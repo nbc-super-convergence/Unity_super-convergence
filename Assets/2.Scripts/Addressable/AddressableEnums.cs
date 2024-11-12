@@ -1,4 +1,5 @@
-/// <summary>addressable group name</summary>
+
+/// <summary> addressable group name </summary>
 public enum eAddressableType
 {
     Animation,
@@ -9,7 +10,7 @@ public enum eAddressableType
     UI
 }
 
-/// <summary>type of file extension</summary>
+/// <summary> type of file extension </summary>
 public enum eAssetType
 {
     other,

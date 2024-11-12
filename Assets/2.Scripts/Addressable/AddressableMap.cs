@@ -3,7 +3,7 @@ using System;
 
 [Serializable]
 public class AddressableMapList
-{
+{// 엔트리의 에셋 주소들
     public List<AddressableMap> list = new List<AddressableMap>();
 
     public void AddRange(List<AddressableMap> list)
@@ -18,8 +18,8 @@ public class AddressableMapList
 }
 
 [Serializable]
-public class AddressableMap
-{
+public class AddressableMap 
+{// 단일 에셋 주소
     public eAddressableType addressableType;
     public eAssetType assetType;
     public string key;
