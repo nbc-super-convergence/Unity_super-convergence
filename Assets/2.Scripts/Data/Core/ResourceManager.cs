@@ -122,11 +122,11 @@ public class ResourceManager : Singleton<ResourceManager>
     /// <param name="group">addressable group name</param>
     /// <returns>T object</returns>
     public async Task<T> LoadAsset<T>(string key, eAddressableType group) where T : UnityEngine.Object
-    { 
+    {
         //UI : UIList에서 관리. 나머지 : assetPool에서 캐싱.
-        if (group != eAddressableType.UI && assetPools[group].ContainsKey(key)) 
+        if (group != eAddressableType.UI && assetPools[group].ContainsKey(key))
             return (T)assetPools[group][key];
-        
+
         var path = GetAssetPath(key, group);
         return await LoadAssetAsync<T>(path);
     }
