@@ -23,6 +23,7 @@ public class ResourceManager : Singleton<ResourceManager>
 
         //Init Addressable Map
         InitAddressableMap();
+        yield return new WaitUntil(() => isInit);
 
         //ResourceManager Initialized.
         isInitialized = true;
