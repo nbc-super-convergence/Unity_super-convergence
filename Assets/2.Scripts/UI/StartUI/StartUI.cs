@@ -6,23 +6,24 @@ using UnityEngine.UI;
 
 public class StartUI : UIBase
 {
-    [SerializeField]
-    private Sprite logo;
+    public Image logoImg;
     [SerializeField]
     private Button[] btnStart;
 
     private string targetScene = "IceBoard";
 
     private string aaa = "temp_super_convergence";
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         InitBtn();
         LoadLogoImage();
     }
 
     private async void LoadLogoImage()
     {
-        logo = await ResourceManager.Instance.LoadAsset<Sprite>(aaa, eAddressableType.Texture);
+        Sprite img = await ResourceManager.Instance.LoadAsset<Sprite>(aaa, eAddressableType.Texture);
+        logoImg.sprite = img;
     }
 
     private void InitBtn()

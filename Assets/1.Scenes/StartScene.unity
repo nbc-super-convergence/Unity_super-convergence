@@ -1200,7 +1200,7 @@ MonoBehaviour:
   isActiveInCreated: 1
   isDestroyAtClosed: 1
   uiPosition: 3
-  logo: {fileID: 0}
+  logoImg: {fileID: 1803048973}
   btnStart:
   - {fileID: 1589695194}
   - {fileID: 376231912}
