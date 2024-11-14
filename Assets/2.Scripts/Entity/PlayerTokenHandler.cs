@@ -1,50 +1,96 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerTokenHandler : MonoBehaviour
 {
-    public PlayerTokenData data;
     private bool isTurn = false; //내 턴인지?
-    public BaseBoard curNode; //현재 위치한 노드
-    public float speed = 1f;
-    public int dice; //주사위 눈
+    private float speed = 5f;
+    private int dice; //주사위 눈
+
+    private IBoardNode curNode; //현재 위치한 노드
+    public PlayerTokenData data;
+
+
+    [field:SerializeField] public Queue<Transform> queue { get; private set; }
+
+    private void Awake()
+    {
+        queue = new();
+        Transform node = MapControl.Instance.startNode;
+        node.TryGetComponent(out curNode);
+    }
 
     private void Update()
     {
-        if(isTurn)
-        {
-            Vector3 target = curNode.transform.position;
+        #region Old
+        //if(isTurn)
+        //{
+        //    Vector3 target = curNode.transform.position;
 
-            transform.position = 
+        //    transform.position = 
+        //        Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+
+        //    if(transform.position == target)
+        //    {
+        //        if(dice > 0)
+        //        {
+        //            curNode.NextNode(SetNextNode);
+        //        }
+        //        else
+        //        {
+        //            //targetNode.GetComponent<IBoard>().Action();
+        //            isTurn = false;
+        //        }
+        //    }
+        //}
+        #endregion
+
+        if (isTurn)
+        {
+            Vector3 target = queue.Peek().position;
+
+            transform.position =
                 Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
 
-            if(transform.position == target)
+            if (transform.position == target)
             {
-                if(dice > 0)
-                {
-                    curNode.NextNode(SetNextNode);
-                }
-                else
-                {
-                    //targetNode.GetComponent<IBoard>().Action();
-                    isTurn = false;
-                }
+                Transform node = queue.Peek();
+                
+                if(node.TryGetComponent(out IAction n))
+                    n.Action();
+
+                queue.Dequeue();
             }
+
+            if (queue.Count == 0)
+                isTurn = false;
         }
     }
 
     //주사위 눈 입력
     public void GetDice(int num)
     {
-        //SetNode()
-        isTurn = true;
-        dice = num;
+        dice = dice > num ? dice : num;
+        Enqueue(dice);
     }
 
-    private void SetNextNode(BaseBoard board)
+    public void SetNode(Transform node,bool minus = false)
     {
-        curNode = board;
-        dice--;
+        if(minus) dice -= 1;
+        queue.Enqueue(node);
+        node.TryGetComponent(out curNode);
+    }
 
-        if (dice == 0) isTurn = false;
+    private void Enqueue(int num)
+    {
+        for (int i = 0; i < num; i++,--dice)
+        {
+            if (curNode.TryRunNextNode(out Transform node))
+                SetNode(node);
+            else
+                break;
+        }
+
+        if(queue.Count > 0) isTurn = true;
     }
 }
