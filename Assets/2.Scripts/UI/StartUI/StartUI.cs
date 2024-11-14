@@ -54,8 +54,10 @@ public class StartUI : UIBase
         }
     }
     private void OpenSettingUI()
-    {
-        Debug.Log($"Setting is Not Ready");
+    {        
+        //await UIManager.Show<SettingUI>();
+        settingUI.SetActive( true );
+        gameObject.SetActive( false );
     }
     private void QuitProgram()
     {
