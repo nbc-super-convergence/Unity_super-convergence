@@ -21,8 +21,6 @@ public class UISetting : UIBase
 
     private async void Back()
     {
-        //gameObject.SetActive(false);
-        //startUI.SetActive(true);
         UIManager.Hide<UISetting>();
         await UIManager.Show<UIStart>();
     }

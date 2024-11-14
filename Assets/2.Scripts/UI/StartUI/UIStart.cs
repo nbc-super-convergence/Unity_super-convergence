@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -53,14 +52,15 @@ public class UIStart : UIBase
         }
     }
     private async void OpenSettingUI()
-    {
-        if(isFirst)
-        {
-            gameObject.SetActive(false);
-        }
+    {       
         UIManager.Hide<UIStart>();
         await UIManager.Show<UISetting>();
-        Destroy(gameObject);
+
+        if (isFirst)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
     }
     private void QuitProgram()
     {
@@ -76,14 +76,5 @@ public class UIStart : UIBase
         //TODO:: 서버에서 버전정보를 가져오거나 출력하는 코드
         string version = $"Current Version: {curVersion}";
         currentVersion.text = version;
-    }
-
-    public override void Closed(object[] param)
-    {
-        base.Closed(param);
-        if(isFirst)
-        {
-            Destroy(gameObject);
-        }
     }
 }
