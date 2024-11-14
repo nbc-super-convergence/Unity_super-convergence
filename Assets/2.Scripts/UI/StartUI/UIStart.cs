@@ -13,9 +13,8 @@ public class UIStart : UIBase
     private Button[] btnStart;
     [SerializeField]
     private TextMeshProUGUI currentVersion;
-    
     [SerializeField]
-    private UIBase settingUI;
+    private bool isFirst = true;
 
     private string targetScene = "IceBoard";
     private string logoKey = "temp_super_convergence";
@@ -53,11 +52,15 @@ public class UIStart : UIBase
             Debug.Log($"로드하려는 {targetScene}이 존재하지 않습니다.");
         }
     }
-    private void OpenSettingUI()
-    {        
-        //await UIManager.Show<SettingUI>();
-        settingUI.SetActive( true );
-        gameObject.SetActive( false );
+    private async void OpenSettingUI()
+    {
+        if(isFirst)
+        {
+            gameObject.SetActive(false);
+        }
+        UIManager.Hide<UIStart>();
+        await UIManager.Show<UISetting>();
+        Destroy(gameObject);
     }
     private void QuitProgram()
     {
@@ -73,5 +76,14 @@ public class UIStart : UIBase
         //TODO:: 서버에서 버전정보를 가져오거나 출력하는 코드
         string version = $"Current Version: {curVersion}";
         currentVersion.text = version;
+    }
+
+    public override void Closed(object[] param)
+    {
+        base.Closed(param);
+        if(isFirst)
+        {
+            Destroy(gameObject);
+        }
     }
 }

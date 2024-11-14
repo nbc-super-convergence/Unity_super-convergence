@@ -6,8 +6,7 @@ public class UISetting : UIBase
 {
     [SerializeField]
     private Button[] buttons;
-    [SerializeField]
-    private UIBase startUI;
+    
 
     private void Start()
     {
@@ -20,10 +19,12 @@ public class UISetting : UIBase
         buttons[1].onClick.AddListener(Apply);
     }
 
-    private void Back()
+    private async void Back()
     {
-        gameObject.SetActive(false);
-        startUI.SetActive(true);
+        //gameObject.SetActive(false);
+        //startUI.SetActive(true);
+        UIManager.Hide<UISetting>();
+        await UIManager.Show<UIStart>();
     }
     private void Apply()
     {
