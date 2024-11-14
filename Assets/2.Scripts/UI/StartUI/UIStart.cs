@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartUI : UIBase
+public class UIStart : UIBase
 {
     public Image logoImg;
     [SerializeField]

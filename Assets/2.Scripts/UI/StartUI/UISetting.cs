@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingUI : UIBase
+public class UISetting : UIBase
 {
     [SerializeField]
     private Button[] buttons;
