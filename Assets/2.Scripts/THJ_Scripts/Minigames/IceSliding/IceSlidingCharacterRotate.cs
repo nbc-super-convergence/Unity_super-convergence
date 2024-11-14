@@ -1,20 +1,20 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 
 public class IceSlidingCharacterRotate : MonoBehaviour
 {
-    [SerializeField] private float _rotationY = 0f; //½ÃÀÛÇÒ ¶§ ÃÊ±â ¾Ş±ÛºÎÅÍ Àâ°í
+    [SerializeField] private float _rotationY = 0f; //ì‹œì‘í•  ë•Œ ì´ˆê¸° ì•µê¸€ë¶€í„° ì¡ê³ 
 
-    //¿©±â¼­ È¸Àü Àû¿ë
+    //ì—¬ê¸°ì„œ íšŒì „ ì ìš©
     private void FixedUpdate()
     {
-        //¿©±â¼­ AtanÀ» ÀÌ¿ëÇÏ¿© (x,z ¸¸ »ç¿ëÇÒ°ÅÁö¸¸) Ä³¸¯ÅÍ È¸Àü
+        //ì—¬ê¸°ì„œ Atanì„ ì´ìš©í•˜ì—¬ (x,z ë§Œ ì‚¬ìš©í• ê±°ì§€ë§Œ) ìºë¦­í„° íšŒì „
         ApplyRotate();
     }
 
     /// <summary>
-    /// ÀÔ·ÂÇÑ ¹æÇâ´ë·Î °¢µµ¸¦ Á¶Àı
+    /// ì…ë ¥í•œ ë°©í–¥ëŒ€ë¡œ ê°ë„ë¥¼ ì¡°ì ˆ
     /// </summary>
-    /// <param name="dir">IceSlidingControllerÀÇ InputControll¿¡¼­ ¹ŞÀ» °ÅÀÓ</param>
+    /// <param name="dir">IceSlidingControllerì˜ InputControllì—ì„œ ë°›ì„ ê±°ì„</param>
     public void SetInput(Vector3 dir)
     {
         if(dir != Vector3.zero)
@@ -22,7 +22,7 @@ public class IceSlidingCharacterRotate : MonoBehaviour
     }
 
     /// <summary>
-    /// °»½ÅÇÑ _rotationY°ªÀ» °¢µµ¿¡ ¼³Á¤
+    /// ê°±ì‹ í•œ _rotationYê°’ì„ ê°ë„ì— ì„¤ì •
     /// </summary>
     private void ApplyRotate()
     {

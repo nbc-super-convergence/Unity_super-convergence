@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(IceSlidingDamage))]
 public class IceSlidingBase : MonoBehaviour
 {
     //받을 컴포넌트
@@ -18,8 +19,9 @@ public class IceSlidingBase : MonoBehaviour
     [SerializeField] private float _slideFactor = 1f; //미끄러짐의 감속 비율
     private Vector3 _slideDirector = Vector3.zero;  //미끄러짐 감속의 좌표
 
-    //플레이어 속성
-    public int PlayerHP { get; private set; } = 100;
+    public bool CheckAlive { get; private set; }    //현재 살아남아 있는지
+    public bool CheckStun { get; private set; }     //현재 스턴에 걸렸는지
+    public bool IsDamage { get; private set; }  //현재 데미지에 걸렸는지
 
     private void Awake()
     {
@@ -33,17 +35,47 @@ public class IceSlidingBase : MonoBehaviour
         _rigidbody.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
     }
 
+    //로직 처리
+    private void Update()
+    {
+        //상태 검사
+        CheckAlive = _damage.PlayerHP > 0;
+        CheckStun = _damage.NowStun;
+    }
+
     //물리적 처리
     private void FixedUpdate()
     {
-        ApplyMove(_moveControll);
+        if (_damage.PlayerHP > 0)   //HP가 남으면
+            ApplyMove(_moveControll);
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        //특정 위치 안에 있으면 데미지 감소
         if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Damage")))
         {
+            IsDamage = true;    //데미지 발생
+            if(collision.gameObject.name.Equals("20001"))   //이거는 나중에 ID로 받을 예정임
+            {
+                //튕겨나가기
+                BounceOut(collision);
+
+                //0.2초간 스턴
+                _damage.GetStun(2f);
+            }
+
             //데미지 처리
+            StartCoroutine(_damage.DamageDelay(1));
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Damage")))
+        {
+            IsDamage = false;
+            StopCoroutine(_damage.DamageDelay(1));  //코루틴 끝내기
         }
     }
 
@@ -54,7 +86,7 @@ public class IceSlidingBase : MonoBehaviour
     /// <param name="dir">moveControll에서 적용</param>
     private void ApplyMove(Vector3 dir)
     {
-        //1인칭 시점에서 이동
+        //이동
         _mainDirection = transform.forward * dir.z + transform.right * dir.x;
 
         //미끄러짐 효과
@@ -67,8 +99,6 @@ public class IceSlidingBase : MonoBehaviour
         _rigidbody.velocity = velocity;
     }
 
-    //Todo : 장애물이랑 데미지 바닥 이랑 충돌하면 데미지 감소
-
     /// <summary>
     /// 입력을 받아 _moveControll에 적용
     /// </summary>
@@ -77,5 +107,29 @@ public class IceSlidingBase : MonoBehaviour
     {
         _moveControll = dir;
     }
-    
+
+    /// <summary>
+    /// 튕겨나가는 효과
+    /// </summary>
+    /// <param name="collision">OnCollision에서</param>
+    private void BounceOut(Collision collision)
+    {
+        float bounceForce = 5f; // 튕겨나가는 힘의 세기  (60초 지나면 강도가 강해지게)
+                                // 충돌 지점의 법선 벡터 가져오기 (첫 번째 접촉 지점의 법선)
+        Vector3 collisionNormal = collision.GetContact(0).normal;
+
+        // 상하좌우 방향 중 가장 가까운 방향을 bounceDirection으로 설정
+        Vector3 bounceDirection = new Vector3(
+            Mathf.Round(collisionNormal.x),
+            Mathf.Round(collisionNormal.y),
+            Mathf.Round(collisionNormal.z)
+        );
+
+        // 방향이 설정되었으면 튕겨나가는 힘 적용
+        if (bounceDirection != Vector3.zero)
+        {
+            _rigidbody.velocity = Vector3.zero; // 기존 속도 초기화
+            _rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.VelocityChange);
+        }
+    }
 }

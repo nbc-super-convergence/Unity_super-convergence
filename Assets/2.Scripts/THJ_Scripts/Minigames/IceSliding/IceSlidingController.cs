@@ -20,7 +20,7 @@ public class IceSlidingController : MonoBehaviour
 
     private void Update()
     {
-        if (!timeManager.GameOver)
+        if (!timeManager.GameOver && !_iceSlidingBase.CheckStun)
         {
             _inputDirection.x = Input.GetAxis("Horizontal");
             _inputDirection.z = Input.GetAxis("Vertical");
@@ -28,9 +28,15 @@ public class IceSlidingController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 받은 입력을 각 메서드에 전달
+    /// </summary>
     private void InputControll()
     {
-        _iceSlidingBase.InputMove(_inputDirection);
-        _characterRotate.SetInput(_inputDirection);
+        if (_iceSlidingBase.CheckAlive) //살아 있을 때만
+        {
+            _iceSlidingBase.InputMove(_inputDirection);
+            _characterRotate.SetInput(_inputDirection);
+        }
     }
 }

@@ -652,6 +652,7 @@ GameObject:
   - component: {fileID: 568831248}
   - component: {fileID: 568831253}
   - component: {fileID: 568831252}
+  - component: {fileID: 568831254}
   m_Layer: 6
   m_Name: Play2
   m_TagString: Untagged
@@ -739,6 +740,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &568831254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568831247}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835fdf32b5d7834abd07858865bc69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &599396022
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,6 +764,7 @@ GameObject:
   - component: {fileID: 599396023}
   - component: {fileID: 599396028}
   - component: {fileID: 599396027}
+  - component: {fileID: 599396029}
   m_Layer: 6
   m_Name: Play3
   m_TagString: Untagged
@@ -838,6 +852,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &599396029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599396022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835fdf32b5d7834abd07858865bc69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &810402440 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4121957669690104, guid: 1617cfd7d856042459cec623d111378d,
@@ -942,7 +968,7 @@ MonoBehaviour:
   m_UiScaleMode: 0
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -1143,7 +1169,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 8aa7a33ec074d5f429b993c5c857614b, type: 2}
+  - {fileID: 2100000, guid: 3b3b5fc58ad0da34e8c6df4d5a51b035, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1656,6 +1682,7 @@ GameObject:
   - component: {fileID: 1805809078}
   - component: {fileID: 1805809083}
   - component: {fileID: 1805809082}
+  - component: {fileID: 1805809084}
   m_Layer: 6
   m_Name: Play4
   m_TagString: Untagged
@@ -1743,6 +1770,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1805809084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805809077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835fdf32b5d7834abd07858865bc69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1824643544
 GameObject:
   m_ObjectHideFlags: 0
@@ -1876,8 +1915,8 @@ GameObject:
   - component: {fileID: 1874277280}
   - component: {fileID: 1874277279}
   - component: {fileID: 1874277278}
-  m_Layer: 0
-  m_Name: BounceCylinder
+  m_Layer: 7
+  m_Name: 20001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2035,6 +2074,7 @@ GameObject:
   - component: {fileID: 1997912705}
   - component: {fileID: 1997912702}
   - component: {fileID: 1997912706}
+  - component: {fileID: 1997912707}
   - component: {fileID: 1997912701}
   - component: {fileID: 1997912700}
   m_Layer: 6
@@ -2136,6 +2176,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _slideSpeed: 10
   _slideFactor: 1
+--- !u!114 &1997912707
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997912699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2835fdf32b5d7834abd07858865bc69a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2074368124
 PrefabInstance:
   m_ObjectHideFlags: 0
