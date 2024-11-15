@@ -100,5 +100,7 @@ public class IceBoardTimeManager : MonoBehaviour
     {
         GameSetTextUI.gameObject.SetActive(GameOver);
     }
+
+    //Todo : 1명이 남으면 즉시 게임 종료
 }
  

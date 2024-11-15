@@ -39,14 +39,14 @@ public class IceSlidingBase : MonoBehaviour
     private void Update()
     {
         //상태 검사
-        CheckAlive = _damage.PlayerHP > 0;
+        CheckAlive = _damage.NowAlive;
         CheckStun = _damage.NowStun;
     }
 
     //물리적 처리
     private void FixedUpdate()
     {
-        if (_damage.PlayerHP > 0)   //HP가 남으면
+        //if (_damage.PlayerHP > 0)   //HP가 남으면
             ApplyMove(_moveControll);
     }
 

@@ -1,54 +1,57 @@
-using System.Collections;
+ï»¿using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(IceSlidingHealth))]
 public class IceSlidingDamage : MonoBehaviour
 {
-    //¿¬°á ÄÄÆ÷³ÍÆ®
+    //ì—°ê²° ì»´í¬ë„ŒíŠ¸
     private IceSlidingBase _iceBase;
+    private IceSlidingHealth _iceHealth;
 
-    public int PlayerHP { get; private set; } = 100;
+    private WaitForSeconds _damageDelay; //ë”œë ˆì´ë¥¼ ì£¼ê¸° ìœ„í•œ ëŒ€ê¸°
+    private float _damageSecond = 1f;    //ë°ë¯¸ì§€ ëŒ€ê¸° ì‹œê°„
 
-    private WaitForSeconds _damageDelay; //µô·¹ÀÌ¸¦ ÁÖ±â À§ÇÑ ´ë±â
-    private float _damageSecond = 1f;    //µ¥¹ÌÁö ´ë±â ½Ã°£
-
-    public bool NowStun { get; private set; }   //µ¥¹ÌÁö Å¬·¡½º ¾È¿¡¼­¸¸ ¼³Á¤
+    public bool NowStun { get; private set; }   //ë°ë¯¸ì§€ í´ë˜ìŠ¤ ì•ˆì—ì„œë§Œ ì„¤ì •
+    public bool NowAlive { get; private set; }
 
     private void Awake()
     {
         _iceBase = GetComponent<IceSlidingBase>();
+        _iceHealth = GetComponent<IceSlidingHealth>();
 
         _damageDelay = new WaitForSeconds(_damageSecond);
     }
 
     /// <summary>
-    /// µ¥¹ÌÁö È¿°ú
+    /// ë°ë¯¸ì§€ íš¨ê³¼
     /// </summary>
     /// <param name="dmg"></param>
     public IEnumerator DamageDelay(int dmg)
     {
         while (_iceBase.IsDamage)
         {
-            PlayerHP = Mathf.Max(0, PlayerHP - dmg);
+            _iceHealth.SetDamage(dmg);
+            NowAlive = _iceHealth.PlayerHP > 0;
             yield return _damageDelay;
-            Debug.Log(PlayerHP);
+            //Debug.Log(PlayerHP);
         }
     }
 
     /// <summary>
-    /// ½ºÅÏ È¿°ú
+    /// ìŠ¤í„´ íš¨ê³¼
     /// </summary>
-    /// <param name="sec">ÄÚ·çÆ¾À¸·Î ³Ñ°Ü µô·¹ÀÌ</param>
+    /// <param name="sec">ì½”ë£¨í‹´ìœ¼ë¡œ ë„˜ê²¨ ë”œë ˆì´</param>
     public void GetStun(float sec)
     {
-        //ÀÌµ¿ ¹× È¸Àü ±İÁö
+        //ì´ë™ ë° íšŒì „ ê¸ˆì§€
         NowStun = true;
         StartCoroutine(StunDelay(sec));
     }
     private IEnumerator StunDelay(float sec)
     {
-        //Debug.Log("½ºÅÏ ½ÃÀÛ");
+        //Debug.Log("ìŠ¤í„´ ì‹œì‘");
         yield return new WaitForSeconds(sec);
-        //Debug.Log("½ºÅÏ ³¡");
+        //Debug.Log("ìŠ¤í„´ ë");
         NowStun = false;
     }
 }
