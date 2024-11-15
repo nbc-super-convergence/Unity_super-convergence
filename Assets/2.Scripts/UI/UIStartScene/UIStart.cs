@@ -42,13 +42,9 @@ public class UIStart : UIBase
 
     private void LoadTargetScene()
     {
-        if (SceneManager.GetSceneByName(targetScene).IsValid())
+        if (IsSceneInBuild(targetScene))
         {
             SceneManager.LoadScene(targetScene);
-        }
-        else
-        {
-            Debug.Log($"로드하려는 {targetScene}이 존재하지 않습니다.");
         }
     }
     private async void OpenSettingUI()
@@ -76,5 +72,21 @@ public class UIStart : UIBase
         //TODO:: 서버에서 버전정보를 가져오거나 출력하는 코드
         string version = $"Current Version: {curVersion}";
         currentVersion.text = version;
+    }
+
+    private bool IsSceneInBuild(string sceneName)
+    {
+        int sceneCount = SceneManager.sceneCountInBuildSettings;
+        for (int i = 0; i < sceneCount; i++)
+        {
+            string path = SceneUtility.GetScenePathByBuildIndex(i);
+            string sceneNameInBuild = System.IO.Path.GetFileNameWithoutExtension(path);
+            if (sceneNameInBuild == sceneName)
+            {
+                return true;
+            }
+        }
+        Debug.Assert(false, $"Scene {sceneName} does not exist in the [Scenes In Build]. Pleas Check [Build Setting...]");
+        return false;
     }
 }
