@@ -18,8 +18,10 @@ public class MapControl : Singleton<MapControl>
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
-    private int playerIndex = 0;
+    private int playerIndex = -1;
 
+    public List<IToggle> trophyNode = new List<IToggle>();
+    private int prevTrophyIndex;
     public PlayerTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
@@ -59,5 +61,18 @@ public class MapControl : Singleton<MapControl>
         playerIndex++;
     }
 
-  
+    public void SetTrophyNode()
+    {
+        int rand = Random.Range(0, trophyNode.Count);
+
+        while(rand == prevTrophyIndex)
+            rand = Random.Range(0, trophyNode.Count);
+
+        if(prevTrophyIndex != -1)
+            trophyNode[prevTrophyIndex].Toggle();
+
+        trophyNode[rand].Toggle();
+
+        prevTrophyIndex = rand;
+    }
 }

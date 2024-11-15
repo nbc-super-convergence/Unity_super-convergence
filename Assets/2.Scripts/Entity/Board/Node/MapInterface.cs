@@ -20,3 +20,8 @@ public interface IPurchase : IAction
 {
     void Purchase(int index);
 }
+
+public interface IToggle : IAction
+{
+    void Toggle();
+}

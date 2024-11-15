@@ -15,4 +15,5 @@ public class PlayerTokenData
     public float hp;
     public PlayerTokenState state;
     public int keyAmount; //재화, 이름 언제든지 수정가능
+    public int trophyAmount;
 }
