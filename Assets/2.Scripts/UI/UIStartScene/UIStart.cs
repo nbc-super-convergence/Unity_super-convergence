@@ -1,21 +1,19 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class StartUI : UIBase
+public class UIStart : UIBase
 {
     public Image logoImg;
     [SerializeField]
     private Button[] btnStart;
     [SerializeField]
     private TextMeshProUGUI currentVersion;
-    
     [SerializeField]
-    private UIBase settingUI;
+    private bool isFirst = true;
 
     private string targetScene = "IceBoard";
     private string logoKey = "temp_super_convergence";
@@ -46,18 +44,23 @@ public class StartUI : UIBase
     {
         if (SceneManager.GetSceneByName(targetScene).IsValid())
         {
-            SceneLoad.LoadSceneByName(targetScene);
+            SceneManager.LoadScene(targetScene);
         }
         else
         {
             Debug.Log($"로드하려는 {targetScene}이 존재하지 않습니다.");
         }
     }
-    private void OpenSettingUI()
-    {        
-        //await UIManager.Show<SettingUI>();
-        settingUI.SetActive( true );
-        gameObject.SetActive( false );
+    private async void OpenSettingUI()
+    {       
+        UIManager.Hide<UIStart>();
+        await UIManager.Show<UISetting>();
+
+        if (isFirst)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
     }
     private void QuitProgram()
     {

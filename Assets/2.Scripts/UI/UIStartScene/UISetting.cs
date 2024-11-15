@@ -1,15 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SettingUI : UIBase
+public class UISetting : UIBase
 {
     [SerializeField]
     private Button[] buttons;
-    [SerializeField]
-    private UIBase startUI;
+    
 
     private void Start()
     {
@@ -22,10 +19,10 @@ public class SettingUI : UIBase
         buttons[1].onClick.AddListener(Apply);
     }
 
-    private void Back()
+    private async void Back()
     {
-        gameObject.SetActive(false);
-        startUI.SetActive(true);
+        UIManager.Hide<UISetting>();
+        await UIManager.Show<UIStart>();
     }
     private void Apply()
     {
