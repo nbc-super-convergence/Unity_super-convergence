@@ -1,17 +1,17 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 
 public class IceSlidingHealth : MonoBehaviour
 {
-    [SerializeField] private Slider _hpBar; //Ã¼·Â¹Ù
+    [SerializeField] private Slider _hpBar; //ì²´ë ¥ë°”
 
-    private Transform _player;  //¶ç¿ì±â À§ÇÑ ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
+    private Transform _player;  //ë„ìš°ê¸° ìœ„í•œ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
 
-    private const int _maxHP = 100;
-    private int _playerHP = 100;
+    private const int _maxHP = 10;
+    private int _playerHP = _maxHP + 1; //ë–¨ì–´ì§ˆë•Œ 1ê¹ì´ëŠ” ë²„ê·¸ ë•œì—...
 
     /// <summary>
-    /// µ¥¹ÌÁö °¨¼Ò
+    /// ë°ë¯¸ì§€ ê°ì†Œ
     /// </summary>
     public int PlayerHP 
     {
@@ -20,7 +20,7 @@ public class IceSlidingHealth : MonoBehaviour
             return _playerHP;
         }
         private set
-        {   //ÇØ´ç µ¥¹ÌÁö °¨¼Ò
+        {   //í•´ë‹¹ ë°ë¯¸ì§€ ê°ì†Œ
             _playerHP = Mathf.Max(0, _playerHP - value);
         }
     }
@@ -36,19 +36,19 @@ public class IceSlidingHealth : MonoBehaviour
     }
 
     /// <summary>
-    /// º¯µ¿µÈ HP °»½Å
+    /// ë³€ë™ëœ HP ê°±ì‹ 
     /// </summary>
     /// <param name="dmg"></param>
     public void SetDamage(int dmg)
     {
         PlayerHP = dmg;
-        Debug.Log(PlayerHP);
+        //Debug.Log(PlayerHP);
     }
 
     private void ShowHPBar()
     {
-        //HP¸¦ ÇÃ·¹ÀÌ¾î UIÀ§¿¡ Ç¥½Ã
-        _hpBar.value = (float)_playerHP / 100;
+        //HPë¥¼ í”Œë ˆì´ì–´ UIìœ„ì— í‘œì‹œ
+        _hpBar.value = (float)_playerHP / _maxHP;
 
         _hpBar.transform.position = _player.position + Vector3.up;
     }
