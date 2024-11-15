@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 //전부 테스트 코드
@@ -26,6 +27,9 @@ public class MapControl : Singleton<MapControl>
 
     protected override void Awake()
     {
+        //임시코드
+        StartCoroutine(Test());
+
         base.Awake();
         isDontDestroyOnLoad = false;
 
@@ -34,6 +38,12 @@ public class MapControl : Singleton<MapControl>
         //리스트에 플레이어 보관
         playerTokenHandlers.Add(handle);
         //handle.curNode = startNode.nextBoard[0];
+    }
+
+    //임시코드
+    public IEnumerator Test()
+    {
+        yield return ResourceManager.Instance.Init();
     }
 
     public void TestRandomDice()

@@ -1,5 +1,5 @@
-using System;
 using TMPro;
+using UnityEngine;
 
 public class PurchaseNodeUI : UIBase
 {
@@ -22,11 +22,11 @@ public class PurchaseNodeUI : UIBase
     {
         var p = MapControl.Instance.playerTokenHandlers[index];
 
-        if(p.data.keyAmount > requireAmount)
-        {
-            p.data.keyAmount -= requireAmount;
+        //if(p.data.keyAmount > requireAmount)
+        //{
+        //    p.data.keyAmount -= requireAmount;
             action.Purchase(index);
-        }
+        //}
 
         SetActive(false);
     }
