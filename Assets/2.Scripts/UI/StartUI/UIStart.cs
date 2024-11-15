@@ -44,7 +44,7 @@ public class UIStart : UIBase
     {
         if (SceneManager.GetSceneByName(targetScene).IsValid())
         {
-            SceneLoad.LoadSceneByName(targetScene);
+            SceneManager.LoadScene(targetScene);
         }
         else
         {
