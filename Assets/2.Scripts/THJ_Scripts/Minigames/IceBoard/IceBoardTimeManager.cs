@@ -53,7 +53,6 @@ public class IceBoardTimeManager : MonoBehaviour
         {
             //이 안에 살아있는 속성을 검사하고 판정
             _lastOne.Add(transform.GetChild(i).GetComponent<IceSlidingBase>());
-            Debug.Log(_lastOne[i]);
         }
     }
 
@@ -63,7 +62,7 @@ public class IceBoardTimeManager : MonoBehaviour
         {
             _currentSecond -= Time.deltaTime;   //시간 갱신
             TimeFlag((int)_currentSecond);
-            //CheckLastOne();
+            CheckLastOne();
         }
         ApplyText((int)_currentSecond);
         ApplyGameSet();
@@ -117,10 +116,15 @@ public class IceBoardTimeManager : MonoBehaviour
     private void CheckLastOne()
     {
         // 리스트 안에 CheckAlive검사
-        foreach(IceSlidingBase person in _lastOne)
+        for (int i = 0; i < _lastOne.Count; i++)
         {
-            if(!person.CheckAlive)
-                _lastOne.Remove(person);
+            Debug.Log(!_lastOne[i].CheckAlive);
+            //플레이어가 죽으면 검사에서 빠져라
+            if (!_lastOne[i].CheckAlive)
+            {
+                Debug.Log($"{_lastOne[i].name} 탈락");
+                _lastOne.Remove(_lastOne[i]);
+            }
         }
 
         if(_lastOne.Count == 1)
@@ -129,17 +133,6 @@ public class IceBoardTimeManager : MonoBehaviour
             GameOver = true;
 
             Debug.Log($"{_lastOne[0].name} WINS!!");
-        }
-    }
-
-    /// <summary>
-    /// 남은 사람들의 이름들을 출력
-    /// </summary>
-    private void ResultText()
-    {
-        foreach(IceSlidingBase person in _lastOne)
-        {
-            Debug.Log($"{person.name} Wins!!");
         }
     }
 }

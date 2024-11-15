@@ -45,6 +45,9 @@ public class IceSlidingHealth : MonoBehaviour
         //Debug.Log(PlayerHP);
     }
 
+    /// <summary>
+    /// 반영된 체력을 UI에 표시
+    /// </summary>
     private void ShowHPBar()
     {
         //HP를 플레이어 UI위에 표시

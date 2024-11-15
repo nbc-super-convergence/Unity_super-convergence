@@ -19,9 +19,9 @@ public class IceSlidingBase : MonoBehaviour
     [SerializeField] private float _slideFactor = 1f; //미끄러짐의 감속 비율
     private Vector3 _slideDirector = Vector3.zero;  //미끄러짐 감속의 좌표
 
-    public bool CheckAlive { get; private set; }    //현재 살아남아 있는지
-    public bool CheckStun { get; private set; }     //현재 스턴에 걸렸는지
-    public bool IsDamage { get; private set; }  //현재 데미지에 걸렸는지
+    public bool CheckAlive { get; private set; } = true;    //현재 살아남아 있는지
+    public bool CheckStun { get; private set; } = false;     //현재 스턴에 걸렸는지
+    public bool IsDamage { get; private set; } = false;  //현재 데미지에 걸렸는지
 
     private void Awake()
     {
