@@ -3,11 +3,13 @@ using UnityEngine.SceneManagement;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using static GamePacket;
 
 public class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    public int level = 1;
-    public bool isAnimationPlaying = false;
+    //TODO: 새로운 함수 만들 때 private void로 만들 것.
+    //TODO: 함수의 이름은 반드시 PayloadOneOfCase Enum과 맞출 것.
+    //TODO: 인자는 GamePacket gamePacket.
 
     public void LoginResponse(GamePacket gamePacket)
     {

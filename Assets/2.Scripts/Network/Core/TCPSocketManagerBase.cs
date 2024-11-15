@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Sockets;
 using System.Reflection;
@@ -22,7 +21,6 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     private string version = "1.0.0";
     private int sequenceNumber = 1;
 
-    [SerializeField] private bool useDNS;
     [SerializeField] private string ip;
     [SerializeField] private int port;
 
@@ -45,14 +43,11 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     /// <summary>
     /// ip, port 초기화 후 패킷 처리 메소드 등록
     /// </summary>
-    /// <param name="ip"></param>
-    /// <param name="port"></param>
-    /// <returns></returns>
-    public TCPSocketManagerBase<T> Init()
-    {
+    public void Init()
+    {//TODO: StartScene의 시작 버튼 누를 때 호출.
         InitPackets();
+        Connect();
         isInitialized = true;
-        return this;
     }
 
     /// <summary>
@@ -84,15 +79,11 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
 
     /// <summary>
     /// 등록된 ip, port로 소켓 연결
-    /// send, receive큐 / Ping StartCoroutine.
     /// </summary>
-    /// <param name="callback"></param>
-    public async void Connect(UnityAction callback = null)
+    private async void Connect(UnityAction callback = null)
     {
         IPEndPoint endPoint; //ip주소 + 포트번호
-        IPAddress ipAddress; //문자열 -> 객체로 치환.
-
-        if (IPAddress.TryParse(ip, out ipAddress))
+        if (IPAddress.TryParse(ip, out IPAddress ipAddress))
         {
             //서버 주소로 IPEndPoint 생성
             endPoint = new IPEndPoint(ipAddress, port);
@@ -231,7 +222,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     /// <summary>
     /// sendQueue에 데이터가 있을 시 소켓에 전송
     /// </summary>
-    IEnumerator OnSendQueue()
+    private IEnumerator OnSendQueue()
     {
         while (true)
         {
@@ -249,7 +240,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     /// <summary>
     /// receiveQueue에 데이터가 있을 시 패킷 타입에 따라 이벤트 호출
     /// </summary>
-    IEnumerator OnReceiveQueue()
+    private IEnumerator OnReceiveQueue()
     {
         while (true)
         {
@@ -271,7 +262,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
         }
     }
 
-    public IEnumerator Ping()
+    private IEnumerator Ping()
     {
         while (SocketManager.Instance.isConnected)
         {
@@ -282,7 +273,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     }
 
     /// <summary>
-    /// 소켓 연결 해제
+    /// 서버와의 연결 해제
     /// </summary>
     /// <param name="isReconnect">재연결 여부</param>
     public void Disconnect(bool isReconnect = false)
