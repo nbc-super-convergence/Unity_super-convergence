@@ -48,7 +48,7 @@ public class UIManager : Singleton<UIManager>
 
             Instance.uiList.Add(ui);
         }
-        ui.opened.Invoke(param);
+        ui.opened?.Invoke(param);
         ui.gameObject.SetActive(ui.isActiveInCreated);
         ui.isActiveInCreated = true;
         return (T)ui;
