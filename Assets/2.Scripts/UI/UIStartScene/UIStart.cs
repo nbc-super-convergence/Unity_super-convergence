@@ -15,6 +15,12 @@ public class UIStart : UIBase
     [SerializeField]
     private bool isFirst = true;
 
+    [SerializeField]
+    private TMP_InputField inputFieldPlayerID;
+    [SerializeField] private string strPlayerID;
+    [SerializeField] private TextMeshProUGUI currentPlayerID;
+    public int playerID;
+
     private string targetScene = "IceBoard";
     private string logoKey = "temp_super_convergence";
     private string curVersion = "0.000";
@@ -25,6 +31,8 @@ public class UIStart : UIBase
         InitBtn();
         LoadLogoImage();
         GetCurrentVersion();
+
+        inputFieldPlayerID = GetComponentInChildren<TMP_InputField>();
     }
 
     private async void LoadLogoImage()
@@ -42,8 +50,17 @@ public class UIStart : UIBase
 
     private void LoadTargetScene()
     {
+        if (!(1 <= playerID && playerID <= 4))
+        {
+            Debug.Log("올바른 PlayerID를 입력하시고 Apply 버튼을 눌러주세요.");
+            return;
+        }
+
         if (IsSceneInBuild(targetScene))
         {
+            SocketManager.Instance.Init();
+            //SocketManager.Instance.OnSend()
+
             SceneManager.LoadScene(targetScene);
         }
     }
@@ -88,5 +105,27 @@ public class UIStart : UIBase
         }
         Debug.Assert(false, $"Scene {sceneName} does not exist in the [Scenes In Build]. Pleas Check [Build Setting...]");
         return false;
+    }
+
+    /// <summary>
+    /// 인스펙터에서 직접 설정.
+    /// </summary>
+    public void ButtonApplyPlayerID()
+    {
+        strPlayerID = inputFieldPlayerID.text;
+        if (strPlayerID.Length == 0)
+        {
+            Debug.Log($"PlayerID 입력이 없습니다.");
+            return;
+        }
+        else if (strPlayerID != "1" && strPlayerID != "2" && strPlayerID != "3" && strPlayerID != "4")
+        {
+            Debug.Log($"1 ~ 4의 숫자를 입력해주세요.");
+            return;
+        }
+
+        playerID = int.Parse(strPlayerID);
+
+        currentPlayerID.text = playerID.ToString();
     }
 }
