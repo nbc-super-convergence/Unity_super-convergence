@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using static GamePacket;
 
 public class UIStart : UIBase
 {
@@ -59,11 +60,25 @@ public class UIStart : UIBase
         if (IsSceneInBuild(targetScene))
         {
             SocketManager.Instance.Init();
-            //SocketManager.Instance.OnSend()
+            SendPacketIceJoinRequest();
 
             SceneManager.LoadScene(targetScene);
         }
     }
+
+    /// <summary>
+    /// ÆÐÅ¶
+    /// </summary>
+    private void SendPacketIceJoinRequest()
+    {
+        GamePacket packet = new();
+        packet.IceJoinRequest = new()
+        {
+            PlayerId = playerID
+        };
+        SocketManager.Instance.OnSend(packet);
+    }
+
     private async void OpenSettingUI()
     {       
         UIManager.Hide<UIStart>();
