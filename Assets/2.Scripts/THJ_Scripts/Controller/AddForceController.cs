@@ -3,16 +3,21 @@
 public class AddForceController : IController
 {
     private Rigidbody rgdby;
-    private Vector3 curPos = Vector3.zero;
+    private float forceSpeed;   //AddForce의 속도
 
-    public virtual void Move(Vector3 pos)
+    public AddForceController(Rigidbody _rgdby, float _spd)
     {
-        curPos.x = pos.x;
-        curPos.z = pos.z;
-        rgdby.AddForce(curPos, ForceMode.Impulse);  //이건 물리결과를 보고
+        rgdby = _rgdby; //컴포넌트를 가져오기
+        forceSpeed = _spd;
     }
 
-    public virtual void Interaction()
+    public void Move(Vector3 pos)
+    {
+        rgdby.AddForce(pos * forceSpeed, ForceMode.Acceleration);  //이건 물리결과를 보고
+    }
+
+    //미사용 메서드
+    public virtual void Interaction(bool isPress)
     {
 
     }

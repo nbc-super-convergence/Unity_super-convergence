@@ -7,13 +7,16 @@ public class ButtonController : IController
 
     }
 
-    public virtual void Interaction()
+    public virtual void Interaction(bool isPress)
     {
-        throw new System.NotImplementedException();
+        if(isPress)
+        {
+
+        }
     }
 
     public virtual void Jump()
     {
-        throw new System.NotImplementedException();
+
     }
 }

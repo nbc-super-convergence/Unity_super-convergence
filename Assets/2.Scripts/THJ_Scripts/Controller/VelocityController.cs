@@ -3,22 +3,27 @@
 public class VelocityController : IController
 {
     private Rigidbody rgdby;
-    private Vector3 curPos = Vector3.zero;
+    private float slideFactor;  // 감속 효과
 
-    public virtual void Move(Vector3 pos)
+    public VelocityController(Rigidbody _rgdby, float _factor = 0f)
     {
-        curPos.x = pos.x;
-        curPos.z = pos.z;
-        rgdby.velocity = curPos;    // velocity에 맞게 적용 (임시로)
+        rgdby = _rgdby; 
+        slideFactor = _factor;
     }
 
-    public virtual void Interaction()
+    public void Move(Vector3 vel)
     {
-        throw new System.NotImplementedException();
+        vel.x *= slideFactor;
+        vel.z *= slideFactor;
+        rgdby.velocity = vel;    // velocity에 맞게 적용 (임시로)
     }
 
+    public virtual void Interaction(bool isPress)
+    {
+
+    }
     public virtual void Jump()
     {
-        throw new System.NotImplementedException();
+
     }
 }
