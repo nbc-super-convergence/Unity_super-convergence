@@ -38,8 +38,6 @@ public class IceBoardTimeManager : MonoBehaviour
     //빙판 속성
     [SerializeField] private IceBoardFloor iceBoardFloor;
 
-    private List<IceSlidingBase> _lastOne = new List<IceSlidingBase>(); //한명만 살아남을 때
-
     private void Awake()
     {
         Instance = this;    //싱글톤 정의
@@ -48,12 +46,6 @@ public class IceBoardTimeManager : MonoBehaviour
     void Start()
     {
         _currentSecond = _startSecond;  //시작할 때 시간을 초기
-
-        for (int i = 0; i < transform.childCount; i++)  //플레이어를 검사
-        {
-            //이 안에 살아있는 속성을 검사하고 판정
-            _lastOne.Add(transform.GetChild(i).GetComponent<IceSlidingBase>());
-        }
     }
 
     void Update()
@@ -62,7 +54,6 @@ public class IceBoardTimeManager : MonoBehaviour
         {
             _currentSecond -= Time.deltaTime;   //시간 갱신
             TimeFlag((int)_currentSecond);
-            CheckLastOne();
         }
         ApplyText((int)_currentSecond);
         ApplyGameSet();
@@ -108,32 +99,6 @@ public class IceBoardTimeManager : MonoBehaviour
     private void ApplyGameSet()
     {
         GameSetTextUI.gameObject.SetActive(GameOver);
-    }
-
-    /// <summary>
-    /// 1명만 살아남았는지
-    /// </summary>
-    private void CheckLastOne()
-    {
-        // 리스트 안에 CheckAlive검사
-        for (int i = 0; i < _lastOne.Count; i++)
-        {
-            Debug.Log(!_lastOne[i].CheckAlive);
-            //플레이어가 죽으면 검사에서 빠져라
-            if (!_lastOne[i].CheckAlive)
-            {
-                Debug.Log($"{_lastOne[i].name} 탈락");
-                _lastOne.Remove(_lastOne[i]);
-            }
-        }
-
-        if(_lastOne.Count == 1)
-        {
-            // 그 사람이 승리자
-            GameOver = true;
-
-            Debug.Log($"{_lastOne[0].name} WINS!!");
-        }
     }
 }
  
