@@ -258,12 +258,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  useDNS: 0
-  ip: 127.0.0.1
-  port: 3000
-  version: 1.0.0
-  sequenceNumber: 1
-  isConnected: 0
+  ip: 3.34.183.2
+  port: 5555
 --- !u!1 &1942804606
 GameObject:
   m_ObjectHideFlags: 0

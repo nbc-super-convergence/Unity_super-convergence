@@ -267,8 +267,8 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
         while (SocketManager.Instance.isConnected)
         {
             yield return new WaitForSeconds(5);
-            GamePacket packet = new() { LoginResponse = new() };
-            SocketManager.Instance.OnSend(packet);
+            //GamePacket packet = new() { LoginResponse = new() };
+            //SocketManager.Instance.OnSend(packet);
         }
     }
 
@@ -284,8 +284,8 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
             isConnected = false;
 
             // 서버에 연결 해제 알림 패킷 생성
-            GamePacket packet = new() { LoginRequest = new() };
-            OnSend(packet); // 서버에 연결 해제 요청
+            //GamePacket packet = new() { LoginRequest = new() };
+            //OnSend(packet); // 서버에 연결 해제 요청
             socket.Disconnect(isReconnect); //소켓 연결 해제
 
             if (isReconnect)
