@@ -3,12 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
     //컴포넌트
-    private Rigidbody playerRgdby;
+    private Rigidbody playerRgdby;  //플레이어 기본 물리
+    private IceSlidingCharacterRotate characterRotate;
 
     //사용 클래스
     IController curCtrl;
@@ -35,6 +35,8 @@ public class Player : MonoBehaviour
 
         addCtrl = new (playerRgdby, playerSpeed);
         velCtrl = new (playerRgdby, slideFactor);
+
+        characterRotate = GetComponentInChildren<IceSlidingCharacterRotate>();
     }
 
     private void Start()
@@ -45,6 +47,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         BasicMove(playerMov);
+        characterRotate.SetInput(playerMov);
     }
 
     /// <summary>
@@ -68,7 +71,6 @@ public class Player : MonoBehaviour
             playerMov = Vector2.zero;
         }
     }
-
     public void OnJumpEvent(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Started)
@@ -78,13 +80,17 @@ public class Player : MonoBehaviour
             addCtrl.Jump();
         }
     }
-
     public void OnInteractEvent(InputAction.CallbackContext context)
     {
         bool isPress;
     }
 
     //플레이어 동작 속성
+
+    /// <summary>
+    /// 받은 입력을 위치에 적용
+    /// </summary>
+    /// <param name="dir">WSAD 입력</param>
     private void BasicMove(Vector2 dir)
     {
         // WASD로 입력받아 3D로 컨버트

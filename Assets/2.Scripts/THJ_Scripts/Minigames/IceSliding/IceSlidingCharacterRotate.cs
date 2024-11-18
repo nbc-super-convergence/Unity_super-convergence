@@ -14,11 +14,11 @@ public class IceSlidingCharacterRotate : MonoBehaviour
     /// <summary>
     /// 입력한 방향대로 각도를 조절
     /// </summary>
-    /// <param name="dir">IceSlidingController의 InputControll에서 받을 거임</param>
-    public void SetInput(Vector3 dir)
+    /// <param name="dir">Controller의 Input에서 받을 거임</param>
+    public void SetInput(Vector2 dir)
     {
-        if(dir != Vector3.zero)
-            _rotationY = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+        if(dir.normalized != Vector2.zero)
+            _rotationY = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
     }
 
     /// <summary>
