@@ -25,6 +25,7 @@ public class Player : MonoBehaviour
         if (context.phase.Equals(InputActionPhase.Performed))
         {
             playerPos = context.ReadValue<Vector2>();
+
             addCtrl.Move(playerPos);
         }
         else if(context.phase.Equals(InputActionPhase.Canceled))
