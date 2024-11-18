@@ -14,8 +14,9 @@ public class StartCanvas : MonoBehaviour
         //set UIManager-Parents
         UIManager.SetParents(parents);
         //init all managers + @
-        yield return GameManager.Instance.InitApp();
-        
+        GameManager.Instance.InitApp();
+        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+
         //wait until "Game Start" input
         yield return new WaitUntil(() => GameManager.isGameStart);
         
