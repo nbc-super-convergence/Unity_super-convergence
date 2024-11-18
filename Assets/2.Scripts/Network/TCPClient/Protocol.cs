@@ -2799,16 +2799,16 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
     public enum PayloadOneofCase
     {
         None = 0,
-        IceJoinRequest = 1,
-        IceStartRequest = 2,
-        IcePlayerMoveRequest = 3,
-        IceMoveNotification = 4,
-        IcePlayerSpawnNotification = 5,
-        IceStartNotification = 6,
-        IcePlayersStateSyncNotification = 7,
-        IcePlayerDeathNotification = 8,
-        IceMapStateSyncNotification = 9,
-        IceOverNotification = 10,
+        IceJoinRequest = 101,
+        IceStartRequest,
+        IcePlayerMoveRequest,
+        IceMoveNotification,
+        IcePlayerSpawnNotification,
+        IceStartNotification,
+        IcePlayersStateSyncNotification,
+        IcePlayerDeathNotification,
+        IceMapStateSyncNotification,
+        IceOverNotification,
     }
     private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
