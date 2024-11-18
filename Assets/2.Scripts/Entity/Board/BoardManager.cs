@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using System.Collections;
 using UnityEngine;
 
 //전부 테스트 코드
-public class MapControl : Singleton<MapControl>
+public class BoardManager : Singleton<BoardManager>
 {
     //시작 지점
     public Transform startNode;
@@ -13,24 +12,27 @@ public class MapControl : Singleton<MapControl>
 
     //플레이어 리스트
     public List<PlayerTokenHandler> playerTokenHandlers = new();
-    
-
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
-    private int playerIndex = -1;
+    private int playerIndex = 0;
 
     public List<IToggle> trophyNode = new List<IToggle>();
-    private int prevTrophyIndex;
+    private int prevTrophyIndex = -1;
     public PlayerTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
     }
 
+    public int curPlayerIndex
+    {
+        get { return playerIndex; }
+    }
+
     protected override void Awake()
     {
         //임시코드
-        StartCoroutine(Test());
+        //StartCoroutine(Test());
 
         base.Awake();
         isDontDestroyOnLoad = false;
@@ -43,10 +45,10 @@ public class MapControl : Singleton<MapControl>
     }
 
     //임시코드
-    public IEnumerator Test()
-    {
-        yield return ResourceManager.Instance.Init();
-    }
+    //public IEnumerator Test()
+    //{
+    //    yield return ResourceManager.Instance.Init();
+    //}
 
     public void TestRandomDice()
     {

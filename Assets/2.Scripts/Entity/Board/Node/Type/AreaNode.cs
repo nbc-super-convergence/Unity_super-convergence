@@ -1,19 +1,14 @@
 
 using UnityEngine;
 
-public class ActionArea : IPurchase
+public class AreaNode : BaseNode,IPurchase
 {
     private int playerIndex = -1;
     [SerializeField] MeshRenderer plane;
 
-    public ActionArea(MeshRenderer plane)
+    public async override void Action()
     {
-        this.plane = plane;
-    }
-
-    public async void Action()
-    {
-        var m = MapControl.Instance;
+        var m = BoardManager.Instance;
         var p = m.Curplayer;
         int index = m.playerTokenHandlers.IndexOf(p);
 
@@ -29,15 +24,15 @@ public class ActionArea : IPurchase
             var ui = await UIManager.Show<PurchaseNodeUI>(this, index);
         }
     }
-
     private void Damage(PlayerTokenData p)
     {
+        //임시 주석
         //p.hp -= 0;
     }
 
     public void Purchase(int index)
     {
         playerIndex = index;
-        plane.material = MapControl.Instance.materials[index];
+        plane.material = BoardManager.Instance.materials[index];
     }
 }

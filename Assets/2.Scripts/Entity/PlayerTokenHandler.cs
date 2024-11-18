@@ -10,13 +10,12 @@ public class PlayerTokenHandler : MonoBehaviour
     private IBoardNode curNode; //현재 위치한 노드
     public PlayerTokenData data;
 
-
-    [field:SerializeField] public Queue<Transform> queue { get; private set; }
+    public Queue<Transform> queue { get; private set; }
 
     private void Awake()
     {
         queue = new();
-        Transform node = MapControl.Instance.startNode;
+        Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
     }
 
@@ -83,9 +82,9 @@ public class PlayerTokenHandler : MonoBehaviour
 
     private void Enqueue(int num)
     {
-        for (int i = 0; i < num; i++,--dice)
+        for (int i = 0; i < num; i++,dice--)
         {
-            if (curNode.TryRunNextNode(out Transform node))
+            if (curNode.TryGetNode(out Transform node))
                 SetNode(node);
             else
                 break;

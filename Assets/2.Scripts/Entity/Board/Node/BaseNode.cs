@@ -1,43 +1,41 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseNode : MonoBehaviour, IBoardNode
+public class BaseNode : MonoBehaviour, IBoardNode,IAction
 {
-    public List<Transform> nodes => nextNode;
-    public List<Transform> nextNode = new();
+    public List<Transform> nodes = new();
     public BoardArrow arrowPrefab;
 
     private List<GameObject> arrows;
 
     private void Awake()
     {
-        if (nextNode.Count > 1)
+        if (nodes.Count > 1)
         {
             CreateArrow();
             ActiveArrow(false);
         }
     }
 
-    public bool TryRunNextNode(out Transform node)
+    public virtual bool TryGetNode(out Transform node)
     {
         node = transform;
 
-        if (nextNode.Count > 1)
+        if (nodes.Count > 1)
         {
-            StartCoroutine(ArrivePlayer(() =>ActiveArrow(true)));
+            StartCoroutine(ArrivePlayer());
             return false;
         }
         else
-            node = nextNode[0];
+            node = nodes[0];
 
         return true;
     }
 
-    protected IEnumerator ArrivePlayer(Action action)
+    protected IEnumerator ArrivePlayer()
     {
-        Transform p = MapControl.Instance.Curplayer.transform;
+        Transform p = BoardManager.Instance.Curplayer.transform;
 
         while(true)
         {
@@ -47,7 +45,7 @@ public class BaseNode : MonoBehaviour, IBoardNode
             yield return null;
         }
 
-        action?.Invoke();
+        Action();
     }
 
     private void ActiveArrow(bool active)
@@ -56,21 +54,26 @@ public class BaseNode : MonoBehaviour, IBoardNode
             g.SetActive(active);
     }
 
-    private void CreateArrow()
+    private async void CreateArrow()
     {
         arrows = new();
 
-        for (int i = 0; i < nextNode.Count; i++)
+        for (int i = 0; i < nodes.Count; i++)
         {
-            Vector3 pos = (nextNode[i].transform.position - transform.position) / 2;
+            Vector3 pos = (nodes[i].transform.position - transform.position) / 2;
             float angle = Mathf.Atan2(pos.z, pos.x) * Mathf.Rad2Deg;
             float dX = arrowPrefab.transform.localEulerAngles.x;
 
             BoardArrow a = Instantiate(arrowPrefab, transform.position + pos, Quaternion.Euler(dX, -angle + dX, 0));
             arrows.Add(a.gameObject);
-            a.SetNode(nextNode[i]);
+            a.SetNode(nodes[i]);
 
             a.OnEvent += () => ActiveArrow(false);
         }
+    }
+
+    public virtual void Action()
+    {
+        ActiveArrow(true);
     }
 }

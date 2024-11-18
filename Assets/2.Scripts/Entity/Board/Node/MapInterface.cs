@@ -4,10 +4,8 @@ using UnityEngine;
 public interface IBoardNode
 {
     public Transform transform { get; }
-    //다음 노드들 저장
-    public List<Transform> nodes { get; }
 
-    bool TryRunNextNode(out Transform node);
+    bool TryGetNode(out Transform node);
 }
 
 public interface IAction

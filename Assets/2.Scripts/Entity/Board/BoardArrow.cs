@@ -28,7 +28,7 @@ public class BoardArrow : MonoBehaviour
     {
         OnEvent?.Invoke();
 
-        PlayerTokenHandler p = MapControl.Instance.Curplayer;
+        PlayerTokenHandler p = BoardManager.Instance.Curplayer;
         p.SetNode(targetNode,true);
         p.GetDice(0);
     }
