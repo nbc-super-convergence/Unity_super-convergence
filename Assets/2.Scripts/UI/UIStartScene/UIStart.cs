@@ -14,13 +14,12 @@ public class UIStart : UIBase
     [SerializeField]
     private TextMeshProUGUI currentVersion;
     [SerializeField]
-    private bool isFirst = true;
+    public bool isFirst = true;
 
-    [SerializeField]
     private TMP_InputField inputFieldPlayerID;
-    [SerializeField] private string strPlayerID;
+    private string strPlayerID;
     [SerializeField] private TextMeshProUGUI currentPlayerID;
-    public int playerID;
+    private int playerID;
 
     private string targetScene = "IceBoard";
     private string logoKey = "temp_super_convergence";
@@ -86,8 +85,7 @@ public class UIStart : UIBase
 
         if (isFirst)
         {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
+            DestroyUIStart();
         }
     }
     private void QuitProgram()
@@ -142,5 +140,14 @@ public class UIStart : UIBase
         playerID = int.Parse(strPlayerID);
 
         currentPlayerID.text = playerID.ToString();
+    }
+
+    public void DestroyUIStart()
+    {
+        if (isFirst)
+        {
+            gameObject.SetActive(false);
+            Destroy(gameObject);
+        }
     }
 }
