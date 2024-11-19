@@ -9,18 +9,13 @@ using static GamePacket;
 public class UIStart : UIBase
 {
     public Image logoImg;
-    [SerializeField]
-    private Button[] btnStart;
-    [SerializeField]
-    private TextMeshProUGUI currentVersion;
-    [SerializeField]
-    private bool isFirst = true;
+    [SerializeField] private Button[] btnStart;
+    [SerializeField] private TextMeshProUGUI currentVersion;
 
-    [SerializeField]
     private TMP_InputField inputFieldPlayerID;
-    [SerializeField] private string strPlayerID;
+    private string strPlayerID;
     [SerializeField] private TextMeshProUGUI currentPlayerID;
-    public int playerID;
+    private int playerID;
 
     private string targetScene = "IceBoard";
     private string logoKey = "temp_super_convergence";
@@ -30,16 +25,18 @@ public class UIStart : UIBase
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         InitBtn();
-        LoadLogoImage();
+        Init();
         GetCurrentVersion();
 
         inputFieldPlayerID = GetComponentInChildren<TMP_InputField>();
     }
 
-    private async void LoadLogoImage()
+    private async void Init()
     {
         Sprite img = await ResourceManager.Instance.LoadAsset<Sprite>(logoKey, eAddressableType.Texture);
         logoImg.sprite = img;
+
+        await UIManager.Show<UILogin>();
     }
 
     private void InitBtn()
@@ -82,13 +79,7 @@ public class UIStart : UIBase
     private async void OpenSettingUI()
     {       
         UIManager.Hide<UIStart>();
-        await UIManager.Show<UISetting>();
-
-        if (isFirst)
-        {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
+        await UIManager.Show<UISetting>();        
     }
     private void QuitProgram()
     {
