@@ -7,6 +7,8 @@ public class Player : MonoBehaviour
     private Rigidbody playerRgdby;  //플레이어 기본 물리
     public Animator animator { get; private set; }  //캐릭터 애니메이터
     private CharacterRotate characterRotate;
+    private PlayerHealth health;
+    private IceSlidingDamage damage;
 
     //사용 클래스
     IController curCtrl;
@@ -32,6 +34,9 @@ public class Player : MonoBehaviour
         playerRgdby = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         characterRotate = GetComponentInChildren<CharacterRotate>();
+        health = GetComponentInChildren<PlayerHealth>();
+
+        damage = gameObject.AddComponent<IceSlidingDamage>();
 
         //애니메이션 상태
         animState = new(this);
@@ -60,17 +65,19 @@ public class Player : MonoBehaviour
         if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Damage")))
         {
             //IsDamage = true;    //데미지 발생
-            if (collision.gameObject.name.Equals("20001"))   //이거는 나중에 ID로 받을 예정임
-            {
-                //튕겨나가기
-                BounceOut(collision);
-
-                //0.2초간 스턴
-                //_damage.GetStun(2f);
-            }
 
             //데미지 처리
-            //StartCoroutine(_damage.DamageDelay(1));
+            StartCoroutine(damage.DamageDelay(1));
+        }
+
+        //가운데 장애물
+        if (collision.gameObject.name.Equals("20001"))   //이거는 나중에 ID로 받을 예정임
+        {
+            //튕겨나가기
+            BounceOut(collision);
+
+            //0.2초간 스턴
+            //_damage.GetStun(2f);
         }
     }
     private void OnCollisionExit(Collision collision)
