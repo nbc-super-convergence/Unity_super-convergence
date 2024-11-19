@@ -16,7 +16,8 @@ public class UIDEBUGER : MonoBehaviour
 
     private async void TestCode()
     {
-        await UIManager.Show<UIError>("abcv");
+        await UIManager.Show<UIError>();
+        UIManager.Get<UIError>().SetErrorMessage(1);
     }
     private async void TestCode2()
     {

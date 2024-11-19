@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57513c10db8890d46a1ce4588d973db4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isActiveInCreated: 1
+  isActiveInCreated: 0
   isDestroyAtClosed: 1
   uiPosition: 3
   errorMessage: {fileID: 4713071759159138086}
