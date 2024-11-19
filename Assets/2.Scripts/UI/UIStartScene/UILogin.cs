@@ -20,7 +20,11 @@ public class UILogin : MonoBehaviour
     private WaitForSeconds errorSeconds = new WaitForSeconds(2f);
 
 
-    public UIStart uiStart;
+    private void OnEnable()
+    {
+        errorMessage.text = "";
+    }
+
 
     #region Button
     // TODO:: 서버로 로그인패킷 보내고 성공 리스폰스 받기.
@@ -31,15 +35,7 @@ public class UILogin : MonoBehaviour
 
     public async void ButtonRegister()
     {
-        // TODO:: 직접 참조하지 않고 UIManager를 통하도록 바꾸기.
-        if(uiStart.isFirst)
-        {
-            uiStart.DestroyUIStart();
-        }
-        else
-        {
-            UIManager.Hide<UIStart>();
-        }
+        UIManager.Hide<UIStart>();
         await UIManager.Show<UIRegister>();
     }
     #endregion

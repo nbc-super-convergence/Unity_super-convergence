@@ -9,12 +9,8 @@ using static GamePacket;
 public class UIStart : UIBase
 {
     public Image logoImg;
-    [SerializeField]
-    private Button[] btnStart;
-    [SerializeField]
-    private TextMeshProUGUI currentVersion;
-    [SerializeField]
-    public bool isFirst = true;
+    [SerializeField] private Button[] btnStart;
+    [SerializeField] private TextMeshProUGUI currentVersion;
 
     private TMP_InputField inputFieldPlayerID;
     private string strPlayerID;
@@ -81,12 +77,7 @@ public class UIStart : UIBase
     private async void OpenSettingUI()
     {       
         UIManager.Hide<UIStart>();
-        await UIManager.Show<UISetting>();
-
-        if (isFirst)
-        {
-            DestroyUIStart();
-        }
+        await UIManager.Show<UISetting>();        
     }
     private void QuitProgram()
     {
@@ -140,14 +131,5 @@ public class UIStart : UIBase
         playerID = int.Parse(strPlayerID);
 
         currentPlayerID.text = playerID.ToString();
-    }
-
-    public void DestroyUIStart()
-    {
-        if (isFirst)
-        {
-            gameObject.SetActive(false);
-            Destroy(gameObject);
-        }
     }
 }

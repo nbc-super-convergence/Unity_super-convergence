@@ -3066,7 +3066,7 @@ MonoBehaviour:
   - {fileID: 1697959469009794244}
   - {fileID: 8625977580638767370}
   currentVersion: {fileID: 4226280690079912895}
-  isFirst: 0
+  isFirst: 1
   currentPlayerID: {fileID: 3845003366126675329}
 --- !u!1 &6261715603264794797
 GameObject:
