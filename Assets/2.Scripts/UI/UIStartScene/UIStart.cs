@@ -25,16 +25,18 @@ public class UIStart : UIBase
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         InitBtn();
-        LoadLogoImage();
+        Init();
         GetCurrentVersion();
 
         inputFieldPlayerID = GetComponentInChildren<TMP_InputField>();
     }
 
-    private async void LoadLogoImage()
+    private async void Init()
     {
         Sprite img = await ResourceManager.Instance.LoadAsset<Sprite>(logoKey, eAddressableType.Texture);
         logoImg.sprite = img;
+
+        await UIManager.Show<UILogin>();
     }
 
     private void InitBtn()

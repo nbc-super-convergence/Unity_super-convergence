@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UILogin : MonoBehaviour
+public class UILogin : UIBase
 {
     public static bool IsSuccessLogin;
 
@@ -20,27 +20,30 @@ public class UILogin : MonoBehaviour
     private WaitForSeconds errorSeconds = new WaitForSeconds(2f);
 
 
-    private void OnEnable()
+    public override void Opened(object[] param)
     {
         errorMessage.text = "";
     }
 
 
-    #region Button
-    // TODO:: 서버로 로그인패킷 보내고 성공 리스폰스 받기.
-    public void ButtonLogin()
+    private async void Login()
     {
-        StartCoroutine(Error());
+        // TODO:: 서버로 로그인패킷 보내고 성공/실패 리스폰스 받기.
+        if(IsSuccessLogin) 
+        {
+            // 로그인 입력화면 비활성화
+            UIManager.Hide<UILogin>();
+            // 로그아웃버튼 활성화
+            await UIManager.Show<UILogout>();
+        }
+        else
+        {
+            StartCoroutine(FailLogin());
+            return;
+        }
     }
 
-    public async void ButtonRegister()
-    {
-        UIManager.Hide<UIStart>();
-        await UIManager.Show<UIRegister>();
-    }
-    #endregion
-
-    private IEnumerator Error()
+    private IEnumerator FailLogin()
     {
         sbError.AppendLine($"아직 미구현");
         errorMessage.text = sbError.ToString();
@@ -50,4 +53,19 @@ public class UILogin : MonoBehaviour
         errorMessage.text = sbError.ToString();
         buttonLogin.interactable = true;
     }
+
+
+    #region Button
+    public void ButtonLogin()
+    {
+        Login();
+    }
+
+    public async void ButtonRegister()
+    {
+        UIManager.Hide<UIStart>();
+        await UIManager.Show<UIRegister>();
+    }
+    #endregion
+    
 }
