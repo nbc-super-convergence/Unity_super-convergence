@@ -1,35 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+public interface IAnimation
+{
+    public void Start();
+    public void End();
+}
 
 public abstract class AnimState
 {
-    public abstract void AnimStart();
-}
+    protected IAnimation curAnim;
 
-
-public class Idle : AnimState
-{
-    public override void AnimStart()
+    public void ChangeAnimation(IAnimation curAnim)
     {
-
+        this.curAnim?.End();
+        this.curAnim = curAnim;
+        this.curAnim?.Start();
     }
-}
-
-public class Move : AnimState
-{
-    public override void AnimStart()
-    {
-
-    }
-
-}
-
-public class Jump : AnimState
-{
-    public override void AnimStart()
-    {
-
-    }
-
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class IceSlidingCharacterRotate : MonoBehaviour
+public class CharacterRotate : MonoBehaviour
 {
     [SerializeField] private float _rotationY = 0f; //시작할 때 초기 앵글부터 잡고
 
