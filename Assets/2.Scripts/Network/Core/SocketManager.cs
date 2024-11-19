@@ -13,62 +13,30 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     //TODO: 함수의 이름은 반드시 PayloadOneOfCase Enum과 맞출 것.
     //TODO: 인자는 GamePacket gamePacket.
 
+    //나의 접속 Send.
     public void IceJoinRequest(GamePacket gamePacket)
     {
         var response = gamePacket.IceJoinRequest;
     }
 
-    public void IceStartRequest(GamePacket gamePacket)
-    {
-        var response = gamePacket.IceStartRequest;
-    }
-
-    public void IcePlayerMoveRequest(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerMoveRequest;
-    }
-
-    //다른 플레이어 움직임
-    public void IceMoveNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IceMoveNotification;
-        
-    }
-
-    //다른 플레이어 스폰
+    //다른 플레이어 스폰 Receive.
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
     }
 
-    //게임 시작 (나중에 구현)
-    public void IceStartNotification(GamePacket gamePacket)
+    //나의 플레이어 움직임 Send.
+    public void IcePlayerMoveRequest(GamePacket gamePacket)
     {
-        var response = gamePacket.IceStartNotification;
+        var response = gamePacket.IcePlayerMoveRequest;
     }
 
-    //애니메이션 반영
-    public void IcePlayersStateSyncNotification(GamePacket gamePacket)
+    //다른 플레이어 움직임 Receive.
+    public void IcePlayerMoveNotification(GamePacket gamePacket)
     {
-        var response = gamePacket.IcePlayersStateSyncNotification;
+        var response = gamePacket.IcePlayerMoveNotification;
+        
     }
 
-    //플레이어 사망 이벤트
-    public void IcePlayerDeathNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerDeathNotification;
-    }
-
-    //맵 상태 이벤트(변경 없으면 유효성, 있으면 변경)
-    public void IceMapStateSyncNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IceMapStateSyncNotification;
-    }
-
-    //Ice 미니게임 종료
-    public void IceOverNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IceOverNotification;
-    }
-
+    
 }
