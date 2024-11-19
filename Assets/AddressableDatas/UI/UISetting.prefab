@@ -518,7 +518,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 3
+  uiPosition: 1
   buttons:
   - {fileID: 585063588405545851}
   - {fileID: 1908642868420971338}
