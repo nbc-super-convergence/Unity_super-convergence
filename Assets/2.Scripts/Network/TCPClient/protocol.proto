@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-message Position {
+message Vector {
     float x = 1; 
     float y = 2; 
     float z = 3; 
@@ -12,62 +12,39 @@ enum State {
     DIE = 2;
 }
 
+// 게임 참가 
 message C2S_IceJoinRequest {
-    int32 playerId = 1; 
+
 }
 
+// 플레이어 이동 
 message C2S_IcePlayerMoveRequest {
     int32 playerId = 1; 
-    int32 hp = 2;
-    Position position = 3; 
-    State state = 4; 
+    Vector position = 2; 
+    Vector vector = 3;
+    float rotation = 4;
+    State state = 5; 
 }
 
-message C2S_IceStartRequest {
+// 플레이어 스폰 위치 
+message S2C_IcePlayerSpawnNotification  {
     int32 playerId = 1; 
+    int32 playerType = 2;
+    Vector position = 3; 
+    Vector vector = 4; 
+    float rotation = 5;
 }
 
-message S2C_IceMoveNotification {
-    int32 playerId = 1; 
-    int32 gameType = 2; 
-}
+// 플레이어들 위치 알림 
+message S2C_IcePlayerMoveNotification {
+    repeated PlayerData players = 1;
 
-message S2C_IcePlayerSpawnNotification {
-    int32 playerId = 1; 
-    Position position = 2; 
-    int32 playerType = 3;
-}
-
-message S2C_IceStartNotification {
+    message PlayerData {
         int32 playerId = 1; 
-}
-
-message S2C_IcePlayersStateSyncNotification {
-    repeated PlayerInfo players = 1;
-
-    message PlayerInfo {
-        int32 playerId = 1; 
-        Position position = 2; 
-        int32 hp = 3; 
-        State state = 4; 
-    }
-}
-
-message S2C_IcePlayerDeathNotification {
-    int32 playerId = 1; 
-}
-
-message S2C_IceMapStateSyncNotification {
-    int32 scale = 1;
-}
-
-message S2C_IceOverNotification {
-    repeated Rank ranks = 1;
-    int32 endTime = 2; 
-
-    message Rank {
-        int32 playerId = 1;
-        int32 rank = 2; 
+        Vector position = 2; 
+        Vector vector = 3; 
+        float rotation = 4;
+        State state = 5;
     }
 }
 
@@ -75,15 +52,10 @@ message GamePacket {
     oneof payload {
 
         C2S_IceJoinRequest iceJoinRequest = 1;
-        C2S_IceStartRequest iceStartRequest = 2;
         C2S_IcePlayerMoveRequest icePlayerMoveRequest = 3; 
         
-        S2C_IceMoveNotification iceMoveNotification = 4;
-        S2C_IcePlayerSpawnNotification icePlayerSpawnNotification = 5;
-        S2C_IceStartNotification iceStartNotification = 6;
-        S2C_IcePlayersStateSyncNotification icePlayersStateSyncNotification = 7;
-        S2C_IcePlayerDeathNotification icePlayerDeathNotification = 8;
-        S2C_IceMapStateSyncNotification iceMapStateSyncNotification = 9;
-        S2C_IceOverNotification iceOverNotification = 10;
+        S2C_IcePlayerSpawnNotification icePlayerSpawnNotification = 5; 
+        S2C_IcePlayerMoveNotification icePlayerMoveNotification = 11; 
+
     }
 }
