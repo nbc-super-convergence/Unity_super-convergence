@@ -9,6 +9,8 @@ public class UIRegister : UIBase
 {
     [SerializeField] private TMP_InputField inputFieldID;
     [SerializeField] private TMP_InputField inputFieldPassword;
+    [SerializeField] private TMP_InputField inputFieldPasswordConfirm;
+    [SerializeField] private TMP_InputField inputFieldNickname;
 
     [SerializeField] private Button buttonRegister;
     [SerializeField] private Button buttonBack;
@@ -37,6 +39,8 @@ public class UIRegister : UIBase
 
             string inputID = inputFieldID.text;
             string inputPassword = inputFieldPassword.text;
+            string inputpasswordConfirm = inputFieldPasswordConfirm.text;
+            string inputNickname = inputFieldNickname.text;
 
             //GamePacket packet = new();
             //packet.AAAA = new()
