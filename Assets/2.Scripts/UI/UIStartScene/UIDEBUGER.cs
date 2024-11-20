@@ -12,6 +12,12 @@ public class UIDEBUGER : MonoBehaviour
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         ShowUI();
         //Destroy(gameObject);
+
+        if(FindObjectOfType<UIStarter>())
+        {
+            GameObject starter = FindObjectOfType<UIStarter>().gameObject;
+            starter.SetActive(false);
+        }
     }
 
     private async void ShowUI()

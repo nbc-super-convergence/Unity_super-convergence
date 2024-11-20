@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 /// <summary>
@@ -29,6 +31,12 @@ public class UIRoom : UIBase
 
     [SerializeField] private TMP_Text count;
     [SerializeField] private GameObject invisibleWall;
+
+    [SerializeField] private TMP_Dropdown ddMaxTurn;
+    private int[] turnOptions = { 10, 15, 20, 25, 30 };
+    [Range(0, 4)] public int maxTurnValue = 0;
+    private int maxTurn;
+
     public override void Opened(object[] param)
     {
         Init();
@@ -47,10 +55,11 @@ public class UIRoom : UIBase
 
     private void Init()    //동적생성하면 Start가 Opened보다 늦게 실행된다.
     {
+        SetIsHost();    // 호스트가 아닌 경우를 Test해보려면 이 줄을 주석처리하기.
         buttonReady.onClick.AddListener(OnReadyButtonClick);
         onUserReadyChanged += TryActiveStartButton;
 
-        SetIsHost();    //ReadyButton을 Test해보려면 SetIsHost(); 를 주석처리하기.
+        SetDropdown();
         SetUserReady(0);    // 방장은 자동 레디처리
     }
 
@@ -86,11 +95,11 @@ public class UIRoom : UIBase
             }
         }        
     }
-    
 
-#region Host
+
+    #region Host
     /// <summary>
-    /// S2C_GamePrepareNotification 를 받을 때 호출
+    /// TODO:: S2C_GamePrepareNotification 를 받을 때 호출
     /// </summary>
     /// <param name="userIndex"></param>
     public void SetUserReady(int userIndex)
@@ -134,11 +143,11 @@ public class UIRoom : UIBase
 
     private async void GameStart()
     {
-        // 서버에 게임시작 패킷 보내기
+        // TODO:: 서버에 게임시작 패킷 보내기
         //GamePacket packet = new();
         //packet.게임시작 = new()
         //{
-
+        // Maxturn = maxturn
         //};
         //SocketManager.Instance.OnSend(packet);
 
@@ -149,12 +158,20 @@ public class UIRoom : UIBase
         invisibleWall.SetActive(false);
 
 
-        // 보드씬 로드
+        // TODO:: 보드씬 로드
+        SceneManager.LoadScene("BoardScene");
     }
+
+
+
+
+
     #endregion
 
 
     #region !Host
+
+
     private async void OnReadyButtonClick()
     {
         buttonReady.interactable = false;
@@ -172,7 +189,6 @@ public class UIRoom : UIBase
                 Debug.Log("준비취소 실패");
                 buttonReady.interactable = true;
             }
-
         }
         else
         {
@@ -245,8 +261,38 @@ public class UIRoom : UIBase
 
     #endregion
 
+    #region GameSetting
+
+    private void SetDropdown()
+    {
+        if (!isHost)
+        {
+            ddMaxTurn.interactable = false;
+        }
+        else
+        {
+            ddMaxTurn.interactable = true;
+
+            maxTurn = turnOptions[maxTurnValue];
+            ddMaxTurn.options.Clear();
+            for (int i = 0; i < maxTurnValue + 1; ++i)
+            {
+                ddMaxTurn.options.Add(new TMP_Dropdown.OptionData(turnOptions[i].ToString()));
+            }
+            ddMaxTurn.onValueChanged.AddListener(OnDropdownEvent);
+        }
+    }
+    private void OnDropdownEvent(int index)
+    {
+        maxTurn = turnOptions[index];
+    }
+
+    #endregion
+
     private async void BackLobby()
     {
+        // TODO:: 방 나감 패킷 보내기
+
         UIManager.Hide<UIRoom>();
         await UIManager.Show<UILobby>();
     }
@@ -262,7 +308,6 @@ public class UIRoom : UIBase
             await Task.Delay(1000);
         }
         count.gameObject.SetActive(false);
-        //await Task.Run(() => FadeScreen.Instance.FadeOut( () => UIManager.Hide<UIFadeScreen>()) );
     }
 
     #region Button
@@ -273,6 +318,7 @@ public class UIRoom : UIBase
 
     public void ButtonStart()
     {
+        Debug.Log($"최대 턴 : {maxTurn}");
         GameStart();
     }
     
