@@ -69,10 +69,7 @@ public class UIStart : UIBase
     private void SendPacketIceJoinRequest()
     {
         GamePacket packet = new();
-        packet.IceJoinRequest = new()
-        {
-            PlayerId = playerID
-        };
+        packet.IceJoinRequest = new();
         SocketManager.Instance.OnSend(packet);
     }
 

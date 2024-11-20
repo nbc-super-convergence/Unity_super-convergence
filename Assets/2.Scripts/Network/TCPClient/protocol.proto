@@ -12,38 +12,50 @@ enum State {
     DIE = 2;
 }
 
+// 게임 참가 
 message C2S_IceJoinRequest {
-    int32 playerId = 1; //필요할까요..? 불필요하다면 저희도 굳이 안보내겠습니당
+
 }
 
-message S2C_IcePlayerSpawnNotification {
-    int32 playerId = 1;
-    Vector position = 2; //스폰 Position
-    float rotation = 3; //스폰 시 회전 방향
-    int32 playerType = 4; //p1~p4
-}
-
+// 플레이어 이동 
 message C2S_IcePlayerMoveRequest {
     int32 playerId = 1; 
-    Vector position = 2; //위치 : 유효성 검증.
-    float rotation = 3; //플레이어가 바라보는 방향 : rot y값.
-    Vector vector = 4; //움직이는 방향 + 힘.
-    State state = 5;  //애니메이션 종류.
+    Vector position = 2; 
+    Vector vector = 3;
+    float rotation = 4;
+    State state = 5; 
 }
 
-message S2C_IcePlayerMoveNotification {
+// 플레이어 스폰 위치 
+message S2C_IcePlayerSpawnNotification  {
     int32 playerId = 1; 
-    Vector position = 2; //위치 : 유효성 검증.
-    float rotation = 3; //플레이어가 바라보는 방향 : rot y값.
-    Vector vector = 4; //움직이는 방향 + 힘.
-    State state = 5;  //애니메이션 종류.
+    int32 playerType = 2;
+    Vector position = 3; 
+    Vector vector = 4; 
+    float rotation = 5;
+}
+
+// 플레이어들 위치 알림 
+message S2C_IcePlayerMoveNotification {
+    repeated PlayerData players = 1;
+
+    message PlayerData {
+        int32 playerId = 1; 
+        Vector position = 2; 
+        Vector vector = 3; 
+        float rotation = 4;
+        State state = 5;
+    }
 }
 
 message GamePacket {
     oneof payload {
-        C2S_IceJoinRequest iceJoinRequest = 101;
-        S2C_IcePlayerSpawnNotification icePlayerSpawnNotification = 102;
-        C2S_IcePlayerMoveRequest icePlayerMoveRequest = 103; 
-        S2C_IcePlayerMoveNotification icePlayerMoveNotification = 104;
+
+        C2S_IceJoinRequest iceJoinRequest = 1;
+        C2S_IcePlayerMoveRequest icePlayerMoveRequest = 3; 
+        
+        S2C_IcePlayerSpawnNotification icePlayerSpawnNotification = 5; 
+        S2C_IcePlayerMoveNotification icePlayerMoveNotification = 11; 
+
     }
 }
