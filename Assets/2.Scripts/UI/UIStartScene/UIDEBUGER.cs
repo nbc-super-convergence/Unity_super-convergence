@@ -1,9 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class UIDEBUGER : MonoBehaviour
 {
     public Button[] button;
+
+    private IEnumerator Start()
+    {
+        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+        ShowUI();
+        Destroy(gameObject);
+    }
+
+    private async void ShowUI()
+    {
+        await UIManager.Show<UIRoom>();
+    }
 
     public void ButtonTest()
     {
