@@ -13,16 +13,30 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     //TODO: 함수의 이름은 반드시 PayloadOneOfCase Enum과 맞출 것.
     //TODO: 인자는 GamePacket gamePacket.
 
-    private void LoginResponse(GamePacket gamePacket)
+    //나의 접속 Send.
+    public void IceJoinRequest(GamePacket gamePacket)
     {
-        //var response = gamePacket.LoginResponse;
-        //if (response.Success)
-        //{
-        //    if (response.MyInfo != null)
-        //    {
-        //        UserInfo.myInfo = new UserInfo(response.MyInfo);
-        //    }
-        //    UIManager.Get<PopupLogin>().OnLoginEnd(response.Success);
-        //}
+        var response = gamePacket.IceJoinRequest;
     }
+
+    //다른 플레이어 스폰 Receive.
+    public void IcePlayerSpawnNotification(GamePacket gamePacket)
+    {
+        var response = gamePacket.IcePlayerSpawnNotification;
+    }
+
+    //나의 플레이어 움직임 Send.
+    public void IcePlayerMoveRequest(GamePacket gamePacket)
+    {
+        var response = gamePacket.IcePlayerMoveRequest;
+    }
+
+    //다른 플레이어 움직임 Receive.
+    public void IcePlayerMoveNotification(GamePacket gamePacket)
+    {
+        var response = gamePacket.IcePlayerMoveNotification;
+        
+    }
+
+    
 }
