@@ -1,54 +1,82 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
-using static UnityEditor.PlayerSettings;
 
 public class Player : MonoBehaviour
 {
-    //ÄÄÆ÷³ÍÆ®
-    private Rigidbody playerRgdby;
+    //ì»´í¬ë„ŒíŠ¸
+    public Rigidbody playerRgdby { get; private set; }  //í”Œë ˆì´ì–´ ê¸°ë³¸ ë¬¼ë¦¬
+    public Animator animator { get; private set; }  //ìºë¦­í„° ì• ë‹ˆë©”ì´í„°
+    public CapsuleCollider playerCollide { get; private set; }  //í”Œë ˆì´ì–´ ì¶©ëŒ (ì£½ìœ¼ë©´ ì¶©ëŒ ë¬´ì‹œ)
+    private CharacterRotate characterRotate;
+    private PlayerHealth health;
+    private PlayerDamage damage;
 
-    //»ç¿ë Å¬·¡½º
+    //ì‚¬ìš© í´ë˜ìŠ¤
     IController curCtrl;
     private AddForceController addCtrl;
     private VelocityController velCtrl;
     private ButtonController btnCtrl = new ();
-    //AnimState
+    PlayerAnimState animState;  //AnimStateë¥¼ ëŒ€ì‹  (ìƒì†ì‹œì¼œì„œ)
 
-    //ÇÃ·¹ÀÌ¾î º¤ÅÍ
-    private Vector3 playerPos = Vector3.zero;   //ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
-    private Vector2 playerMov;   //ÇÃ·¹ÀÌ¾î Move ÀÔ·Â
+    //í”Œë ˆì´ì–´ ë²¡í„°
+    private Vector3 playerPos = Vector3.zero;   //í˜„ì¬ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
+    private Vector2 playerMoveInput;   //í”Œë ˆì´ì–´ Move ì…ë ¥
 
-    [Header("ÇÃ·¹ÀÌ¾î ¼Ó¼º")]
-    [SerializeField] private float playerSpeed = 10f; //ÀÌµ¿ ¼Óµµ
-    [SerializeField] private float slideFactor = 1f; //¹Ì²ô·¯ÁüÀÇ °¨¼Ó ºñÀ²
+    [Header("í”Œë ˆì´ì–´ ì†ì„±")]
+    [SerializeField] private float playerSpeed = 10f; //ì´ë™ ì†ë„
+    [SerializeField] private float slideFactor = 1f; //ë¯¸ë„ëŸ¬ì§ì˜ ê°ì† ë¹„ìœ¨
 
     /// <summary>
-    /// ÄÄÆ÷³ÍÆ® Á¤ÀÇ
+    /// ì»´í¬ë„ŒíŠ¸ ì •ì˜
     /// </summary>
     private void Awake()
     {
-        //¸ÕÀú ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À°í ¾Æ·¡ Å¬·¡½º »ı¼ºÀÚ·Î Àü´Ş
+        //ë¨¼ì € ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¤ê³  ì•„ë˜ í•„ìš”í•œ í´ë˜ìŠ¤ ìƒì„±ìë¡œ ì „ë‹¬
         playerRgdby = GetComponent<Rigidbody>();
+        animator = GetComponentInChildren<Animator>();
+        playerCollide = GetComponent<CapsuleCollider>();
 
+        characterRotate = GetComponentInChildren<CharacterRotate>();
+        health = GetComponentInChildren<PlayerHealth>();
+
+        damage = gameObject.AddComponent<PlayerDamage>();
+
+        //ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ
+        animState = new(this);
+
+        //Rigidbody
         addCtrl = new (playerRgdby, playerSpeed);
         velCtrl = new (playerRgdby, slideFactor);
     }
 
     private void Start()
     {
-        playerRgdby.freezeRotation = true; // RigidbodyÀÇ È¸ÀüÀ» Àá°¡ Á÷Á¢ È¸Àü Á¦¾î
+        playerRgdby.freezeRotation = true; // Rigidbodyì˜ íšŒì „ì„ ì ê°€ ì§ì ‘ íšŒì „ ì œì–´
+
+        animState.ChangeAnimation(animState.IdleAnim);  //ì• ë‹ˆë©”ì´ì…˜ ì´ˆê¸°í™”
+    }
+
+    private void Update()
+    {
+        if(!damage.IsAlive)
+        {
+            animState.Update();
+            animState.ChangeAnimation(animState.DeathAnim);
+        }
     }
 
     private void FixedUpdate()
     {
-        BasicMove(playerMov);
+        //ìƒíƒœ ì´ìƒì´ ì—†ìœ¼ë©´
+        if (damage.IsAlive && !damage.IsStun)
+        {
+            BasicMove(playerMoveInput);
+            characterRotate.SetInput(playerMoveInput);
+        }
     }
 
     /// <summary>
-    /// »óÅÂ º¯°æ
+    /// ìƒíƒœ ë³€ê²½
     /// </summary>
     /// <param name="newCtrl"></param>
     public void ChangeState(IController newCtrl)
@@ -56,45 +84,76 @@ public class Player : MonoBehaviour
         curCtrl = newCtrl;
     }
 
-    //ÄÁÆ®·Ñ·¯ ¼Ó¼º (ÀÌ°Å Å¬·¡½º µû·Î »©¾ß µÇ³ª?)
+    //ì»¨íŠ¸ë¡¤ëŸ¬ ì†ì„± (ì´ê±° í´ë˜ìŠ¤ ë”°ë¡œ ë¹¼ì•¼ ë˜ë‚˜?)
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
         if (context.phase.Equals(InputActionPhase.Performed))
         {
-            playerMov = context.ReadValue<Vector2>();
+            playerMoveInput = context.ReadValue<Vector2>();
         }
         else if(context.phase.Equals(InputActionPhase.Canceled))
         {
-            playerMov = Vector2.zero;
+            playerMoveInput = Vector2.zero;
         }
-    }
 
+        ApplyAnimation();
+    }
     public void OnJumpEvent(InputAction.CallbackContext context)
     {
-        if(context.phase == InputActionPhase.Started)
-        {
-            //Á¡ÇÁ
+        float pressAnalog = 0f; //í‚¤ë¥¼ ì–´ëŠì •ë„ ëˆ„ë¥´ê³  ìˆëŠ”ì§€
 
+        if(context.phase == InputActionPhase.Performed)
+        {
+            //ì í”„
+            pressAnalog += Time.deltaTime;
             addCtrl.Jump();
+        }
+        else if(context.phase == InputActionPhase.Canceled)
+        {
+            pressAnalog = 0f;
+        }
+    }
+    public void OnInteractEvent(InputAction.CallbackContext context)
+    {
+        switch(context.phase)
+        {
+            case InputActionPhase.Started:
+                break;
+            case InputActionPhase.Performed:
+                break;
+            case InputActionPhase.Canceled:
+                break;
         }
     }
 
-    public void OnInteractEvent(InputAction.CallbackContext context)
-    {
-        bool isPress;
-    }
-
-    //ÇÃ·¹ÀÌ¾î µ¿ÀÛ ¼Ó¼º
+    //í”Œë ˆì´ì–´ ë™ì‘ ì†ì„±
+    /// <summary>
+    /// ë°›ì€ ì…ë ¥ì„ ìœ„ì¹˜ì— ì ìš©
+    /// </summary>
+    /// <param name="dir">WSAD ì…ë ¥</param>
     private void BasicMove(Vector2 dir)
     {
-        // WASD·Î ÀÔ·Â¹Ş¾Æ 3D·Î ÄÁ¹öÆ®
+        // WASDë¡œ ì…ë ¥ë°›ì•„ 3Dë¡œ ì»¨ë²„íŠ¸
         playerPos = transform.forward * dir.y + transform.right * dir.x;
 
         
-        // IceSliding À§ÁÖ·Î ÀÛ¾÷ÇßÁö¸¸ ÀÌ°Ô ¸Â´ÂÁö ¸ğ¸£°Ú´Ù....
+        // IceSliding ìœ„ì£¼ë¡œ ì‘ì—…í–ˆì§€ë§Œ ì´ê²Œ ë§ëŠ”ì§€ ëª¨ë¥´ê² ë‹¤....
 
-        addCtrl.Move(playerPos);    //¹Ì²ô·¯Áü È¿°ú
+        addCtrl.Move(playerPos);    //ë¯¸ë„ëŸ¬ì§ íš¨ê³¼
+        velCtrl.Move(playerRgdby.velocity); // ê°ì† íš¨ê³¼
 
-        velCtrl.Move(playerRgdby.velocity); // °¨¼Ó È¿°ú
+    }
+
+    //ì• ë‹ˆë©”ì´ì…˜ ì ìš©
+    /// <summary>
+    /// ì…ë ¥ì— ë”°ë¥¸ ì• ë‹ˆë©”ì´ì…˜ ì ìš©
+    /// </summary>
+    private void ApplyAnimation()
+    {
+        //ì• ë‹ˆë©”ì´ì…˜
+        if (playerMoveInput != Vector2.zero)
+            animState.ChangeAnimation(animState.RunAnim);
+        else
+            animState.ChangeAnimation(animState.IdleAnim);
     }
 }
