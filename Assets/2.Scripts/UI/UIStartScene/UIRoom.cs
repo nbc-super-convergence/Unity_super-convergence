@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -26,6 +27,8 @@ public class UIRoom : UIBase
     [SerializeField] private UserInfo[] users= new UserInfo[4];
     private bool[] isReadyUsers = new bool[4];
 
+    [SerializeField] private TMP_Text count;
+    [SerializeField] private GameObject invisibleWall;
     public override void Opened(object[] param)
     {
         Init();
@@ -129,7 +132,7 @@ public class UIRoom : UIBase
         return true;
     }
 
-    private void GameStart()
+    private async void GameStart()
     {
         // 서버에 게임시작 패킷 보내기
         //GamePacket packet = new();
@@ -139,12 +142,19 @@ public class UIRoom : UIBase
         //};
         //SocketManager.Instance.OnSend(packet);
 
+
+
+        await CountDownAsync(3);
+        await UIManager.Show<UIFadeScreen>("FadeOut");
+        invisibleWall.SetActive(false);
+
+
         // 보드씬 로드
     }
-#endregion
+    #endregion
 
 
-#region !Host
+    #region !Host
     private async void OnReadyButtonClick()
     {
         buttonReady.interactable = false;
@@ -240,8 +250,22 @@ public class UIRoom : UIBase
         UIManager.Hide<UIRoom>();
         await UIManager.Show<UILobby>();
     }
+        
+    private async Task CountDownAsync(int countNum)
+    {
+        invisibleWall.SetActive(true);
+        count.gameObject.SetActive(true);
 
-#region Button
+        while (countNum > 0)
+        {
+            count.text = countNum--.ToString();
+            await Task.Delay(1000);
+        }
+        count.gameObject.SetActive(false);
+        //await Task.Run(() => FadeScreen.Instance.FadeOut( () => UIManager.Hide<UIFadeScreen>()) );
+    }
+
+    #region Button
     public void ButtonBack()
     {
         BackLobby();

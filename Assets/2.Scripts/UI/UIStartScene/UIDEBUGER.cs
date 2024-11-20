@@ -11,7 +11,7 @@ public class UIDEBUGER : MonoBehaviour
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         ShowUI();
-        Destroy(gameObject);
+        //Destroy(gameObject);
     }
 
     private async void ShowUI()
