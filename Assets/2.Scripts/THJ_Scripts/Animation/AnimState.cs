@@ -2,6 +2,7 @@ public interface IAnimation
 {
     public void Start();
     public void End();
+    public void Update();
 }
 
 public abstract class AnimState
@@ -13,5 +14,10 @@ public abstract class AnimState
         this.curAnim?.End();
         this.curAnim = curAnim;
         this.curAnim?.Start();
+    }
+
+    public void Update()
+    {
+        curAnim?.Update();
     }
 }

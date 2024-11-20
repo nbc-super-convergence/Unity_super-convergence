@@ -38,7 +38,7 @@ public class PlayerHealth : MonoBehaviour
     /// 변동된 HP 갱신
     /// </summary>
     /// <param name="dmg"></param>
-    public void SetDamage(int dmg)
+    public void DecreaseHP(int dmg)
     {
         PlayerHP = dmg;
         //Debug.Log(PlayerHP);

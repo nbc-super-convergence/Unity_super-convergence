@@ -20,6 +20,11 @@ public class PlayerBaseAnimation : IAnimation
         AnimationEnd(HashCode);
     }
 
+    public virtual void Update()
+    {
+
+    }
+
     protected void AnimationStart(int hashCode)
     {
         animState.Player.animator.SetBool(hashCode, true);

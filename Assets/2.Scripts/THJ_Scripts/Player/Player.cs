@@ -1,44 +1,47 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    //ÄÄÆ÷³ÍÆ®
-    private Rigidbody playerRgdby;  //ÇÃ·¹ÀÌ¾î ±âº» ¹°¸®
-    public Animator animator { get; private set; }  //Ä³¸¯ÅÍ ¾Ö´Ï¸ŞÀÌÅÍ
+    //ì»´í¬ë„ŒíŠ¸
+    public Rigidbody playerRgdby { get; private set; }  //í”Œë ˆì´ì–´ ê¸°ë³¸ ë¬¼ë¦¬
+    public Animator animator { get; private set; }  //ìºë¦­í„° ì• ë‹ˆë©”ì´í„°
+    public CapsuleCollider playerCollide { get; private set; }  //í”Œë ˆì´ì–´ ì¶©ëŒ (ì£½ìœ¼ë©´ ì¶©ëŒ ë¬´ì‹œ)
     private CharacterRotate characterRotate;
     private PlayerHealth health;
-    private IceSlidingDamage damage;
+    private PlayerDamage damage;
 
-    //»ç¿ë Å¬·¡½º
+    //ì‚¬ìš© í´ë˜ìŠ¤
     IController curCtrl;
     private AddForceController addCtrl;
     private VelocityController velCtrl;
     private ButtonController btnCtrl = new ();
-    PlayerAnimState animState;  //AnimState¸¦ ´ë½Å (»ó¼Ó½ÃÄÑ¼­)
+    PlayerAnimState animState;  //AnimStateë¥¼ ëŒ€ì‹  (ìƒì†ì‹œì¼œì„œ)
 
-    //ÇÃ·¹ÀÌ¾î º¤ÅÍ
-    private Vector3 playerPos = Vector3.zero;   //ÇöÀç ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
-    private Vector2 playerMoveInput;   //ÇÃ·¹ÀÌ¾î Move ÀÔ·Â
+    //í”Œë ˆì´ì–´ ë²¡í„°
+    private Vector3 playerPos = Vector3.zero;   //í˜„ì¬ í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
+    private Vector2 playerMoveInput;   //í”Œë ˆì´ì–´ Move ì…ë ¥
 
-    [Header("ÇÃ·¹ÀÌ¾î ¼Ó¼º")]
-    [SerializeField] private float playerSpeed = 10f; //ÀÌµ¿ ¼Óµµ
-    [SerializeField] private float slideFactor = 1f; //¹Ì²ô·¯ÁüÀÇ °¨¼Ó ºñÀ²
+    [Header("í”Œë ˆì´ì–´ ì†ì„±")]
+    [SerializeField] private float playerSpeed = 10f; //ì´ë™ ì†ë„
+    [SerializeField] private float slideFactor = 1f; //ë¯¸ë„ëŸ¬ì§ì˜ ê°ì† ë¹„ìœ¨
 
     /// <summary>
-    /// ÄÄÆ÷³ÍÆ® Á¤ÀÇ
+    /// ì»´í¬ë„ŒíŠ¸ ì •ì˜
     /// </summary>
     private void Awake()
     {
-        //¸ÕÀú ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿À°í ¾Æ·¡ ÇÊ¿äÇÑ Å¬·¡½º »ı¼ºÀÚ·Î Àü´Ş
+        //ë¨¼ì € ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜¤ê³  ì•„ë˜ í•„ìš”í•œ í´ë˜ìŠ¤ ìƒì„±ìë¡œ ì „ë‹¬
         playerRgdby = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
+        playerCollide = GetComponent<CapsuleCollider>();
+
         characterRotate = GetComponentInChildren<CharacterRotate>();
         health = GetComponentInChildren<PlayerHealth>();
 
-        damage = gameObject.AddComponent<IceSlidingDamage>();
+        damage = gameObject.AddComponent<PlayerDamage>();
 
-        //¾Ö´Ï¸ŞÀÌ¼Ç »óÅÂ
+        //ì• ë‹ˆë©”ì´ì…˜ ìƒíƒœ
         animState = new(this);
 
         //Rigidbody
@@ -48,49 +51,32 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        playerRgdby.freezeRotation = true; // RigidbodyÀÇ È¸ÀüÀ» Àá°¡ Á÷Á¢ È¸Àü Á¦¾î
+        playerRgdby.freezeRotation = true; // Rigidbodyì˜ íšŒì „ì„ ì ê°€ ì§ì ‘ íšŒì „ ì œì–´
 
-        animState.ChangeAnimation(animState.IdleAnim);  //¾Ö´Ï¸ŞÀÌ¼Ç ÃÊ±âÈ­
+        animState.ChangeAnimation(animState.IdleAnim);  //ì• ë‹ˆë©”ì´ì…˜ ì´ˆê¸°í™”
+    }
+
+    private void Update()
+    {
+        if(!damage.IsAlive)
+        {
+            animState.Update();
+            animState.ChangeAnimation(animState.DeathAnim);
+        }
     }
 
     private void FixedUpdate()
     {
-        BasicMove(playerMoveInput);
-        characterRotate.SetInput(playerMoveInput);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Æ¯Á¤ À§Ä¡ ¾È¿¡ ÀÖÀ¸¸é µ¥¹ÌÁö °¨¼Ò
-        if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Damage")))
+        //ìƒíƒœ ì´ìƒì´ ì—†ìœ¼ë©´
+        if (damage.IsAlive && !damage.IsStun)
         {
-            //IsDamage = true;    //µ¥¹ÌÁö ¹ß»ı
-
-            //µ¥¹ÌÁö Ã³¸®
-            StartCoroutine(damage.DamageDelay(1));
-        }
-
-        //°¡¿îµ¥ Àå¾Ö¹°
-        if (collision.gameObject.name.Equals("20001"))   //ÀÌ°Å´Â ³ªÁß¿¡ ID·Î ¹ŞÀ» ¿¹Á¤ÀÓ
-        {
-            //Æ¨°Ü³ª°¡±â
-            BounceOut(collision);
-
-            //0.2ÃÊ°£ ½ºÅÏ
-            //_damage.GetStun(2f);
-        }
-    }
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Damage")))
-        {
-            //IsDamage = false;
-            //StopCoroutine(_damage.DamageDelay(1));  //ÄÚ·çÆ¾ ³¡³»±â
+            BasicMove(playerMoveInput);
+            characterRotate.SetInput(playerMoveInput);
         }
     }
 
     /// <summary>
-    /// »óÅÂ º¯°æ
+    /// ìƒíƒœ ë³€ê²½
     /// </summary>
     /// <param name="newCtrl"></param>
     public void ChangeState(IController newCtrl)
@@ -98,7 +84,7 @@ public class Player : MonoBehaviour
         curCtrl = newCtrl;
     }
 
-    //ÄÁÆ®·Ñ·¯ ¼Ó¼º (ÀÌ°Å Å¬·¡½º µû·Î »©¾ß µÇ³ª?)
+    //ì»¨íŠ¸ë¡¤ëŸ¬ ì†ì„± (ì´ê±° í´ë˜ìŠ¤ ë”°ë¡œ ë¹¼ì•¼ ë˜ë‚˜?)
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
         if (context.phase.Equals(InputActionPhase.Performed))
@@ -114,11 +100,11 @@ public class Player : MonoBehaviour
     }
     public void OnJumpEvent(InputAction.CallbackContext context)
     {
-        float pressAnalog = 0f; //Å°¸¦ ¾î´ÀÁ¤µµ ´©¸£°í ÀÖ´ÂÁö
+        float pressAnalog = 0f; //í‚¤ë¥¼ ì–´ëŠì •ë„ ëˆ„ë¥´ê³  ìˆëŠ”ì§€
 
         if(context.phase == InputActionPhase.Performed)
         {
-            //Á¡ÇÁ
+            //ì í”„
             pressAnalog += Time.deltaTime;
             addCtrl.Jump();
         }
@@ -140,60 +126,34 @@ public class Player : MonoBehaviour
         }
     }
 
-    //ÇÃ·¹ÀÌ¾î µ¿ÀÛ ¼Ó¼º
+    //í”Œë ˆì´ì–´ ë™ì‘ ì†ì„±
     /// <summary>
-    /// ¹ŞÀº ÀÔ·ÂÀ» À§Ä¡¿¡ Àû¿ë
+    /// ë°›ì€ ì…ë ¥ì„ ìœ„ì¹˜ì— ì ìš©
     /// </summary>
-    /// <param name="dir">WSAD ÀÔ·Â</param>
+    /// <param name="dir">WSAD ì…ë ¥</param>
     private void BasicMove(Vector2 dir)
     {
-        // WASD·Î ÀÔ·Â¹Ş¾Æ 3D·Î ÄÁ¹öÆ®
+        // WASDë¡œ ì…ë ¥ë°›ì•„ 3Dë¡œ ì»¨ë²„íŠ¸
         playerPos = transform.forward * dir.y + transform.right * dir.x;
 
         
-        // IceSliding À§ÁÖ·Î ÀÛ¾÷ÇßÁö¸¸ ÀÌ°Ô ¸Â´ÂÁö ¸ğ¸£°Ú´Ù....
+        // IceSliding ìœ„ì£¼ë¡œ ì‘ì—…í–ˆì§€ë§Œ ì´ê²Œ ë§ëŠ”ì§€ ëª¨ë¥´ê² ë‹¤....
 
-        addCtrl.Move(playerPos);    //¹Ì²ô·¯Áü È¿°ú
-        velCtrl.Move(playerRgdby.velocity); // °¨¼Ó È¿°ú
+        addCtrl.Move(playerPos);    //ë¯¸ë„ëŸ¬ì§ íš¨ê³¼
+        velCtrl.Move(playerRgdby.velocity); // ê°ì† íš¨ê³¼
 
     }
 
-    //¾Ö´Ï¸ŞÀÌ¼Ç Àû¿ë
+    //ì• ë‹ˆë©”ì´ì…˜ ì ìš©
     /// <summary>
-    /// ÀÔ·Â¿¡ µû¸¥ ¾Ö´Ï¸ŞÀÌ¼Ç Àû¿ë
+    /// ì…ë ¥ì— ë”°ë¥¸ ì• ë‹ˆë©”ì´ì…˜ ì ìš©
     /// </summary>
     private void ApplyAnimation()
     {
-        //¾Ö´Ï¸ŞÀÌ¼Ç
+        //ì• ë‹ˆë©”ì´ì…˜
         if (playerMoveInput != Vector2.zero)
             animState.ChangeAnimation(animState.RunAnim);
         else
             animState.ChangeAnimation(animState.IdleAnim);
-    }
-
-    //ÀÌ°Íµµ µû·Î »©¾ßµÊ
-    /// <summary>
-    /// Æ¨°Ü³ª°¡´Â È¿°ú
-    /// </summary>
-    /// <param name="collision">OnCollision¿¡¼­</param>
-    private void BounceOut(Collision collision)
-    {
-        float bounceForce = 5f; // Æ¨°Ü³ª°¡´Â ÈûÀÇ ¼¼±â  (60ÃÊ Áö³ª¸é °­µµ°¡ °­ÇØÁö°Ô)
-                                // Ãæµ¹ ÁöÁ¡ÀÇ ¹ı¼± º¤ÅÍ °¡Á®¿À±â (Ã¹ ¹øÂ° Á¢ÃË ÁöÁ¡ÀÇ ¹ı¼±)
-        Vector3 collisionNormal = collision.GetContact(0).normal;
-
-        // »óÇÏÁÂ¿ì ¹æÇâ Áß °¡Àå °¡±î¿î ¹æÇâÀ» bounceDirectionÀ¸·Î ¼³Á¤
-        Vector3 bounceDirection = new Vector3(
-            Mathf.Round(collisionNormal.x),
-            Mathf.Round(collisionNormal.y),
-            Mathf.Round(collisionNormal.z)
-        );
-
-        // ¹æÇâÀÌ ¼³Á¤µÇ¾úÀ¸¸é Æ¨°Ü³ª°¡´Â Èû Àû¿ë
-        if (bounceDirection != Vector3.zero)
-        {
-            playerRgdby.velocity = Vector3.zero; // ±âÁ¸ ¼Óµµ ÃÊ±âÈ­
-            playerRgdby.AddForce(bounceDirection * bounceForce, ForceMode.VelocityChange);
-        }
     }
 }

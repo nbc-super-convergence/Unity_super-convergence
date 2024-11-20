@@ -29,7 +29,7 @@ public class IceSlidingDamage : MonoBehaviour
     {
         //while (_iceBase.IsDamage)
         {
-            iceHealth.SetDamage(dmg);
+            iceHealth.DecreaseHP(dmg);
             NowAlive = iceHealth.PlayerHP > 0;
             yield return _damageDelay;
             //Debug.Log(PlayerHP);
