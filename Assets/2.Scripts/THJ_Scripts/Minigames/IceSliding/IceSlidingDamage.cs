@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(IceSlidingHealth))]
 public class IceSlidingDamage : MonoBehaviour
 {
     //연결 컴포넌트
-    private IceSlidingBase _iceBase;
-    private IceSlidingHealth _iceHealth;
+    private Player player;
+    private PlayerHealth iceHealth;
 
     private WaitForSeconds _damageDelay; //딜레이를 주기 위한 대기
     private float _damageSecond = 1f;    //데미지 대기 시간
@@ -16,8 +15,8 @@ public class IceSlidingDamage : MonoBehaviour
 
     private void Awake()
     {
-        _iceBase = GetComponent<IceSlidingBase>();
-        _iceHealth = GetComponent<IceSlidingHealth>();
+        player = GetComponent<Player>();
+        iceHealth = GetComponent<PlayerHealth>();
 
         _damageDelay = new WaitForSeconds(_damageSecond);
     }
@@ -28,10 +27,10 @@ public class IceSlidingDamage : MonoBehaviour
     /// <param name="dmg"></param>
     public IEnumerator DamageDelay(int dmg)
     {
-        while (_iceBase.IsDamage)
+        //while (_iceBase.IsDamage)
         {
-            _iceHealth.SetDamage(dmg);
-            NowAlive = _iceHealth.PlayerHP > 0;
+            iceHealth.DecreaseHP(dmg);
+            NowAlive = iceHealth.PlayerHP > 0;
             yield return _damageDelay;
             //Debug.Log(PlayerHP);
         }
