@@ -29,9 +29,11 @@ public class UIRoom : UIBase
     [SerializeField] private UserInfo[] users= new UserInfo[4];
     private bool[] isReadyUsers = new bool[4];
 
+
     [SerializeField] private TMP_Text count;
     [SerializeField] private GameObject invisibleWall;
 
+    [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
     private int[] turnOptions = { 10, 15, 20, 25, 30 };
     [Range(0, 4)] public int maxTurnValue = 0;
