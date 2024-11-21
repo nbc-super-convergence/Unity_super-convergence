@@ -111,7 +111,6 @@ public class UpdateInput : IInputAction
 
         while (performCount % 2 == 1)
         {
-            Debug.Log(1);
             time += Time.deltaTime;
 
             if (time > 0.2f)

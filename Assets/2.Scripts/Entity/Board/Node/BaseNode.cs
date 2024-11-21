@@ -9,14 +9,17 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
 
     private List<GameObject> arrows;
 
-    private void Awake()
+    private async void Awake()
     {
-        nodes = new();
-        if (nodes.Count > 1)
-        {
-            CreateArrow();
-            ActiveArrow(false);
-        }
+        //GameObject g = await ResourceManager.Instance.LoadAsset<GameObject>("arrow", eAddressableType.Prefab);
+        //arrowPrefab = g.GetComponent<BoardArrow>();
+
+        ////arrowPrefab = ResourceManager.Instance.
+        //if (nodes.Count > 1)
+        //{
+        //    CreateArrow();
+        //    ActiveArrow(false);
+        //}
     }
 
     public virtual bool TryGetNode(out Transform node)

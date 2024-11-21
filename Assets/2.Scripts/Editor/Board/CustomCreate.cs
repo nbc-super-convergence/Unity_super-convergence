@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
@@ -10,7 +10,7 @@ using UnityEngine.InputSystem;
 public class CustomCreate : Editor
 {
     List<int> indexs;
-    string[] tools = { "Create", "Update" };
+    string[] tools = { "Create", "Connect" };
     const string path = "Assets/AddressableDatas/Prefab/addressableMap.json";
     public List<GameObject> prefabs = new();
     public static List<BaseNode> nodes = new();
@@ -21,6 +21,7 @@ public class CustomCreate : Editor
     private void Awake()
     {
         b = (BoardCreator)target;
+        nodes = FindObjectsOfType<BaseNode>().ToList();
 
         b.actions[(int)InputType.Tab] = Tab;
 
@@ -31,6 +32,7 @@ public class CustomCreate : Editor
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
+
         if (!Application.isPlaying) return;
 
         int index = indexs[(int)IndexType.Tool];
