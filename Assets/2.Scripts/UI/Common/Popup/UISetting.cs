@@ -24,6 +24,7 @@ public class UISetting : UIBase
         UIManager.Hide<UISetting>();
         await UIManager.Show<UIStart>();
     }
+
     private void Apply()
     {
         Debug.Log($"Apply is Not Ready");
