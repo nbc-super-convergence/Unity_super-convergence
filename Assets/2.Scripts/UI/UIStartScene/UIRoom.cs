@@ -19,6 +19,7 @@ public class UserInfo
 public class UIRoom : UIBase
 {
     [SerializeField] private bool isHost;
+    public bool IsHost { get { return isHost; } }
     private bool isReady = false;
 
     [SerializeField] private Button buttonBack;

@@ -2555,6 +2555,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
 --- !u!114 &970568382986895236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3188,6 +3189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 3
 --- !u!114 &9159558002497462828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3252,6 +3254,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 2
 --- !u!114 &796242675376293892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3955,6 +3958,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 1
 --- !u!114 &3308416225592138252
 MonoBehaviour:
   m_ObjectHideFlags: 0
