@@ -96,10 +96,9 @@ public class UIRegister : UIBase
 
 
     #region Button
-    public async void ButtonBack()
+    public void ButtonBack()
     {
         UIManager.Hide<UIRegister>();
-        await UIManager.Show<UIStart>();
     }
 
     public void ButtonRegister()

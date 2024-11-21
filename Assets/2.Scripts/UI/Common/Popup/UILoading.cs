@@ -19,7 +19,7 @@ public class UILoading : UIBase
         PlayLoadingScreen();
     }
 
-    private async void PlayLoadingScreen()
+    private void PlayLoadingScreen()
     {
         if (!isStarted)
         {
@@ -27,7 +27,6 @@ public class UILoading : UIBase
             StartCoroutine(FakeSlider());
             loadingImage.gameObject.SetActive(false);
             loadingSlider.gameObject.SetActive(false);
-            await UIManager.Show<UIStart>();
             Destroy(this);
         }
         else
