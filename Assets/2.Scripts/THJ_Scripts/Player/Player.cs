@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
     [SerializeField] private float playerSpeed = 10f; //이동 속도
     [SerializeField] private float slideFactor = 1f; //미끄러짐의 감속 비율
     private State playerState;
-    public int CurrentId { get; private set; } = 1;  //플레이어의 현재 아이디
+    public int CurrentId { get; set; }  //플레이어의 현재 아이디
 
     //서버에 보낼 데이터
     private GamePacket sendPlayerData = new ();
@@ -187,6 +187,9 @@ public class Player : MonoBehaviour
             animState.ChangeAnimation(animState.IdleAnim);
     }
 
+    /// <summary>
+    /// 변경된 값을 서버에 전송
+    /// </summary>
     public void SendPosition()
     {
         //개인의 위치 및 회전을 서버로 전송
@@ -198,7 +201,7 @@ public class Player : MonoBehaviour
         sendPlayerData.IcePlayerMoveRequest.State = playerState;
         //벡터 : AddForce 이건 어떻게 보내지?
 
-        SocketManager.Instance.OnSend(sendPlayerData);
+        //SocketManager.Instance.OnSend(sendPlayerData);
     }
 
     public void ReceivePosition()
