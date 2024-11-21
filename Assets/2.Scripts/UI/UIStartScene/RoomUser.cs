@@ -10,7 +10,7 @@ public class RoomUser : MonoBehaviour
     private TMP_Text nickNameTMP;
     private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.
     private StringBuilder sbNickname = new();
-
+    private bool isJoin = false;
     private void Awake()
     {
         nickNameTMP = GetComponentInChildren<TMP_Text>();
@@ -19,9 +19,20 @@ public class RoomUser : MonoBehaviour
 
     public void SetNickname(string inputNickname)
     {
-        sbNickname.Clear();
-        sbNickname.Append(inputNickname);
-        nickNameTMP.text = sbNickname.ToString();
+        if (inputNickname == null || inputNickname == "")
+        {
+            sbNickname.Clear();
+            sbNickname.Append("EMPTY");
+            nickNameTMP.text = sbNickname.ToString();
+            return;
+        }        
+        else
+        {
+            isJoin = true;
+            sbNickname.Clear();
+            sbNickname.Append(inputNickname);
+            nickNameTMP.text = sbNickname.ToString();
+        }
     }
     public void SetImage()
     {

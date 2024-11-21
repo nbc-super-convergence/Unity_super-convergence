@@ -1,19 +1,57 @@
-﻿using UnityEngine;
+﻿using System.Text;
+using UnityEngine;
+using UnityEngine.Events;
 
 public class RoomPlayerManager : MonoBehaviour
 {
     [SerializeField]private RoomUser[] users = new RoomUser[4];
-    private int currentUserCount = 0;
+    //private int currentUserCount = 0;
 
-    private void RefrashRoomUser(RoomUser user, string nickName)
+    [SerializeField] private StringBuilder[] sbUsers = new StringBuilder[4]; // 여기에 서버에서 받은 정보 저장하기
+
+    //private UnityAction onUserChanged;
+
+    //private void Awake()
+    //{
+    //    onUserChanged +=
+    //}
+
+    #region 테스트코드
+    string[] strings0 = { "손효재", "정승연", "탁혁재", "박인수" };
+    string[] strings1 = { "박인수", "손효재", "정승연", "탁혁재" };
+    string[] strings2 = { "손효재", "정승연", "", "" };
+
+    private void Update()
     {
-        user.SetNickname(nickName);
+        if (Input.GetKeyDown(KeyCode.A)) ReceiveServer(strings0);
+        if (Input.GetKeyDown(KeyCode.S)) ReceiveServer(strings1);
+        if (Input.GetKeyDown(KeyCode.D)) ReceiveServer(strings2);
     }
+    #endregion
 
+    /// <summary>
+    /// 서버로부터 리스폰스or 노티스 받을 때 실행될 메서드. 패킷의 정보를 저장, 갱신한다.
+    /// S2C_JoinRoomNotification 을 받았을 때 실행
+    /// </summary>
+    /// <param name="nickNames"></param>
+    public void ReceiveServer(string[] nickNames)
+    {
+        for (int i = 0; i < sbUsers.Length; i++)
+        {
+            if (sbUsers[i] == null)
+            {
+                sbUsers[i] = new StringBuilder();
+            }
+            sbUsers[i].Clear();
+            sbUsers[i].Append(nickNames[i]);
+            users[i].SetNickname(sbUsers[i].ToString());
+        }
+
+        Debug.Log($"현재 유저: {string.Join(" ", nickNames)}");
+    }
 
     #region 유저 입장
 
-    // 
 
 
 
@@ -21,7 +59,9 @@ public class RoomPlayerManager : MonoBehaviour
 
 
     #region 유저 퇴장
-
+    // 퇴장 시
+    // S2C_LeaveRoomNotification
+    // userId가 퇴장한다는 신호를 보낸다.
     #endregion
 
 }
