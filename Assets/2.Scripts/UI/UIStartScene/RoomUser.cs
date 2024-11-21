@@ -11,6 +11,7 @@ public class RoomUser : MonoBehaviour
     private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.
     private StringBuilder sbNickname = new();
     private bool isJoin = false;
+    [SerializeField] private GameObject objReady;
 
     public int playerId;
 
@@ -43,7 +44,17 @@ public class RoomUser : MonoBehaviour
         
     }
 
-
+    public void Ready(bool isReady)
+    {
+        if(isReady)
+        {
+            objReady.SetActive(true);
+        }
+        else
+        {
+            objReady.SetActive(false);
+        }
+    }
 
 
 }

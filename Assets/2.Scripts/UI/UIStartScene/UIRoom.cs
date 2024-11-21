@@ -21,6 +21,7 @@ public class UIRoom : UIBase
     [SerializeField] private bool isHost;
     public bool IsHost { get { return isHost; } }
     private bool isReady = false;
+    private int myNumber;
 
     [SerializeField] private Button buttonBack;
     [SerializeField] private Button buttonReady;
@@ -64,6 +65,7 @@ public class UIRoom : UIBase
 
         SetDropdown();
         SetUserReady(0);    // 방장은 자동 레디처리
+
     }
 
     private void Update()
@@ -107,11 +109,14 @@ public class UIRoom : UIBase
     /// <param name="userIndex"></param>
     public void SetUserReady(int userIndex)
     {
+        if(isHost) isReady = true;
+
         if (userIndex >=0 && userIndex < isReadyUsers.Length)
         {
             isReadyUsers[userIndex] = true;
 
             onUserReadyChanged?.Invoke();
+            UpdateReadyState(userIndex);
         }
     }
 
@@ -261,6 +266,13 @@ public class UIRoom : UIBase
         }
         buttonReady.interactable = interactable;
     }
+
+    private void UpdateReadyState(int userIndex)
+    {
+        var item = GetComponent<RoomPlayerManager>();
+        item.ReadyThem(userIndex, isReady);
+    }
+    
 
     #endregion
 

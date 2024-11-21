@@ -58,11 +58,10 @@ public class RoomPlayerManager : MonoBehaviour
     // S2C_LeaveRoomNotification
     // userId가 퇴장한다는 신호를 보낸다.
 
-    public void Kick(int index)
-    {
-        // 누구를 강퇴했는지 보여주기
-        // 서버에서 구현
-    }
     #endregion
 
+    public void ReadyThem(int index, bool isReady)
+    {
+        users[index].Ready(isReady);
+    }
 }
