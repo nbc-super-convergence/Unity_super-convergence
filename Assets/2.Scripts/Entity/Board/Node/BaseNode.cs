@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class BaseNode : MonoBehaviour, IBoardNode,IAction
 {
-    public List<Transform> nodes = new();
+    public List<Transform> nodes;
     public BoardArrow arrowPrefab;
 
     private List<GameObject> arrows;
 
     private void Awake()
     {
+        nodes = new();
         if (nodes.Count > 1)
         {
             CreateArrow();

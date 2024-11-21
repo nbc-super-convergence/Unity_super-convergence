@@ -13059,11 +13059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960694ab3e23fab4db299550a93bcb18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nodes: []
-  arrowPrefab: {fileID: -3450078550439914599, guid: 9cb51d0eff6c7a24292ae83e233dd0e3,
-    type: 3}
-  arrows: []
-  plane: {fileID: 4395546715380890661}
 --- !u!4 &2614887767329798788
 Transform:
   m_ObjectHideFlags: 0

@@ -19,6 +19,7 @@ public class BoardManager : Singleton<BoardManager>
 
     public List<IToggle> trophyNode = new List<IToggle>();
     private int prevTrophyIndex = -1;
+
     public PlayerTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
