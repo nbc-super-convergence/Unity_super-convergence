@@ -5,6 +5,7 @@
 #pragma warning disable 1591, 0612, 3021
 #region Designer generated code
 
+using System.Numerics;
 using pb = global::Google.Protobuf;
 using pbc = global::Google.Protobuf.Collections;
 using pbr = global::Google.Protobuf.Reflection;
@@ -105,6 +106,14 @@ public sealed partial class Vector : pb::IMessage<Vector>
         y_ = other.y_;
         z_ = other.z_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public Vector(Vector3 other) : this()
+    {
+        x_ = other.X;
+        y_ = other.Y;
+        z_ = other.Z;
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

@@ -26,6 +26,11 @@ public class Player : MonoBehaviour
     [Header("플레이어 속성")]
     [SerializeField] private float playerSpeed = 10f; //이동 속도
     [SerializeField] private float slideFactor = 1f; //미끄러짐의 감속 비율
+    private State playerState;
+    public int CurrentId { get; private set; } = 1;  //플레이어의 현재 아이디
+
+    //서버에 보낼 데이터
+    private GamePacket sendPlayerData = new ();
 
     /// <summary>
     /// 컴포넌트 정의
@@ -57,9 +62,20 @@ public class Player : MonoBehaviour
 
         //내 플레이어에 맞게
         //서버에서 아이디 정보를 받아서 해당 캐릭터 생성
-        //
+        //CurrentId = gamePacket.IcePlayerSpawnNotification.PlayerId;
 
         animState.ChangeAnimation(animState.IdleAnim);  //애니메이션 초기화
+
+        playerState = State.Idle;
+
+        //gamePacket Payload (기본 초기화 후 서버에 전송)
+        sendPlayerData.IcePlayerMoveRequest = new()
+        {
+            PlayerId = CurrentId,
+            Rotation = characterRotate.transform.rotation.y,
+            Position = SocketManager.CreateVector(playerPos), //이거는 생성자 필요할 듯
+            State = playerState
+        };
     }
 
     private void Update()
@@ -68,6 +84,10 @@ public class Player : MonoBehaviour
         {
             animState.Update();
             animState.ChangeAnimation(animState.DeathAnim);
+        }
+        else
+        {
+            playerState = State.Die;
         }
     }
 
@@ -96,10 +116,12 @@ public class Player : MonoBehaviour
         if (context.phase.Equals(InputActionPhase.Performed))
         {
             playerMoveInput = context.ReadValue<Vector2>();
+            playerState = State.Move;
         }
         else if(context.phase.Equals(InputActionPhase.Canceled))
         {
             playerMoveInput = Vector2.zero;
+            playerState = State.Idle;
         }
 
         ApplyAnimation();
@@ -148,6 +170,8 @@ public class Player : MonoBehaviour
         addCtrl.Move(playerPos);    //미끄러짐 효과
         velCtrl.Move(playerRgdby.velocity); // 감속 효과
 
+        //움직인걸 서버에 전송
+        SendPosition();
     }
 
     //애니메이션 적용
@@ -166,10 +190,15 @@ public class Player : MonoBehaviour
     public void SendPosition()
     {
         //개인의 위치 및 회전을 서버로 전송
-        GamePacket gamePacket = new GamePacket();
-        gamePacket.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
-        //gamePacket.IcePlayerMoveRequest.Position == transform.position;
+        sendPlayerData.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
+        sendPlayerData.IcePlayerMoveRequest.Position.X = transform.position.x;
+        sendPlayerData.IcePlayerMoveRequest.Position.Y = transform.position.y;
+        sendPlayerData.IcePlayerMoveRequest.Position.Z = transform.position.z;
+        sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
+        sendPlayerData.IcePlayerMoveRequest.State = playerState;
+        //벡터 : AddForce 이건 어떻게 보내지?
 
+        SocketManager.Instance.OnSend(sendPlayerData);
     }
 
     public void ReceivePosition()

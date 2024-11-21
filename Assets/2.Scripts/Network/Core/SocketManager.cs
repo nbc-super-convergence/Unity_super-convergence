@@ -38,5 +38,14 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
         
     }
 
-    
+    //새로운 벡터 선언 (임시로)
+    public static Vector CreateVector(Vector3 other)
+    {
+        return new Vector
+        {
+            X = other.x,
+            Y = other.y,
+            Z = other.z,
+        };
+    }
 }
