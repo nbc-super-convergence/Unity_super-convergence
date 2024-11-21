@@ -116,7 +116,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1028977321879226687}
   m_OnClick:
     m_PersistentCalls:
@@ -1239,6 +1239,7 @@ GameObject:
   - component: {fileID: 2854916004008454318}
   - component: {fileID: 4333016923619777002}
   - component: {fileID: 1749572802895897999}
+  - component: {fileID: 4874679861424712761}
   m_Layer: 5
   m_Name: SettingBtn
   m_TagString: Untagged
@@ -1348,8 +1349,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41854711743819418}
-        m_TargetAssemblyTypeName: UILobby, Assembly-CSharp
+      - m_Target: {fileID: 4874679861424712761}
+        m_TargetAssemblyTypeName: SettingBtn, Assembly-CSharp
         m_MethodName: OnBtnSetting
         m_Mode: 1
         m_Arguments:
@@ -1360,6 +1361,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &4874679861424712761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3226770243474648346}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddfa34f7d4c8d3f47bce6f4754328d1b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3485918969852002578
 GameObject:
   m_ObjectHideFlags: 0
@@ -4257,7 +4270,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 307717990372990235}
   m_TextViewport: {fileID: 0}
   m_TextComponent: {fileID: 6236377174952399534}

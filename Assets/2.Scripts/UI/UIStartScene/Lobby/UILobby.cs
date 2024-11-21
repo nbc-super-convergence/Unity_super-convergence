@@ -2,7 +2,6 @@
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UILobby : UIBase
 {
@@ -46,12 +45,6 @@ public class UILobby : UIBase
     {
         //Send: 로그아웃 신호.
         UIManager.Hide<UILobby>();
-    }
-
-    //Inspector: 설정 버튼
-    public async void OnBtnSetting()
-    {
-        var result = await UIManager.Show<UISetting>();
     }
 
     //Inspector: 방 검색 InputField
