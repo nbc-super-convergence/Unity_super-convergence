@@ -1,45 +1,38 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class IceBoardPlayerManager : MonoBehaviour
 {
-    //¾È¿¡ ÇÃ·¹ÀÌ¾îµéÀÇ À§Ä¡¿Í È¸Àü°ª ±×¸®°í ¾ÆÀÌµğ¸¦ ¹Ş¾Æ¼­ °¢ À§Ä¡°ªÀ» ¹İ¿µ
-    List<Player> multiPlayers;
-    GamePacket gamePacket = new ();
+    //ì•ˆì— í”Œë ˆì´ì–´ë“¤ì˜ ìœ„ì¹˜ì™€ íšŒì „ê°’ ê·¸ë¦¬ê³  ì•„ì´ë””ë¥¼ ë°›ì•„ì„œ ê° ìœ„ì¹˜ê°’ì„ ë°˜ì˜
+    [SerializeField] private List<Player> multiPlayers;
+    private GamePacket gamePacket = new ();
 
-    public int CurrentId { get; private set; } = 1;  //À¯ÀúÀÇ ÇöÀç ¾ÆÀÌµğ
+    public int CurrentId { get; private set; } = 4;  //ìœ ì €ì˜ í˜„ì¬ ì•„ì´ë”” (ì„œë²„ì—ì„œ ê°€ì ¸ì˜¬ ê±°ì„)
 
     private void Awake()
     {
         multiPlayers = new List<Player>(4);
 
-        //ÀüÃ¼ ÇÃ·¹ÀÌ¾î¿¡¼­ À¯Àú µî·Ï(?)
+        //ì „ì²´ í”Œë ˆì´ì–´ì—ì„œ ìœ ì € ë“±ë¡(?)
         Player _player;
         for (int i = 0; i < transform.childCount; i++)
         {
             _player = transform.GetChild(i).GetComponent<Player>();
-
-            if (CurrentId == (i + 1))   //À¯Àú ¾ÆÀÌµğ ¹İ¿µ
-                _player.CurrentId = (i + 1);
-
+            _player.CurrentId = (i + 1);
             multiPlayers.Add(_player);
         }
     }
 
-    private void FixedUpdate()
+    private void Start()
     {
+        //ë‚´ê°€ ì§€ê¸ˆ ëª‡Pì¸ì§€
         for (int i = 0; i < multiPlayers.Count; i++)
         {
-            if (CurrentId != i) //ÇöÀç ¾ÆÀÌµğ°¡ ¾Æ´Ï¶ó¸é ´Ù¸¥ »ç¿ëÀÚÀÇ À§Ä¡ÀÇ Á¤º¸¸¦ ¹İ¿µ
-            {
-                //multiPlayers[i].transform = ¼­¹ö¿¡¼­ ¹ŞÀº°ªÀ» ¹İ¿µ
-            } 
+            if (multiPlayers[i].CurrentId == CurrentId)
+                multiPlayers[i].EnablePlayer();
         }
-    }
-
-    private void ReceivePosition(GamePacket receivePacket)  //¼­¹ö¿¡¼­ ¹Ş¾Æ¿Â À§Ä¡°ªÀ» ¹İ¿µ (»ó´ëÆÀµé)
-    {
-
     }
 }

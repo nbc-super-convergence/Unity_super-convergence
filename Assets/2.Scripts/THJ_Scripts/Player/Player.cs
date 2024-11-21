@@ -54,18 +54,21 @@ public class Player : MonoBehaviour
         //Rigidbody
         addCtrl = new (playerRgdby, playerSpeed);
         velCtrl = new (playerRgdby, slideFactor);
+
+        playerRgdby.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
+
+        canInput.enabled = false;
     }
 
     private void Start()
     {
-        playerRgdby.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
 
         //내 플레이어에 맞게
         //서버에서 아이디 정보를 받아서 해당 캐릭터 생성
         //CurrentId = gamePacket.IcePlayerSpawnNotification.PlayerId;
 
-        animState.ChangeAnimation(animState.IdleAnim);  //애니메이션 초기화
-
+        //애니메이션 및 상태 초기
+        animState.ChangeAnimation(animState.IdleAnim);
         playerState = State.Idle;
 
         //gamePacket Payload (기본 초기화 후 서버에 전송)
@@ -108,6 +111,15 @@ public class Player : MonoBehaviour
     public void ChangeState(IController newCtrl)
     {
         curCtrl = newCtrl;
+    }
+
+    /// <summary>
+    /// 내가 이 유저라면 입력 활성
+    /// </summary>
+    public void EnablePlayer()
+    {
+        this.enabled = true;
+        canInput.enabled = true;
     }
 
     //컨트롤러 속성 (이거 클래스 따로 빼야 되나?)
@@ -171,7 +183,8 @@ public class Player : MonoBehaviour
         velCtrl.Move(playerRgdby.velocity); // 감속 효과
 
         //움직인걸 서버에 전송
-        SendPosition();
+        if(SocketManager.Instance != null)  //방어코드
+            SendPosition();
     }
 
     //애니메이션 적용
@@ -201,7 +214,7 @@ public class Player : MonoBehaviour
         sendPlayerData.IcePlayerMoveRequest.State = playerState;
         //벡터 : AddForce 이건 어떻게 보내지?
 
-        //SocketManager.Instance.OnSend(sendPlayerData);
+        SocketManager.Instance.OnSend(sendPlayerData);
     }
 
     public void ReceivePosition()
