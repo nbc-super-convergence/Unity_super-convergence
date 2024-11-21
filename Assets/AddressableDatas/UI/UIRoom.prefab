@@ -1256,19 +1256,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7143542988979638398}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 2385267440154661218}
-        m_TargetAssemblyTypeName: UIRoom, Assembly-CSharp
-        m_MethodName: ButtonReady
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &1881535413821292375
 GameObject:
   m_ObjectHideFlags: 0
@@ -2525,6 +2513,7 @@ GameObject:
   m_Component:
   - component: {fileID: 683800010020213139}
   - component: {fileID: 3312203085007953994}
+  - component: {fileID: 970568382986895236}
   m_Layer: 5
   m_Name: RoomUser
   m_TagString: Untagged
@@ -2564,6 +2553,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &970568382986895236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4861485225292415491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e54da5d3a384bb4eba6699ecd6c8980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4983513004653135983
@@ -3145,6 +3146,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7902702428669457799}
   - component: {fileID: 2118652741093437271}
+  - component: {fileID: 9159558002497462828}
   m_Layer: 5
   m_Name: RoomUser (3)
   m_TagString: Untagged
@@ -3186,6 +3188,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &9159558002497462828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6123625438012539649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e54da5d3a384bb4eba6699ecd6c8980, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6317762760989853914
 GameObject:
   m_ObjectHideFlags: 0
@@ -3196,6 +3210,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4034895573960546848}
   - component: {fileID: 3583698958997352130}
+  - component: {fileID: 796242675376293892}
   m_Layer: 5
   m_Name: RoomUser (2)
   m_TagString: Untagged
@@ -3235,6 +3250,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &796242675376293892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6317762760989853914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e54da5d3a384bb4eba6699ecd6c8980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &6454599380097736732
@@ -3886,6 +3913,7 @@ GameObject:
   m_Component:
   - component: {fileID: 360214821249657884}
   - component: {fileID: 906706886108301889}
+  - component: {fileID: 3308416225592138252}
   m_Layer: 5
   m_Name: RoomUser (1)
   m_TagString: Untagged
@@ -3925,6 +3953,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3308416225592138252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095907295438618696}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e54da5d3a384bb4eba6699ecd6c8980, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &8282026766544235665

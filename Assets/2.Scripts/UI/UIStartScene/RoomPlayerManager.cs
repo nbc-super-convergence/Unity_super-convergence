@@ -11,10 +11,6 @@ public class RoomPlayerManager : MonoBehaviour
 
     //private UnityAction onUserChanged;
 
-    //private void Awake()
-    //{
-    //    onUserChanged +=
-    //}
 
     #region 테스트코드
     string[] strings0 = { "손효재", "정승연", "탁혁재", "박인수" };
@@ -45,14 +41,13 @@ public class RoomPlayerManager : MonoBehaviour
             sbUsers[i].Clear();
             sbUsers[i].Append(nickNames[i]);
             users[i].SetNickname(sbUsers[i].ToString());
+            users[i].SetImage();
         }
 
         Debug.Log($"현재 유저: {string.Join(" ", nickNames)}");
     }
 
     #region 유저 입장
-
-
 
 
     #endregion
@@ -62,6 +57,12 @@ public class RoomPlayerManager : MonoBehaviour
     // 퇴장 시
     // S2C_LeaveRoomNotification
     // userId가 퇴장한다는 신호를 보낸다.
+
+    public void Kick(int index)
+    {
+        // 누구를 강퇴했는지 보여주기
+        // 서버에서 구현
+    }
     #endregion
 
 }

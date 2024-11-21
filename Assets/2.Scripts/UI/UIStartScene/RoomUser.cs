@@ -11,12 +11,16 @@ public class RoomUser : MonoBehaviour
     private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.
     private StringBuilder sbNickname = new();
     private bool isJoin = false;
+
+    public int playerId;
+
     private void Awake()
     {
         nickNameTMP = GetComponentInChildren<TMP_Text>();
         userImage = GetComponentInChildren<Image>();
     }
 
+    
     public void SetNickname(string inputNickname)
     {
         if (inputNickname == null || inputNickname == "")
@@ -38,4 +42,8 @@ public class RoomUser : MonoBehaviour
     {
         
     }
+
+
+
+
 }
