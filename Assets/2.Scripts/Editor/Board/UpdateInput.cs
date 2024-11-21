@@ -1,31 +1,26 @@
 using UnityEngine.InputSystem;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor;
 using System;
-using System.Security.Cryptography;
-using UnityEditor.Rendering;
 
 public class UpdateInput : IInputAction
 {
     private BoardCreator b;
-    private CustomCreate c;
     private Stack<Action> stack = new();
 
-    public UpdateInput(BoardCreator b, CustomCreate c)
+    public UpdateInput(BoardCreator b)
     {
         this.b = b;
-        this.c = c;
     }
 
     public void Arrow(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            if (c.nodes.Count == 0) return;
+            if (CustomCreate.nodes.Count == 0) return;
 
             int index = b.indexs[(int)IndexType.NextNode];
-            int count = c.nodes.Count;
+            int count = CustomCreate.nodes.Count;
             string input = context.action.activeControl.ToString();
 
             int num = 0;
@@ -55,8 +50,8 @@ public class UpdateInput : IInputAction
             int i = b.indexs[(int)IndexType.Prefab];
             int j = b.indexs[(int)IndexType.NextNode];
 
-            BaseNode cur = c.nodes[i];
-            BaseNode next = c.nodes[j];
+            BaseNode cur = CustomCreate.nodes[i];
+            BaseNode next = CustomCreate.nodes[j];
 
             cur.nodes.Add(next.transform);
             stack.Push(() => { cur.nodes.Remove(next.transform); });
@@ -66,7 +61,7 @@ public class UpdateInput : IInputAction
     public void WASD(InputAction.CallbackContext context)
     {
         int index = b.indexs[(int)IndexType.Prefab];
-        int count = c.nodes.Count;
+        int count = CustomCreate.nodes.Count;
         Vector3 input = context.ReadValue<Vector3>();
 
         int num = 0;

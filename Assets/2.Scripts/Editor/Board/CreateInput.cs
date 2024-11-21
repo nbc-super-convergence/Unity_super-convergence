@@ -6,16 +6,12 @@ public class CreateInput : IInputAction
 {
     private BoardCreator b;
     private CustomCreate c;
-    private Stack<GameObject> stack;
-    private List<BaseNode> nodes;
+    private Stack<GameObject> stack = new();
 
     public CreateInput(BoardCreator b, CustomCreate c)
     {
         this.b = b; 
         this.c = c;
-
-        stack = c.stack;
-        nodes = c.nodes;
     }
 
     public void Arrow(InputAction.CallbackContext context)
@@ -43,7 +39,7 @@ public class CreateInput : IInputAction
 
             var g = stack.Pop();
             Object.Destroy(g);
-            nodes.Remove(g.GetComponent<BaseNode>());
+            CustomCreate.nodes.Remove(g.GetComponent<BaseNode>());
         }
     }
 
@@ -56,7 +52,7 @@ public class CreateInput : IInputAction
             var g = c.prefabs[index];
             var o = Object.Instantiate(g, b.transform.position, Quaternion.identity);
             stack.Push(o);
-            nodes.Add(o.GetComponent<BaseNode>());
+            CustomCreate.nodes.Add(o.GetComponent<BaseNode>());
         }
     }
 

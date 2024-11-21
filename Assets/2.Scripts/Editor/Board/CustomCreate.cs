@@ -13,8 +13,7 @@ public class CustomCreate : Editor
     string[] tools = { "Create", "Update" };
     const string path = "Assets/AddressableDatas/Prefab/addressableMap.json";
     public List<GameObject> prefabs = new();
-    public Stack<GameObject> stack = new();
-    public List<BaseNode> nodes = new();
+    public static List<BaseNode> nodes = new();
     private BoardCreator b;
 
     List<IInputAction> inputs = new List<IInputAction>();
@@ -26,7 +25,7 @@ public class CustomCreate : Editor
         b.actions[(int)InputType.Tab] = Tab;
 
         inputs.Add(new CreateInput(b, this));
-        inputs.Add(new UpdateInput(b, this));
+        inputs.Add(new UpdateInput(b));
     }
 
     public override void OnInspectorGUI()
@@ -60,6 +59,15 @@ public class CustomCreate : Editor
     {
         LoadPrefab();
         indexs = b.indexs;
+
+        int index = indexs[(int)IndexType.Tool];
+        inputs[index].InputEnter();
+    }
+
+    private void OnDisable()
+    {
+        int index = indexs[(int)IndexType.Tool];
+        inputs[index].InputExit();
     }
 
     private void Tab(InputAction.CallbackContext context)
