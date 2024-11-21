@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
     public Rigidbody playerRgdby { get; private set; }  //플레이어 기본 물리
     public Animator animator { get; private set; }  //캐릭터 애니메이터
     public CapsuleCollider playerCollide { get; private set; }  //플레이어 충돌 (죽으면 충돌 무시)
+    private PlayerInput canInput;   //입력 활성화
     private CharacterRotate characterRotate;
     private PlayerHealth health;
     private PlayerDamage damage;
@@ -35,6 +36,7 @@ public class Player : MonoBehaviour
         playerRgdby = GetComponent<Rigidbody>();
         animator = GetComponentInChildren<Animator>();
         playerCollide = GetComponent<CapsuleCollider>();
+        canInput = GetComponent<PlayerInput>();
 
         characterRotate = GetComponentInChildren<CharacterRotate>();
         health = GetComponentInChildren<PlayerHealth>();
@@ -52,6 +54,10 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerRgdby.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
+
+        //내 플레이어에 맞게
+        //서버에서 아이디 정보를 받아서 해당 캐릭터 생성
+        //
 
         animState.ChangeAnimation(animState.IdleAnim);  //애니메이션 초기화
     }
@@ -155,5 +161,19 @@ public class Player : MonoBehaviour
             animState.ChangeAnimation(animState.RunAnim);
         else
             animState.ChangeAnimation(animState.IdleAnim);
+    }
+
+    public void SendPosition()
+    {
+        //개인의 위치 및 회전을 서버로 전송
+        GamePacket gamePacket = new GamePacket();
+        gamePacket.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
+        //gamePacket.IcePlayerMoveRequest.Position == transform.position;
+
+    }
+
+    public void ReceivePosition()
+    {
+        //서버에서 받은 값을 반영(?)
     }
 }

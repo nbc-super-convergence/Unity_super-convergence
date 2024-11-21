@@ -36,7 +36,6 @@ public class DeathAnimation : PlayerBaseAnimation
         {
             //End();
             DeadDirect();
-            Debug.Log("끝");
         }
     }
 
