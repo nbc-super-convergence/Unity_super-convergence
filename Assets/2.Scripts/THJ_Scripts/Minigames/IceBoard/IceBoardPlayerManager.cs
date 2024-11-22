@@ -27,6 +27,8 @@ public class IceBoardPlayerManager : MonoBehaviour
         {
             
         };
+
+        CurrentId = GameManager.Instance.GetPlayerId();
     }
 
     private void Start()
@@ -39,18 +41,26 @@ public class IceBoardPlayerManager : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        ReceivePosition();
+    }
+
     private void ReceivePosition()
     {
         var response = gamePacket.IcePlayerMoveNotification;
 
-        for (int i = 0; i < multiPlayers.Count; i++)
+        if (response.Players.Count > 0)
         {
-            //내가 아닌 상대라면 상대가 이동한 값을 반영
-            if (CurrentId != gamePacket.IcePlayerMoveRequest.PlayerId)
+            for (int i = 0; i < multiPlayers.Count; i++)
             {
-                
-                //multiPlayers[i].ReceivePosition()
+                multiPlayers[i].ReceivePosition(new Vector3(response.Players[i].Position.X,
+                    response.Players[i].Position.Y, response.Players[i].Position.Z));
             }
+        }
+        else
+        {
+            Debug.Log($"{response.Players.Count}");
         }
     }
 }

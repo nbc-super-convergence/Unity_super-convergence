@@ -36,7 +36,7 @@ public class UIStart : UIBase
         Sprite img = await ResourceManager.Instance.LoadAsset<Sprite>(logoKey, eAddressableType.Texture);
         logoImg.sprite = img;
 
-        await UIManager.Show<UILogin>();
+        //await UIManager.Show<UILogin>();
     }
 
     private void InitBtn()
@@ -56,6 +56,10 @@ public class UIStart : UIBase
 
         if (IsSceneInBuild(targetScene))
         {
+            // TEST
+            GameManager.Instance.SetPlayerId(playerID); 
+            //TEST
+
             SocketManager.Instance.Init();
             SendPacketIceJoinRequest();
 

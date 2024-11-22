@@ -35,7 +35,6 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerMoveNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerMoveNotification;
-        
     }
 
     //새로운 벡터 선언 (임시로)
