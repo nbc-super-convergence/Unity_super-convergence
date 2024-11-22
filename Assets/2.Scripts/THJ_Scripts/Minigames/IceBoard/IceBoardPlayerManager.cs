@@ -7,7 +7,7 @@ public class IceBoardPlayerManager : MonoBehaviour
     [SerializeField] private List<Player> multiPlayers;
     private GamePacket gamePacket = new ();
 
-    public int CurrentId { get; private set; } = 2;  //유저의 현재 아이디 (서버에서 가져올 거임)
+    public int CurrentId { get; private set; } = 1;  //유저의 현재 아이디 (서버에서 가져올 거임)
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class IceBoardPlayerManager : MonoBehaviour
             //내가 아닌 상대라면 상대가 이동한 값을 반영
             if (CurrentId != gamePacket.IcePlayerMoveRequest.PlayerId)
             {
-
+                
                 //multiPlayers[i].ReceivePosition()
             }
         }

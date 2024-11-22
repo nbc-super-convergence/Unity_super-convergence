@@ -77,6 +77,7 @@ public class Player : MonoBehaviour
         {
             PlayerId = CurrentId,
             Rotation = characterRotate.transform.rotation.y,
+            Vector = SocketManager.CreateVector(playerPos),
             Position = SocketManager.CreateVector(playerPos), //이거는 생성자 필요할 듯
             State = playerState
         };
@@ -213,6 +214,9 @@ public class Player : MonoBehaviour
         sendPlayerData.IcePlayerMoveRequest.Position.Z = transform.position.z;
         sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
         sendPlayerData.IcePlayerMoveRequest.State = playerState;
+        sendPlayerData.IcePlayerMoveRequest.Vector.X = transform.position.x;
+        sendPlayerData.IcePlayerMoveRequest.Vector.Y = transform.position.y;
+        sendPlayerData.IcePlayerMoveRequest.Vector.Z = transform.position.z;
         //벡터 : AddForce 이건 어떻게 보내지?
 
         SocketManager.Instance.OnSend(sendPlayerData);
