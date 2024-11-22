@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
+using UnityEditor.EditorTools;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using UnityEngine.InputSystem;
@@ -10,10 +12,12 @@ using UnityEngine.InputSystem;
 public class CustomCreate : Editor
 {
     List<int> indexs;
-    string[] tools = { "Create", "Connect" };
+    string[] tools = { "Create", "Connect","Move" };
     const string path = "Assets/AddressableDatas/Prefab/addressableMap.json";
     public List<GameObject> prefabs = new();
     public static List<BaseNode> nodes = new();
+    public List<Transform> selects = new();
+
     private BoardCreator b;
 
     List<IInputAction> inputs = new List<IInputAction>();
@@ -21,12 +25,17 @@ public class CustomCreate : Editor
     private void Awake()
     {
         b = (BoardCreator)target;
-        nodes = FindObjectsOfType<BaseNode>().ToList();
 
         b.actions[(int)InputType.Tab] = Tab;
 
         inputs.Add(new CreateInput(b, this));
-        inputs.Add(new UpdateInput(b));
+        inputs.Add(new ConnectInput(b));
+        inputs.Add(new MoveInput(b, this));
+
+        GameObject g = GameObject.Find("Board");
+
+        if(g != null)
+            nodes = g.GetComponentsInChildren<BaseNode>().ToList();
     }
 
     public override void OnInspectorGUI()
@@ -44,7 +53,10 @@ public class CustomCreate : Editor
                 DrawGrid();
                 break;
             case 1:
-                //sceneview.lastactivesceneview.pivot = 
+
+                break;
+            case 2:
+
                 break;
         }
     }
@@ -54,11 +66,25 @@ public class CustomCreate : Editor
         if (!Application.isPlaying) return;
 
         int index = indexs[(int)IndexType.Tool];
-        if (index == 1) DrawLine();
+
+        switch (index)
+        {
+            case 0:
+                //DrawGrid();
+                break;
+            case 1:
+                DrawLine();
+                break;
+            case 2:
+                DrawSelect();
+                break;
+        }
     }
 
     private void OnEnable()
     {
+        if (!Application.isPlaying) return;
+
         LoadPrefab();
         indexs = b.indexs;
 
@@ -68,6 +94,8 @@ public class CustomCreate : Editor
 
     private void OnDisable()
     {
+        if (!Application.isPlaying) return;
+
         int index = indexs[(int)IndexType.Tool];
         inputs[index].InputExit();
     }
@@ -79,7 +107,7 @@ public class CustomCreate : Editor
             int index = indexs[(int)IndexType.Tool];
             inputs[index].InputExit();
 
-            index = (indexs[(int)IndexType.Tool] + 1) % 2;
+            index = (indexs[(int)IndexType.Tool] + 1) % inputs.Count;
             indexs[(int)IndexType.Tool] = index;
             inputs[index].InputEnter();
         }
@@ -154,7 +182,7 @@ public class CustomCreate : Editor
 
     #endregion
 
-    #region 수정
+    #region 연결
 
     private void DrawLine()
     {
@@ -180,7 +208,7 @@ public class CustomCreate : Editor
         Handles.DrawAAPolyLine(5f,p,t.position);
     }
 
-  
+
 
     //private void Show()
     //{
@@ -213,6 +241,31 @@ public class CustomCreate : Editor
 
     //    n1.nodes.Add(n2.transform);
     //}
+
+    #endregion
+
+    #region 이동
+
+    void DrawSelect()
+    {
+        foreach(var t in selects)
+        {
+            Handles.color = Color.green;
+            Handles.DrawSolidDisc(t.position, Vector3.up, 1f);
+        }
+
+        Handles.color = Color.red;
+
+        int index = indexs[(int)IndexType.Prefab];
+        Transform cur = nodes[index].transform;
+        Handles.DrawSolidDisc(cur.position, Vector3.up, .5f);
+    }
+
+    #endregion
+
+    #region 
+
+
 
     #endregion
 }

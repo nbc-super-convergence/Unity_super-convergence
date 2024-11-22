@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using System.Collections;
 using System;
 
-public class UpdateInput : IInputAction
+public class ConnectInput : IInputAction
 {
     private BoardCreator b;
     private Stack<Action> stack = new();
     private bool isperformed = false;
-    private int performCount = 0;
+    private int performCount;
 
-    public UpdateInput(BoardCreator b)
+    public ConnectInput(BoardCreator b)
     {
         this.b = b;
     }
@@ -92,24 +92,33 @@ public class UpdateInput : IInputAction
 
     public void WASD(InputAction.CallbackContext context)
     {
-        Vector3 input = context.ReadValue<Vector3>();
+        if(context.performed)
+        {
+            Vector3 input = context.ReadValue<Vector3>();
+            int num = 0;
 
-        int num = 0;
+            if (input == Vector3.right) num = 1;
+            else if (input == Vector3.left) num = -1;
 
-        if (input == Vector3.right) num = 1;
-        else if (input == Vector3.left) num = -1;
+            performCount = (performCount + 1) % 2;
 
+            if (performCount == 1)
+            {
+                int index = b.indexs[(int)IndexType.Prefab];
+                int count = CustomCreate.nodes.Count;
 
-        performCount += 1;
-        if (performCount % 2 == 1)
-            b.StartCoroutine(WASD(num));
+                b.indexs[(int)IndexType.Prefab] = (index + num + count) % count;
+
+                b.StartCoroutine(WASD(num));
+            }
+        }
     }
 
     public IEnumerator WASD(int num)
     {
         float time = 0.0f;
 
-        while (performCount % 2 == 1)
+        while (performCount == 1)
         {
             time += Time.deltaTime;
 
@@ -127,6 +136,8 @@ public class UpdateInput : IInputAction
     }
     public void InputEnter()
     {
+        performCount = 0;
+
         b.actions[(int)InputType.WASD] += WASD;
         b.actions[(int)InputType.Arrow] += Arrow;
         b.actions[(int)InputType.BackSpace] += BackSpace;
