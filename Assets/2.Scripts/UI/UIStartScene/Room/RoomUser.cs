@@ -13,7 +13,7 @@ public class RoomUser : MonoBehaviour
     private bool isJoin = false;
     [SerializeField] private GameObject objReady;
 
-    public int playerId;
+    public int userId;  // 서버와 같은 값
 
     private void Awake()
     {
@@ -22,7 +22,7 @@ public class RoomUser : MonoBehaviour
     }
 
     
-    public void SetNickname(string inputNickname)
+    public void SetRoomUser(string inputNickname, int userId)
     {
         if (inputNickname == null || inputNickname == "")
         {
@@ -38,6 +38,8 @@ public class RoomUser : MonoBehaviour
             sbNickname.Append(inputNickname);
             nickNameTMP.text = sbNickname.ToString();
         }
+
+        this.userId = userId;
     }
     public void SetImage()
     {
@@ -55,6 +57,4 @@ public class RoomUser : MonoBehaviour
             objReady.SetActive(false);
         }
     }
-
-
 }

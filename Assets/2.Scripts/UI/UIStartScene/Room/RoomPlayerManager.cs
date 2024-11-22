@@ -17,11 +17,16 @@ public class RoomPlayerManager : MonoBehaviour
     string[] strings1 = { "박인수", "손효재", "정승연", "탁혁재" };
     string[] strings2 = { "손효재", "정승연", "", "" };
 
+    int[] ints0 = { 6521, 4789, 35478, 1123 };
+    int[] ints1 = { 1123, 6521, 4789, 35478 };
+    int[] ints2 = { 6521, 4789, 0, 0 };
+
+
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A)) ReceiveServer(strings0);
-        if (Input.GetKeyDown(KeyCode.S)) ReceiveServer(strings1);
-        if (Input.GetKeyDown(KeyCode.D)) ReceiveServer(strings2);
+        if (Input.GetKeyDown(KeyCode.A)) ReceiveServer(strings0, ints0);
+        if (Input.GetKeyDown(KeyCode.S)) ReceiveServer(strings1, ints1);
+        if (Input.GetKeyDown(KeyCode.D)) ReceiveServer(strings2, ints2);
     }
     #endregion
 
@@ -30,7 +35,7 @@ public class RoomPlayerManager : MonoBehaviour
     /// S2C_JoinRoomNotification 을 받았을 때 실행
     /// </summary>
     /// <param name="nickNames"></param>
-    public void ReceiveServer(string[] nickNames)
+    public void ReceiveServer(string[] nickNames, int[] userId)
     {
         for (int i = 0; i < sbUsers.Length; i++)
         {
@@ -40,7 +45,7 @@ public class RoomPlayerManager : MonoBehaviour
             }
             sbUsers[i].Clear();
             sbUsers[i].Append(nickNames[i]);
-            users[i].SetNickname(sbUsers[i].ToString());
+            users[i].SetRoomUser(sbUsers[i].ToString(), userId[i]);
             users[i].SetImage();
         }
 
