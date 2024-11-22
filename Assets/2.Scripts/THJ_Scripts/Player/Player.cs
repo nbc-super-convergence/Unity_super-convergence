@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.VisualScripting;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
@@ -215,6 +216,20 @@ public class Player : MonoBehaviour
         //벡터 : AddForce 이건 어떻게 보내지?
 
         SocketManager.Instance.OnSend(sendPlayerData);
+    }
+
+    /// <summary>
+    /// 받은 패킷을 Transform에 적용
+    /// </summary>
+    /// <param name="dir"></param>
+    public void SetPosition(Vector3 dir)
+    {
+        Vector2 characterRot = Vector2.zero;
+        characterRot.x = dir.x;
+        characterRot.y = dir.z;
+
+        transform.position = dir;
+        characterRotate.SetInput(characterRot);
     }
 
     public void ReceivePosition()

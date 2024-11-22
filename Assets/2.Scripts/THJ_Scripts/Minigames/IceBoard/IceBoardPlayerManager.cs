@@ -1,8 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
-using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class IceBoardPlayerManager : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class IceBoardPlayerManager : MonoBehaviour
     [SerializeField] private List<Player> multiPlayers;
     private GamePacket gamePacket = new ();
 
-    public int CurrentId { get; private set; } = 4;  //유저의 현재 아이디 (서버에서 가져올 거임)
+    public int CurrentId { get; private set; } = 2;  //유저의 현재 아이디 (서버에서 가져올 거임)
 
     private void Awake()
     {
@@ -24,6 +21,12 @@ public class IceBoardPlayerManager : MonoBehaviour
             _player.CurrentId = (i + 1);
             multiPlayers.Add(_player);
         }
+
+        //서버에 있는 데이터를 임포트
+        gamePacket.IcePlayerMoveNotification = new()
+        {
+            
+        };
     }
 
     private void Start()
@@ -33,6 +36,20 @@ public class IceBoardPlayerManager : MonoBehaviour
         {
             if (multiPlayers[i].CurrentId == CurrentId)
                 multiPlayers[i].EnablePlayer();
+        }
+    }
+
+    private void ReceivePosition()
+    {
+        var response = gamePacket.IcePlayerMoveNotification;
+
+        for (int i = 0; i < multiPlayers.Count; i++)
+        {
+            //내가 아닌 상대라면 상대가 이동한 값을 반영
+            if (CurrentId != gamePacket.IcePlayerMoveRequest.PlayerId)
+            {
+
+            }
         }
     }
 }
