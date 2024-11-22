@@ -207,17 +207,21 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SendPosition()
     {
-        //개인의 위치 및 회전을 서버로 전송
+        //회전
         sendPlayerData.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
-        sendPlayerData.IcePlayerMoveRequest.Position.X = transform.position.x;
-        sendPlayerData.IcePlayerMoveRequest.Position.Y = transform.position.y;
-        sendPlayerData.IcePlayerMoveRequest.Position.Z = transform.position.z;
+
         sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
+        //이걸 velocity나 normalize를 이용해서 이동하는 포지션으로
+        sendPlayerData.IcePlayerMoveRequest.Position.X = playerPos.x;
+        sendPlayerData.IcePlayerMoveRequest.Position.Y = playerPos.y;
+        sendPlayerData.IcePlayerMoveRequest.Position.Z = playerPos.z;
         sendPlayerData.IcePlayerMoveRequest.State = playerState;
-        sendPlayerData.IcePlayerMoveRequest.Vector.X = transform.position.x;
-        sendPlayerData.IcePlayerMoveRequest.Vector.Y = transform.position.y;
-        sendPlayerData.IcePlayerMoveRequest.Vector.Z = transform.position.z;
-        //벡터 : AddForce 이건 어떻게 보내지?
+        //Force 데이터
+        Vector3 _force = addCtrl.GetForce();
+        sendPlayerData.IcePlayerMoveRequest.Vector.X = _force.x;
+        sendPlayerData.IcePlayerMoveRequest.Vector.Y = _force.y;
+        sendPlayerData.IcePlayerMoveRequest.Vector.Z = _force.z;
+        //벡터 : AddForce 이게 맞나?
 
         SocketManager.Instance.OnSend(sendPlayerData);
     }
