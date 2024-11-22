@@ -49,6 +49,7 @@ public class IceBoardPlayerManager : MonoBehaviour
             if (CurrentId != gamePacket.IcePlayerMoveRequest.PlayerId)
             {
 
+                //multiPlayers[i].ReceivePosition()
             }
         }
     }

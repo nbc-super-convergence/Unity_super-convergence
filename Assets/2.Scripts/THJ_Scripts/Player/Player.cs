@@ -222,7 +222,7 @@ public class Player : MonoBehaviour
     /// 받은 패킷을 Transform에 적용
     /// </summary>
     /// <param name="dir"></param>
-    public void SetPosition(Vector3 dir)
+    public void ReceivePosition(Vector3 dir)
     {
         Vector2 characterRot = Vector2.zero;
         characterRot.x = dir.x;
@@ -230,10 +230,5 @@ public class Player : MonoBehaviour
 
         transform.position = dir;
         characterRotate.SetInput(characterRot);
-    }
-
-    public void ReceivePosition()
-    {
-        //서버에서 받은 값을 반영(?)
     }
 }
