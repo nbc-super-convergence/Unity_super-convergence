@@ -27,6 +27,8 @@ public class IceBoardPlayerManager : MonoBehaviour
         {
             
         };
+
+        CurrentId = GameManager.Instance.GetPlayerId();
     }
 
     private void Start()
