@@ -122,6 +122,12 @@ public class Player : MonoBehaviour
     {
         this.enabled = true;
         canInput.enabled = true;
+
+        //내가 참가했다고 패킷에 전송
+
+        sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
+        SendPosition();
+
     }
 
     //컨트롤러 속성 (이거 클래스 따로 빼야 되나?)
@@ -210,7 +216,6 @@ public class Player : MonoBehaviour
         //회전
         sendPlayerData.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
 
-        sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
         //이걸 velocity나 normalize를 이용해서 이동하는 포지션으로
         sendPlayerData.IcePlayerMoveRequest.Position.X = playerPos.x;
         sendPlayerData.IcePlayerMoveRequest.Position.Y = playerPos.y;

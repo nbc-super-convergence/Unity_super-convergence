@@ -23,10 +23,7 @@ public class IceBoardPlayerManager : MonoBehaviour
         }
 
         //서버에 있는 데이터를 임포트
-        gamePacket.IcePlayerMoveNotification = new()
-        {
-            
-        };
+        gamePacket.IceJoinRequest = new();
 
         CurrentId = GameManager.Instance.GetPlayerId();
     }
@@ -38,6 +35,14 @@ public class IceBoardPlayerManager : MonoBehaviour
         {
             if (multiPlayers[i].CurrentId == CurrentId)
                 multiPlayers[i].EnablePlayer();
+        }
+    }
+
+    private void Update()
+    {
+        for (int i = 0; i < multiPlayers.Count; i++)
+        {
+
         }
     }
 
