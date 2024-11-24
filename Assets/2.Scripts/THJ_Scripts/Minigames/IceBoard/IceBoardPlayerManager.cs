@@ -23,7 +23,11 @@ public class IceBoardPlayerManager : MonoBehaviour
         }
 
         //서버에 있는 데이터를 임포트
-        gamePacket.IceJoinRequest = new();
+        gamePacket.IcePlayerMoveNotification = new()
+        {
+            //형변환 있는 자료들을 각 플레이어에 적용
+
+        };
 
         CurrentId = GameManager.Instance.GetPlayerId();
     }
@@ -53,7 +57,9 @@ public class IceBoardPlayerManager : MonoBehaviour
 
     private void ReceivePosition()
     {
+        //SocketManager에서 Receive메서드로 받아서 전달
         var response = gamePacket.IcePlayerMoveNotification;
+            Debug.Log(response);
 
         if (response.Players.Count > 0)
         {
@@ -61,6 +67,7 @@ public class IceBoardPlayerManager : MonoBehaviour
             {
                 multiPlayers[i].ReceivePosition(new Vector3(response.Players[i].Position.X,
                     response.Players[i].Position.Y, response.Players[i].Position.Z));
+                Debug.Log($"{multiPlayers[i].gameObject.name} {response.Players[i].Position}");
             }
         }
         else

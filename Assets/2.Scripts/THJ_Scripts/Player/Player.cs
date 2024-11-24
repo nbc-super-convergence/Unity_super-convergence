@@ -27,8 +27,9 @@ public class Player : MonoBehaviour
     [Header("플레이어 속성")]
     [SerializeField] private float playerSpeed = 10f; //이동 속도
     [SerializeField] private float slideFactor = 1f; //미끄러짐의 감속 비율
-    private State playerState;
+    private State playerState = State.Idle;
     public int CurrentId { get; set; }  //플레이어의 현재 아이디
+    private bool imEnable = false;  //내가 사용자다!!!
 
     //서버에 보낼 데이터
     private GamePacket sendPlayerData = new ();
@@ -85,14 +86,15 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if(!damage.IsAlive)
+        if(damage.IsAlive)
         {
-            animState.Update();
-            animState.ChangeAnimation(animState.DeathAnim);
+            playerState = State.Idle;
         }
         else
         {
             playerState = State.Die;
+            animState.Update();
+            animState.ChangeAnimation(animState.DeathAnim);
         }
     }
 
@@ -122,7 +124,7 @@ public class Player : MonoBehaviour
     {
         this.enabled = true;
         canInput.enabled = true;
-
+        imEnable = true;
         //내가 참가했다고 패킷에 전송
 
         sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
@@ -191,8 +193,11 @@ public class Player : MonoBehaviour
         velCtrl.Move(playerRgdby.velocity); // 감속 효과
 
         //움직인걸 서버에 전송
-        if(SocketManager.Instance != null)  //방어코드
-            SendPosition();
+        if (SocketManager.Instance != null)  //방어코드
+        {
+            if(imEnable)
+                SendPosition();
+        }
     }
 
     //애니메이션 적용
@@ -217,15 +222,18 @@ public class Player : MonoBehaviour
         sendPlayerData.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
 
         //이걸 velocity나 normalize를 이용해서 이동하는 포지션으로
-        sendPlayerData.IcePlayerMoveRequest.Position.X = playerPos.x;
-        sendPlayerData.IcePlayerMoveRequest.Position.Y = playerPos.y;
-        sendPlayerData.IcePlayerMoveRequest.Position.Z = playerPos.z;
+        sendPlayerData.IcePlayerMoveRequest.Position.X = transform.position.x;
+        sendPlayerData.IcePlayerMoveRequest.Position.Y = transform.position.y;
+        sendPlayerData.IcePlayerMoveRequest.Position.Z = transform.position.z;
         sendPlayerData.IcePlayerMoveRequest.State = playerState;
+        //Debug.Log($"{playerPos} + {playerState}");
         //Force 데이터
         Vector3 _force = addCtrl.GetForce();
         sendPlayerData.IcePlayerMoveRequest.Vector.X = _force.x;
         sendPlayerData.IcePlayerMoveRequest.Vector.Y = _force.y;
         sendPlayerData.IcePlayerMoveRequest.Vector.Z = _force.z;
+        //Debug.Log(sendPlayerData);
+
         //벡터 : AddForce 이게 맞나?
 
         SocketManager.Instance.OnSend(sendPlayerData);
