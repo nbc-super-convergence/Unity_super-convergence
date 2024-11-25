@@ -43,7 +43,11 @@ public class BoardManager : Singleton<BoardManager>
         PlayerTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<PlayerTokenHandler>();
         //리스트에 플레이어 보관
         playerTokenHandlers.Add(handle);
+
         //handle.curNode = startNode.nextBoard[0];
+
+        //트로피칸 설정
+        //SetTrophyNode();
     }
 
     //임시코드
@@ -56,6 +60,7 @@ public class BoardManager : Singleton<BoardManager>
     {
         //주사위 돌림
         int rand = Random.Range(1, 7);
+
         //나온 주사위의 수를 플레이어에 입력
         Curplayer.GetDice(rand);
     }

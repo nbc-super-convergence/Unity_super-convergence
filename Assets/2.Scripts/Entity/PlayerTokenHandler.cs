@@ -5,10 +5,12 @@ public class PlayerTokenHandler : MonoBehaviour
 {
     private bool isTurn = false; //내 턴인지?
     private float speed = 5f;
+
     public int dice { get; private set; } //주사위 눈
 
     private IBoardNode curNode; //현재 위치한 노드
     public PlayerTokenData data;
+    [SerializeField] Transform character;
 
     public Queue<Transform> queue { get; private set; }
 
@@ -47,6 +49,7 @@ public class PlayerTokenHandler : MonoBehaviour
         if (isTurn)
         {
             Vector3 target = queue.Peek().position;
+            character.LookAt(queue.Peek());
 
             transform.position =
                 Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
@@ -61,8 +64,7 @@ public class PlayerTokenHandler : MonoBehaviour
                 queue.Dequeue();
             }
 
-            if (queue.Count == 0)
-                isTurn = false;
+            if (queue.Count == 0) isTurn = false;
         }
     }
 
@@ -76,6 +78,8 @@ public class PlayerTokenHandler : MonoBehaviour
     public void SetNode(Transform node,bool minus = false)
     {
         if(minus) dice -= 1;
+        if (dice < 0) return;        
+
         queue.Enqueue(node);
         node.TryGetComponent(out curNode);
     }
@@ -84,8 +88,6 @@ public class PlayerTokenHandler : MonoBehaviour
     {
         for (int i = 0; i < num; i++,dice--)
         {
-            Debug.Log(curNode);
-
             if (curNode.TryGetNode(out Transform node))
                 SetNode(node);
             else

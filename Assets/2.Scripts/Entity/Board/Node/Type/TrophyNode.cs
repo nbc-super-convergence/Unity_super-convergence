@@ -1,12 +1,17 @@
 using UnityEngine;
 
-public class TrophyNode : BaseNode,IToggle
+public class TrophyNode : BaseNode,IToggle,IPurchase
 {
     private bool isTrophy;
+    private int price;
+
+    public string message => $"{price}의 열쇠를 지불하여 트로피를 구매 할 수 있습니다.";
+
 
     private void Start()
     {
         BoardManager.Instance.trophyNode.Add(this);
+        isTrophy = true;
     }
 
     public void Toggle()
@@ -29,19 +34,34 @@ public class TrophyNode : BaseNode,IToggle
     //    return true;
     //}
 
-    public override void Action()
+    public async override void Action()
     {
-        //트로피 + 1
-        //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
+        if(isTrophy)
+        {
+            var player = BoardManager.Instance.Curplayer;
+            int index = BoardManager.Instance.curPlayerIndex;
+            IPurchase purchase = this;
 
-        //트로피 획득후 이동
-        //PlayerTokenHandler p = BoardManager.Instance.Curplayer;
-        //p.SetNode(targetNode, true);
-        //p.GetDice(0);
+            var ui = await UIManager.Show<PurchaseNodeUI>(purchase,index);
+        }
     }
 
     protected override bool IsStopCondition()
     {
         return isTrophy;
+    }
+
+    public void Purchase(int index)
+    {
+        ////트로피 + 1
+        //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
+
+    }
+
+    public void Cancle()
+    {
+        PlayerTokenHandler p = BoardManager.Instance.Curplayer;
+        p.SetNode(nodes[0],true);
+        p.GetDice(0);
     }
 }

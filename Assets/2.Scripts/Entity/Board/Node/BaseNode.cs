@@ -31,7 +31,8 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
 
         if (IsStopCondition())
         {
-            StartCoroutine(ArrivePlayer());
+            //Debug.Log(1);
+            //StartCoroutine(ArrivePlayer());
             return false;
         }
         else
@@ -40,20 +41,20 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
         return true;
     }
 
-    protected IEnumerator ArrivePlayer()
-    {
-        Transform p = BoardManager.Instance.Curplayer.transform;
+    //protected IEnumerator ArrivePlayer()
+    //{
+    //    Transform p = BoardManager.Instance.Curplayer.transform;
 
-        while(true)
-        {
-            if (transform.position.Equals(p.position))
-                break;
+    //    while(true)
+    //    {
+    //        if (transform.position.Equals(p.position))
+    //            break;
 
-            yield return null;
-        }
+    //        yield return null;
+    //    }
 
-        Action();
-    }
+    //    Action();
+    //}
 
     private void ActiveArrow(bool active)
     {

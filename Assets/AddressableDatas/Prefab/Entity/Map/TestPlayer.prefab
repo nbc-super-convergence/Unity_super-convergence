@@ -96,6 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aac0b175f6e9a94d8dde8eac483c178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curNode: {fileID: 0}
-  speed: 5
-  dice: 0
+  data:
+    position: {x: 0, y: 0, z: 0}
+    rotY: 0
+    keyAmount: 0
+    trophyAmount: 0
+    state: 0
+  character: {fileID: 5627500538086025904}

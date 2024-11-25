@@ -1,9 +1,13 @@
 using UnityEngine;
 
-public class AreaNode : BaseNode,IPurchase
+public class AreaNode : BaseNode, IPurchase
 {
     private int playerIndex = -1;
     [SerializeField] MeshRenderer plane;
+    int price;
+
+    string IPurchase.message => $"{price}의 열쇠를 지불하여 해당 칸을 구매 할 수 있습니다.";
+
 
     public async override void Action()
     {
@@ -16,19 +20,23 @@ public class AreaNode : BaseNode,IPurchase
             return;
         }
 
-        var m = BoardManager.Instance;
-        var p = m.Curplayer;
-        int index = m.playerTokenHandlers.IndexOf(p);
+        //var m = BoardManager.Instance;
+        //int index = m.playerTokenHandlers.IndexOf(p);
 
-        if (playerIndex == -1)
+        var player = BoardManager.Instance.Curplayer;
+        int index = BoardManager.Instance.curPlayerIndex;
+        IPurchase purchase = this;
+
+        //if (playerIndex == -1)
+        //{
+        //    var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
+        //    return;
+        //}
+
+        if (playerIndex != index)
         {
-            var ui = await UIManager.Show<PurchaseNodeUI>(this, index);
-            return;
-        }
-        else if (playerIndex != index)
-        {
-            Damage(p.data);
-            var ui = await UIManager.Show<PurchaseNodeUI>(this, index);
+            if (playerIndex != -1) Damage(player.data);
+            var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         }
     }
     private void Damage(PlayerTokenData p)
@@ -41,5 +49,12 @@ public class AreaNode : BaseNode,IPurchase
     {
         playerIndex = index;
         plane.material = BoardManager.Instance.materials[index];
+    }
+
+    public void Cancle()
+    {
+        PlayerTokenHandler p = BoardManager.Instance.Curplayer;
+        p.SetNode(nodes[0],true);
+        p.GetDice(0);
     }
 }

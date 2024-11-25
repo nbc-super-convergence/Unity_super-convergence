@@ -1,20 +1,23 @@
+using System;
 using TMPro;
+using UnityEngine;
 
 public class PurchaseNodeUI : UIBase
 {
-    public TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI content;
+    //[SerializeField] TextMeshProUGUI price;
 
-    private int requireAmount = 0; 
     private IPurchase action;
     private int index;
 
     public override void Opened(object[] param)
     {
         base.Opened(param);
-        text.text = $"{requireAmount}의 열쇠를 지불하여 구매가 가능합니다.";
-
         action = (IPurchase)param[0];
         index = (int)param[1];
+
+        content.text = action.message;
+        //price.text = action.price.ToString();
     }
 
     //구매 기능
@@ -32,4 +35,9 @@ public class PurchaseNodeUI : UIBase
         SetActive(false);
     }
 
+    public void Cancle()
+    {
+        action.Cancle();
+        SetActive(false);
+    }
 }

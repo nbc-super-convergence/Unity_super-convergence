@@ -16,7 +16,9 @@ public interface IAction
 
 public interface IPurchase
 {
+    string message { get; }
     void Purchase(int index);
+    void Cancle();
 }
 
 public interface IToggle
