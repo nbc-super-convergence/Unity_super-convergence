@@ -49,6 +49,8 @@ public class AreaNode : BaseNode, IPurchase
     {
         playerIndex = index;
         plane.material = BoardManager.Instance.materials[index];
+
+        Cancle();
     }
 
     public void Cancle()
@@ -56,5 +58,7 @@ public class AreaNode : BaseNode, IPurchase
         PlayerTokenHandler p = BoardManager.Instance.Curplayer;
         p.SetNode(nodes[0],true);
         p.GetDice(0);
+
+        BoardManager.Instance.TestTurnEnd();
     }
 }

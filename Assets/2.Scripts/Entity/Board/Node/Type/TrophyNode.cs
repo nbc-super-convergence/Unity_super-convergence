@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TrophyNode : BaseNode,IToggle,IPurchase
@@ -11,7 +12,6 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
     private void Start()
     {
         BoardManager.Instance.trophyNode.Add(this);
-        isTrophy = true;
     }
 
     public void Toggle()
@@ -56,6 +56,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         ////Æ®·ÎÇÇ + 1
         //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
 
+        Cancle();
     }
 
     public void Cancle()
@@ -63,5 +64,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         PlayerTokenHandler p = BoardManager.Instance.Curplayer;
         p.SetNode(nodes[0],true);
         p.GetDice(0);
+
+        BoardManager.Instance.TestTurnEnd();
     }
 }

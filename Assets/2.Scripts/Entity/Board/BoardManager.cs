@@ -16,7 +16,7 @@ public class BoardManager : Singleton<BoardManager>
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
-    private int playerIndex = 0;
+    [SerializeField] private int playerIndex = 0;
 
     public List<IToggle> trophyNode = new List<IToggle>();
     private int prevTrophyIndex = -1;
@@ -39,10 +39,13 @@ public class BoardManager : Singleton<BoardManager>
         base.Awake();
         isDontDestroyOnLoad = false;
 
-        //시작 지점에 플레이어 생성
-        PlayerTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<PlayerTokenHandler>();
-        //리스트에 플레이어 보관
-        playerTokenHandlers.Add(handle);
+        for(int i =0; i < 2; i++)
+        {
+            //시작 지점에 플레이어 생성
+            PlayerTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<PlayerTokenHandler>();
+            //리스트에 플레이어 보관
+            playerTokenHandlers.Add(handle);
+        }
 
         //handle.curNode = startNode.nextBoard[0];
 
@@ -67,7 +70,13 @@ public class BoardManager : Singleton<BoardManager>
 
     public void TestTurnEnd()
     {
-        playerIndex++;
+        if(Curplayer.IsTurnEnd())
+        {
+            //(현재인원 + 1) % (현재인원 + 1)
+            int count = playerTokenHandlers.Count;
+            playerIndex = (playerIndex + 1) % (count + 1);
+            //playerIndex++;
+        }
     }
 
     public void SetTrophyNode()

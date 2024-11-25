@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
+using System;
 
 public class PlayerTokenHandler : MonoBehaviour
 {
@@ -91,9 +93,29 @@ public class PlayerTokenHandler : MonoBehaviour
             if (curNode.TryGetNode(out Transform node))
                 SetNode(node);
             else
+            {
+                Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                StartCoroutine(ArrivePlayer(action, curNode.transform));
                 break;
+            }
         }
 
         if(queue.Count > 0) isTurn = true;
+    }
+
+    public bool IsTurnEnd() => (dice == 0 && queue.Count == 0);
+
+    protected IEnumerator ArrivePlayer(Action action,Transform t)
+    {
+        while (true)
+        {
+            if (transform.position.Equals(t.position))
+                break;
+
+            yield return null;
+        }
+
+        action?.Invoke();
     }
 }
