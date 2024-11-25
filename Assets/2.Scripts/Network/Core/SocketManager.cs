@@ -26,9 +26,8 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
-        int CurrentId = response.PlayerId;
-        Vector3 myStartPos = new Vector3(response.Position.X, response.Position.Y, response.Position.Z);
-        float myRotY = response.Rotation;
+
+        IceBoardPlayerManager.Instance.SpawnPosition(response);
     }
 
     //나의 플레이어 움직임 Send.
@@ -43,6 +42,10 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IcePlayerMoveNotification;
         int playerSize = response.Players.Count;
         PlayerData data = response.Players[0];
+
+        IceBoardPlayerManager.Instance.ReceivePosition(response);
+
+        //Debug.Log(response);
     }
 
     //새로운 벡터 선언 (임시로)
@@ -55,4 +58,15 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
             Z = other.z,
         };
     }
+
+    public static Vector3 ConvertVector3(Vector other)
+    {
+        return new Vector3()
+        {
+            x = other.X,
+            y = other.Y,
+            z = other.Z
+        };
+    }
 }
+

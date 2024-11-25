@@ -57,16 +57,6 @@ public class Player : MonoBehaviour
         playerRgdby.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
 
         canInput.enabled = false;
-
-        //gamePacket Payload (기본 초기화 후 서버에 전송)
-        sendPlayerData.IcePlayerMoveRequest = new()
-        {
-            PlayerId = CurrentId,
-            Rotation = characterRotate.transform.rotation.y,
-            Vector = SocketManager.CreateVector(playerPos),
-            Position = SocketManager.CreateVector(playerPos), //이거는 생성자 필요할 듯
-            State = playerState
-        };
     }
 
     private void Start()
@@ -231,13 +221,32 @@ public class Player : MonoBehaviour
     /// 받은 패킷을 Transform에 적용
     /// </summary>
     /// <param name="dir"></param>
-    public void ReceivePosition(GamePacket packet)
+    public void ReceivePosition(S2C_IcePlayerMoveNotification response)
     {
         //if (CurrentId == Players[i].PlayerId) Receive 무시.
 
-        Vector3 getPos = Vector3.zero;
-        Vector3 getForce = Vector3.zero;
-        float getRot = 0f;
+        //Vector3 getPos = response.Players[0].Position.ToVector3();
+        //Vector3 getForce = response.Players[0].Force.ToVector3();
+        //float getRot = response.Players[0].Rotation;
+        //playerState = response.Players[0].State;
+    }
 
+    /// <summary>
+    /// 이건 Spawn했을 때 적용 (시작할 때)
+    /// </summary>
+    /// <param name="response"></param>
+    public void ReceivePosition(S2C_IcePlayerSpawnNotification response)
+    {
+        //Vector3 getPos = Vector3.zero;
+        Vector getPos = response.Position;
+        Vector getForce = response.Force;
+        float getRot = response.Rotation;
+
+        playerPos = SocketManager.ConvertVector3(getPos);
+        characterRotate.SetRotationY(getRot);
+
+        transform.position = playerPos; //결과를 반영
+
+        Debug.Log(response);
     }
 }
