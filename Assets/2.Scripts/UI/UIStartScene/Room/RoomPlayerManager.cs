@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class RoomPlayerManager : MonoBehaviour
+public class RoomPlayerManager : Singleton<RoomPlayerManager>
 {
     [SerializeField]private RoomUser[] users = new RoomUser[4];
     //private int currentUserCount = 0;
@@ -69,4 +69,17 @@ public class RoomPlayerManager : MonoBehaviour
     {
         users[index].Ready(isReady);
     }
+
+    #region 소켓매니저에 작성할 메서드들
+
+
+    #endregion
+}
+
+
+public class UserData
+{
+    public int userId;
+    public string nickname;
+    public string level;
 }
