@@ -31,9 +31,6 @@ public class Player : MonoBehaviour
     public int CurrentId { get; set; }  //플레이어의 현재 아이디
     private bool imEnable = false;  //내가 사용자다!!!
 
-    //서버에 보낼 데이터
-    private GamePacket sendPlayerData = new ();
-
     /// <summary>
     /// 컴포넌트 정의
     /// </summary>
@@ -218,25 +215,18 @@ public class Player : MonoBehaviour
     /// </summary>
     public void SendPosition()
     {
-        //회전
-        sendPlayerData.IcePlayerMoveRequest.Rotation = characterRotate.transform.rotation.y;
+        GamePacket packet = new();
 
-        //이걸 velocity나 normalize를 이용해서 이동하는 포지션으로
-        sendPlayerData.IcePlayerMoveRequest.Position.X = transform.position.x;
-        sendPlayerData.IcePlayerMoveRequest.Position.Y = transform.position.y;
-        sendPlayerData.IcePlayerMoveRequest.Position.Z = transform.position.z;
-        sendPlayerData.IcePlayerMoveRequest.State = playerState;
-        //Debug.Log($"{playerPos} + {playerState}");
-        //Force 데이터
-        Vector3 _force = addCtrl.GetForce();
-        sendPlayerData.IcePlayerMoveRequest.Vector.X = _force.x;
-        sendPlayerData.IcePlayerMoveRequest.Vector.Y = _force.y;
-        sendPlayerData.IcePlayerMoveRequest.Vector.Z = _force.z;
-        //Debug.Log(sendPlayerData);
+        packet.IcePlayerMoveRequest = new()
+        {
+            //PlayerId = IceBoardPlayerManager.instan
+            Position = SocketManager.CreateVector(transform.position),
+            Force = SocketManager.CreateVector(addCtrl.GetForce()),
+            Rotation = characterRotate.transform.rotation.y,
+            State = playerState
+        };
 
-        //벡터 : AddForce 이게 맞나?
-
-        SocketManager.Instance.OnSend(sendPlayerData);
+        SocketManager.Instance.OnSend(packet);
     }
 
     /// <summary>
