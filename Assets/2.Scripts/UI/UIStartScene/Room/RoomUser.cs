@@ -14,6 +14,7 @@ public class RoomUser : MonoBehaviour
     [SerializeField] private GameObject objReady;
 
     public int userId;  // 서버와 같은 값
+    private string nickNameEMPTY = "EMPTY";
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class RoomUser : MonoBehaviour
         if (inputNickname == null || inputNickname == "")
         {
             sbNickname.Clear();
-            sbNickname.Append("EMPTY");
+            sbNickname.Append(nickNameEMPTY);
             nickNameTMP.text = sbNickname.ToString();
             return;
         }        
@@ -56,5 +57,11 @@ public class RoomUser : MonoBehaviour
         {
             objReady.SetActive(false);
         }
+    }
+
+    public void LeaveRoomUser()
+    {
+        nickNameTMP.text = nickNameEMPTY;
+        objReady.SetActive(false);
     }
 }
