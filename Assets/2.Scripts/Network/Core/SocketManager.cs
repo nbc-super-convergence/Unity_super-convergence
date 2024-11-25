@@ -4,6 +4,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using static GamePacket;
+using UnityEngine.UIElements;
 
 public class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -19,10 +20,13 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IceJoinRequest;
     }
 
-    //다른 플레이어 스폰 Receive.
+    //나의 스폰 알림 Receive.
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
+        int CurrentId = response.PlayerType;
+        Vector3 myStartPos = new Vector3(response.Position.X, response.Position.Y, response.Position.Z);
+        float myRotY = response.Rotation;
     }
 
     //나의 플레이어 움직임 Send.
