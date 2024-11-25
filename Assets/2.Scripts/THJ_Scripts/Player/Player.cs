@@ -130,8 +130,6 @@ public class Player : MonoBehaviour
         canInput.enabled = true;
         imEnable = true;
         //내가 참가했다고 패킷에 전송
-
-        sendPlayerData.IcePlayerMoveRequest.PlayerId = CurrentId;
         SendPosition();
 
     }
@@ -235,37 +233,11 @@ public class Player : MonoBehaviour
     /// <param name="dir"></param>
     public void ReceivePosition(GamePacket packet)
     {
-        var response = packet.IcePlayerMoveNotification;
+        //if (CurrentId == Players[i].PlayerId) Receive 무시.
 
         Vector3 getPos = Vector3.zero;
         Vector3 getForce = Vector3.zero;
         float getRot = 0f;
 
-        if (response == null)
-            return;
-        else
-        {
-            for (int i = 0; i < response.Players.Count; i++)
-            {
-                Debug.Log(response.Players);
-                if (response.Players[i].PlayerId == CurrentId)
-                {
-                    getPos.x = response.Players[i].Position.X;
-                    getPos.y = response.Players[i].Position.Y;
-                    getPos.z = response.Players[i].Position.Z;
-
-                    getRot = response.Players[i].Rotation;
-
-                    getForce.x = response.Players[i].Vector.X;
-                    getForce.y = response.Players[i].Vector.Y;
-                    getForce.z = response.Players[i].Vector.Z;
-
-                    transform.position = getPos;
-                    characterRotate.SetRotationY(getRot);
-                    //addCtrl.SetForce(getForce);
-                    playerState = response.Players[i].State;
-                }
-            }
-        }
     }
 }

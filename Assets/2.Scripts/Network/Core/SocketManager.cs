@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using static GamePacket;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
+using static S2C_IcePlayerMoveNotification.Types;
 
 public class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -24,7 +26,7 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
-        int CurrentId = response.PlayerType;
+        int CurrentId = response.PlayerId;
         Vector3 myStartPos = new Vector3(response.Position.X, response.Position.Y, response.Position.Z);
         float myRotY = response.Rotation;
     }
@@ -39,6 +41,8 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerMoveNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerMoveNotification;
+        int playerSize = response.Players.Count;
+        PlayerData data = response.Players[0];
     }
 
     //새로운 벡터 선언 (임시로)
