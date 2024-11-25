@@ -21,6 +21,11 @@ public class CharacterRotate : MonoBehaviour
             _rotationY = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
     }
 
+    public void SetRotationY(float angle)
+    {
+        _rotationY = angle; 
+    }
+
     /// <summary>
     /// 갱신한 _rotationY값을 각도에 설정
     /// </summary>

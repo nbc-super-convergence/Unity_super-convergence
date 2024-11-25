@@ -11,6 +11,15 @@ public class IceBoardPlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        //소켓에서 받아오기
+        SocketManager.Instance.Init();
+
+        //서버에 있는 데이터를 임포트
+        gamePacket.IcePlayerMoveNotification = new()
+        {
+
+        };
+
         multiPlayers = new List<Player>(4);
 
         //전체 플레이어에서 유저 등록(?)
@@ -22,12 +31,6 @@ public class IceBoardPlayerManager : MonoBehaviour
             multiPlayers.Add(_player);
         }
 
-        //서버에 있는 데이터를 임포트
-        gamePacket.IcePlayerMoveNotification = new()
-        {
-            //형변환 있는 자료들을 각 플레이어에 적용
-
-        };
 
         CurrentId = GameManager.Instance.GetPlayerId();
     }
@@ -44,10 +47,7 @@ public class IceBoardPlayerManager : MonoBehaviour
 
     private void Update()
     {
-        for (int i = 0; i < multiPlayers.Count; i++)
-        {
 
-        }
     }
 
     private void FixedUpdate()
@@ -57,22 +57,13 @@ public class IceBoardPlayerManager : MonoBehaviour
 
     private void ReceivePosition()
     {
-        //SocketManager에서 Receive메서드로 받아서 전달
-        var response = gamePacket.IcePlayerMoveNotification;
-            Debug.Log(response);
-
-        if (response.Players.Count > 0)
+        //SocketManager에서 각 플레이어의Receive메서드로 받아서 전달
+        for (int i = 0; i < multiPlayers.Count; i++)
         {
-            for (int i = 0; i < multiPlayers.Count; i++)
+            if (CurrentId != (i + 1))  //내가 아닌 상대라면
             {
-                multiPlayers[i].ReceivePosition(new Vector3(response.Players[i].Position.X,
-                    response.Players[i].Position.Y, response.Players[i].Position.Z));
-                Debug.Log($"{multiPlayers[i].gameObject.name} {response.Players[i].Position}");
+                multiPlayers[i].ReceivePosition(gamePacket);    //패킷에서 데이터 받기
             }
-        }
-        else
-        {
-            Debug.Log($"{response.Players.Count}");
         }
     }
 }

@@ -25,7 +25,13 @@ public class IceBoardFloor : MonoBehaviour
     /// <param name="length">받아올 길이</param>
     public void SetLength(float length)
     {
-        StartCoroutine(DecreaseFloor(length));
+        /* 서버에서 받아서 적용하기 */
+
+        //한번에 줄어들기
+        ApplyLength(new Vector3(length, transform.localScale.y, length));
+
+        //서서히 줄어들기
+        //StartCoroutine(DecreaseFloor(length));
     }
 
     /// <summary>

@@ -67,10 +67,10 @@ public class IceBoardTimeManager : MonoBehaviour
     {
         if (sec == 0)
         {
-            GameOver = true;
+            GameOver = true;    //끝났다고 서버에 전송
             return;
         }
-        else if(sec <= 60)
+        else if(sec <= 60)  //아래 데이터들을 서버에 전송
         {
             iceBoardFloor.SetLength(5);
         }    

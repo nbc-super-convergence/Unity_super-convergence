@@ -60,6 +60,16 @@ public class Player : MonoBehaviour
         playerRgdby.freezeRotation = true; // Rigidbody의 회전을 잠가 직접 회전 제어
 
         canInput.enabled = false;
+
+        //gamePacket Payload (기본 초기화 후 서버에 전송)
+        sendPlayerData.IcePlayerMoveRequest = new()
+        {
+            PlayerId = CurrentId,
+            Rotation = characterRotate.transform.rotation.y,
+            Vector = SocketManager.CreateVector(playerPos),
+            Position = SocketManager.CreateVector(playerPos), //이거는 생성자 필요할 듯
+            State = playerState
+        };
     }
 
     private void Start()
@@ -72,16 +82,6 @@ public class Player : MonoBehaviour
         //애니메이션 및 상태 초기
         animState.ChangeAnimation(animState.IdleAnim);
         playerState = State.Idle;
-
-        //gamePacket Payload (기본 초기화 후 서버에 전송)
-        sendPlayerData.IcePlayerMoveRequest = new()
-        {
-            PlayerId = CurrentId,
-            Rotation = characterRotate.transform.rotation.y,
-            Vector = SocketManager.CreateVector(playerPos),
-            Position = SocketManager.CreateVector(playerPos), //이거는 생성자 필요할 듯
-            State = playerState
-        };
     }
 
     private void Update()
@@ -105,6 +105,13 @@ public class Player : MonoBehaviour
         {
             BasicMove(playerMoveInput);
             characterRotate.SetInput(playerMoveInput);
+        }
+
+        //움직인걸 서버에 전송
+        if (SocketManager.Instance != null)  //방어코드
+        {
+            if (imEnable)
+                SendPosition();
         }
     }
 
@@ -191,13 +198,6 @@ public class Player : MonoBehaviour
 
         addCtrl.Move(playerPos);    //미끄러짐 효과
         velCtrl.Move(playerRgdby.velocity); // 감속 효과
-
-        //움직인걸 서버에 전송
-        if (SocketManager.Instance != null)  //방어코드
-        {
-            if(imEnable)
-                SendPosition();
-        }
     }
 
     //애니메이션 적용
@@ -243,13 +243,39 @@ public class Player : MonoBehaviour
     /// 받은 패킷을 Transform에 적용
     /// </summary>
     /// <param name="dir"></param>
-    public void ReceivePosition(Vector3 dir)
+    public void ReceivePosition(GamePacket packet)
     {
-        Vector2 characterRot = Vector2.zero;
-        characterRot.x = dir.x;
-        characterRot.y = dir.z;
+        var response = packet.IcePlayerMoveNotification;
 
-        transform.position = dir;
-        characterRotate.SetInput(characterRot);
+        Vector3 getPos = Vector3.zero;
+        Vector3 getForce = Vector3.zero;
+        float getRot = 0f;
+
+        if (response == null)
+            return;
+        else
+        {
+            for (int i = 0; i < response.Players.Count; i++)
+            {
+                Debug.Log(response.Players);
+                if (response.Players[i].PlayerId == CurrentId)
+                {
+                    getPos.x = response.Players[i].Position.X;
+                    getPos.y = response.Players[i].Position.Y;
+                    getPos.z = response.Players[i].Position.Z;
+
+                    getRot = response.Players[i].Rotation;
+
+                    getForce.x = response.Players[i].Vector.X;
+                    getForce.y = response.Players[i].Vector.Y;
+                    getForce.z = response.Players[i].Vector.Z;
+
+                    transform.position = getPos;
+                    characterRotate.SetRotationY(getRot);
+                    //addCtrl.SetForce(getForce);
+                    playerState = response.Players[i].State;
+                }
+            }
+        }
     }
 }
