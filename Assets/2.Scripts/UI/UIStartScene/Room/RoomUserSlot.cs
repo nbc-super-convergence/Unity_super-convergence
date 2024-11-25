@@ -5,11 +5,10 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomUser : MonoBehaviour
+public class RoomUserSlot : MonoBehaviour
 {
     private TMP_Text nickNameTMP;
-    private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.
-    private StringBuilder sbNickname = new();
+    private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.    
     private bool isJoin = false;
     [SerializeField] private GameObject objReady;
 
@@ -27,17 +26,13 @@ public class RoomUser : MonoBehaviour
     {
         if (inputNickname == null || inputNickname == "")
         {
-            sbNickname.Clear();
-            sbNickname.Append(nickNameEMPTY);
-            nickNameTMP.text = sbNickname.ToString();
+            nickNameTMP.text = nickNameEMPTY;
             return;
         }        
         else
         {
             isJoin = true;
-            sbNickname.Clear();
-            sbNickname.Append(inputNickname);
-            nickNameTMP.text = sbNickname.ToString();
+            nickNameTMP.text = inputNickname;
         }
 
         this.userId = userId;

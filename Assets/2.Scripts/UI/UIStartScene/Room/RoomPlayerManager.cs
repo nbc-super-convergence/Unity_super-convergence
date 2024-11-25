@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class RoomPlayerManager : Singleton<RoomPlayerManager>
 {
-    [SerializeField]private RoomUser[] users = new RoomUser[4]; // TODO:: 바꿀수도 있음.
+    [SerializeField]private RoomUserSlot[] users = new RoomUserSlot[4]; // TODO:: 바꿀수도 있음.
 
     [SerializeField] private StringBuilder sbUser = new StringBuilder();
 
@@ -57,7 +57,7 @@ public class RoomPlayerManager : Singleton<RoomPlayerManager>
     // UserData 한개만 받았을때 실행
     public void JoinRoomNotification(UserData data)
     {
-        foreach (RoomUser user in users)
+        foreach (RoomUserSlot user in users)
         {
             if(user == null)
             {
@@ -66,6 +66,9 @@ public class RoomPlayerManager : Singleton<RoomPlayerManager>
             }
         }
     }
+
+    // 새로입장한 유저를 위해 모두 받기 -> 로비Scene에서 처리?
+    
 
     #endregion
 
@@ -110,7 +113,7 @@ public class RoomPlayerManager : Singleton<RoomPlayerManager>
     public void LeaveRoomUserNotification(int playerId)
     {
         // TODO::user의 처리에 맞게 바꾸기
-        foreach(RoomUser user in users)
+        foreach(RoomUserSlot user in users)
         {
             if(user.userId == playerId)
             {
