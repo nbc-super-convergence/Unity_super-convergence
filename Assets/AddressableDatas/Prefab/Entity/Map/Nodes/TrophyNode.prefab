@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5391501420922550351}
   - component: {fileID: 8335209255579362173}
   - component: {fileID: 3386678100148254745}
-  - component: {fileID: -8519775303038582821}
+  - component: {fileID: 3601316809729828348}
   m_Layer: 0
   m_Name: TrophyNode
   m_TagString: Untagged
@@ -108,7 +108,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 59095861c85e0134aa6db61cda5ee6be, type: 3}
---- !u!114 &-8519775303038582821
+--- !u!114 &3601316809729828348
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,11 +117,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1570593283139917361}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f6853d4b45cdc64a94d652520256033, type: 3}
+  m_Script: {fileID: 11500000, guid: 3ccaa0ea2b88727488f550998b8453cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nodes: []
-  arrowPrefab: {fileID: 0}
+  arrows: []
 --- !u!1 &8120141757118553159
 GameObject:
   m_ObjectHideFlags: 0

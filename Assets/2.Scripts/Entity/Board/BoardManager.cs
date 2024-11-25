@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 //전부 테스트 코드
 public class BoardManager : Singleton<BoardManager>
@@ -48,7 +49,7 @@ public class BoardManager : Singleton<BoardManager>
     //임시코드
     //public IEnumerator Test()
     //{
-    //    yield return ResourceManager.Instance.Init();
+    //    yield return GameManager.Instance.InitApp();
     //}
 
     public void TestRandomDice()
@@ -56,7 +57,7 @@ public class BoardManager : Singleton<BoardManager>
         //주사위 돌림
         int rand = Random.Range(1, 7);
         //나온 주사위의 수를 플레이어에 입력
-        playerTokenHandlers[playerIndex].GetDice(3);
+        Curplayer.GetDice(rand);
     }
 
     public void TestTurnEnd()

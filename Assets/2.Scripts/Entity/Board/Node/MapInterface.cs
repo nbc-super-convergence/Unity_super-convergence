@@ -14,12 +14,12 @@ public interface IAction
     void Action();
 }
 
-public interface IPurchase : IAction
+public interface IPurchase
 {
     void Purchase(int index);
 }
 
-public interface IToggle : IAction
+public interface IToggle
 {
     void Toggle();
 }

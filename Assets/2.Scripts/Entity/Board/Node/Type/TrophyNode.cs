@@ -14,20 +14,20 @@ public class TrophyNode : BaseNode,IToggle
         isTrophy = !isTrophy;
     }
 
-    public override bool TryGetNode(out Transform node)
-    {
-        node = transform;
+    //public override bool TryGetNode(out Transform node)
+    //{
+    //    node = transform;
 
-        if (nodes.Count > 1 || isTrophy)
-        {
-            StartCoroutine(ArrivePlayer());
-            return false;
-        }
-        else
-            node = nodes[0];
+    //    if (nodes.Count > 1 || isTrophy)
+    //    {
+    //        StartCoroutine(ArrivePlayer());
+    //        return false;
+    //    }
+    //    else
+    //        node = nodes[0];
 
-        return true;
-    }
+    //    return true;
+    //}
 
     public override void Action()
     {
@@ -38,5 +38,10 @@ public class TrophyNode : BaseNode,IToggle
         //PlayerTokenHandler p = BoardManager.Instance.Curplayer;
         //p.SetNode(targetNode, true);
         //p.GetDice(0);
+    }
+
+    protected override bool IsStopCondition()
+    {
+        return isTrophy;
     }
 }

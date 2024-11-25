@@ -9,11 +9,13 @@ public enum PlayerTokenState
 }
 
 [Serializable]
-public class PlayerTokenData 
+public class PlayerTokenData
 {
-    public Vector3 float3;
-    public float hp;
-    public PlayerTokenState state;
+    public Vector3 position;
+    public float rotY;
+
     public int keyAmount; //재화, 이름 언제든지 수정가능
     public int trophyAmount;
+
+    public PlayerTokenState state;
 }

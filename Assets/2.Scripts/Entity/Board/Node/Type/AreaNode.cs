@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class AreaNode : BaseNode,IPurchase
@@ -8,6 +7,15 @@ public class AreaNode : BaseNode,IPurchase
 
     public async override void Action()
     {
+        int c = BoardManager.Instance.Curplayer.queue.Count;
+        int d = BoardManager.Instance.Curplayer.dice;
+
+        if (c > 1 || d > 0)
+        {
+            base.Action();
+            return;
+        }
+
         var m = BoardManager.Instance;
         var p = m.Curplayer;
         int index = m.playerTokenHandlers.IndexOf(p);
@@ -17,8 +25,7 @@ public class AreaNode : BaseNode,IPurchase
             var ui = await UIManager.Show<PurchaseNodeUI>(this, index);
             return;
         }
-
-        if (playerIndex != index)
+        else if (playerIndex != index)
         {
             Damage(p.data);
             var ui = await UIManager.Show<PurchaseNodeUI>(this, index);

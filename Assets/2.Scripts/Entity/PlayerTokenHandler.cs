@@ -5,7 +5,7 @@ public class PlayerTokenHandler : MonoBehaviour
 {
     private bool isTurn = false; //내 턴인지?
     private float speed = 5f;
-    private int dice; //주사위 눈
+    public int dice { get; private set; } //주사위 눈
 
     private IBoardNode curNode; //현재 위치한 노드
     public PlayerTokenData data;
@@ -54,8 +54,8 @@ public class PlayerTokenHandler : MonoBehaviour
             if (transform.position == target)
             {
                 Transform node = queue.Peek();
-                
-                if(node.TryGetComponent(out IAction n))
+
+                if (node.TryGetComponent(out IAction n))
                     n.Action();
 
                 queue.Dequeue();
@@ -84,6 +84,8 @@ public class PlayerTokenHandler : MonoBehaviour
     {
         for (int i = 0; i < num; i++,dice--)
         {
+            Debug.Log(curNode);
+
             if (curNode.TryGetNode(out Transform node))
                 SetNode(node);
             else
