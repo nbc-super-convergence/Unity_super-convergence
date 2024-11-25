@@ -37,7 +37,7 @@ public class CustomCreate : Editor
         if(g != null)
             nodes = g.GetComponentsInChildren<BaseNode>().ToList();
     }
-
+    
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
@@ -77,6 +77,9 @@ public class CustomCreate : Editor
                 break;
             case 2:
                 DrawSelect();
+                break;
+            case 3:
+
                 break;
         }
     }
@@ -248,14 +251,14 @@ public class CustomCreate : Editor
 
     void DrawSelect()
     {
+        List<GameObject> list=  new List<GameObject>();
+
         foreach(var t in selects)
-        {
-            Handles.color = Color.green;
-            Handles.DrawSolidDisc(t.position, Vector3.up, 1f);
-        }
+            list.Add(t.gameObject);
+
+        Handles.DrawOutline(list,Color.green);
 
         Handles.color = Color.red;
-
         int index = indexs[(int)IndexType.Prefab];
         Transform cur = nodes[index].transform;
         Handles.DrawSolidDisc(cur.position, Vector3.up, .5f);
@@ -263,7 +266,7 @@ public class CustomCreate : Editor
 
     #endregion
 
-    #region 
+    #region Á¤·Ä
 
 
 
