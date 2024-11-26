@@ -7,7 +7,7 @@ public class MiniPlayer : MonoBehaviour
     /*Controllers*/
     //IController curCtrl;
 
-    private Vector3 nextPos;
+    public Vector3 nextPos;
 
     [Header("Components")]
     public Rigidbody rb;

@@ -698,6 +698,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
         type: 3}
+      propertyPath: nextPos.x
+      value: 5.41985
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.y
+      value: 1.328
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.z
+      value: 4.445722
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
       propertyPath: MiniPlayerId
       value: 2
       objectReference: {fileID: 0}
@@ -1372,6 +1387,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.x
+      value: -5.562097
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.y
+      value: 1.328
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.z
+      value: -6.31809
       objectReference: {fileID: 0}
     - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
         type: 3}
@@ -2362,6 +2392,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: P1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.x
+      value: -5.799735
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.y
+      value: 1.328
+      objectReference: {fileID: 0}
+    - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
+        type: 3}
+      propertyPath: nextPos.z
+      value: 3.855657
       objectReference: {fileID: 0}
     - target: {fileID: 7443276078078182267, guid: 2f0b3db1c6f68bd4c87aa9f1a92fb574,
         type: 3}
