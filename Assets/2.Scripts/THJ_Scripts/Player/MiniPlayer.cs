@@ -7,6 +7,8 @@ public class MiniPlayer : MonoBehaviour
     /*Controllers*/
     //IController curCtrl;
 
+    private Vector3 nextPos;
+
     [Header("Components")]
     public Rigidbody rb;
     public CapsuleCollider _collider;
@@ -40,10 +42,7 @@ public class MiniPlayer : MonoBehaviour
 
     private void Update()
     {
-        //if (IsClient)
-        //{
-        //    SendClientMove();
-        //}
+        
     }
 
     private void FixedUpdate()
@@ -53,6 +52,10 @@ public class MiniPlayer : MonoBehaviour
             MoveByInput(moveInput);
             miniRotate.InputRotation(moveInput);
         }   
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, Time.fixedDeltaTime);
+        }
     }
     #endregion
 
@@ -170,7 +173,7 @@ public class MiniPlayer : MonoBehaviour
     {
         if (!IsClient)
         {
-            transform.position = pos;
+            nextPos = pos;
         }
     }
     #endregion
