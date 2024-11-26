@@ -54,12 +54,11 @@ public class MiniPlayer : MonoBehaviour
         }   
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, Time.fixedDeltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
         }
-    }
+    }       
     #endregion
 
-   
     #region Server
     /// <summary>
     /// IcePlayerSpawnNotification Receive받기.
