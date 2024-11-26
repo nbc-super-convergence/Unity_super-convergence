@@ -31,9 +31,9 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerMoveNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerMoveNotification;
-
         foreach (var p in response.Players)
         {
+            Debug.LogWarning($"ReceiveClientMove : {p.PlayerId}");
             MiniGameManager.Instance.GetMiniPlayer(p.PlayerId)
                 .ReceiveOtherMove(ConvertVector3(p.Position), ConvertVector3(p.Force), p.Rotation, p.State);
         }

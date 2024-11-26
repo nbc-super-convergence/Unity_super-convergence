@@ -67,6 +67,7 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     public void SendClientMove()
     {
+        Debug.LogWarning($"SendClientMove : {MiniPlayerId}");
         GamePacket packet = new()
         {
             IcePlayerMoveRequest = new()
@@ -160,7 +161,7 @@ public class MiniPlayer : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"{MiniPlayerId}");
+            //Debug.LogError($"{MiniPlayerId}");
         }
         
         //GetForce = force;
