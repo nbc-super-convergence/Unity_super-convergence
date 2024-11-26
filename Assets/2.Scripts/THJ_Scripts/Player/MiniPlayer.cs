@@ -35,7 +35,7 @@ public class MiniPlayer : MonoBehaviour
         curState = State.Idle;
     }
 
-    private void Start()
+    private void Update()
     {
         if (!IsClient)
         {
