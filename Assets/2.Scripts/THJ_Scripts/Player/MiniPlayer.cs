@@ -115,24 +115,27 @@ public class MiniPlayer : MonoBehaviour
             moveInput = context.ReadValue<Vector2>();
             animator.SetBool("Move", true);
             curState = State.Move;
-            if (c == null)
-            {
-                c = StartCoroutine(SendClientMove());
-            }
-            
+            c ??= StartCoroutine(SendClientMove());
         }
         else if(context.phase.Equals(InputActionPhase.Canceled))
         {
             moveInput = Vector2.zero;
             animator.SetBool("Move", false);
             curState = State.Idle;
-            if (c != null)
-            {
-                StopCoroutine(c);
-                c = null;
-            }
+            StartCoroutine(StopSending());
         }
     }
+
+    private IEnumerator StopSending()
+    {
+        yield return new WaitForSeconds(2f);
+        if (c != null)
+        {
+            StopCoroutine(c);
+            c = null;
+        }
+    }
+
     public void OnJumpEvent(InputAction.CallbackContext context)
     {
         float pressAnalog = 0f; //키를 어느정도 누르고 있는지
@@ -179,12 +182,7 @@ public class MiniPlayer : MonoBehaviour
     {
         if (!IsClient)
         {
-            if (transform.position != pos)
-            {
-                transform.position = pos;
-            }
-
-            rb.AddForce(force * forceMultiplier, ForceMode.Force);
+            transform.position = pos;
         }
     }
     #endregion
