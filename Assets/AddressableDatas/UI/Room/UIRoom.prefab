@@ -1451,7 +1451,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7984772476047384482}
   - component: {fileID: 2385267440154661218}
-  - component: {fileID: 4136704999278584795}
   m_Layer: 5
   m_Name: UIRoom
   m_TagString: Untagged
@@ -1500,6 +1499,11 @@ MonoBehaviour:
   isDestroyAtClosed: 1
   uiPosition: 2
   isHost: 0
+  userSlots:
+  - {fileID: 3312203085007953994}
+  - {fileID: 906706886108301889}
+  - {fileID: 3583698958997352130}
+  - {fileID: 2118652741093437271}
   roomNumber: {fileID: 6327223611679959131}
   roomName: {fileID: 6801687929070380815}
   ddMaxTurn: {fileID: 6295112512489116450}
@@ -1509,24 +1513,6 @@ MonoBehaviour:
   buttonBack: {fileID: 8991844732337417508}
   buttonReady: {fileID: 6002692169799762068}
   buttonStart: {fileID: 600561188586269190}
---- !u!114 &4136704999278584795
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085893653889601269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 305ba48e242e21c43b161171d9fc391f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDontDestroyOnLoad: 1
-  users:
-  - {fileID: 3312203085007953994}
-  - {fileID: 906706886108301889}
-  - {fileID: 3583698958997352130}
-  - {fileID: 2118652741093437271}
 --- !u!1 &2283049541340126802
 GameObject:
   m_ObjectHideFlags: 0
@@ -2830,8 +2816,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   objReady: {fileID: 1970649470346519190}
-  userId: 0
 --- !u!114 &970568382986895236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3540,8 +3526,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   objReady: {fileID: 2063215472910676527}
-  userId: 0
 --- !u!114 &9159558002497462828
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3606,8 +3592,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   objReady: {fileID: 2415361385635976767}
-  userId: 0
 --- !u!114 &796242675376293892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4311,8 +4297,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerId: 0
   objReady: {fileID: 6782444750072951228}
-  userId: 0
 --- !u!114 &3308416225592138252
 MonoBehaviour:
   m_ObjectHideFlags: 0

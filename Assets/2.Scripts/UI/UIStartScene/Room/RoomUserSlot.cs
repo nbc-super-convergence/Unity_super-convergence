@@ -7,12 +7,13 @@ using UnityEngine.UI;
 
 public class RoomUserSlot : MonoBehaviour
 {
+    public int playerId;  // or userId or 식별가능한 고유값
+
     private TMP_Text nickNameTMP;
     private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.    
     private bool isJoin = false;
     [SerializeField] private GameObject objReady;
 
-    public int playerId;  // 서버와 같은 값
     private string nickNameEMPTY = "EMPTY";
 
     private void Awake()
