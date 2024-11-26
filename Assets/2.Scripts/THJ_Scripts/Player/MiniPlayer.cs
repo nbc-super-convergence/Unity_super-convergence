@@ -49,7 +49,7 @@ public class MiniPlayer : MonoBehaviour
         }   
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, 30 * Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, 60 * Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
         }
     }       
     #endregion
