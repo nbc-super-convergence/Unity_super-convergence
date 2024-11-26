@@ -37,7 +37,10 @@ public class MiniPlayer : MonoBehaviour
 
     private void Start()
     {
-        //StartCoroutine(SendMessage());
+        if (!IsClient)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, 30 * Time.deltaTime * Vector3.Distance(transform.position, nextPos));
+        }
     }
 
     private void FixedUpdate()
@@ -46,10 +49,6 @@ public class MiniPlayer : MonoBehaviour
         {
             MoveByInput(moveInput);
             miniRotate.InputRotation(moveInput);
-        }   
-        else
-        {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, 60 * Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
         }
     }       
     #endregion
