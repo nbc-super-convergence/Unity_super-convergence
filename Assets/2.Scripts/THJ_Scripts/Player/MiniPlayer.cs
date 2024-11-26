@@ -66,8 +66,7 @@ public class MiniPlayer : MonoBehaviour
     {
         playerInput.enabled = true; //Input 활성화
         transform.position = position; //position 초기화
-        miniRotate.RotByReceive(rotation); //rotation 초기화   
-        InvokeRepeating("SendMessage", 0.0f, 0.1f);
+        miniRotate.RotByReceive(rotation); //rotation 초기화
     }
 
     /// <summary>
