@@ -99,7 +99,7 @@ public class MiniPlayer : MonoBehaviour
     public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
     {
         //transform.position = pos; //위치 동기화?
-        MoveByReceive(pos);
+        MoveByReceive(pos, force);
         miniRotate.RotByReceive(rotY);
         curState = state;
     }
@@ -175,23 +175,17 @@ public class MiniPlayer : MonoBehaviour
     /// <summary>
     /// Receive에 따른 플레이어 움직임
     /// </summary>
-    private void MoveByReceive(Vector3 force)
+    private void MoveByReceive(Vector3 pos, Vector3 force)
     {
         if (!IsClient)
         {
-            Debug.LogError($"{MiniPlayerId}");
-            transform.position = force;
-        }
-        else
-        {
-            //Debug.LogError($"{MiniPlayerId}");
-        }
-        
-        //GetForce = force;
-        //rb.AddForce(force * forceMultiplier, ForceMode.Force);
-        //Debug.LogWarning(force);
-    }
+            if (transform.position != pos)
+            {
+                transform.position = pos;
+            }
 
-    public Vector3 GetForce;
+            rb.AddForce(force * forceMultiplier, ForceMode.Force);
+        }
+    }
     #endregion
 }
