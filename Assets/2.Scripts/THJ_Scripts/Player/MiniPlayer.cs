@@ -162,7 +162,7 @@ public class MiniPlayer : MonoBehaviour
     {
         // WASD로 입력받아 3D로 컨버트
         Vector3 force = new(moveInput.x, 0, moveInput.y);
-        rb.AddForce(force * forceMultiplier, ForceMode.Impulse);
+        rb.AddForce(force * forceMultiplier, ForceMode.Force);
         curForce = force;
     }
     /// <summary>
