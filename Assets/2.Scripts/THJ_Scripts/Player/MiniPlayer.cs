@@ -34,7 +34,10 @@ public class MiniPlayer : MonoBehaviour
         curState = State.Idle;
     }
 
-
+    private void Start()
+    {
+        StartCoroutine(SendMessage());
+    }
 
     private void Update()
     {
@@ -65,7 +68,7 @@ public class MiniPlayer : MonoBehaviour
         transform.position = position; //position 초기화
         miniRotate.RotByReceive(rotation); //rotation 초기화
 
-        StartCoroutine(SendMessage());
+        
     }
 
     /// <summary>
