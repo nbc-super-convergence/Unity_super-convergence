@@ -22,7 +22,7 @@ public class MiniPlayer : MonoBehaviour
     [SerializeField] private float forceMultiplier = 10f; //플레이어 속도
     [SerializeField] private float stopThreshold = 0.01f; //속도 기반 멈춤 판별
     private Vector2 moveInput;
-    private Vector3 curForce;
+    public Vector3 curForce;
 
     private bool IsClient => MiniPlayerId == GameManager.Instance.PlayerId;
 
