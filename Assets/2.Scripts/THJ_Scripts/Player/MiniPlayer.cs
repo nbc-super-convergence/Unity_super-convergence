@@ -15,7 +15,7 @@ public class MiniPlayer : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
-    private State curState = State.Idle;
+    public State curState;
 
     [Header("Player Properties")]
     [SerializeField] private int MiniPlayerId;
@@ -69,7 +69,6 @@ public class MiniPlayer : MonoBehaviour
                 State = curState
             }
         };
-        Debug.Log("my Send" + packet);
         SocketManager.Instance.OnSend(packet);
     }
 
@@ -138,7 +137,7 @@ public class MiniPlayer : MonoBehaviour
         // WASD로 입력받아 3D로 컨버트
         Vector3 force = new(moveInput.x, 0, moveInput.y);
         rb.AddForce(force * forceMultiplier, ForceMode.Force);
-        curForce = force; //Send하기 위함.
+        curForce = force;
     }
     /// <summary>
     /// Receive에 따른 플레이어 움직임

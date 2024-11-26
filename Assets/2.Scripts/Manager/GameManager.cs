@@ -29,6 +29,7 @@ public class GameManager : Singleton<GameManager>
     public void SetPlayerId(int playerId)
     {
         PlayerId = playerId;
+        Debug.Log("MY ID : " + playerId);
     }
     #endregion
 }
