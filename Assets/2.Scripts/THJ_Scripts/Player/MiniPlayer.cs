@@ -122,17 +122,6 @@ public class MiniPlayer : MonoBehaviour
             moveInput = Vector2.zero;
             animator.SetBool("Move", false);
             curState = State.Idle;
-            StartCoroutine(StopSending());
-        }
-    }
-
-    private IEnumerator StopSending()
-    {
-        yield return new WaitForSeconds(2f);
-        if (c != null)
-        {
-            StopCoroutine(c);
-            c = null;
         }
     }
 
