@@ -27,11 +27,11 @@ public class PlayerBaseAnimation : IAnimation
 
     protected void AnimationStart(int hashCode)
     {
-        animState.Player.animator.SetBool(hashCode, true);
+        //animState.Player.animator.SetBool(hashCode, true);
     }
 
     protected void AnimationEnd(int hashCode)
     {
-        animState.Player.animator.SetBool(hashCode, false);
+        //animState.Player.animator.SetBool(hashCode, false);
     }
 }

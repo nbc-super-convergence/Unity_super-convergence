@@ -6,7 +6,7 @@ public class IceSlidingController : MonoBehaviour
 
     //컴포넌트 속성
     private IceSlidingBase _iceSlidingBase; //물리 작용으로 전달
-    private CharacterRotate _characterRotate; //캐릭터 회전
+    private MiniPlayerRotate _characterRotate; //캐릭터 회전
 
     private Vector3 _inputDirection;    //입력받을 벡터
 
@@ -15,7 +15,7 @@ public class IceSlidingController : MonoBehaviour
         timeManager = IceBoardTimeManager.Instance; //싱글톤 적용
         
         _iceSlidingBase = GetComponent<IceSlidingBase>();
-        _characterRotate = GetComponentInChildren<CharacterRotate>();
+        _characterRotate = GetComponentInChildren<MiniPlayerRotate>();
     }
 
     private void Update()
@@ -36,7 +36,7 @@ public class IceSlidingController : MonoBehaviour
         if (_iceSlidingBase.CheckAlive) //살아 있을 때만
         {
             _iceSlidingBase.InputMove(_inputDirection);
-            _characterRotate.SetInput(_inputDirection);
+            _characterRotate.InputRotation(_inputDirection);
         }
     }
 }

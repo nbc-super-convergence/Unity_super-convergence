@@ -21,7 +21,7 @@ public class MiniPlayerRotate : MonoBehaviour
     /// <summary>
     /// 서버에게 Receive 받은 Y축 회전 값.
     /// </summary>
-    public void ReceiveRotation(float angle)
+    public void RotByReceive(float angle)
     {
         _rotY = angle;
     }

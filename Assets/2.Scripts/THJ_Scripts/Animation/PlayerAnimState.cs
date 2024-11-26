@@ -1,13 +1,13 @@
 ﻿public class PlayerAnimState : AnimState
 {
-    public Player Player { get; }
+    public MiniPlayer Player { get; }
 
     public IdleAnimation IdleAnim { get; }
     public RunAnimation RunAnim { get; }
     public JumpAnimation JumpAnim { get; }
     public DeathAnimation DeathAnim { get; }
 
-    public PlayerAnimState(Player player)
+    public PlayerAnimState(MiniPlayer player)
     {
         Player = player;
 

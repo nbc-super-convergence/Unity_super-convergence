@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class IceBoardTimeManager : MonoBehaviour
+public class IceBoardTimeManager : Singleton<IceBoardTimeManager>
 {
     /// <summary>
     /// 시간 : 120초
@@ -11,20 +12,6 @@ public class IceBoardTimeManager : MonoBehaviour
     /// 60초 이하일 때 5
     /// </summary>
     /// 
-
-    private static IceBoardTimeManager _instance; //싱글톤 (이유는 플레이어와 연동하게)
-    public static IceBoardTimeManager Instance 
-    { 
-        get
-        {
-            return _instance;
-        }
-        private set
-        {
-            if (_instance == null)
-                _instance = value;
-        }
-    }
 
     //기본 속성
     private float _startSecond = 120f;
@@ -37,11 +24,6 @@ public class IceBoardTimeManager : MonoBehaviour
 
     //빙판 속성
     [SerializeField] private IceBoardFloor iceBoardFloor;
-
-    private void Awake()
-    {
-        Instance = this;    //싱글톤 정의
-    }
 
     void Start()
     {

@@ -30,13 +30,13 @@ public class DeathAnimation : PlayerBaseAnimation
     //애니메이션이 끝나면 플래그 실행
     private void EndLoop()
     {
-        AnimatorStateInfo stateInfo = animState.Player.animator.GetCurrentAnimatorStateInfo(0);
+        //AnimatorStateInfo stateInfo = animState.Player.animator.GetCurrentAnimatorStateInfo(0);
 
-        if (stateInfo.shortNameHash == HashCode && stateInfo.normalizedTime > 1f)
-        {
-            //End();
-            DeadDirect();
-        }
+        //if (stateInfo.shortNameHash == HashCode && stateInfo.normalizedTime > 1f)
+        //{
+        //    //End();
+        //    DeadDirect();
+        //}
     }
 
     /// <summary>
@@ -47,9 +47,9 @@ public class DeathAnimation : PlayerBaseAnimation
         Transform nowPlayerPos = animState.Player.gameObject.transform;
 
         //죽을 때 물리작용이 일어나지 않게
-        animState.Player.playerCollide.enabled = false;
-        animState.Player.playerRgdby.useGravity = false;
-        animState.Player.playerRgdby.constraints = RigidbodyConstraints.FreezePosition;
+        animState.Player._collider.enabled = false;
+        animState.Player.rb.useGravity = false;
+        animState.Player.rb.constraints = RigidbodyConstraints.FreezePosition;
 
         while (nowPlayerPos.position.y > deathDepth)
             nowPlayerPos.Translate(0, -0.01f, 0);

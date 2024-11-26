@@ -4,7 +4,7 @@ using UnityEngine;
 public class IceSlidingDamage : MonoBehaviour
 {
     //연결 컴포넌트
-    private Player player;
+    private MiniPlayer player;
     private PlayerHealth iceHealth;
 
     private WaitForSeconds _damageDelay; //딜레이를 주기 위한 대기
@@ -15,7 +15,7 @@ public class IceSlidingDamage : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<Player>();
+        player = GetComponent<MiniPlayer>();
         iceHealth = GetComponent<PlayerHealth>();
 
         _damageDelay = new WaitForSeconds(_damageSecond);

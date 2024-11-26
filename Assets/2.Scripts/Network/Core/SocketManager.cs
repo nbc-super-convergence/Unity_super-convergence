@@ -15,12 +15,14 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
-        GameManager.Instance.SetPlayerId(response.PlayerId); //추후 로그인 단계로 이동.
+
+        //추후 로그인 단계로 이동.
+        GameManager.Instance.SetPlayerId(response.PlayerId); 
 
         //init Minigame
         MiniGameManager.Instance.SetMiniGame<GameIceSlider>();
 
-        //init MiniPlayer
+        //Spawn MiniPlayer
         MiniGameManager.Instance.GetMiniPlayer(response.PlayerId)
             .ReceivePlayerSpawn(ConvertVector3(response.Position), response.Rotation);
     }
@@ -32,6 +34,7 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
 
         foreach (var p in response.Players)
         {
+            Debug.Log("Received+" + p);
             MiniGameManager.Instance.GetMiniPlayer(p.PlayerId)
                 .ReceiveOtherMove(ConvertVector3(p.Position), ConvertVector3(p.Force), p.Rotation, p.State);
         }
@@ -61,4 +64,3 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 }
-
