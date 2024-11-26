@@ -66,9 +66,7 @@ public class MiniPlayer : MonoBehaviour
     {
         playerInput.enabled = true; //Input 활성화
         transform.position = position; //position 초기화
-        miniRotate.RotByReceive(rotation); //rotation 초기화
-
-        
+        miniRotate.RotByReceive(rotation); //rotation 초기화   
     }
 
     /// <summary>
@@ -93,22 +91,26 @@ public class MiniPlayer : MonoBehaviour
 
     public IEnumerator SendMessage()
     {
-        if (IsClient)
+        while (true)
         {
-            GamePacket packet = new()
+            if (IsClient)
             {
-                IcePlayerMoveRequest = new()
+                GamePacket packet = new()
                 {
-                    PlayerId = MiniPlayerId,
-                    Position = SocketManager.ConvertVector(transform.position),
-                    Force = SocketManager.ConvertVector(curForce),
-                    Rotation = miniRotate.transform.rotation.y,
-                    State = curState
-                }
-            };
-            SocketManager.Instance.OnSend(packet);
-            yield return new WaitForSeconds(0.1f);
+                    IcePlayerMoveRequest = new()
+                    {
+                        PlayerId = MiniPlayerId,
+                        Position = SocketManager.ConvertVector(transform.position),
+                        Force = SocketManager.ConvertVector(curForce),
+                        Rotation = miniRotate.transform.rotation.y,
+                        State = curState
+                    }
+                };
+                SocketManager.Instance.OnSend(packet);
+                yield return new WaitForSeconds(0.1f);
+            }
         }
+        
     }
 
 
