@@ -33,12 +33,15 @@ public class MiniPlayer : MonoBehaviour
         curState = State.Idle;
     }
 
+    private void Update()
+    {
+        if (IsClient) SendClientMove();
+    }
+
     private void FixedUpdate()
     {
         MoveByInput(moveInput);
         miniRotate.InputRotation(moveInput);
-
-        if (IsClient) SendClientMove();
     }
     #endregion
 
