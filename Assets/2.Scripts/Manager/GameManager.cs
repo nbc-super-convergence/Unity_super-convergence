@@ -4,7 +4,7 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public static bool isGameStart; //로그인 -> 다른 씬으로 이동 시.
-    
+    public int PlayerId { get; private set; }
 
     public void InitApp()
     {
@@ -25,15 +25,10 @@ public class GameManager : Singleton<GameManager>
         isInitialized = true;
     }
 
-    #region TEST
-    public int playerId;
+    #region Client ID
     public void SetPlayerId(int playerId)
     {
-        this.playerId = playerId;
-    }
-    public int GetPlayerId()
-    {
-        return this.playerId;
+        PlayerId = playerId;
     }
     #endregion
 }
