@@ -40,11 +40,6 @@ public class MiniPlayer : MonoBehaviour
         //StartCoroutine(SendMessage());
     }
 
-    private void Update()
-    {
-        
-    }
-
     private void FixedUpdate()
     {
         if (IsClient)
@@ -54,7 +49,15 @@ public class MiniPlayer : MonoBehaviour
         }   
         else
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
+            float positionError = Vector3.Distance(transform.position, nextPos);
+            if (positionError > 0.5f) // 허용 오차 범위 초과 시
+            {
+                transform.position = nextPos; // 즉시 보정
+            }
+            else
+            {
+                transform.position = Vector3.MoveTowards(transform.position, nextPos, 10 * Time.fixedDeltaTime);
+            }
         }
     }       
     #endregion
