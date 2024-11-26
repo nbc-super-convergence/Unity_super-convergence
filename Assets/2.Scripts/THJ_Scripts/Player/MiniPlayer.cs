@@ -153,7 +153,11 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     private void MoveByReceive(Vector3 force)
     {
+        GetForce = force;
         rb.AddForce(force * forceMultiplier, ForceMode.Force);
+        Debug.LogWarning(force);
     }
+
+    public Vector3 GetForce;
     #endregion
 }
