@@ -89,7 +89,7 @@ public class MiniPlayer : MonoBehaviour
                 }
             };
             SocketManager.Instance.OnSend(packet);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.02f);
         }   
     }
 
