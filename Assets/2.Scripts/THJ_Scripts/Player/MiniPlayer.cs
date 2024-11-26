@@ -73,27 +73,11 @@ public class MiniPlayer : MonoBehaviour
     /// <summary>
     /// IcePlayerMoveRequest Send하기.
     /// </summary>
-    public void SendClientMove()
+    private IEnumerator SendClientMove()
     {
-        Debug.LogError($"SendClientMove : {MiniPlayerId}");
-        GamePacket packet = new()
+        while (true)
         {
-            IcePlayerMoveRequest = new()
-            {
-                PlayerId = MiniPlayerId,
-                Position = SocketManager.ConvertVector(transform.position),
-                Force = SocketManager.ConvertVector(curForce),
-                Rotation = miniRotate.transform.rotation.y,
-                State = curState
-            }
-        };
-        SocketManager.Instance.OnSend(packet);
-    }
-
-    private void SendMessage()
-    {
-        if (IsClient)
-        {
+            Debug.LogError($"SendClientMove : {MiniPlayerId}");
             GamePacket packet = new()
             {
                 IcePlayerMoveRequest = new()
@@ -106,33 +90,9 @@ public class MiniPlayer : MonoBehaviour
                 }
             };
             SocketManager.Instance.OnSend(packet);
-        }
+            yield return new WaitForSeconds(0.1f);
+        }   
     }
-
-    //public IEnumerator SendMessage()
-    //{
-    //    while (true)
-    //    {
-    //        if (IsClient)
-    //        {
-    //            GamePacket packet = new()
-    //            {
-    //                IcePlayerMoveRequest = new()
-    //                {
-    //                    PlayerId = MiniPlayerId,
-    //                    Position = SocketManager.ConvertVector(transform.position),
-    //                    Force = SocketManager.ConvertVector(curForce),
-    //                    Rotation = miniRotate.transform.rotation.y,
-    //                    State = curState
-    //                }
-    //            };
-    //            SocketManager.Instance.OnSend(packet);
-    //            yield return new WaitForSeconds(0.1f);
-    //        }
-    //    }
-        
-    //}
-
 
     /// <summary>
     /// IcePlayerMoveNotification Receive받기.
@@ -146,6 +106,8 @@ public class MiniPlayer : MonoBehaviour
     }
     #endregion
 
+    public Coroutine c;
+
     #region Input System Events
     public void OnMoveEvent(InputAction.CallbackContext context)
     {
@@ -154,12 +116,22 @@ public class MiniPlayer : MonoBehaviour
             moveInput = context.ReadValue<Vector2>();
             animator.SetBool("Move", true);
             curState = State.Move;
+            if (c == null)
+            {
+                c = StartCoroutine(SendClientMove());
+            }
+            
         }
         else if(context.phase.Equals(InputActionPhase.Canceled))
         {
             moveInput = Vector2.zero;
             animator.SetBool("Move", false);
             curState = State.Idle;
+            if (c != null)
+            {
+                StopCoroutine(c);
+                c = null;
+            }
         }
     }
     public void OnJumpEvent(InputAction.CallbackContext context)
