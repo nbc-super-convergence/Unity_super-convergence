@@ -15,31 +15,49 @@ public class UserInfo
 {
 
 }
+public class RoomData
+{
+    public string name;
+    public string number;
+    public List<UserData> userDatas; // RoomData 안에 입장해있는 인원 정보도 있다고 가정함.
+}
+public class UserData
+{
+    public int userId;
+    public string nickname;
+}
+
 
 public class UIRoom : UIBase
 {
     [SerializeField] private bool isHost;
     public bool IsHost { get { return isHost; } }
     private bool isReady = false;
-    private int myNumber;
 
-    [SerializeField] private Button buttonBack;
-    [SerializeField] private Button buttonReady;
-    [SerializeField] private Button buttonStart;
+    [Header("Room Info")]
+    private RoomData roomData;
+    [SerializeField] private TMP_Text roomNumber;
+    [SerializeField] private TMP_Text roomName;
 
     private UnityAction onUserReadyChanged;
     [SerializeField] private UserInfo[] users= new UserInfo[4];
     private bool[] isReadyUsers = new bool[4];
-
-
-    [SerializeField] private TMP_Text count;
-    [SerializeField] private GameObject invisibleWall;
+    public TaskCompletionSource<bool> readyTcs;
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
     private int[] turnOptions = { 10, 15, 20, 25, 30 };
     [Range(0, 4)] public int maxTurnValue = 0;
     private int maxTurn;
+
+    [Header("Start Countdown")]
+    [SerializeField] private TMP_Text count;
+    [SerializeField] private GameObject invisibleWall;
+
+    [Header("Button")]
+    [SerializeField] private Button buttonBack;
+    [SerializeField] private Button buttonReady;
+    [SerializeField] private Button buttonStart;
 
     public override void Opened(object[] param)
     {
@@ -77,6 +95,18 @@ public class UIRoom : UIBase
         if (Input.GetKeyDown(KeyCode.Alpha4)) SetUserReady(3);
     }
 
+
+    public void SetRoomInfo(RoomData data)
+    {
+        roomData = data;
+        roomNumber.text = (data.number != null) ? $"No. {data.number.ToString()}" : "";
+        roomName.text = (data.name != null) ? data.name.ToString() : "";
+    }
+
+    // 로비에서 대기방 생성을 요청하고 생성된 방에 조인 한다고 가정하고 작성.
+    
+
+
     /// <summary>
     /// 방을 만들고 내가 첫 유저면 isHost true.
     /// 이건 서버가 할 일?
@@ -102,23 +132,32 @@ public class UIRoom : UIBase
     }
 
 
-    #region Host
     /// <summary>
     /// TODO:: S2C_GamePrepareNotification 를 받을 때 호출
+    /// 
     /// </summary>
-    /// <param name="userIndex"></param>
-    public void SetUserReady(int userIndex)
+    /// <param name="userId"></param>
+    public void SetUserReady(int userId)
     {
         if(isHost) isReady = true;
 
-        if (userIndex >=0 && userIndex < isReadyUsers.Length)
+
+
+
+
+
+
+
+        if (userId >=0 && userId < isReadyUsers.Length)
         {
-            isReadyUsers[userIndex] = true;
+            isReadyUsers[userId] = true;
 
             onUserReadyChanged?.Invoke();
-            UpdateReadyState(userIndex);
+            UpdateReadyState(userId);
         }
     }
+
+    #region Host
 
     public void TryActiveStartButton()
     {
@@ -186,8 +225,8 @@ public class UIRoom : UIBase
 
         if (isReady)
         {
-            bool success = await CancelReadyAsync();
-            if(success)
+            bool isSuccess = await CancelReadyAsync();
+            if(isSuccess)
             {
                 isReady = false;
                 UpdateButtonUI("Ready", Color.grey, true);
@@ -200,8 +239,8 @@ public class UIRoom : UIBase
         }
         else
         {
-            bool success = await ReadyAsync();
-            if (success)
+            bool isSuccess = await ReadyAsync();
+            if (isSuccess)
             {
                 isReady = true;
                 UpdateButtonUI("Cancel Ready", Color.green, true);
@@ -214,22 +253,36 @@ public class UIRoom : UIBase
         }
     }
 
+    /// <summary>
+    /// C2S_GamePrepareRequest 
+    /// </summary>
+    /// <returns></returns>
     private async Task<bool> ReadyAsync()
     {
+        readyTcs = new();
         // 서버에 준비 패킷 보내기
         //GamePacket packet = new();
-        //packet.게임준비 = new()
+        //packet.GamePrepareRequest = new()
         //{
-
+        //    PlayerId = GameManager.Instance.GetPlayerId()
         //};
         //SocketManager.Instance.OnSend(packet);
 
         Debug.Log("서버로 준비 완료 패킷 전송 중...");
-        await Task.Delay(500);
-        // 실제 구현?: SocketManager.Instance.SendReadyPacketAsync();
+        bool isSuccess = await readyTcs.Task;
         Debug.Log("준비 완료 패킷 전송 성공");
-        return true;
+
+        if (isSuccess)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
+
+    
 
     private async Task<bool> CancelReadyAsync()
     {
@@ -336,7 +389,42 @@ public class UIRoom : UIBase
         Debug.Log($"최대 턴 : {maxTurn}");
         GameStart();
     }
-    
-#endregion
 
+    #endregion
+
+
+
+    #region 소켓매니저에 작성될 메서드
+    /// <summary>
+    /// S2C_GamePrepareResponse 
+    /// </summary>
+    /// <param name="packet"></param>
+    public void GamePrepareResponse(GamePacket packet)
+    {
+        //var response = packet.GamePrepareResponse;
+        //bool isSuccess = response.Success;
+        //if (UIManager.Get<UIRoom>().readyTcs.TrySetResult(isSuccess))
+        //{
+        //    return;
+        //}
+        //else
+        //{
+        //    // TODO:: FailCode에 맞는 알림바꾸기
+        //    Debug.LogError($"FailCode : {response.FailCode}");
+        //}
+    }
+
+    /// <summary>
+    /// S2C_GamePrepareNotification 
+    /// </summary>
+    /// <param name="packet"></param>
+    public void GamePrepareNotification(GamePacket packet)
+    {
+        //var response = packet.GamePrepareNotification;
+        //int readyUserId = response.UserId;
+
+    }
+
+
+    #endregion
 }

@@ -12,7 +12,7 @@ public class RoomUserSlot : MonoBehaviour
     private bool isJoin = false;
     [SerializeField] private GameObject objReady;
 
-    public int userId;  // 서버와 같은 값
+    public int playerId;  // 서버와 같은 값
     private string nickNameEMPTY = "EMPTY";
 
     private void Awake()
@@ -22,7 +22,7 @@ public class RoomUserSlot : MonoBehaviour
     }
 
     
-    public void SetRoomUser(string inputNickname, int userId)
+    public void SetRoomUser(string inputNickname, int playerId)
     {
         if (inputNickname == null || inputNickname == "")
         {
@@ -35,7 +35,7 @@ public class RoomUserSlot : MonoBehaviour
             nickNameTMP.text = inputNickname;
         }
 
-        this.userId = userId;
+        this.playerId = playerId;
     }
     public void SetImage()
     {
