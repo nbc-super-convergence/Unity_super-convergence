@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using static UnityEditor.PlayerSettings;
 
@@ -33,12 +34,14 @@ public class MiniPlayer : MonoBehaviour
         curState = State.Idle;
     }
 
+
+
     private void Update()
     {
-        if (IsClient)
-        {
-            SendClientMove();
-        }
+        //if (IsClient)
+        //{
+        //    SendClientMove();
+        //}
     }
 
     private void FixedUpdate()
@@ -51,6 +54,7 @@ public class MiniPlayer : MonoBehaviour
     }
     #endregion
 
+   
     #region Server
     /// <summary>
     /// IcePlayerSpawnNotification Receive받기.
@@ -60,6 +64,8 @@ public class MiniPlayer : MonoBehaviour
         playerInput.enabled = true; //Input 활성화
         transform.position = position; //position 초기화
         miniRotate.RotByReceive(rotation); //rotation 초기화
+
+        StartCoroutine(SendMessage());
     }
 
     /// <summary>
@@ -67,7 +73,7 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     public void SendClientMove()
     {
-        Debug.LogWarning($"SendClientMove : {MiniPlayerId}");
+        Debug.LogError($"SendClientMove : {MiniPlayerId}");
         GamePacket packet = new()
         {
             IcePlayerMoveRequest = new()
@@ -81,6 +87,27 @@ public class MiniPlayer : MonoBehaviour
         };
         SocketManager.Instance.OnSend(packet);
     }
+
+    public IEnumerator SendMessage()
+    {
+        if (IsClient)
+        {
+            GamePacket packet = new()
+            {
+                IcePlayerMoveRequest = new()
+                {
+                    PlayerId = MiniPlayerId,
+                    Position = SocketManager.ConvertVector(transform.position),
+                    Force = SocketManager.ConvertVector(curForce),
+                    Rotation = miniRotate.transform.rotation.y,
+                    State = curState
+                }
+            };
+            SocketManager.Instance.OnSend(packet);
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
 
     /// <summary>
     /// IcePlayerMoveNotification Receive받기.
