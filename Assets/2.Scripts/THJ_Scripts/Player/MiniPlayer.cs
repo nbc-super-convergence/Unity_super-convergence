@@ -49,15 +49,7 @@ public class MiniPlayer : MonoBehaviour
         }   
         else
         {
-            float positionError = Vector3.Distance(transform.position, nextPos);
-            if (positionError > 0.5f) // 허용 오차 범위 초과 시
-            {
-                transform.position = nextPos; // 즉시 보정
-            }
-            else
-            {
-                transform.position = Vector3.MoveTowards(transform.position, nextPos, 10 * Time.fixedDeltaTime);
-            }
+            transform.position = Vector3.MoveTowards(transform.position, nextPos, 30 * Time.fixedDeltaTime * Vector3.Distance(transform.position, nextPos));
         }
     }       
     #endregion
