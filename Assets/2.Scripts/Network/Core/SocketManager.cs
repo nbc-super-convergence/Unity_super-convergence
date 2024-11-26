@@ -1,5 +1,4 @@
 using UnityEngine;
-using static S2C_IcePlayerMoveNotification.Types;
 
 public class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -10,30 +9,38 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
      * 함수명 PayloadOneOfCase Enum과 맞출 것.
      * 인자는 GamePacket gamePacket.
      */
-    
-    
+
+    #region Receive Packets
     //나의 스폰 알림 Receive.
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
+        GameManager.Instance.SetPlayerId(response.PlayerId); //추후 로그인 단계로 이동.
 
-        IceBoardPlayerManager.Instance.SpawnPosition(response);
+        //init Minigame
+        MiniGameManager.Instance.SetMiniGame<GameIceSlider>();
+
+        //init MiniPlayer
+        MiniGameManager.Instance.GetMiniPlayer(response.PlayerId)
+            .ReceivePlayerSpawn(ConvertVector3(response.Position), response.Rotation);
     }
 
     //다른 플레이어 움직임 Receive.
     public void IcePlayerMoveNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerMoveNotification;
-        int playerSize = response.Players.Count;
-        PlayerData data = response.Players[0];
 
-        IceBoardPlayerManager.Instance.ReceivePosition(response);
-
-        //Debug.Log(response);
+        foreach (var p in response.Players)
+        {
+            MiniGameManager.Instance.GetMiniPlayer(p.PlayerId)
+                .ReceiveOtherMove(ConvertVector3(p.Position), ConvertVector3(p.Force), p.Rotation, p.State);
+        }
     }
+    #endregion
 
+    #region Parse Messages
     //새로운 벡터 선언 (임시로)
-    public static Vector CreateVector(Vector3 other)
+    public static Vector ConvertVector(Vector3 other)
     {
         return new Vector
         {
@@ -52,5 +59,6 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
             z = other.Z
         };
     }
+    #endregion
 }
 
