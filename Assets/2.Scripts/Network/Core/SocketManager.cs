@@ -1,39 +1,23 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using static GamePacket;
-using UnityEngine.UIElements;
-using System.Collections.Generic;
 using static S2C_IcePlayerMoveNotification.Types;
 
 public class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     //Sample : http://wocjf84.synology.me:8418/ExternalSharing/Sparta_Node6th_Chapter5/src/branch/main/Assets/_Project/Scripts/Manager/SocketManager.cs
 
-    //TODO: 새로운 함수 만들 때 private void로 만들 것.
-    //TODO: 함수의 이름은 반드시 PayloadOneOfCase Enum과 맞출 것.
-    //TODO: 인자는 GamePacket gamePacket.
-
-    //나의 접속 Send.
-    public void IceJoinRequest(GamePacket gamePacket)
-    {
-        var response = gamePacket.IceJoinRequest;
-    }
-
+    /* 소켓 매니저 가이드
+     * 새로운 함수 만들 때 public void로 만들 것. (public 사유 : 리플렉션의 정상 작동)
+     * 함수명 PayloadOneOfCase Enum과 맞출 것.
+     * 인자는 GamePacket gamePacket.
+     */
+    
+    
     //나의 스폰 알림 Receive.
     public void IcePlayerSpawnNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerSpawnNotification;
 
         IceBoardPlayerManager.Instance.SpawnPosition(response);
-    }
-
-    //나의 플레이어 움직임 Send.
-    public void IcePlayerMoveRequest(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerMoveRequest;
     }
 
     //다른 플레이어 움직임 Receive.
