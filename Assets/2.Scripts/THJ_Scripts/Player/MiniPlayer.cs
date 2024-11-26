@@ -86,7 +86,7 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
     {
-        transform.position = pos; //위치 동기화?
+        //transform.position = pos; //위치 동기화?
         MoveByReceive(force);
         miniRotate.RotByReceive(rotY);
         curState = state;
