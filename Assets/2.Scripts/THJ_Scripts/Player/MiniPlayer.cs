@@ -155,7 +155,12 @@ public class MiniPlayer : MonoBehaviour
     {
         if (!IsClient)
         {
+            Debug.LogError($"{MiniPlayerId}");
             transform.position = force;
+        }
+        else
+        {
+            Debug.LogError($"{MiniPlayerId}");
         }
         
         //GetForce = force;
