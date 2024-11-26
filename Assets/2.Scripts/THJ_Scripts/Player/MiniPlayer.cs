@@ -36,7 +36,7 @@ public class MiniPlayer : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(SendMessage());
+        //StartCoroutine(SendMessage());
     }
 
     private void Update()
@@ -67,6 +67,7 @@ public class MiniPlayer : MonoBehaviour
         playerInput.enabled = true; //Input 활성화
         transform.position = position; //position 초기화
         miniRotate.RotByReceive(rotation); //rotation 초기화   
+        InvokeRepeating("SendMessage", 0.0f, 0.1f);
     }
 
     /// <summary>
@@ -89,29 +90,48 @@ public class MiniPlayer : MonoBehaviour
         SocketManager.Instance.OnSend(packet);
     }
 
-    public IEnumerator SendMessage()
+    private void SendMessage()
     {
-        while (true)
+        if (IsClient)
         {
-            if (IsClient)
+            GamePacket packet = new()
             {
-                GamePacket packet = new()
+                IcePlayerMoveRequest = new()
                 {
-                    IcePlayerMoveRequest = new()
-                    {
-                        PlayerId = MiniPlayerId,
-                        Position = SocketManager.ConvertVector(transform.position),
-                        Force = SocketManager.ConvertVector(curForce),
-                        Rotation = miniRotate.transform.rotation.y,
-                        State = curState
-                    }
-                };
-                SocketManager.Instance.OnSend(packet);
-                yield return new WaitForSeconds(0.1f);
-            }
+                    PlayerId = MiniPlayerId,
+                    Position = SocketManager.ConvertVector(transform.position),
+                    Force = SocketManager.ConvertVector(curForce),
+                    Rotation = miniRotate.transform.rotation.y,
+                    State = curState
+                }
+            };
+            SocketManager.Instance.OnSend(packet);
         }
-        
     }
+
+    //public IEnumerator SendMessage()
+    //{
+    //    while (true)
+    //    {
+    //        if (IsClient)
+    //        {
+    //            GamePacket packet = new()
+    //            {
+    //                IcePlayerMoveRequest = new()
+    //                {
+    //                    PlayerId = MiniPlayerId,
+    //                    Position = SocketManager.ConvertVector(transform.position),
+    //                    Force = SocketManager.ConvertVector(curForce),
+    //                    Rotation = miniRotate.transform.rotation.y,
+    //                    State = curState
+    //                }
+    //            };
+    //            SocketManager.Instance.OnSend(packet);
+    //            yield return new WaitForSeconds(0.1f);
+    //        }
+    //    }
+        
+    //}
 
 
     /// <summary>
