@@ -5,7 +5,7 @@ public class UIKick : UIBase
 {
     [SerializeField] private Button buttonKick;
     [SerializeField] private GameObject overlay;
-    public int targetPlayerId;
+    public string targetPlayerId;
 
     public override void Opened(object[] param)
     {
@@ -21,7 +21,7 @@ public class UIKick : UIBase
         transform.position = new Vector3(x, y);
     }
 
-    public void SetPlayerId(int playerId)
+    public void SetPlayerId(string playerId)
     {
         this.targetPlayerId = playerId;
     }
