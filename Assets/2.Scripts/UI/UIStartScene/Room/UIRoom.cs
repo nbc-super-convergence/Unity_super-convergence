@@ -6,35 +6,6 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-
-public class RoomData   // Protocol.cs에서 만들어지는 클래스.
-{
-    public string id;
-    public string ownerId;
-    public string name;
-    public string lobbyId;
-    RoomStateType state;
-    public List<UserData> users; 
-    public int maxUsers;
-    public List<string> readyUsers;
-}
-public class UserData
-{
-    public int loginId;
-    public string nickname;
-    public UserData(int loginId, string nickname)
-    {
-        this.loginId = loginId;
-        this.nickname = nickname;
-    }
-}
-enum RoomStateType
-{
-    WAIT = 0,
-    PREPARE = 1,
-    INGAME = 2
-}
-
 public class UIRoom : UIBase
 {
     [SerializeField] private bool isHost;
@@ -106,24 +77,24 @@ public class UIRoom : UIBase
     public void SetRoomInfo(RoomData data)
     {
         roomData = data;
-        roomNumber.text = (data.id != null) ? $"No. {data.id.ToString()}" : "";
-        roomName.text = (data.name != null) ? data.name.ToString() : "";
+        roomNumber.text = (data.Id != -1) ? $"No. {data.Id}" : "";
+        roomName.text = (data.Name != null) ? data.Name : "";
 
-        //for (int i = 0; i < data.userDatas.Count; i++)
-        //{
-        //    if (data.userDatas[i].userId == GameManager.Instance.PlayerId)
-        //    {
-        //        AddRoomUser(data.userDatas[i]);    // TODO::클라에 저장해둔 내정보를 넣기
-        //    }
-        //    else
-        //    {
-        //        AddRoomUser(data.userDatas[i]);
-        //    }
-        //}
-        //if(data.userDatas.Count == 0) 
-        //{
-        //    AddRoomUser(new UserData(GameManager.Instance.PlayerId, GameManager.Instance.nickName);     // TODO::클라에 저장해둔 내정보를 넣기 (서버의 RoomData가 비어있을거다.)
-        //}
+        for (int i = 0; i < data.Users.Count; i++)
+        {
+            if (data.Users[i].LoginId == GameManager.Instance.myInfo.userData.LoginId)
+            {
+                AddRoomUser(data.Users[i]);    // TODO::클라에 저장해둔 내정보를 넣기
+            }
+            else
+            {
+                AddRoomUser(data.Users[i]);
+            }
+        }
+        if (data.Users.Count == 0)
+        {
+            AddRoomUser(GameManager.Instance.myInfo.ToUserData());
+        }
     }
 
     public void AddRoomUser(UserData userData)
@@ -143,19 +114,19 @@ public class UIRoom : UIBase
         }
     }
 
-    public void RemoveRoomUser(int userId)
+    public void RemoveRoomUser(string userId)
     {
         // TODO::user의 처리에 맞게 바꾸기
         foreach (RoomUserSlot user in userSlots)
         {
-            if (user.playerId == userId)
+            if (user.loginId == userId)
             {
                 user.EmptyRoomUser();
                 break;
             }
         }
 
-        users.RemoveAll(obj => obj.loginId == userId);
+        users.RemoveAll(obj => obj.LoginId == userId);
         for (int i = 0; i < userSlots.Count; ++i)
         {
             UserData userInfo = users.Count > i ? users[i] : null;
@@ -212,14 +183,14 @@ public class UIRoom : UIBase
     private async Task<bool> ReadyAsync()
     {
         readyTcs = new();
-        // 서버에 준비 패킷 보내기
-        //GamePacket packet = new();
-        //packet.GamePrepareRequest = new()
-        //{
-        //    SessionId = GameManager.Instance.GetPlayerId()
-        //    IsReady = true;
-        //};
-        //SocketManager.Instance.OnSend(packet);
+
+        GamePacket packet = new();
+        packet.GamePrepareRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId,
+            IsReady = true
+        };    
+        SocketManager.Instance.OnSend(packet);
 
         Debug.Log("서버로 준비 완료 패킷 전송 중...");
         bool isSuccess = await readyTcs.Task;
@@ -233,13 +204,13 @@ public class UIRoom : UIBase
         readyTcs = new();
 
         // 서버에 준비취소 패킷 보내기
-        //GamePacket packet = new();
-        //packet.GamePrepareRequest = new()
-        //{
-        //    SessionId = GameManager.Instance.GetPlayerId()
-        //    IsReady = false;
-        //};
-        //SocketManager.Instance.OnSend(packet);
+        GamePacket packet = new();
+        packet.GamePrepareRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId,
+            IsReady = false
+        };
+        SocketManager.Instance.OnSend(packet);
 
         Debug.Log("서버로 준비 취소 패킷 전송 중...");
         bool isSuccess = await readyTcs.Task;
@@ -268,12 +239,12 @@ public class UIRoom : UIBase
     /// S2C_GamePrepareNotification 를 받을 때 호출
     /// 준비와 준비취소 모두 대응.
     /// </summary>
-    public void SetUserReady(int sessionId, bool isReady, int state)
+    public void SetUserReady(string sessionId, bool isReady, RoomStateType state)
     {
         bool isError = true;
         foreach(RoomUserSlot user in userSlots)
         {
-            if(user.playerId == sessionId)
+            if(user.loginId == sessionId)
             {
                 user.CheckReadyState(isReady, isHost);
                 readyCount = isReady ? readyCount++ : readyCount--;
@@ -306,13 +277,12 @@ public class UIRoom : UIBase
     /// </summary>
     private void OnClickGameStartButton()
     {
-        // TODO:: 서버에 게임시작 패킷 보내기
-        //GamePacket packet = new();
-        //packet.GameStartRequest = new()
-        //{
-        //   SessionId = GameManager.Instance.PlayerId;
-        //};
-        //SocketManager.Instance.OnSend(packet);
+        GamePacket packet = new();
+        packet.GameStartRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId
+        };
+        SocketManager.Instance.OnSend(packet);
     }
 
     /// <summary>
@@ -382,26 +352,26 @@ public class UIRoom : UIBase
     // 유저가 퇴장버튼UI를 누르면
     public async void LeaveRoom()
     {
-        //leaveRoomTcs = new();
+        leaveRoomTcs = new();
 
-        //GamePacket packet = new();
-        //packet.C2S_LeaveRoomRequest = new()
-        //{
-        //    PlayerId = playerId
-        //};
-        //SocketManager.Instance.OnSend(packet);
+        GamePacket packet = new();
+        packet.LeaveRoomRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId
+        };
+        SocketManager.Instance.OnSend(packet);
 
-        //bool isSuccess = await leaveRoomTcs.Task;
+        bool isSuccess = await leaveRoomTcs.Task;
 
-        //if (isSuccess)
-        //{
-        //    UIManager.Hide<UIRoom>();
-        //    await UIManager.Show<UILobby>();
-        //}
-        //else
-        //{
-        //    Debug.LogError("서버와 통신실패. 방나가기 실패");
-        //}
+        if (isSuccess)
+        {
+            UIManager.Hide<UIRoom>();
+            await UIManager.Show<UILobby>();
+        }
+        else
+        {
+            Debug.LogError("서버와 통신실패. 방나가기 실패");
+        }
     }    
 
     #endregion
@@ -421,102 +391,6 @@ public class UIRoom : UIBase
 
     #region 소켓매니저에 작성될 메서드    
 
-    // 로비에서 C2S_JoinRoomRequest 요청을 보내고 S2C_JoinRoomResponse 받을 때 여기있는 메서드를 호출한다.   
-    // 로비에서 만들어져 있는 방에 입장할 때 S2C_JoinRoomResponse 응답받고 호출한다.
-    public void JoinRoomResponse(GamePacket gamePacket)
-    {
-        //var response = gamePacket.JoinRoomResponse;
-
-        //RoomData roomData = response.RoomData;
-
-        //if(response.Success)
-        //{
-        //    UIManager.Show<UIRoom>(response.RoomData);    
-        //}
-    }
-    /// <summary>
-    /// S2C_JoinRoomNotification 
-    /// SocketManager. 새로운 유저가 대기방에 Join했을 때 대기방 기존 유저들에게 알림.
-    /// </summary>
-    /// <param name="gamePacket"></param>
-    public void JoinRoomNotification(GamePacket gamePacket)
-    {
-       //var response = gamePacket.JoinRoomNotification;
-       //UIManager.Get<UIRoom>().AddRoomUser(response.JoinUser);
-    }
-
-    /// <summary>
-    /// S2C_LeaveRoomResponse
-    /// </summary>
-    /// <param name="gamePacket"></param>
-    public void LeaveRoomResponse(GamePacket gamePacket)
-    {
-        //var response = gamePacket.LeaveRoomResponse;
-        //if(UIManager.Get<UIRoom>().leaveRoomTcs.TrySetResult(response.Success) )
-        //{
-        //    Debug.Log("Leave Room Success");
-        //}
-        //else
-        //{
-        //    // TODO:: FailCode에 맞는 알림바꾸기
-        //    Debug.LogError($"FailCode : {response.FailCode}");
-        //}
-    }
-
-    /// <summary>
-    /// S2C_LeaveRoomNotification 
-    /// </summary>
-    /// <param name="gamePacket"></param>
-    public void LeaveRoomNotification(GamePacket gamePacket)
-    {
-        //    var response = gamePacket.LeaveRoomNotification;
-        //    UIManager.Get<UIRoom>().RemoveRoomUser(response.UserId);
-    }
-
-    /// <summary>
-    /// S2C_GamePrepareResponse 
-    /// </summary>
-    /// <param name="packet"></param>
-    public void GamePrepareResponse(GamePacket packet)
-    {
-        //var response = packet.GamePrepareResponse;
-        //if (UIManager.Get<UIRoom>().readyTcs.TrySetResult(response.Success))
-        //{
-        //    UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
-        //}
-        //else
-        //{
-        //    // TODO:: FailCode에 맞는 알림바꾸기
-        //    Debug.LogError($"FailCode : {response.FailCode}");
-        //}
-    }
-
-    /// <summary>
-    /// S2C_GamePrepareNotification 
-    /// </summary>
-    /// <param name="packet"></param>
-    public void GamePrepareNotification(GamePacket packet)
-    {
-        //var response = packet.GamePrepareNotification;
-        //UIManager.Get<UIRoom>().SetUserReady(response.SessionId, response.IsReady, response.State);
-    }
-
-    /// <summary>
-    /// S2C_GameStartNotification
-    /// </summary>
-    public void GameStartNotification(GamePacket packet)
-    {
-        //var response = packet.GameStartNotification;
-        //if (response.Success)
-        //{
-        //    UIManager.Get<UIRoom>().GameStart();
-        //}
-        //else
-        //{
-        //    Debug.LogError($"FailCode : {response.FailCode}");
-        //}
-    }
-
-
+ 
     #endregion
 }

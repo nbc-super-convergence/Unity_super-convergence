@@ -15,7 +15,7 @@ public class RoomUserSlot : MonoBehaviour
 
     public bool isReady = false;
 
-    public int playerId;  // or userId or 식별가능한 고유값
+    public string loginId;  // or userId or 식별가능한 고유값
 
 
     private void Awake()
@@ -26,16 +26,16 @@ public class RoomUserSlot : MonoBehaviour
     
     public void SetRoomUser(UserData userData)
     {
-        if (userData.nickname == null || userData.nickname == "")
+        if (userData.Nickname == null || userData.Nickname == "")
         {
             nickNameTMP.text = "EMPTY";
             return;
         }        
         else
         {
-            nickNameTMP.text = userData.nickname;
+            nickNameTMP.text = userData.Nickname;
         }
-        this.playerId = userData.loginId;
+        this.loginId = userData.LoginId;
     }
 
     public void SetImage()
