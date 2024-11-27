@@ -10,35 +10,6 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
      * 인자는 GamePacket gamePacket.
      */
 
-    #region Receive Packets
-    //나의 스폰 알림 Receive.
-    public void IcePlayerSpawnNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerSpawnNotification;
-
-        //추후 로그인 단계로 이동.
-        GameManager.Instance.SetPlayerId(response.PlayerId); 
-
-        //init Minigame
-        MiniGameManager.Instance.SetMiniGame<GameIceSlider>();
-
-        //Spawn MiniPlayer
-        MiniGameManager.Instance.GetMiniPlayer(response.PlayerId)
-            .ReceivePlayerSpawn(ConvertVector3(response.Position), response.Rotation);
-    }
-
-    //다른 플레이어 움직임 Receive.
-    public void IcePlayerMoveNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerMoveNotification;
-        foreach (var p in response.Players)
-        {   
-            MiniGameManager.Instance.GetMiniPlayer(p.PlayerId)
-                .ReceiveOtherMove(ConvertVector3(p.Position), ConvertVector3(p.Force), p.Rotation, p.State);
-        }
-    }
-    #endregion
-
     #region Parse Messages
     //새로운 벡터 선언 (임시로)
     public static Vector ConvertVector(Vector3 other)
