@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "PlayerControll",
+            "name": "MiniPlayerToken",
             "id": "6749c88b-81ee-4fea-bc76-6a2a4fe1b7a2",
             "actions": [
                 {
