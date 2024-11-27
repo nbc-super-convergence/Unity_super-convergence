@@ -4,6 +4,13 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public static bool isGameStart; //로그인 -> 다른 씬으로 이동 시.
+    //public int PlayerId { get; private set; }
+    public int PlayerId;
+    protected override void Awake()
+    {
+        base.Awake();
+        Application.targetFrameRate = 60;
+    }
 
     public void InitApp()
     {
@@ -23,4 +30,11 @@ public class GameManager : Singleton<GameManager>
         //Initialize GameManager : 확실한 초기화 보장.
         isInitialized = true;
     }
+
+    #region Client ID
+    public void SetPlayerId(int playerId)
+    {
+        PlayerId = playerId;
+    }
+    #endregion
 }
