@@ -75,7 +75,7 @@ public class LoginPanel : MonoBehaviour
     private void SendPacketIceJoinRequest()
     {
         GamePacket packet = new();
-        packet.IceJoinRequest = new();
+        //packet.IceJoinRequest = new();
         SocketManager.Instance.OnSend(packet);
     }
     #endregion
