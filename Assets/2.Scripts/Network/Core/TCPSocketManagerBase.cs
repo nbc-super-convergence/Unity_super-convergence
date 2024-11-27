@@ -167,7 +167,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
                         byte[] typeBytes = reader.ReadBytes(2);
                         Array.Reverse(typeBytes); //빅 엔디언(네트워크) -> 리틀 엔디언(PC)
                         PayloadOneofCase type = (PayloadOneofCase)BitConverter.ToInt16(typeBytes);
-                        Debug.Log($"PacketType:{type}");
+                        //Debug.Log($"PacketType:{type}");
 
                         /*버전 읽기*/
                         byte versionLength = reader.ReadByte();
@@ -191,7 +191,7 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
                         int totalLength = 11 + versionLength + payloadLength;
                         Packet packet = new Packet(type, version, sequence, payloadBytes);
                         receiveQueue.Enqueue(packet);
-                        Debug.Log($"Enqueued Type: {type}|{receiveQueue.Count}");
+                        //Debug.Log($"Enqueued Type: {type}|{receiveQueue.Count}");
 
                         processedLength += totalLength;
                     }

@@ -1,9 +1,43 @@
 syntax = "proto3";
 
-message Position {
-    float x = 1; 
-    float y = 2; 
-    float z = 3; 
+// 공통 
+message UserData {
+    string loginId = 1;
+    string nickname = 2;
+}
+
+message RoomData {
+    int32 id = 1;
+    int64 ownerId = 2;
+    string name = 3;
+    RoomStateType state = 4; // WAIT 0, PREPARE 1, INAGAME 2
+    repeated UserData users = 5;
+}
+
+enum GlobalFailCode {
+    NONE_FAILCODE = 0;
+    UNKNOWN_ERROR = 1;
+    INVALID_REQUEST = 2;
+    AUTHENTICATION_FAILED = 3;
+    CREATE_ROOM_FAILED = 4;
+    JOIN_ROOM_FAILED = 5;
+    LEAVE_ROOM_FAILED = 6;
+    CHAT_FAIL = 7;
+    GAME_PREPARE_FAIL = 8;
+    BOARD_PLAYER_MOVE_FAIL = 9;
+    TILE_PURCHASE_FAIL = 10;
+    BACK_TO_THE_ROOM_FAIL = 11;
+    INVALID_ROOM_STATE = 12;
+    ID_OR_PASSWORD_MISS = 13; // 13 ~ 16 AUTH SERVER ERROR
+    NOT_MATCH_PASSWORD_CONFIRM = 14;
+    ALREADY_EXIST_ID = 15;
+    ALREADY_LOGGED_IN_ID = 16;
+}
+
+enum RoomStateType  {
+	WAIT = 0;
+	PREPARE = 1;
+	INGAME = 2;
 }
 
 enum State {
@@ -12,78 +46,396 @@ enum State {
     DIE = 2;
 }
 
-message C2S_IceJoinRequest {
+message Vector {
+    float x = 1; 
+    float y = 2; 
+    float z = 3; 
+}
+
+message S2S_ServerInfoNotification {
+    
+    repeated Params params = 1;
+    
+    message Params {
+        string name = 1;
+        int32 number = 2;
+        string host = 3;
+        string port = 4;
+        repeated int32 types = 5;
+    }
+}
+
+// 인증서버 
+message C2S_RegisterRequest {
+    string loginId = 1;            
+    string password = 2;
+    string passwordConfirm = 3;
+    string nickname = 4;           
+}
+
+message S2C_RegisterResponse {
+    bool success = 1;
+    GlobalFailCode failCode = 2;
+}
+
+message C2S_LoginRequest {
+    string loginId = 1;
+    string password = 2;
+}
+
+message S2C_LoginResponse {
+    bool success = 1;
+    string sessionId = 2;
+    GlobalFailCode failCode = 3;
+}
+
+// 로비서버
+message C2S_LobbyJoinRequest {
+    string sessionId = 1; 
+}
+
+message S2C_LobbyJoinResponse {
+    bool success = 1;
+    UserData userData = 2;
+    GlobalFailCode failCode = 3;
+}
+
+message C2S_LobbyLeaveRequest{
+    string sessionId = 1; 
+}
+
+message S2C_LobbyLeaveResponse{
+    bool success = 1;
+    GlobalFailCode failCode = 2;
+}
+
+message C2S_LobbyUserListRequest{
+    string sessionId = 1; 
+}
+
+message S2C_LobbyUserListResponse{
+    bool success = 1;
+    repeated string userList = 2;
+    GlobalFailCode failCode = 3;
+}
+
+message C2S_LobbyUserDetailRequest{
+    string sessionId = 1; 
+    string tartgetSessionId = 2; 
+}
+
+message S2C_LobbyUserDetailResponse{
+    bool success = 1;
+    UserData userData = 2;
+    GlobalFailCode failCode = 3;
+}
+
+// 룸 서버 
+message C2S_RoomListRequest{
+	string lobbyId = 1;
+}
+
+message S2C_RoomListResponse{
+    bool success = 1;
+    repeated RoomData rooms = 2;
+    GlobalFailCode failCode = 3;
+}
+
+message C2S_CreateRoomRequest {
+    string sessionId = 1;
+    string roomName = 2;
+    string lobbyId = 3; 
+}
+
+message S2C_CreateRoomResponse{
+    bool success = 1;
+    RoomData room = 2;
+    GlobalFailCode failCode = 3;
+}
+
+message C2S_JoinRoomRequest {
+    string sessionId = 1;
+    string roomId = 2;
+}
+
+message S2C_JoinRoomResponse {
+	bool success = 1;
+	RoomData room = 2;
+	GlobalFailCode failCode = 3;
+}
+
+message S2C_JoinRoomNotification {
+    UserData userData = 1;
+}
+
+message C2S_LeaveRoomRequest{
+    string sessionId = 1;
+}
+
+message S2C_LeaveRoomResponse{
+    bool success = 1;
+    GlobalFailCode failCode = 2;
+}
+
+message S2C_LeaveRoomNotification {
+    string sessionId = 1;
+}
+
+message C2S_GamePrepareRequest {
+    string sessionId = 1;
+    bool isReady = 2;
+}
+
+message S2C_GamePrepareResponse {
+    bool success = 1;
+    bool isReady = 2;
+    GlobalFailCode failCode = 3;
+} 
+
+message S2C_GamePrepareNotification{
+    string sessionId = 1;
+    bool isReady = 2;
+    RoomStateType state = 3;
+}
+
+// 보드 서버 
+message C2S_GameStartRequest {
+    string sessionId = 1;
+}
+
+message S2C_GameStartNotification {
+    bool success = 1;
+    repeated PlayerData players = 2;
+	GlobalFailCode failCode = 3;
+    
+    message PlayerData {
+        string userId = 1;
+        string nickname = 2;
+        int32 position = 3;
+    }
+}
+
+message C2S_RollDiceRequest {
+}
+
+message S2C_RollDiceResponse {
+  	bool success = 1;
+	int32 diceResult = 2;
+	GlobalFailCode failCode = 3;
+}
+
+message S2C_RollDiceNotification {
+	int32 playerId = 1;
+	int32 diceResult = 2;
+}
+
+message C2S_MovePlayerBoardRequest {
+	string sessionId = 1;
+	Vector targetPoint = 2;
+}
+
+message  S2C_MovePlayerBoardResponse {
+  	bool success = 1;
+	GlobalFailCode failCode = 2;
+}
+
+message  S2C_MovePlayerBoardNotification {
+	int32 playerId = 1;
+	Vector targetPoint = 2;
+}
+
+message  C2S_PurchaseTileRequest {
+	string sessionId = 1;
+	Vector tile = 2;
+}
+
+message  S2C_PurchaseTileResponse {
+  	bool success = 1;
+	Vector tile = 2;
+	GlobalFailCode failCode = 3;
+}
+
+message  S2C_PurchaseTileNotification {
+	int32 playerId = 1;
+	Vector tile = 2;
+}
+
+message S2C_GameEndNotification {
+  	repeated Rank rank = 1;
+}
+
+message C2S_BackToTheRoomRequest {
+	int32 userId = 1;
+}
+
+message S2C_BackToTheRoomResponse {
+	bool success = 1;
+	RoomData room = 2;
+	GlobalFailCode failCode = 3;
+}
+
+message S2C_BackToTheRoomNotification {
+	int32 playerId = 1;
+}
+
+message C2S_StartMiniGameRequest {
+    string sessionId = 1;
+}
+
+message S2C_StartMiniGameNotification {
+	int32 gameType = 1; 
+}
+
+// 미니게임 - 아이스
+message C2S_IceMiniGameStartRequest {
+    string sessionId = 1; // 방장의 세션 id
+}
+
+message S2C_IceMiniGameStartNotification {
+    repeated startPlayers players = 1;
+    int64 startTime = 2;    
+    
+    message startPlayers {
+        int32 playerId = 1; 
+        int32 playerType = 2;
+        Vector position = 3; 
+        float rotation = 4;
+    }
+
+}
+
+message C2S_IceGameReadyRequest {
+    string playerId = 1; 
+}
+
+message S2C_IceGameReadyNotification {
     int32 playerId = 1; 
+}
+
+message S2C_IceGameStartNotification {
+    int64 startTime = 1; 
 }
 
 message C2S_IcePlayerMoveRequest {
-    int32 playerId = 1; 
-    int32 hp = 2;
-    Position position = 3; 
-    State state = 4; 
+    int32 playerId = 1;
+     Vector position = 2;
+     float rotation = 3;
 }
 
-message C2S_IceStartRequest {
-    int32 playerId = 1; 
+message S2C_IcePlayerSyncNotification {
+     int32 playerId = 1;
+     Vector position = 2;
+     float rotation = 3;
+     int32 hp = 4;
+     State state = 5;
 }
 
-message S2C_IceMoveNotification {
-    int32 playerId = 1; 
-    int32 gameType = 2; 
+
+message C2S_IcePlayerDamageRequest {
+   int32 playerId = 1;
 }
 
-message S2C_IcePlayerSpawnNotification {
-    int32 playerId = 1; 
-    Position position = 2; 
-    int32 playerType = 3;
-}
-
-message S2C_IceStartNotification {
-        int32 playerId = 1; 
-}
-
-message S2C_IcePlayersStateSyncNotification {
-    repeated PlayerInfo players = 1;
-
-    message PlayerInfo {
-        int32 playerId = 1; 
-        Position position = 2; 
-        int32 hp = 3; 
-        State state = 4; 
-    }
-}
 
 message S2C_IcePlayerDeathNotification {
-    int32 playerId = 1; 
+    int32 playerId = 1;
+    Vector position = 2;
 }
 
-message S2C_IceMapStateSyncNotification {
-    int32 scale = 1;
+
+message MapInfos {
+    float min = 1;
+    float max = 2;
 }
 
-message S2C_IceOverNotification {
-    repeated Rank ranks = 1;
+message S2C_IceMapSyncNotification {
+   MapInfos map = 1;
+}
+
+message S2C_IceGameOverNotification {
+   repeated Rank ranks = 1;
     int32 endTime = 2; 
 
-    message Rank {
-        int32 playerId = 1;
-        int32 rank = 2; 
-    }
 }
+
+message Rank { 
+    int32 playerId = 1;
+    int32 rank = 2; 
+}
+
+
 
 message GamePacket {
     oneof payload {
-
-        C2S_IceJoinRequest iceJoinRequest = 1;
-        C2S_IceStartRequest iceStartRequest = 2;
-        C2S_IcePlayerMoveRequest icePlayerMoveRequest = 3; 
+        // Auth (1~9)
+        C2S_RegisterRequest registerRequest = 1;
+        S2C_RegisterResponse registerResponse = 2;
+        C2S_LoginRequest loginRequest = 3;
+        S2C_LoginResponse loginResponse = 4;
         
-        S2C_IceMoveNotification iceMoveNotification = 4;
-        S2C_IcePlayerSpawnNotification icePlayerSpawnNotification = 5;
-        S2C_IceStartNotification iceStartNotification = 6;
-        S2C_IcePlayersStateSyncNotification icePlayersStateSyncNotification = 7;
-        S2C_IcePlayerDeathNotification icePlayerDeathNotification = 8;
-        S2C_IceMapStateSyncNotification iceMapStateSyncNotification = 9;
-        S2C_IceOverNotification iceOverNotification = 10;
+        // distributor noti (10)
+        S2S_ServerInfoNotification serverInfoNotification = 10;
+
+        // Lobby (11-30)
+        C2S_LobbyJoinRequest lobbyJoinRequest = 11;
+        S2C_LobbyJoinResponse lobbyJoinResponse = 12;
+        C2S_LobbyLeaveRequest lobbyLeaveRequest = 13;
+        S2C_LobbyLeaveResponse lobbyLeaveResponse = 14;
+        C2S_LobbyUserListRequest lobbyUserListRequest = 15;
+        S2C_LobbyUserListResponse lobbyUserListResponse = 16;
+        C2S_LobbyUserDetailRequest lobbyUserDetailRequest = 17;
+        S2C_LobbyUserDetailResponse lobbyUserDetailResponse = 18;
+
+        // Room (31-50)
+        C2S_RoomListRequest roomListRequest = 31;
+        S2C_RoomListResponse roomListResponse = 32;
+        C2S_CreateRoomRequest createRoomRequest = 33;
+        S2C_CreateRoomResponse createRoomResponse = 34;
+        C2S_JoinRoomRequest joinRoomRequest = 35;
+        S2C_JoinRoomResponse joinRoomResponse = 36;
+        S2C_JoinRoomNotification joinRoomNotification = 37;
+        C2S_LeaveRoomRequest leaveRoomRequest = 38;
+        S2C_LeaveRoomResponse leaveRoomResponse = 39;
+        S2C_LeaveRoomNotification leaveRoomNotification = 40;
+        C2S_GamePrepareRequest gamePrepareRequest = 41;
+        S2C_GamePrepareResponse gamePrepareResponse = 42;
+        S2C_GamePrepareNotification gamePrepareNotification = 43;
+
+        // Game start (51-60)
+        C2S_GameStartRequest gameStartRequest = 51;
+        S2C_GameStartNotification gameStartNotification = 52;
+
+        // Game Play (61-90)
+        C2S_RollDiceRequest rollDiceRequest = 61;
+        S2C_RollDiceResponse rollDiceResponse = 62;
+        S2C_RollDiceNotification rollDiceNotification = 63;
+        C2S_MovePlayerBoardRequest movePlayerBoardRequest = 64;
+        S2C_MovePlayerBoardResponse movePlayerBoardResponse = 65;
+        S2C_MovePlayerBoardNotification movePlayerBoardNotification = 66;
+        C2S_PurchaseTileRequest purchaseTileRequest = 67;
+        S2C_PurchaseTileResponse purchaseTileResponse = 68;
+        S2C_PurchaseTileNotification purchaseTileNotification = 69;
+        S2C_GameEndNotification gameEndNotification = 70;
+
+        // Post Game (91-100)
+        C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
+        S2C_BackToTheRoomResponse backToTheRoomResponse = 92;
+        S2C_BackToTheRoomNotification backToTheRoomNotification = 93;
+
+        // Mini Game (101-110)
+        C2S_StartMiniGameRequest startMiniGameRequest = 101;
+        S2C_StartMiniGameNotification startMiniGameNotification = 102;
+
+        // ice  (201)
+        C2S_IceMiniGameStartRequest iceMiniGameStartRequest = 201;
+        S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 202;
+        C2S_IceGameReadyRequest iceGameReadyRequest = 203; 
+        S2C_IceGameReadyNotification iceGameReadyNotification = 204;
+        S2C_IceGameStartNotification iceGameStartNotification = 205;
+        C2S_IcePlayerMoveRequest icePlayerMoveRequest = 206;
+        S2C_IcePlayerSyncNotification icePlayerSyncNotification = 207;
+        C2S_IcePlayerDamageRequest icePlayerDamageRequest = 208;
+        S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
+        S2C_IceGameOverNotification iceGameOverNotification = 210;
+        S2C_IceMapSyncNotification iceMapSyncNotification = 211;
     }
 }

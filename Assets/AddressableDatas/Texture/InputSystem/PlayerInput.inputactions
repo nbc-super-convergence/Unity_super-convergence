@@ -2,7 +2,7 @@
     "name": "PlayerInput",
     "maps": [
         {
-            "name": "PlayerControll",
+            "name": "MiniPlayerToken",
             "id": "6749c88b-81ee-4fea-bc76-6a2a4fe1b7a2",
             "actions": [
                 {
@@ -37,7 +37,7 @@
                 {
                     "name": "2D Vector",
                     "id": "f8bda928-de5c-4f46-a25a-e5cdff120db7",
-                    "path": "2DVector",
+                    "path": "2DVector(mode=2)",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
