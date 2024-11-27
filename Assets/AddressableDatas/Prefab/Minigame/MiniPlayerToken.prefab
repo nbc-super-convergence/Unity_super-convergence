@@ -1096,12 +1096,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8971691201692695086}
-  - component: {fileID: 1157154809407784835}
   - component: {fileID: 5892469025028561705}
   - component: {fileID: 4354627205027103094}
+  - component: {fileID: 1300090847211069023}
   - component: {fileID: 7443276078078182267}
   - component: {fileID: 3658608749494323995}
-  - component: {fileID: 1300090847211069023}
   m_Layer: 6
   m_Name: MiniPlayerToken
   m_TagString: Player
@@ -1126,85 +1125,6 @@ Transform:
   - {fileID: 1974293777268880023}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1157154809407784835
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5833503977316714578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 9a043abeae96aea4b897642e5dc531dd,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7443276078078182267}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnMoveEvent
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3553aaf1-c350-4ab3-bff2-3e0f64518203
-    m_ActionName: PlayerControll/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7443276078078182267}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnJumpEvent
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 2a6e15a7-7a6b-43d7-9ba6-73cd485e723d
-    m_ActionName: PlayerControll/Jump[/Keyboard/space]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7443276078078182267}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnInteractEvent
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: fdeef296-2f5d-4b56-801c-7cf2387a826e
-    m_ActionName: PlayerControll/Interaction[/Mouse/leftButton]
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: Keyboard_Mouse
-  m_DefaultActionMap: PlayerControll
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 0}
 --- !u!136 &5892469025028561705
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1255,41 +1175,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &7443276078078182267
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5833503977316714578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b4bd30ba68498864181742fe2eb75639, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nextPos: {x: -5.799735, y: 1.328, z: 3.855657}
-  rb: {fileID: 4354627205027103094}
-  _collider: {fileID: 5892469025028561705}
-  playerInput: {fileID: 1157154809407784835}
-  miniRotate: {fileID: 3658608749494323995}
-  animator: {fileID: 1300090847211069023}
-  curState: 0
-  MiniPlayerId: 1
-  forceMultiplier: 500
-  stopThreshold: 0.01
-  curForce: {x: 0, y: 0, z: 0}
---- !u!114 &3658608749494323995
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5833503977316714578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 98bab42572733614f8d3a495c27223d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1300090847211069023
 Animator:
   serializedVersion: 5
@@ -1303,7 +1188,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: 5406cb218055eed4ab69ddcfb185d593, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_WarningMessage: 
@@ -1311,6 +1196,38 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7443276078078182267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833503977316714578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bd30ba68498864181742fe2eb75639, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerData:
+    miniPlayerId: 0
+    WASDInput: 0
+    moveVector: {x: 0, y: 0}
+  rb: {fileID: 0}
+  col: {fileID: 0}
+  animator: {fileID: 1300090847211069023}
+  miniRotate: {fileID: 3658608749494323995}
+--- !u!114 &3658608749494323995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833503977316714578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98bab42572733614f8d3a495c27223d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6061559758917856231
 GameObject:
   m_ObjectHideFlags: 0

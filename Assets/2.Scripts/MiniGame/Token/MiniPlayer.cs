@@ -1,38 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class MiniPlayer : MonoBehaviour
 {
-    /*Controllers*/
-    //IController curCtrl;
-
-    public Vector3 nextPos;
-
+    [Header("Player Data")]
+    [SerializeField] private MiniPlayerTokenData playerData;
+    
     [Header("Components")]
-    public Rigidbody rb;
-    public CapsuleCollider _collider;
-    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private Rigidbody rb;
+    [SerializeField] private CapsuleCollider col;
+    [SerializeField] private Animator animator;
     [SerializeField] private MiniPlayerRotate miniRotate;
 
-    [Header("Animation")]
-    [SerializeField] private Animator animator;
-    public State curState;
-
-    [Header("Player Properties")]
-    [SerializeField] private int MiniPlayerId;
-    [SerializeField] private float forceMultiplier = 10f; //플레이어 속도
-    [SerializeField] private float stopThreshold = 0.01f; //속도 기반 멈춤 판별
-    private Vector2 moveInput;
-    public Vector3 curForce;
-
-    private bool IsClient => MiniPlayerId == GameManager.Instance.PlayerId;
+    [Header("Input & Control")]
+    [SerializeField] private MiniPlayerInputHandler inputHandler;
+    private MiniPlayerController curCtrl;
+    
+    /*Server*/
+    private bool IsClient => playerData.miniPlayerId == GameManager.Instance.PlayerId;
+    private Coroutine SendMoveCoroutine;
+    private Vector3 nextPos; //수동 움직임.
 
     #region Unity Messages
     private void Awake()
     {
-        playerInput.enabled = false;
-        curState = State.Idle;
+        inputHandler.Init(playerData);
     }
 
     private void Update()
@@ -47,8 +41,11 @@ public class MiniPlayer : MonoBehaviour
     {
         if (IsClient)
         {
-            MoveByInput(moveInput);
-            miniRotate.InputRotation(moveInput);
+            if (playerData.WASDInput)
+            {
+                curCtrl.MoveVector2();
+                miniRotate.InputRotation(playerData.moveVector);
+            }
         }
     }       
     #endregion
@@ -59,9 +56,12 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     public void ReceivePlayerSpawn(Vector3 position, float rotation)
     {
-        playerInput.enabled = true; //Input 활성화
+        inputHandler.EnablePlayerInput();
+        //TODO: Input Map 바꾸기...?
+        curCtrl = new AddForceController(playerData, rb); //컨트롤러 고르기.
         transform.position = position; //position 초기화
         miniRotate.RotByReceive(rotation); //rotation 초기화
+        SendMoveCoroutine ??= StartCoroutine(SendClientMove());
     }
 
     /// <summary>
@@ -69,20 +69,25 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     private IEnumerator SendClientMove()
     {
+        Vector3 curPos = transform.position, lastPos = transform.position;
         while (true)
         {
-            GamePacket packet = new()
+            curPos = transform.position;
+            if (curPos != lastPos)
             {
-                IcePlayerMoveRequest = new()
+                GamePacket packet = new()
                 {
-                    PlayerId = MiniPlayerId,
-                    Position = SocketManager.ConvertVector(transform.position),
-                    Force = SocketManager.ConvertVector(curForce),
-                    Rotation = miniRotate.transform.rotation.y,
-                    State = curState
-                }
-            };
-            SocketManager.Instance.OnSend(packet);
+                    IcePlayerMoveRequest = new()
+                    {
+                        PlayerId = playerData.miniPlayerId,
+                        Position = SocketManager.ConvertVector(transform.position),
+                        Rotation = miniRotate.transform.rotation.y,
+                        //State = playerData.CurState
+                    }
+                };
+                SocketManager.Instance.OnSend(packet);
+                lastPos = curPos;
+            }
             yield return new WaitForSeconds(0.1f);
         }   
     }
@@ -95,55 +100,13 @@ public class MiniPlayer : MonoBehaviour
         //transform.position = pos; //위치 동기화?
         MoveByReceive(pos, force);
         miniRotate.RotByReceive(rotY);
-        curState = state;
+        playerData.CurState = state;
     }
-    #endregion
-
-    public Coroutine c;
-
-    #region Input System Events
-    public void OnMoveEvent(InputAction.CallbackContext context)
+    
+    public void ReceivePlayerDespawn()
     {
-        if (context.phase.Equals(InputActionPhase.Performed))
-        {
-            moveInput = context.ReadValue<Vector2>();
-            animator.SetBool("Move", true);
-            curState = State.Move;
-            //c ??= StartCoroutine(SendClientMove());
-        }
-        else if(context.phase.Equals(InputActionPhase.Canceled))
-        {
-            moveInput = Vector2.zero;
-            animator.SetBool("Move", false);
-            curState = State.Idle;
-        }
-    }
-
-    public void OnJumpEvent(InputAction.CallbackContext context)
-    {
-        float pressAnalog = 0f; //키를 어느정도 누르고 있는지
-
-        if(context.phase == InputActionPhase.Performed)
-        {
-            //점프
-            pressAnalog += Time.deltaTime;
-        }
-        else if(context.phase == InputActionPhase.Canceled)
-        {
-            pressAnalog = 0f;
-        }
-    }
-    public void OnInteractEvent(InputAction.CallbackContext context)
-    {
-        switch(context.phase)
-        {
-            case InputActionPhase.Started:
-                break;
-            case InputActionPhase.Performed:
-                break;
-            case InputActionPhase.Canceled:
-                break;
-        }
+        inputHandler.DisablePlayerInput();
+        curCtrl = null;
     }
     #endregion
 
@@ -153,10 +116,7 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     private void MoveByInput(Vector2 moveInput)
     {
-        // WASD로 입력받아 3D로 컨버트
-        Vector3 force = new(moveInput.x, 0, moveInput.y);
-        rb.AddForce(force * forceMultiplier, ForceMode.Force);
-        curForce = force;
+        
     }
     /// <summary>
     /// Receive에 따른 플레이어 움직임
