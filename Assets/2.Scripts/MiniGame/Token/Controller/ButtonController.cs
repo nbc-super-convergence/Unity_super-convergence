@@ -1,22 +1,8 @@
 ﻿using UnityEngine;
 
-public class ButtonController : IController
+public class ButtonController : MiniPlayerController
 {
-    public virtual void Move(Vector3 pos)
+    public ButtonController(MiniPlayerTokenData playerData, Rigidbody rb) : base(playerData, rb)
     {
-
-    }
-
-    public virtual void Interaction(bool isPress)
-    {
-        if(isPress)
-        {
-
-        }
-    }
-
-    public virtual void Jump()
-    {
-
     }
 }
