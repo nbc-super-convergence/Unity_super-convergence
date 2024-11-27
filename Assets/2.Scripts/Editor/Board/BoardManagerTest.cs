@@ -20,7 +20,7 @@ public class BoardManagerTest : Editor
         if (!Application.isPlaying) return;
 
         if(GUILayout.Button("Dice"))
-            target.TestRandomDice();
+            target.RandomDice();
 
     }
 }

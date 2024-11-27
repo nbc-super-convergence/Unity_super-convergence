@@ -26,13 +26,13 @@ public class PurchaseNodeUI : UIBase
         var p = BoardManager.Instance.playerTokenHandlers[index];
 
         //임시 주석
-        //if(p.data.keyAmount > requireAmount)
+        //if (p.data.keyAmount > requireAmount)
         //{
         //    p.data.keyAmount -= requireAmount;
             action.Purchase(index);
         //}
+        //else Cancle();
 
-        SetActive(false);
     }
 
     public void Cancle()

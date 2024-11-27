@@ -56,6 +56,15 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         ////Æ®·ÎÇÇ + 1
         //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
 
+        //GamePacket packet = new();
+
+        ////packet. = new()
+        ////{
+
+        ////};
+
+        //SocketManager.Instance.OnSend(packet);
+
         Cancle();
     }
 
@@ -65,6 +74,6 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         p.SetNode(nodes[0],true);
         p.GetDice(0);
 
-        BoardManager.Instance.TestTurnEnd();
+        BoardManager.Instance.TurnEnd();
     }
 }

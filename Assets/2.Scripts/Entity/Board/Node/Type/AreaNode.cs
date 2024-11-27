@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class AreaNode : BaseNode, IPurchase
 {
@@ -43,12 +44,30 @@ public class AreaNode : BaseNode, IPurchase
     {
         //임시 주석
         //p.hp -= 0;
+
+        //GamePacket packet = new();
+
+        ////packet. = new()
+        ////{
+
+        ////};
+
+        //SocketManager.Instance.OnSend(packet);
     }
 
     public void Purchase(int index)
     {
-        playerIndex = index;
-        plane.material = BoardManager.Instance.materials[index];
+        //playerIndex = index;
+        //plane.material = BoardManager.Instance.materials[index];
+
+        //GamePacket packet = new();
+
+        ////packet. = new()
+        ////{
+
+        ////};
+
+        //SocketManager.Instance.OnSend(packet);
 
         Cancle();
     }
@@ -59,6 +78,6 @@ public class AreaNode : BaseNode, IPurchase
         p.SetNode(nodes[0],true);
         p.GetDice(0);
 
-        BoardManager.Instance.TestTurnEnd();
+        BoardManager.Instance.TurnEnd();
     }
 }
