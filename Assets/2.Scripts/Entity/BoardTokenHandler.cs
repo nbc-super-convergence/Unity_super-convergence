@@ -2,16 +2,22 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
+using TMPro;
+using Sirenix.Utilities;
 
-public class PlayerTokenHandler : MonoBehaviour
+
+public class BoardTokenHandler : MonoBehaviour
 {
+    private bool isReady = false;
     private bool isTurn = false; //내 턴인지?
     private float speed = 5f;
+    private float syncTime = 0f;
+
 
     public int dice { get; private set; } //주사위 눈
 
     private IBoardNode curNode; //현재 위치한 노드
-    public PlayerTokenData data;
+    public BoardTokenData data;
     [SerializeField] Transform character;
 
     public Queue<Transform> queue { get; private set; }
@@ -48,8 +54,31 @@ public class PlayerTokenHandler : MonoBehaviour
         //}
         #endregion
 
+        #region 주사위 굴림
+
+        if (isReady)
+        {
+            if(Input.GetKeyDown(KeyCode.Space))
+            {
+                GamePacket packet = new();
+                packet.RollDiceRequest = new()
+                {
+
+                };
+
+                SocketManager.Instance.OnSend(packet);
+
+                isReady = false;
+            }
+        }
+
+        #endregion
+
+        #region 움직이는 동안 작동
         if (isTurn)
         {
+            syncTime += Time.deltaTime;
+
             Vector3 target = queue.Peek().position;
             character.LookAt(queue.Peek());
 
@@ -66,8 +95,23 @@ public class PlayerTokenHandler : MonoBehaviour
                 queue.Dequeue();
             }
 
+            if(syncTime >= 1.0f)
+            {
+                GamePacket packet = new();
+
+                packet.MovePlayerBoardRequest = new()
+                {
+                    SessionId = "", //세션 아이디 구해올 곳 필요함
+                    TargetPoint = SocketManager.ConvertVector(transform.position)
+                };
+
+                syncTime = 0.0f;
+            }
+
             if (queue.Count == 0) isTurn = false;
         }
+
+        #endregion
     }
 
     //주사위 눈 입력
@@ -117,5 +161,10 @@ public class PlayerTokenHandler : MonoBehaviour
         }
 
         action?.Invoke();
+    }
+
+    public void Ready()
+    {
+        isReady = true;
     }
 }

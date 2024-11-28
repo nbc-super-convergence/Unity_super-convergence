@@ -9,7 +9,7 @@ public enum PlayerTokenState
 }
 
 [Serializable]
-public class PlayerTokenData
+public class BoardTokenData
 {
     public Vector3 position;
     public float rotY;
