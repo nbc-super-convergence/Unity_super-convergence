@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,8 @@ public class UIRegister : UIBase
     [SerializeField] private TMP_Text errorMessage;
     private StringBuilder sbError = new();
 
+    private TaskCompletionSource<bool> registerTcs;
+
     public override void Opened(object[] param)
     {
         base.Opened(param);
@@ -25,7 +28,7 @@ public class UIRegister : UIBase
     }
 
 
-    private void Register()
+    private async void Register()
     {
         if (!IsValidation())
         {
@@ -39,29 +42,32 @@ public class UIRegister : UIBase
 
             string inputID = inputFieldID.text;
             string inputPassword = inputFieldPassword.text;
-            string inputpasswordConfirm = inputFieldPasswordConfirm.text;
+            string inputPasswordConfirm = inputFieldPasswordConfirm.text;
             string inputNickname = inputFieldNickname.text;
 
-            //GamePacket packet = new();
-            //packet.AAAA = new()
-            //{
-
-            //};
-            //SocketManager.Instance.OnSend(packet);
-
-            //TODO:: 서버에 전송해서 같은 id가 있을 경우 리스폰스 받고, 에러메세지 띄우기.
-            //await 응답받기까지 기다리기 
-            if(IsSameID())
+            GamePacket packet = new();
+            packet.RegisterRequest = new()
             {
-                sbError.AppendLine($"같은 아이디가 존재합니다.");
-                errorMessage.text = sbError.ToString();
-                sbError.Clear();
-                return;
+                LoginId = inputID,
+                Password = inputPassword,
+                PasswordConfirm = inputPasswordConfirm,
+                Nickname = inputNickname
+            };
+            registerTcs = new();
+            SocketManager.Instance.OnSend(packet);
+
+            bool isSuccess = await registerTcs.Task;
+            if (isSuccess)
+            {
+                Debug.Log($"가입성공 ID: {inputID}, Password: {inputPassword}");
+                ButtonBack();                
             }
             else
             {
-                Debug.Log($"가입성공 ID: {inputID}, Password: {inputPassword}");
-                ButtonBack();
+                //sbError.AppendLine($"같은 아이디가 존재합니다.");
+                //errorMessage.text = sbError.ToString();
+                //sbError.Clear();
+                //return;
             }
         }
     }
@@ -86,14 +92,15 @@ public class UIRegister : UIBase
         }
 
         return true;
-    }
+    }        
 
-    //TODO:: 서버에 전송해서 같은 id가 있을 경우 리스폰스 받고, 에러메세지 띄우기.
-    private bool IsSameID()
+    public void TrySetTask(bool isSuccess)
     {
-        return false;
+        if(registerTcs.TrySetResult(isSuccess))
+        {
+            Debug.Log("회원가입 성공");
+        }
     }
-
 
     #region Button
     public void ButtonBack()
