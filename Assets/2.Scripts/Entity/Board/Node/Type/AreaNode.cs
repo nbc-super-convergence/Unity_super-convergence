@@ -40,7 +40,7 @@ public class AreaNode : BaseNode, IPurchase
             var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         }
     }
-    private void Damage(PlayerTokenData p)
+    private void Damage(BoardTokenData p)
     {
         //임시 주석
         //p.hp -= 0;
@@ -59,25 +59,32 @@ public class AreaNode : BaseNode, IPurchase
     {
         //playerIndex = index;
         //plane.material = BoardManager.Instance.materials[index];
+        //int i = BoardManager.Instance.areaNodes.IndexOf(this);
 
-        //GamePacket packet = new();
+        GamePacket packet = new();
+        //packet.PurchaseTileRequest = new()
+        //{
+        //    SessionId = "1",
+        //    Tile = SocketManager.ConvertVector(transform.position)
+        //};
 
-        ////packet. = new()
-        ////{
-
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
+        SocketManager.Instance.OnSend(packet);
 
         Cancle();
     }
 
     public void Cancle()
     {
-        PlayerTokenHandler p = BoardManager.Instance.Curplayer;
+        BoardTokenHandler p = BoardManager.Instance.Curplayer;
         p.SetNode(nodes[0],true);
         p.GetDice(0);
 
         BoardManager.Instance.TurnEnd();
+    }
+
+    public void SetArea(int index)
+    {
+        //playerIndex = index;
+        plane.material = BoardManager.Instance.materials[index];
     }
 }

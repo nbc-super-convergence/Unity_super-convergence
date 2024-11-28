@@ -70,7 +70,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
 
     public void Cancle()
     {
-        PlayerTokenHandler p = BoardManager.Instance.Curplayer;
+        BoardTokenHandler p = BoardManager.Instance.Curplayer;
         p.SetNode(nodes[0],true);
         p.GetDice(0);
 

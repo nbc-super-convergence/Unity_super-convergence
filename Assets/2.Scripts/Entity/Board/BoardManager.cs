@@ -51,16 +51,19 @@ public class BoardManager : Singleton<BoardManager>
     public GameObject TestPlayerPrefab;
 
     //플레이어 리스트
-    public List<PlayerTokenHandler> playerTokenHandlers = new();
+    public List<BoardTokenHandler> playerTokenHandlers = new();
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
     [SerializeField] private int playerIndex = 0;
 
     public List<IToggle> trophyNode = new List<IToggle>();
+    public List<AreaNode> areaNodes = new List<AreaNode>();
     private int prevTrophyIndex = -1;
 
-    public PlayerTokenHandler Curplayer
+    
+
+    public BoardTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
     }
@@ -81,12 +84,14 @@ public class BoardManager : Singleton<BoardManager>
         for(int i =0; i < 2; i++)
         {
             //시작 지점에 플레이어 생성
-            PlayerTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<PlayerTokenHandler>();
+            BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
             //리스트에 플레이어 보관
             playerTokenHandlers.Add(handle);
         }
 
         //handle.curNode = startNode.nextBoard[0];
+
+        Curplayer.Ready();
 
         //트로피칸 설정
         SetTrophyNode();
@@ -176,5 +181,10 @@ public class BoardManager : Singleton<BoardManager>
         ////};
 
         //SocketManager.Instance.OnSend(packet);
+    }
+
+    public void PurChaseNode(int node,int playerIndex)
+    {
+        areaNodes[node].SetArea(playerIndex);
     }
 }
