@@ -115,7 +115,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().RemoveRoomUser(response.SessionId);
+        UIManager.Get<UIRoom>().RemoveRoomUser(response.UserData.LoginId);
     }
 
     public void GamePrepareResponse(GamePacket packet)
