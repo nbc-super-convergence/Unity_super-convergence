@@ -2,12 +2,12 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class MiniPlayerTokenData
+public class MiniTokenData
 {
-    private Animator animator;
+    private readonly Animator animator;
 
-    #region common
-    public int miniPlayerId;
+    #region common : 모든 게임에서 사용
+    public int miniTokenId;
     private State curState;
     public State CurState
     {
@@ -23,17 +23,20 @@ public class MiniPlayerTokenData
     }
     #endregion
 
-    #region WASD
-    public bool WASDInput;
-    public Vector2 moveVector;
+    #region Inputs
+    public Vector2 wasdVector;
+    public Vector3 nextPos;
+
+    public float rotY = 0f;
     #endregion
 
     #region Ice Datas
     public readonly float icePlayerSpeed = 10f;
     #endregion
 
-    public MiniPlayerTokenData(Animator _anim)
+    public MiniTokenData(Animator _anim)
     {
         animator = _anim;
+        curState = State.Idle;
     }
 }
