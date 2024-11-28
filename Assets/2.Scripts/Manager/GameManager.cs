@@ -6,6 +6,9 @@ public class GameManager : Singleton<GameManager>
     public static bool isGameStart; //로그인 -> 다른 씬으로 이동 시.
     //public int PlayerId { get; private set; }
     public int PlayerId;
+
+    public UserInfo myInfo = new();
+
     protected override void Awake()
     {
         base.Awake();
@@ -32,9 +35,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region Client ID
-    public void SetPlayerId(int playerId)
-    {
-        PlayerId = playerId;
-    }
+    //public void SetPlayerId(int playerId)
+    //{
+    //    PlayerId = playerId;
+    //}
     #endregion
 }
