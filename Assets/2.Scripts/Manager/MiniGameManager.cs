@@ -7,7 +7,7 @@ public enum eGameType
     GameBombDelivery,
 }
 
-public class MiniGameManager : Singleton<MiniGameManager>
+public class MinigameManager : Singleton<MinigameManager>
 {
     public eGameType type { get; private set; }
     private IGame curMiniGame;

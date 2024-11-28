@@ -20,7 +20,7 @@ public class MiniTokenController
         rb = _rb;
     }
 
-    public void MoveVector2(eMoveType type)
+    public void MoveToken(eMoveType type)
     {
        switch (type)
         {
@@ -40,8 +40,8 @@ public class MiniTokenController
         }
     }
 
-    public void RotateY()
+    public void RotateY(float rotY)
     {
-        transform.rotation = Quaternion.Euler(0f, miniData.rotY, 0f);
+        transform.rotation = Quaternion.Euler(0f, rotY, 0f);
     }
 }

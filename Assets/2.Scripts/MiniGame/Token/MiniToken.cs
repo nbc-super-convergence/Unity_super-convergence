@@ -7,12 +7,12 @@ public class MiniToken : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private Animator animator;
 
-    [Header("Data")]
-    private MiniTokenData miniData;
- 
-    [Header("Input & Control")]
-    private MiniTokenInputHandler inputHandler;
-    private MiniTokenController controller;
+    /*Data*/
+    public MiniTokenData MiniData { get; set; }
+
+    /*Input & Control*/
+    public MiniTokenInputHandler InputHandler { get; private set; }
+    public MiniTokenController Controller { get; private set; }
 
     /*Server*/
     private bool IsClient;
@@ -21,20 +21,20 @@ public class MiniToken : MonoBehaviour
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
-        miniData = new(animator);
-        inputHandler = new(miniData);
-        controller = new MiniTokenController(miniData, transform, rb);
+        MiniData = new(animator);
+        InputHandler = new(MiniData);
+        Controller = new MiniTokenController(MiniData, transform, rb);
     }
 
     private void Update()
     {
         if (!IsClient)
         {
-            switch (MiniGameManager.Instance.type)
+            switch (MinigameManager.Instance.type)
             {
                 case eGameType.GameIceSlider:
-                    controller.MoveVector2(eMoveType.Server);
-                    controller.RotateY();
+                    Controller.MoveToken(eMoveType.Server);
+                    Controller.RotateY(MiniData.rotY);
                     break;
             }
         }
@@ -44,30 +44,20 @@ public class MiniToken : MonoBehaviour
     {
         if (IsClient)
         {
-            switch (MiniGameManager.Instance.type)
+            switch (MinigameManager.Instance.type)
             {
                 case eGameType.GameIceSlider:
-                    controller.MoveVector2(eMoveType.AddForce);
-                    controller.RotateY();
+                    Controller.MoveToken(eMoveType.AddForce);
+                    Controller.RotateY(MiniData.rotY);
                     break;
             }
         }
-    }       
+    }
     #endregion
 
-    #region Server
-    /// <summary>
-    /// IcePlayerSpawnNotification Receive받기.
-    /// </summary>
-    public void ReceivePlayerSpawn(Vector3 position, float rotY)
-    {
-        inputHandler.EnablePlayerInput();
-        //TODO: Input Map 바꾸기...?
-         //컨트롤러 고르기.
-        transform.position = position;
-        miniData.rotY = rotY;
-        SendMoveCoroutine ??= StartCoroutine(SendClientMove());
-    }
+    #region IceBoard
+    //IceMiniGameStartNotification : SocketManager
+    //
 
     /// <summary>
     /// IcePlayerMoveRequest Send하기.
@@ -84,8 +74,8 @@ public class MiniToken : MonoBehaviour
                 {
                     packet.IcePlayerSyncRequest = new()
                     {
-                        SessionId = miniData.miniTokenId,
-                        Position = SocketManager.ConvertVector(transform.position),
+                        //PlayerId = MiniData.miniTokenId,
+                        Position = SocketManager.ToVector(transform.position),
                         Rotation = transform.rotation.y,
                         //State = playerData.CurState
                     };
@@ -102,15 +92,15 @@ public class MiniToken : MonoBehaviour
     /// </summary>
     public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
     {
-        miniData.nextPos = pos;
-        miniData.rotY = rotY;
-        miniData.CurState = state;
+        MiniData.nextPos = pos;
+        MiniData.rotY = rotY;
+        MiniData.CurState = state;
     }
     
     public void ReceivePlayerDespawn()
     {
-        inputHandler.DisablePlayerInput();
-        controller = null;
+        InputHandler.DisablePlayerInput();
+        Controller = null;
     }
     #endregion
 }
