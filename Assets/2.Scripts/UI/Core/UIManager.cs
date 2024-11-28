@@ -23,8 +23,9 @@ public class UIManager : Singleton<UIManager>
     private List<UIBase> uiList = new List<UIBase>();
 
     //GameManager해서 호출함으로써 Manager간 초기화 서순 지키기.
-    public void Init()
+    public async void Init()
     {
+        await Show<UILogin>(); 
         isInitialized = true;
     }
 

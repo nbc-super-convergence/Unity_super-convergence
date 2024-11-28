@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginPanel : Singleton<LoginPanel>
+public class UILogin : UIBase
 {
     public static bool isSuccessLogin = false;
 
