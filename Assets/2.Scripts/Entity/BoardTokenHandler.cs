@@ -102,7 +102,7 @@ public class BoardTokenHandler : MonoBehaviour
                 packet.MovePlayerBoardRequest = new()
                 {
                     SessionId = "", //세션 아이디 구해올 곳 필요함
-                    TargetPoint = SocketManager.ConvertVector(transform.position)
+                    TargetPoint = SocketManager.ToVector(transform.position)
                 };
 
                 syncTime = 0.0f;

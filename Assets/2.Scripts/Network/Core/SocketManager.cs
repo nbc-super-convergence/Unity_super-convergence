@@ -12,7 +12,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #region Parse Messages
     //새로운 벡터 선언 (임시로)
-    public static Vector ConvertVector(Vector3 other)
+    public static Vector ToVector(Vector3 other)
     {
         return new Vector
         {
@@ -22,7 +22,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         };
     }
 
-    public static Vector3 ConvertVector3(Vector other)
+    public static Vector3 ToVector3(Vector other)
     {
         return new Vector3()
         {
