@@ -26,12 +26,8 @@ public class MiniTokenData
     #region Inputs
     public Vector2 wasdVector;
     public Vector3 nextPos;
-
-    public float rotY = 0f;
-    #endregion
-
-    #region Ice Datas
     public readonly float icePlayerSpeed = 10f;
+    public float rotY = 0f;
     #endregion
 
     public MiniTokenData(Animator _anim)

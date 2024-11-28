@@ -15,7 +15,7 @@ public class MiniToken : MonoBehaviour
     private MiniTokenController controller;
 
     /*Server*/
-    private bool IsClient = true; //TODO: GameManager 등으로부터 클라이언트 아이디 받기.
+    private bool IsClient;
     private Coroutine SendMoveCoroutine;
 
     #region Unity Messages

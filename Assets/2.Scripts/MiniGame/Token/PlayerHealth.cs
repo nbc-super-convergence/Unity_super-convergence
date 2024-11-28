@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    private MiniPlayer player;
+    private MiniToken player;
     [SerializeField] private TextMeshProUGUI hpText; //체력텍스트
 
     private const int maxHP = 10;
@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<MiniPlayer>();
+        player = GetComponent<MiniToken>();
     }
 
     private void Update()
