@@ -18,6 +18,7 @@ public class GameManager : Singleton<GameManager>
     public void InitApp()
     {
         StartCoroutine(InitManagers());
+        
     }
 
     private IEnumerator InitManagers()
@@ -29,6 +30,9 @@ public class GameManager : Singleton<GameManager>
         //Initialize UIManager
         UIManager.Instance.Init();
         yield return new WaitUntil(() => UIManager.Instance.isInitialized);
+
+        //Initialize SocketManager
+        SocketManager.Instance.Init();
 
         //Initialize GameManager : 확실한 초기화 보장.
         isInitialized = true;

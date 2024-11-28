@@ -96,10 +96,8 @@ public class UIRegister : UIBase
 
     public void TrySetTask(bool isSuccess)
     {
-        if(registerTcs.TrySetResult(isSuccess))
-        {
-            Debug.Log("회원가입 성공");
-        }
+        bool boolll = registerTcs.TrySetResult(isSuccess);
+        Debug.Log(boolll ? "회원가입 성공" : "회원가입 실패");        
     }
 
     #region Button
