@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Google.Protobuf.Collections;
 using TMPro;
 using UnityEngine;
-using static Unity.VisualScripting.Member;
+using UnityEngine.UI;
 
 public class UILobby : UIBase
 {
@@ -18,6 +19,9 @@ public class UILobby : UIBase
     [SerializeField] private GameObject roomObj;
     [SerializeField] private GameObject myChatObj;
     [SerializeField] private GameObject otherChatObj;
+
+    [Header("Button")]
+    [SerializeField] private Button btnRefresh;
 
     private Dictionary<string, RoomPrefab> roomMap = new();
 
@@ -55,7 +59,7 @@ public class UILobby : UIBase
     public void TrySetTask(bool isSuccess)
     {
         bool boolll = sourceTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "로그인 성공" : "로그인 실패");
+        Debug.Log(boolll ? "성공" : "실패");
     }
 
     #region 버튼 이벤트
@@ -115,7 +119,45 @@ public class UILobby : UIBase
         }
     }
 
+    //Inspector: 방 새로고침
+    public async void OnBtnRefresh()
+    {
+        btnRefresh.interactable = false;
 
+        GamePacket packet = new();
+        packet.RoomListRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+        }
+        btnRefresh.interactable = true;
+    }
+
+    // 방 참가
+    public async void TryJoinRoom(RoomData roomData, Button participateBtn)
+    {
+        participateBtn.interactable = false;
+        GamePacket packet = new();
+        packet.JoinRoomRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId,
+            RoomId = roomData.RoomId
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+        }
+        participateBtn.interactable = true;
+    }
 
     //SetRoom 메서드에서 이벤트 등록.
     private async void OnBtnParticipate()
@@ -127,48 +169,46 @@ public class UILobby : UIBase
     #endregion
 
     #region Room 관리
-    //테스트용. 추후 서버와 연결 후 삭제.
-    class RoomInfo
-    {
-        public string name;
-        public int participant;
-        public int ping;
-    }
 
     // 새로고침
-    private void SetRoomList(RoomInfo[] roomList)
+    // TODO:: RoomStateType state에 따라 참가불가능(클릭불가능)하게 만들기
+    public void SetRoomList(RepeatedField<RoomData> roomList)
     {
         HashSet<string> currentRoomNames = new HashSet<string>(roomMap.Keys);
 
-        foreach (RoomInfo info in roomList)
+        foreach (RoomData info in roomList)
         {
-            if (roomMap.ContainsKey(info.name))
+            if (roomMap.ContainsKey(info.RoomName))
             {//이미 존재하는 방 정보 업데이트
-                roomMap[info.name].SetRoomInfo(info.name, info.participant, info.ping);
-                currentRoomNames.Remove(info.name);
+                roomMap[info.RoomName].SetRoomInfo(info.RoomName, info.Users.Count, GetRandomInt(20,40), info );
+                currentRoomNames.Remove(info.RoomName);
             }
             else
             {//새로운 방 추가
-                AddRoom(info.name, info.participant, info.ping);
+                AddRoom(info.RoomName, info.Users.Count, GetRandomInt(20, 40), info);
             }
         }
 
         foreach (string roomName in currentRoomNames)
         {//사라진 방 제거
-            roomMap[roomName].participateBtn.onClick.RemoveListener(OnBtnParticipate);
+            //roomMap[roomName].participateBtn.onClick.RemoveListener(OnBtnParticipate);
             Destroy(roomMap[roomName].gameObject);
             roomMap.Remove(roomName);
         }
     }
+    // 패킷페이로드에 ping이 없어서 임시코드.
+    private int GetRandomInt(int min, int max)
+    {
+        return UnityEngine.Random.Range(min, max);
+    }
 
 
-
-    private void AddRoom(string name, int participant, int ping)
+    private void AddRoom(string name, int participant, int ping, RoomData roomData)
     {
         RoomPrefab room = Instantiate(roomObj, roomParent.transform).GetComponent<RoomPrefab>();
         roomMap[name] = room;
-        room.SetRoomInfo(name, participant, ping);
-        room.participateBtn.onClick.AddListener(OnBtnParticipate);
+        room.SetRoomInfo(name, participant, ping, roomData);
+        //room.participateBtn.onClick.AddListener(OnBtnParticipate);
     }
 
     private int SearchPriority(string roomName, string query)

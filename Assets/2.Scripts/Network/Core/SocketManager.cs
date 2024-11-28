@@ -85,13 +85,42 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     #endregion
 
     #region ·ë ¼­¹ö
+
+    public void RoomListResponse(GamePacket packet)
+    {
+        var response = packet.RoomListResponse;
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        if (response.Success) UIManager.Get<UILobby>().SetRoomList(response.Rooms);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void CreateRoomResponse(GamePacket packet)
+    {
+        var response = packet.CreateRoomResponse;
+        UIManager.Get<UIMakeRoom>().TrySetTask(response.Success);
+        UIManager.Show<UIRoom>(response.Room);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
-
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
         if (response.Success)
         {
+            UIManager.Hide<UILobby>();
             UIManager.Show<UIRoom>(response.Room);
+        }
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
 
@@ -119,7 +148,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().RemoveRoomUser(response.UserData.LoginId);
+        UIManager.Get<UIRoom>().RemoveRoomUser(response.User.LoginId);
     }
 
     public void GamePrepareResponse(GamePacket packet)
@@ -140,7 +169,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.SessionId, response.IsReady, response.State);
+        UIManager.Get<UIRoom>().SetUserReady(response.User.LoginId, response.IsReady, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)

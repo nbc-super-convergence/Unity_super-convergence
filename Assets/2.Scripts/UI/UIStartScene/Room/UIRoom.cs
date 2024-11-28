@@ -68,7 +68,7 @@ public class UIRoom : UIBase
 
     private void Init()
     {
-        //isHost = (roomData.ownerId == GameManager.Instance.SessionId) ? true : false;
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
 
         SetDropdown();
         if (isHost) ButtonReady();    // 방장은 자동 레디처리
@@ -77,8 +77,8 @@ public class UIRoom : UIBase
     public void SetRoomInfo(RoomData data)
     {
         roomData = data;
-        roomNumber.text = (data.Id != -1) ? $"No. {data.Id}" : "";
-        roomName.text = (data.Name != null) ? data.Name : "";
+        roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
+        roomName.text = (data.RoomName != null) ? data.RoomName : "";
 
         for (int i = 0; i < data.Users.Count; i++)
         {
@@ -389,8 +389,4 @@ public class UIRoom : UIBase
         count.gameObject.SetActive(false);
     }
 
-    #region 소켓매니저에 작성될 메서드    
-
- 
-    #endregion
 }
