@@ -74,7 +74,7 @@ public class MiniToken : MonoBehaviour
                 {
                     packet.IcePlayerSyncRequest = new()
                     {
-                        PlayerId = MiniData.miniTokenId,
+                        //PlayerId = MiniData.miniTokenId,
                         Position = SocketManager.ToVector(transform.position),
                         Rotation = transform.rotation.y,
                         //State = playerData.CurState
