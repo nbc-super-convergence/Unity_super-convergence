@@ -1,39 +1,42 @@
 ﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 
-public class MiniPlayer : MonoBehaviour
+public class MiniToken : MonoBehaviour
 {
-    [Header("Player Data")]
-    [SerializeField] private MiniPlayerTokenData playerData;
-    
     [Header("Components")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private CapsuleCollider col;
     [SerializeField] private Animator animator;
-    [SerializeField] private MiniPlayerRotate miniRotate;
 
+    [Header("Data")]
+    private MiniTokenData miniData;
+ 
     [Header("Input & Control")]
-    [SerializeField] private MiniPlayerInputHandler inputHandler;
-    private MiniPlayerController curCtrl;
-    
+    private MiniTokenInputHandler inputHandler;
+    private MiniTokenController controller;
+
     /*Server*/
-    private bool IsClient => playerData.miniPlayerId == GameManager.Instance.PlayerId;
+    private bool IsClient;
     private Coroutine SendMoveCoroutine;
-    private Vector3 nextPos; //수동 움직임.
 
     #region Unity Messages
     private void Awake()
-    {
-        inputHandler.Init(playerData);
+    {//BoardScene 진입 시 일어나는 초기화.
+        miniData = new(animator);
+        inputHandler = new(miniData);
+        controller = new MiniTokenController(miniData, transform, rb);
     }
 
     private void Update()
     {
         if (!IsClient)
         {
-            transform.position = Vector3.MoveTowards(transform.position, nextPos, 30 * Time.deltaTime * Vector3.Distance(transform.position, nextPos));
+            switch (MiniGameManager.Instance.type)
+            {
+                case eGameType.GameIceSlider:
+                    controller.MoveVector2(eMoveType.Server);
+                    controller.RotateY();
+                    break;
+            }
         }
     }
 
@@ -41,10 +44,12 @@ public class MiniPlayer : MonoBehaviour
     {
         if (IsClient)
         {
-            if (playerData.WASDInput)
+            switch (MiniGameManager.Instance.type)
             {
-                curCtrl.MoveVector2();
-                miniRotate.InputRotation(playerData.moveVector);
+                case eGameType.GameIceSlider:
+                    controller.MoveVector2(eMoveType.AddForce);
+                    controller.RotateY();
+                    break;
             }
         }
     }       
@@ -54,13 +59,13 @@ public class MiniPlayer : MonoBehaviour
     /// <summary>
     /// IcePlayerSpawnNotification Receive받기.
     /// </summary>
-    public void ReceivePlayerSpawn(Vector3 position, float rotation)
+    public void ReceivePlayerSpawn(Vector3 position, float rotY)
     {
         inputHandler.EnablePlayerInput();
         //TODO: Input Map 바꾸기...?
-        curCtrl = new AddForceController(playerData, rb); //컨트롤러 고르기.
-        transform.position = position; //position 초기화
-        miniRotate.RotByReceive(rotation); //rotation 초기화
+         //컨트롤러 고르기.
+        transform.position = position;
+        miniData.rotY = rotY;
         SendMoveCoroutine ??= StartCoroutine(SendClientMove());
     }
 
@@ -79,9 +84,9 @@ public class MiniPlayer : MonoBehaviour
                 {
                     IcePlayerMoveRequest = new()
                     {
-                        PlayerId = playerData.miniPlayerId,
+                        PlayerId = miniData.miniTokenId,
                         Position = SocketManager.ConvertVector(transform.position),
-                        Rotation = miniRotate.transform.rotation.y,
+                        Rotation = transform.rotation.y,
                         //State = playerData.CurState
                     }
                 };
@@ -97,36 +102,15 @@ public class MiniPlayer : MonoBehaviour
     /// </summary>
     public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
     {
-        //transform.position = pos; //위치 동기화?
-        MoveByReceive(pos, force);
-        miniRotate.RotByReceive(rotY);
-        playerData.CurState = state;
+        miniData.nextPos = pos;
+        miniData.rotY = rotY;
+        miniData.CurState = state;
     }
     
     public void ReceivePlayerDespawn()
     {
         inputHandler.DisablePlayerInput();
-        curCtrl = null;
-    }
-    #endregion
-
-    #region Move
-    /// <summary>
-    /// Input에 따른 플레이어 움직임
-    /// </summary>
-    private void MoveByInput(Vector2 moveInput)
-    {
-        
-    }
-    /// <summary>
-    /// Receive에 따른 플레이어 움직임
-    /// </summary>
-    private void MoveByReceive(Vector3 pos, Vector3 force)
-    {
-        if (!IsClient)
-        {
-            nextPos = pos;
-        }
+        controller = null;
     }
     #endregion
 }

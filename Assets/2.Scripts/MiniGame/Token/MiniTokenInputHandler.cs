@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MiniPlayerInputHandler 
+public class MiniTokenInputHandler 
 {
     private PlayerInput playerInput;
-    private MiniPlayerTokenData playerData; 
+    private MiniTokenData playerData; 
 
-    public void Init(MiniPlayerTokenData data)
+    public MiniTokenInputHandler(MiniTokenData data)
     {
         playerInput = new PlayerInput();
         playerData = data;
@@ -31,13 +31,14 @@ public class MiniPlayerInputHandler
     #region WASD ¿Ãµø
     private void OnMove(InputAction.CallbackContext context)
     {
-        playerData.moveVector = context.ReadValue<Vector2>();
+        playerData.wasdVector = context.ReadValue<Vector2>();
+        playerData.rotY = Mathf.Atan2(playerData.wasdVector.x, playerData.wasdVector.y) * Mathf.Rad2Deg;
         playerData.CurState = State.Move;
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
-        playerData.moveVector = Vector2.zero;
+        playerData.wasdVector = Vector2.zero;
         playerData.CurState = State.Idle;
     }
     #endregion
