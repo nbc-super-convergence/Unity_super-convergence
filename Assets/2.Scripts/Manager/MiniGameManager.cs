@@ -9,11 +9,11 @@ public enum eGameType
 
 public class MiniGameManager : Singleton<MiniGameManager>
 {
-    eGameType type;
+    public eGameType type { get; private set; }
     private IGame curMiniGame;
     private MiniGameData gameData;
 
-    [SerializeField] private MiniPlayer[] miniPlayers;
+    [SerializeField] private MiniToken[] miniPlayers;
     
     #region Properties
     public T GetMiniGame<T>() where T : IGame
@@ -22,17 +22,8 @@ public class MiniGameManager : Singleton<MiniGameManager>
         return (T)curMiniGame;
     }
 
-    public MiniPlayer GetMiniPlayer(int playerID)
+    public MiniToken GetMiniPlayer(int idx)
     {
-        int idx = playerID switch
-        {
-            1 => 0,
-            2 => 1,
-            3 => 2,
-            4 => 3,
-            _ => -1
-        };
-
         if (idx == -1) return null;
         else return miniPlayers[idx];
     }
