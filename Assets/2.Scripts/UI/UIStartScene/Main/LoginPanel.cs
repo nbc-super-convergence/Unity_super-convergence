@@ -59,7 +59,7 @@ public class LoginPanel : Singleton<LoginPanel>
             await UIManager.Show<UILobby>();
         }
     }
-    
+
     public void TrySetTask(bool isSuccess)
     {
         if (sourceTcs.TrySetResult(isSuccess))
@@ -67,6 +67,8 @@ public class LoginPanel : Singleton<LoginPanel>
             Debug.Log("회원가입 성공");
         }
     }
+
+    
 
     //Inspector: 게임종료 판넬 키기
     public async void OnQuitBtn()

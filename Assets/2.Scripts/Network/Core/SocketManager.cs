@@ -62,6 +62,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LobbyJoinResponse;
         GameManager.Instance.myInfo.userData = response.User;
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void LobbyLeaveResponse(GamePacket packet)
+    {
+        var response = packet.LobbyLeaveResponse;
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
     }
 
     #endregion

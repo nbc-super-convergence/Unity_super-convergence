@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using static Unity.VisualScripting.Member;
 
 public class UILobby : UIBase
 {
@@ -19,17 +21,43 @@ public class UILobby : UIBase
 
     private Dictionary<string, RoomPrefab> roomMap = new();
 
+    private TaskCompletionSource<bool> sourceTcs;
+
     public override void Opened(object[] param)
     {
-        /* 로비 입장 Packet
-         * [0] : 닉네임.
-         */
+        LobbyJoinRequest();
 
-        //닉네임 설정하기
-        //nameTxt.text = param[0].ToString();
+        //AddRoom("테스트룸1", 4, 10);
+        //AddRoom("TestRoom22", 1, 100);
+    }
+    private async void LobbyJoinRequest()
+    {
+        GamePacket packet = new();
+        packet.LobbyJoinRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
 
-        AddRoom("테스트룸1", 4, 10);
-        AddRoom("TestRoom22", 1, 100);
+        bool isSuccess = await sourceTcs.Task;
+        if(isSuccess)
+        {
+            //닉네임 설정하기
+            nameTxt.text = GameManager.Instance.myInfo.userData.Nickname;
+        }
+        else
+        {
+            Debug.LogError($"UILobby sourceTcs : {isSuccess}");
+        }
+    }
+
+    public void TrySetTask(bool isSuccess)
+    {
+        if (sourceTcs.TrySetResult(isSuccess))
+        {
+            Debug.Log("회원가입 성공");
+        }
     }
 
     #region 버튼 이벤트
@@ -41,10 +69,26 @@ public class UILobby : UIBase
     }
 
     //Inspector: 로그아웃 버튼
-    public void OnBtnLogout()
+    public async void OnBtnLogout()
     {
         //Send: 로그아웃 신호.
-        UIManager.Hide<UILobby>();
+        GamePacket packet = new();
+        packet.LobbyLeaveRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+            UIManager.Hide<UILobby>();
+        }
+        else
+        {
+            Debug.LogError($"UILobby sourceTcs : {isSuccess}");
+        }
     }
 
     //Inspector: 방 검색 InputField
@@ -73,6 +117,8 @@ public class UILobby : UIBase
         }
     }
 
+
+
     //SetRoom 메서드에서 이벤트 등록.
     private async void OnBtnParticipate()
     {
@@ -91,6 +137,7 @@ public class UILobby : UIBase
         public int ping;
     }
 
+    // 새로고침
     private void SetRoomList(RoomInfo[] roomList)
     {
         HashSet<string> currentRoomNames = new HashSet<string>(roomMap.Keys);
@@ -115,6 +162,8 @@ public class UILobby : UIBase
             roomMap.Remove(roomName);
         }
     }
+
+
 
     private void AddRoom(string name, int participant, int ping)
     {
