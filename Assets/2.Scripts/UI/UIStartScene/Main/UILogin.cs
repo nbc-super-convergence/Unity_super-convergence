@@ -14,7 +14,6 @@ public class UILogin : UIBase
     [SerializeField] private TextMeshProUGUI versionTxt;
 
     private TaskCompletionSource<bool> sourceTcs;
-    private string targetScene = "IceBoard";
 
     private void Start()
     {

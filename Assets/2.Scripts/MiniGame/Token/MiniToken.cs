@@ -80,15 +80,15 @@ public class MiniToken : MonoBehaviour
             curPos = transform.position;
             if (curPos != lastPos)
             {
-                GamePacket packet = new()
+                GamePacket packet = new();
                 {
-                    IcePlayerMoveRequest = new()
+                    packet.IcePlayerSyncRequest = new()
                     {
-                        PlayerId = miniData.miniTokenId,
+                        SessionId = miniData.miniTokenId,
                         Position = SocketManager.ConvertVector(transform.position),
                         Rotation = transform.rotation.y,
                         //State = playerData.CurState
-                    }
+                    };
                 };
                 SocketManager.Instance.OnSend(packet);
                 lastPos = curPos;

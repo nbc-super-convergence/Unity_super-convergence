@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,9 +19,12 @@ public class RoomPrefab : MonoBehaviour
     [SerializeField] private TextMeshProUGUI participantTxt;
     [SerializeField] private Image pingIcon;
     [SerializeField] private TextMeshProUGUI pingTxt;
+
     public Button participateBtn;
     
-    public void SetRoomInfo(string roomName, int participant, int ping)
+    private RoomData roomData;
+
+    public void SetRoomInfo(string roomName, int participant, int ping, RoomData roomData)
     {
         //room 보안 상태
         roomIcon.sprite = icons[(int)iconType.publicRoom];
@@ -42,5 +43,12 @@ public class RoomPrefab : MonoBehaviour
             pingIcon.sprite = icons[(int)iconType.networkBad];
         }
         pingTxt.text = ping.ToString();
+
+        this.roomData = roomData;
+    }
+
+    public void OnBtnParticipate()
+    {
+        UIManager.Get<UILobby>().TryJoinRoom(this.roomData, participateBtn);     
     }
 }

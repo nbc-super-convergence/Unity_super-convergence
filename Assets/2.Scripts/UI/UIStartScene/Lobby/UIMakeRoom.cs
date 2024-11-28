@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
 public class UIMakeRoom : UIBase
 {
     [SerializeField] private TMP_InputField RoomNameInput;
+
+    private TaskCompletionSource<bool> sourceTcs;
 
     public void OnBackBtn()
     {
@@ -17,8 +17,25 @@ public class UIMakeRoom : UIBase
     {
         UIManager.Hide<UIMakeRoom>();
         //Send Make Room
-        //规 捞抚: RoomNameInput.text 
-        await UIManager.Show<UIRoom>();
-        UIManager.Hide<UILobby>();
+        GamePacket packet = new();
+        packet.CreateRoomRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.sessionId,
+            RoomName = RoomNameInput.text
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+            //await UIManager.Show<UIRoom>();
+            UIManager.Hide<UILobby>();
+        }
+    }
+    public void TrySetTask(bool isSuccess)
+    {
+        bool boolll = sourceTcs.TrySetResult(isSuccess);
+        Debug.Log(boolll ? "规 积己 己傍" : "规 积己 角菩");
     }
 }
