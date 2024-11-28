@@ -1,9 +1,10 @@
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LoginPanel : MonoBehaviour
+public class LoginPanel : Singleton<LoginPanel>
 {
     public static bool isSuccessLogin = false;
 
@@ -12,6 +13,7 @@ public class LoginPanel : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI versionTxt;
 
+    private TaskCompletionSource<bool> sourceTcs;
     private string targetScene = "IceBoard";
 
     private void Start()
@@ -27,7 +29,7 @@ public class LoginPanel : MonoBehaviour
     }
 
     //Inspector: 로그인 후 로비로 들어가기
-    public void OnLoginBtn()
+    public async void OnLoginBtn()
     {
         //테스트 코드
         if (IsSceneInBuild(targetScene))
@@ -38,14 +40,32 @@ public class LoginPanel : MonoBehaviour
         }
 
         ////Send: 서버로 ID PW.
-        //string id = IDInput.text;
-        //string passward = PasswardInput.text;
-        ////Receive: 서버로부터 로그인 유효성 검사.
+        string id = IDInput.text;
+        string passward = PasswardInput.text;
 
-        //if (isSuccessLogin)
-        //{
-        //    await UIManager.Show<UILobby>();
-        //}
+        GamePacket packet = new();
+        packet.LoginRequest = new()
+        {
+            LoginId = id,
+            Password = passward
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+
+        ////Receive: 서버로부터 로그인 유효성 검사.
+        isSuccessLogin = await sourceTcs.Task;
+        if (isSuccessLogin)
+        {
+            await UIManager.Show<UILobby>();
+        }
+    }
+    
+    public void TrySetTask(bool isSuccess)
+    {
+        if (sourceTcs.TrySetResult(isSuccess))
+        {
+            Debug.Log("회원가입 성공");
+        }
     }
 
     //Inspector: 게임종료 판넬 키기

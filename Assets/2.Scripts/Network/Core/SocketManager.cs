@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SocketManager : TCPSocketManagerBase<SocketManager>
+public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     //Sample : http://wocjf84.synology.me:8418/ExternalSharing/Sparta_Node6th_Chapter5/src/branch/main/Assets/_Project/Scripts/Manager/SocketManager.cs
 
@@ -33,19 +33,40 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
+    #region 인증 서버
+    public void RegisterResponse(GamePacket packet)
+    {
+        var response = packet.RegisterResponse;
+        UIManager.Get<UIRegister>().TrySetTask(response.Success);
+        if((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
     public void LoginResponse(GamePacket packet)
     {
         var response = packet.LoginResponse;
+        LoginPanel.Instance.TrySetTask(response.Success);
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
     }
+    #endregion
 
+
+    #region 로비 서버
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
-        GameManager.Instance.myInfo.userData = response.UserData;
+        GameManager.Instance.myInfo.userData = response.User;
     }
 
-    #region 대기방
+    #endregion
+
+    #region 룸 서버
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
@@ -59,7 +80,7 @@ public class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomNotification;
-        UIManager.Get<UIRoom>().AddRoomUser(response.UserData);
+        UIManager.Get<UIRoom>().AddRoomUser(response.User);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
