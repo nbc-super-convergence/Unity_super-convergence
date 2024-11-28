@@ -54,10 +54,8 @@ public class UILobby : UIBase
 
     public void TrySetTask(bool isSuccess)
     {
-        if (sourceTcs.TrySetResult(isSuccess))
-        {
-            Debug.Log("회원가입 성공");
-        }
+        bool boolll = sourceTcs.TrySetResult(isSuccess);
+        Debug.Log(boolll ? "로그인 성공" : "로그인 실패");
     }
 
     #region 버튼 이벤트

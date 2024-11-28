@@ -32,12 +32,12 @@ public class LoginPanel : Singleton<LoginPanel>
     public async void OnLoginBtn()
     {
         //테스트 코드
-        if (IsSceneInBuild(targetScene))
-        {
-            SocketManager.Instance.Init();
-            SendPacketIceJoinRequest();
-            SceneManager.LoadScene(targetScene);
-        }
+        //if (IsSceneInBuild(targetScene))
+        //{
+        //    SocketManager.Instance.Init();
+        //    SendPacketIceJoinRequest();
+        //    SceneManager.LoadScene(targetScene);
+        //}
 
         ////Send: 서버로 ID PW.
         string id = IDInput.text;
@@ -54,6 +54,7 @@ public class LoginPanel : Singleton<LoginPanel>
 
         ////Receive: 서버로부터 로그인 유효성 검사.
         isSuccessLogin = await sourceTcs.Task;
+
         if (isSuccessLogin)
         {
             await UIManager.Show<UILobby>();
