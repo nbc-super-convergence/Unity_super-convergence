@@ -51,7 +51,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
-        LoginPanel.Instance.TrySetTask(response.Success);
+        //UILogin.Instance.TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");

@@ -1,13 +1,15 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public static bool isGameStart; //로그인 -> 다른 씬으로 이동 시.
-    //public int PlayerId { get; private set; }
-    public int PlayerId;
-
+    public static bool isGameStart; //BoardScene으로 넘어갈 때???
+    
     public UserInfo myInfo = new();
+
+    //0:빨강, 1:노랑, 2:초록, 3:파랑
+    public Dictionary<string, int> SessionDic { get; private set; } = new();
 
     protected override void Awake()
     {
@@ -39,9 +41,9 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region Client ID
-    //public void SetPlayerId(int playerId)
-    //{
-    //    PlayerId = playerId;
-    //}
+    public void SetPlayerId(string sessionId, int playerId)
+    {
+        SessionDic[sessionId] = playerId;
+    }
     #endregion
 }
