@@ -191,6 +191,8 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
                         int totalLength = 11 + versionLength + payloadLength;
                         Packet packet = new Packet(type, version, sequence, payloadBytes);
                         receiveQueue.Enqueue(packet);
+                        //string result = string.Join(", ", payloadBytes);
+                        //Debug.Log($"{result}");
                         //Debug.Log($"Enqueued Type: {type}|{receiveQueue.Count}");
 
                         processedLength += totalLength;
