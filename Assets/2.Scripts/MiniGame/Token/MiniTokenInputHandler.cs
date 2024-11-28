@@ -4,12 +4,12 @@ using UnityEngine.InputSystem;
 public class MiniTokenInputHandler 
 {
     private PlayerInput playerInput;
-    private MiniTokenData playerData; 
+    private MiniTokenData miniData; 
 
     public MiniTokenInputHandler(MiniTokenData data)
     {
         playerInput = new PlayerInput();
-        playerData = data;
+        miniData = data;
     }
 
     public void EnablePlayerInput()
@@ -31,15 +31,15 @@ public class MiniTokenInputHandler
     #region WASD ¿Ãµø
     private void OnMove(InputAction.CallbackContext context)
     {
-        playerData.wasdVector = context.ReadValue<Vector2>();
-        playerData.rotY = Mathf.Atan2(playerData.wasdVector.x, playerData.wasdVector.y) * Mathf.Rad2Deg;
-        playerData.CurState = State.Move;
+        miniData.wasdVector = context.ReadValue<Vector2>();
+        miniData.rotY = Mathf.Atan2(miniData.wasdVector.x, miniData.wasdVector.y) * Mathf.Rad2Deg;
+        miniData.CurState = State.Move;
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
-        playerData.wasdVector = Vector2.zero;
-        playerData.CurState = State.Idle;
+        miniData.wasdVector = Vector2.zero;
+        miniData.CurState = State.Idle;
     }
     #endregion
 
