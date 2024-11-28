@@ -38,7 +38,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.RegisterResponse;
         UIManager.Get<UIRegister>().TrySetTask(response.Success);
-        if((int)response.FailCode != 0)
+        Debug.Log(response.Success);
+        Debug.Log(response.FailCode);
+
+        if ((int)response.FailCode != 0)
         {
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
@@ -47,8 +50,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LoginResponse(GamePacket packet)
     {
         var response = packet.LoginResponse;
-        LoginPanel.Instance.TrySetTask(response.Success);
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
+        LoginPanel.Instance.TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -62,6 +65,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LobbyJoinResponse;
         GameManager.Instance.myInfo.userData = response.User;
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void LobbyLeaveResponse(GamePacket packet)
+    {
+        var response = packet.LobbyLeaveResponse;
+        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        if ((int)response.FailCode != 0)
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
     }
 
     #endregion
@@ -86,7 +104,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomResponse;
-        if (UIManager.Get<UIRoom>().leaveRoomTcs.TrySetResult(response.Success))
+        bool isSuccess = UIManager.Get<UIRoom>().leaveRoomTcs.TrySetResult(response.Success);
+        if (isSuccess)
         {
             Debug.Log("Leave Room Success");
         }
@@ -100,13 +119,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().RemoveRoomUser(response.SessionId);
+        UIManager.Get<UIRoom>().RemoveRoomUser(response.UserData.LoginId);
     }
 
     public void GamePrepareResponse(GamePacket packet)
     {
         var response = packet.GamePrepareResponse;
-        if (UIManager.Get<UIRoom>().readyTcs.TrySetResult(response.Success))
+        bool isSuccess = UIManager.Get<UIRoom>().readyTcs.TrySetResult(response.Success);
+        if (isSuccess)
         {
             UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
         }
