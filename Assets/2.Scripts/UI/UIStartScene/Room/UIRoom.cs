@@ -71,7 +71,7 @@ public class UIRoom : UIBase
         isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
 
         SetDropdown();
-        if (isHost) ButtonReady();    // 방장은 자동 레디처리
+        //if (isHost) ButtonReady();    // 방장은 자동 레디처리
     }
     
     public void SetRoomInfo(RoomData data)
@@ -82,9 +82,9 @@ public class UIRoom : UIBase
 
         for (int i = 0; i < data.Users.Count; i++)
         {
-            if (data.Users[i].LoginId == GameManager.Instance.myInfo.userData.LoginId)
+            if (data.Users[i].LoginId == GameManager.Instance.myInfo.userData.LoginId)  // sessionId
             {
-                AddRoomUser(data.Users[i]);    // TODO::클라에 저장해둔 내정보를 넣기
+                AddRoomUser(GameManager.Instance.myInfo.ToUserData());
             }
             else
             {
@@ -114,19 +114,19 @@ public class UIRoom : UIBase
         }
     }
 
-    public void RemoveRoomUser(string userId)
+    public void RemoveRoomUser(string userId)// sessionI
     {
         // TODO::user의 처리에 맞게 바꾸기
         foreach (RoomUserSlot user in userSlots)
         {
-            if (user.loginId == userId)
+            if (user.loginId == userId)// sessionI
             {
                 user.EmptyRoomUser();
                 break;
             }
         }
 
-        users.RemoveAll(obj => obj.LoginId == userId);
+        users.RemoveAll(obj => obj.LoginId == userId);// sessionI
         for (int i = 0; i < userSlots.Count; ++i)
         {
             UserData userInfo = users.Count > i ? users[i] : null;
