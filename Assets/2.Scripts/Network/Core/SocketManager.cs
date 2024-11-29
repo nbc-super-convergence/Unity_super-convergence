@@ -1,5 +1,6 @@
 using UnityEngine;
 
+#pragma warning disable CS4014
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     //Sample : http://wocjf84.synology.me:8418/ExternalSharing/Sparta_Node6th_Chapter5/src/branch/main/Assets/_Project/Scripts/Manager/SocketManager.cs
