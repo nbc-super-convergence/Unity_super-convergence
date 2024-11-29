@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-public class GameData
+public class BoardGameData
 {
     public int diceCount = 0; // 지금까지 움직인 수
     public int purchaseArea = 0; //지금까지 일반 땅을 구매한 수 
