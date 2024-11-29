@@ -45,6 +45,11 @@ public class MiniTokenController
         transform.localPosition = pos;
     }
 
+    public void SetNextPos(Vector3 pos)
+    {
+        miniData.nextPos = pos;
+    }
+
     public void SetRotY(float rotY)
     {
         transform.rotation = Quaternion.Euler(0f, rotY, 0f);
