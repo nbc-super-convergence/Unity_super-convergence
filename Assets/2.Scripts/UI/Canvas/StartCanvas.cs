@@ -19,8 +19,8 @@ public class StartCanvas : MonoBehaviour
 
         //wait until "Game Start" input
         yield return new WaitUntil(() => GameManager.isGameStart);
-        
-        //load lobby
-        //SceneManager.LoadSceneAsync("LobbyScene");
+
+        //load BoardScene
+        UIManager.LoadBoardScene();
     }
 }

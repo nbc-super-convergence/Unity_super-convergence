@@ -1,433 +1,430 @@
 syntax = "proto3";
 
-// 공통 
-message UserData {
-    string loginId = 1;
-    string nickname = 2;
-}
+//COMMON 
+    message UserData {
+        string sessionId = 1;
+        string nickname = 2;
+    }
 
-message RoomData {
-    string roomId = 1;
-    string ownerId = 2;
-    string roomName = 3;
-    string lobbyId = 4;
-    RoomStateType state = 5;
-    repeated UserData users = 6;
-    int32 maxUser = 7;
-    repeated string readyUsers = 8;
-}
+    message RoomData {
+        string roomId = 1;
+        string ownerId = 2;
+        string roomName = 3;
+        string lobbyId = 4;
+        RoomStateType state = 5;
+        repeated UserData users = 6;
+        int32 maxUser = 7;
+        repeated string readyUsers = 8;
+    }
 
-message Vector {
-    float x = 1; 
-    float y = 2; 
-    float z = 3; 
-}
+    message Vector {
+        float x = 1; 
+        float y = 2; 
+        float z = 3; 
+    }
 
-message Rank { 
-    int32 playerId = 1;
-    int32 rank = 2; 
-}
-
-enum RoomStateType  {
+    message Rank { 
+        int32 playerId = 1;
+        int32 rank = 2; 
+    }
+//ENUM
+    enum RoomStateType  {
 	WAIT = 0;
 	PREPARE = 1;
 	BOARD = 2;
     MINI = 3;
-}
-
-enum GlobalFailCode {
-    NONE_FAILCODE = 0;
-    UNKNOWN_ERROR = 1;
-    INVALID_REQUEST = 2;
-    AUTHENTICATION_FAILED = 3;
-    CREATE_ROOM_FAILED = 4;
-    JOIN_ROOM_FAILED = 5;
-    LEAVE_ROOM_FAILED = 6;
-    CHAT_FAIL = 7;
-    GAME_PREPARE_FAIL = 8;
-    BOARD_PLAYER_MOVE_FAIL = 9;
-    TILE_PURCHASE_FAIL = 10;
-    BACK_TO_THE_ROOM_FAIL = 11;
-    INVALID_ROOM_STATE = 12;
-    ID_OR_PASSWORD_MISS = 13; // 13 ~ 16 AUTH SERVER ERROR
-    NOT_MATCH_PASSWORD_CONFIRM = 14;
-    ALREADY_EXIST_ID = 15;
-    ALREADY_LOGGED_IN_ID = 16;
-}
-
-enum State {
-    IDLE = 0;
-    MOVE = 1;
-    DIE = 2;
-}
-
-// 인증
-message C2S_RegisterRequest {
-    string loginId = 1;            
-    string password = 2;
-    string passwordConfirm = 3;
-    string nickname = 4;           
-}
-
-message S2C_RegisterResponse {
-    bool success = 1;
-    GlobalFailCode failCode = 2;
-}
-
-message C2S_LoginRequest {
-    string loginId = 1;
-    string password = 2;
-}
-
-message S2C_LoginResponse {
-    bool success = 1;
-    string sessionId = 2;
-    GlobalFailCode failCode = 3;
-}
-
-message C2S_LoggoutRequest {
-    string sessionId = 1;
-}
-
-// 보드게임
-message C2S_GameStartRequest {
-    string sessionId = 1;
-}
-
-message S2C_GameStartNotification {
-    bool success = 1;
-    repeated PlayerData players = 2;
-	GlobalFailCode failCode = 3;
-    
-    message PlayerData {
-        string userId = 1;
-        string nickname = 2;
-        int32 position = 3;
     }
-}
 
-message C2S_RollDiceRequest {
-}
+    enum GlobalFailCode {
+        NONE_FAILCODE = 0;
+        UNKNOWN_ERROR = 1;
+        INVALID_REQUEST = 2;
+        AUTHENTICATION_FAILED = 3;
+        CREATE_ROOM_FAILED = 4;
+        JOIN_ROOM_FAILED = 5;
+        LEAVE_ROOM_FAILED = 6;
+        CHAT_FAIL = 7;
+        GAME_PREPARE_FAIL = 8;
+        BOARD_PLAYER_MOVE_FAIL = 9;
+        TILE_PURCHASE_FAIL = 10;
+        BACK_TO_THE_ROOM_FAIL = 11;
+        INVALID_ROOM_STATE = 12;
+        ID_OR_PASSWORD_MISS = 13; // 13 ~ 16 AUTH SERVER ERROR
+        NOT_MATCH_PASSWORD_CONFIRM = 14;
+        ALREADY_EXIST_ID = 15;
+        ALREADY_LOGGED_IN_ID = 16;
+    }
 
-message S2C_RollDiceResponse {
-  	bool success = 1;
-	int32 diceResult = 2;
-	GlobalFailCode failCode = 3;
-}
+    enum State {
+        IDLE = 0;
+        MOVE = 1;
+        DIE = 2;
+    }
 
-message S2C_RollDiceNotification {
-	int32 playerId = 1;
-	int32 diceResult = 2;
-}
 
-message C2S_MovePlayerBoardRequest {
-	string sessionId = 1;
-	Vector targetPoint = 2;
-}
+//AUTH
+    message C2S_RegisterRequest {
+        string loginId = 1;            
+        string password = 2;
+        string passwordConfirm = 3;
+        string nickname = 4;           
+    }
 
-message  S2C_MovePlayerBoardResponse {
-  	bool success = 1;
-	GlobalFailCode failCode = 2;
-}
+    message S2C_RegisterResponse {
+        bool success = 1;
+        GlobalFailCode failCode = 2;
+    }
 
-message  S2C_MovePlayerBoardNotification {
-	int32 playerId = 1;
-	Vector targetPoint = 2;
-}
+    message C2S_LoginRequest {
+        string loginId = 1;
+        string password = 2;
+    }
 
-message  C2S_PurchaseTileRequest {
-	string sessionId = 1;
-	Vector tile = 2;
-}
+    message S2C_LoginResponse {
+        bool success = 1;
+        string sessionId = 2;
+        GlobalFailCode failCode = 3;
+    }
 
-message  S2C_PurchaseTileResponse {
-  	bool success = 1;
-	Vector tile = 2;
-	GlobalFailCode failCode = 3;
-}
-
-message  S2C_PurchaseTileNotification {
-	int32 playerId = 1;
-	Vector tile = 2;
-}
-
-message S2C_GameEndNotification {
-  	repeated Rank rank = 1;
-}
-
-message C2S_BackToTheRoomRequest {
-	int32 userId = 1;
-}
-
-message S2C_BackToTheRoomResponse {
-	bool success = 1;
-	RoomData room = 2;
-	GlobalFailCode failCode = 3;
-}
-
-message S2C_BackToTheRoomNotification {
-	int32 playerId = 1;
-}
-
-message C2S_StartMiniGameRequest {
-    string sessionId = 1;
-}
-
-message S2C_StartMiniGameNotification {
-	int32 game = 1; // 랜덤으로 돌린 미니 게임 중 하나
-}
-
-// 로비
-message C2S_LobbyJoinRequest {
-    string sessionId = 1;
-}
-
-message S2C_LobbyJoinResponse {
-    bool success = 1;
-    UserData user = 2;
-    GlobalFailCode failCode = 3;
-}
-
-message C2S_LobbyLeaveRequest {
-    string sessionId = 1; 
-}
-
-message S2C_LobbyLeaveResponse {
-    bool success = 1;
-    GlobalFailCode failCode = 2;
-}
-
-message C2S_LobbyUserListRequest {
-    string sessionId = 1;
-}
-
-message S2C_LobbyUserListResponse {
-    bool success = 1;
-    repeated string userList = 2;
-    GlobalFailCode failCode = 3;
-}
-
-message C2S_LobbyUserDetailRequest {
-    string sessionId = 1;
-    string targetSessionId = 2; 
-}
-
-message S2C_LobbyUserDetailResponse {
-    bool success = 1;
-    UserData user = 2;
-    GlobalFailCode failCode = 3;
-}
-
-// 대기방
-message C2S_RoomListRequest {
-    string sessionId = 1;
-}
-
-message S2C_RoomListResponse{
-    bool success = 1;
-    repeated RoomData rooms = 2;
-    GlobalFailCode failCode = 3;
-}
-
-message C2S_CreateRoomRequest {
-    string sessionId = 1;
-    string roomName = 2;
-}
-
-message S2C_CreateRoomResponse {
-    bool success = 1;
-    RoomData room = 2;
-    GlobalFailCode failCode = 3;
-}
-
-message C2S_JoinRoomRequest {
-    string sessionId = 1;
-    string roomId = 2;
-}
-
-message S2C_JoinRoomResponse {
-	bool success = 1;
-	RoomData room = 2;
-	GlobalFailCode failCode = 3;
-}
-
-message S2C_JoinRoomNotification {
-    UserData user = 1;
-}
-
-message C2S_LeaveRoomRequest{
-    string sessionId = 1;
-}
-
-message S2C_LeaveRoomResponse{
-    bool success = 1;
-    GlobalFailCode failCode = 2;
-}
-
-message S2C_LeaveRoomNotification {
-    UserData user = 1;
-    string ownerId = 2;
-}
-
-message C2S_GamePrepareRequest {
-    string sessionId = 1;
-    bool isReady = 2;
-}
-
-message S2C_GamePrepareResponse {
-    bool success = 1;
-    bool isReady = 2;
-    GlobalFailCode failCode = 3;
-} 
-
-message S2C_GamePrepareNotification{
-    UserData user = 1;
-    bool isReady = 2;
-    RoomStateType state = 3;
-}
-
-// 미니게임
-message S2S_BoardGameToIceStartRequest {
-    string sessionId = 1;
-}
-
-message C2S_IceMiniGameStartRequest {
-    string sessionId = 1;
-}
-
-message S2C_IceMiniGameReadyNotification {
-    repeated startPlayers players = 1;
-
-    message startPlayers {
-        string sessionId = 1; 
-        Vector position =2; 
-        float rotation = 3;
-    } 
-}
-
-message C2S_IceGameReadyRequest {
-    string sessionId = 1;
-}
-
-message S2C_IceGameReadyNotification {
-    string sessionId = 1;
-}
-
-message S2C_IceMiniGameStartNotification {
-}
-
-message C2S_IcePlayerSyncRequest {
-    string sessionId = 1;
-     Vector position = 2;
-     float rotation = 3;
-     State state = 4;
-}
-
-message S2C_IcePlayerSyncNotification {
-    string sessionId = 1;
-    Vector position = 2;
-    float rotation = 3;
-    State state = 4;
-}
-
-message C2S_IcePlayerDamageRequest {
-    string sessionId = 1;
- }
- 
- message S2C_IcePlayerDamageNotification {
-    string sessionId = 1;
- }
-
- message S2C_IcePlayerDeathNotification {
-    string sessionId = 1;
-    Vector position = 2;
-}
-
-message S2C_IceMapSyncNotification {
-}
-
-message S2C_IceGameOverNotification {
-    repeated Rank ranks = 1;
-     int64 endTime = 2; 
- 
-     message Rank {
+    message C2S_LoggoutRequest {
         string sessionId = 1;
-         int32 rank = 2; 
-     }
- }
+    }
+
+//BOARD
+    message C2S_GameStartRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_GameStartNotification {
+        bool success = 1;
+        repeated PlayerData players = 2;
+        GlobalFailCode failCode = 3;
+        
+        message PlayerData {
+            string userId = 1;
+            string nickname = 2;
+            int32 position = 3;
+        }
+    }
+
+    message C2S_RollDiceRequest {
+    }
+
+    message S2C_RollDiceResponse {
+        bool success = 1;
+        int32 diceResult = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message S2C_RollDiceNotification {
+        int32 playerId = 1;
+        int32 diceResult = 2;
+    }
+
+    message C2S_MovePlayerBoardRequest {
+        string sessionId = 1;
+        Vector targetPoint = 2;
+    }
+
+    message  S2C_MovePlayerBoardResponse {
+        bool success = 1;
+        GlobalFailCode failCode = 2;
+    }
+
+    message  S2C_MovePlayerBoardNotification {
+        int32 playerId = 1;
+        Vector targetPoint = 2;
+    }
+
+    message  C2S_PurchaseTileRequest {
+        string sessionId = 1;
+        Vector tile = 2;
+    }
+
+    message  S2C_PurchaseTileResponse {
+        bool success = 1;
+        Vector tile = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message  S2C_PurchaseTileNotification {
+        int32 playerId = 1;
+        Vector tile = 2;
+    }
+
+    message S2C_GameEndNotification {
+        repeated Rank rank = 1;
+    }
+
+    message C2S_BackToTheRoomRequest {
+        int32 userId = 1;
+    }
+
+    message S2C_BackToTheRoomResponse {
+        bool success = 1;
+        RoomData room = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message S2C_BackToTheRoomNotification {
+        int32 playerId = 1;
+    }
+
+    message C2S_StartMiniGameRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_StartMiniGameNotification {
+        int32 game = 1; // 랜덤으로 돌린 미니 게임 중 하나
+    }
+
+//LOBBY
+    message C2S_LobbyJoinRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_LobbyJoinResponse {
+        bool success = 1;
+        UserData user = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message C2S_LobbyLeaveRequest {
+        string sessionId = 1; 
+    }
+
+    message S2C_LobbyLeaveResponse {
+        bool success = 1;
+        GlobalFailCode failCode = 2;
+    }
+
+    message C2S_LobbyUserListRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_LobbyUserListResponse {
+        bool success = 1;
+        repeated string userList = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message C2S_LobbyUserDetailRequest {
+        string sessionId = 1;
+        string targetSessionId = 2; 
+    }
+
+    message S2C_LobbyUserDetailResponse {
+        bool success = 1;
+        UserData user = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+//ROOM
+    message C2S_RoomListRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_RoomListResponse{
+        bool success = 1;
+        repeated RoomData rooms = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message C2S_CreateRoomRequest {
+        string sessionId = 1;
+        string roomName = 2;
+    }
+
+    message S2C_CreateRoomResponse {
+        bool success = 1;
+        RoomData room = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message C2S_JoinRoomRequest {
+        string sessionId = 1;
+        string roomId = 2;
+    }
+
+    message S2C_JoinRoomResponse {
+        bool success = 1;
+        RoomData room = 2;
+        GlobalFailCode failCode = 3;
+    }
+
+    message S2C_JoinRoomNotification {
+        UserData user = 1;
+    }
+
+    message C2S_LeaveRoomRequest{
+        string sessionId = 1;
+    }
+
+    message S2C_LeaveRoomResponse{
+        bool success = 1;
+        GlobalFailCode failCode = 2;
+    }
+
+    message S2C_LeaveRoomNotification {
+        UserData user = 1;
+        string ownerId = 2;
+    }
+
+    message C2S_GamePrepareRequest {
+        string sessionId = 1;
+        bool isReady = 2;
+    }
+
+    message S2C_GamePrepareResponse {
+        bool success = 1;
+        bool isReady = 2;
+        GlobalFailCode failCode = 3;
+    } 
+
+    message S2C_GamePrepareNotification{
+        UserData user = 1;
+        bool isReady = 2;
+        RoomStateType state = 3;
+    }
+
+//ICE
+    message C2S_IceMiniGameStartRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_IceMiniGameReadyNotification {
+        repeated startPlayers players = 1;
+
+        message startPlayers {
+            string sessionId = 1; 
+            Vector position =2; 
+            float rotation = 3;
+        } 
+    }
+
+    message C2S_IceGameReadyRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_IceGameReadyNotification {
+        string sessionId = 1;
+    }
+
+    message S2C_IceMiniGameStartNotification {
+    }
+
+    message C2S_IcePlayerSyncRequest {
+        string sessionId = 1;
+        Vector position = 2;
+        float rotation = 3;
+        State state = 4;
+    }
+
+    message S2C_IcePlayerSyncNotification {
+        string sessionId = 1;
+        Vector position = 2;
+        float rotation = 3;
+        State state = 4;
+    }
+
+    message C2S_IcePlayerDamageRequest {
+        string sessionId = 1;
+    }
+    
+    message S2C_IcePlayerDamageNotification {
+        string sessionId = 1;
+    }
+
+    message S2C_IcePlayerDeathNotification {
+        string sessionId = 1;
+        Vector position = 2;
+    }
+
+    message S2C_IceMapSyncNotification {
+    }
+
+    message S2C_IceGameOverNotification {
+        repeated Rank ranks = 1;
+        int64 endTime = 2; 
+    
+        message Rank {
+            string sessionId = 1;
+            int32 rank = 2; 
+        }
+    }
 
 // 게임패킷
-message GamePacket {
-    oneof payload {
-        // Auth (1~9)
-        C2S_RegisterRequest registerRequest = 1;
-        S2C_RegisterResponse registerResponse = 2;
-        C2S_LoginRequest loginRequest = 3;
-        S2C_LoginResponse loginResponse = 4;
-        C2S_LoggoutRequest logoutRequest = 5;
+    message GamePacket {
+        oneof payload {
+            // Auth (1~9)
+            C2S_RegisterRequest registerRequest = 1;
+            S2C_RegisterResponse registerResponse = 2;
+            C2S_LoginRequest loginRequest = 3;
+            S2C_LoginResponse loginResponse = 4;
+            C2S_LoggoutRequest logoutRequest = 5;
 
-        // Lobby (11-30)
-        C2S_LobbyJoinRequest lobbyJoinRequest = 11;
-        S2C_LobbyJoinResponse lobbyJoinResponse = 12;
-        C2S_LobbyLeaveRequest lobbyLeaveRequest = 13;
-        S2C_LobbyLeaveResponse lobbyLeaveResponse = 14;
-        C2S_LobbyUserListRequest lobbyUserListRequest = 15;
-        S2C_LobbyUserListResponse lobbyUserListResponse = 16;
-        C2S_LobbyUserDetailRequest lobbyUserDetailRequest = 17;
-        S2C_LobbyUserDetailResponse lobbyUserDetailResponse = 18;
+            // Lobby (11-30)
+            C2S_LobbyJoinRequest lobbyJoinRequest = 11;
+            S2C_LobbyJoinResponse lobbyJoinResponse = 12;
+            C2S_LobbyLeaveRequest lobbyLeaveRequest = 13;
+            S2C_LobbyLeaveResponse lobbyLeaveResponse = 14;
+            C2S_LobbyUserListRequest lobbyUserListRequest = 15;
+            S2C_LobbyUserListResponse lobbyUserListResponse = 16;
+            C2S_LobbyUserDetailRequest lobbyUserDetailRequest = 17;
+            S2C_LobbyUserDetailResponse lobbyUserDetailResponse = 18;
 
-        // Room (31-50)
-        C2S_RoomListRequest roomListRequest = 31;
-        S2C_RoomListResponse roomListResponse = 32;
-        C2S_CreateRoomRequest createRoomRequest = 33;
-        S2C_CreateRoomResponse createRoomResponse = 34;
-        C2S_JoinRoomRequest joinRoomRequest = 35;
-        S2C_JoinRoomResponse joinRoomResponse = 36;
-        S2C_JoinRoomNotification joinRoomNotification = 37;
-        C2S_LeaveRoomRequest leaveRoomRequest = 38;
-        S2C_LeaveRoomResponse leaveRoomResponse = 39;
-        S2C_LeaveRoomNotification leaveRoomNotification = 40;
-        C2S_GamePrepareRequest gamePrepareRequest = 41;
-        S2C_GamePrepareResponse gamePrepareResponse = 42;
-        S2C_GamePrepareNotification gamePrepareNotification = 43;
+            // Room (31-50)
+            C2S_RoomListRequest roomListRequest = 31;
+            S2C_RoomListResponse roomListResponse = 32;
+            C2S_CreateRoomRequest createRoomRequest = 33;
+            S2C_CreateRoomResponse createRoomResponse = 34;
+            C2S_JoinRoomRequest joinRoomRequest = 35;
+            S2C_JoinRoomResponse joinRoomResponse = 36;
+            S2C_JoinRoomNotification joinRoomNotification = 37;
+            C2S_LeaveRoomRequest leaveRoomRequest = 38;
+            S2C_LeaveRoomResponse leaveRoomResponse = 39;
+            S2C_LeaveRoomNotification leaveRoomNotification = 40;
+            C2S_GamePrepareRequest gamePrepareRequest = 41;
+            S2C_GamePrepareResponse gamePrepareResponse = 42;
+            S2C_GamePrepareNotification gamePrepareNotification = 43;
 
-        // Game start (51-60)
-        C2S_GameStartRequest gameStartRequest = 51;
-        S2C_GameStartNotification gameStartNotification = 52;
+            // Game start (51-60)
+            C2S_GameStartRequest gameStartRequest = 51;
+            S2C_GameStartNotification gameStartNotification = 52;
 
-        // Game Play (61-90)
-        C2S_RollDiceRequest rollDiceRequest = 61;
-        S2C_RollDiceResponse rollDiceResponse = 62;
-        S2C_RollDiceNotification rollDiceNotification = 63;
-        C2S_MovePlayerBoardRequest movePlayerBoardRequest = 64;
-        S2C_MovePlayerBoardResponse movePlayerBoardResponse = 65;
-        S2C_MovePlayerBoardNotification movePlayerBoardNotification = 66;
-        C2S_PurchaseTileRequest purchaseTileRequest = 67;
-        S2C_PurchaseTileResponse purchaseTileResponse = 68;
-        S2C_PurchaseTileNotification purchaseTileNotification = 69;
-        S2C_GameEndNotification gameEndNotification = 70;
+            // Game Play (61-90)
+            C2S_RollDiceRequest rollDiceRequest = 61;
+            S2C_RollDiceResponse rollDiceResponse = 62;
+            S2C_RollDiceNotification rollDiceNotification = 63;
+            C2S_MovePlayerBoardRequest movePlayerBoardRequest = 64;
+            S2C_MovePlayerBoardResponse movePlayerBoardResponse = 65;
+            S2C_MovePlayerBoardNotification movePlayerBoardNotification = 66;
+            C2S_PurchaseTileRequest purchaseTileRequest = 67;
+            S2C_PurchaseTileResponse purchaseTileResponse = 68;
+            S2C_PurchaseTileNotification purchaseTileNotification = 69;
+            S2C_GameEndNotification gameEndNotification = 70;
 
-        // Post Game (91-100)
-        C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
-        S2C_BackToTheRoomResponse backToTheRoomResponse = 92;
-        S2C_BackToTheRoomNotification backToTheRoomNotification = 93;
+            // Post Game (91-100)
+            C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
+            S2C_BackToTheRoomResponse backToTheRoomResponse = 92;
+            S2C_BackToTheRoomNotification backToTheRoomNotification = 93;
 
-        // Mini Game (101-110)
-        C2S_StartMiniGameRequest startMiniGameRequest = 101;
-        S2C_StartMiniGameNotification startMiniGameNotification = 102;
+            // Mini Game (101-110)
+            C2S_StartMiniGameRequest startMiniGameRequest = 101;
+            S2C_StartMiniGameNotification startMiniGameNotification = 102;
 
-        // ice  (201)
-        C2S_IceMiniGameStartRequest iceMiniGameStartRequest = 201;
-        S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 202;
-        C2S_IceGameReadyRequest iceGameReadyRequest = 203; 
-        S2C_IceGameReadyNotification iceGameReadyNotification = 204;
-        S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 205;
-        C2S_IcePlayerSyncRequest icePlayerSyncRequest = 206;
-        S2C_IcePlayerSyncNotification icePlayerSyncNotification = 207;
-        C2S_IcePlayerDamageRequest icePlayerDamageRequest = 208;
-        S2C_IcePlayerDamageNotification icePlayerDamageNotification = 209;
-        S2C_IcePlayerDeathNotification icePlayerDeathNotification = 210;
-        S2C_IceGameOverNotification iceGameOverNotification = 211;
-        S2C_IceMapSyncNotification iceMapSyncNotification = 212;
-    }
+            // ice  (201)
+            C2S_IceMiniGameStartRequest iceMiniGameStartRequest = 201;
+            S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 202;
+            C2S_IceGameReadyRequest iceGameReadyRequest = 203; 
+            S2C_IceGameReadyNotification iceGameReadyNotification = 204;
+            S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 205;
+            C2S_IcePlayerSyncRequest icePlayerSyncRequest = 206;
+            S2C_IcePlayerSyncNotification icePlayerSyncNotification = 207;
+            C2S_IcePlayerDamageRequest icePlayerDamageRequest = 208;
+            S2C_IcePlayerDamageNotification icePlayerDamageNotification = 209;
+            S2C_IcePlayerDeathNotification icePlayerDeathNotification = 210;
+            S2C_IceGameOverNotification iceGameOverNotification = 211;
+            S2C_IceMapSyncNotification iceMapSyncNotification = 212;
+        }
 }

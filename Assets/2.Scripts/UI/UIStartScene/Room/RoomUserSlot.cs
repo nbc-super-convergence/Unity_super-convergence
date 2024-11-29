@@ -5,14 +5,13 @@ using UnityEngine.UI;
 public class RoomUserSlot : MonoBehaviour
 {
     private TMP_Text nickNameTMP;
-    private Image userImage;    // 유저아바타 표시용. 어떤 유형으로든 바꿔도 됨. 필요 없을지도.    
+    private Image userImage;    
     [SerializeField] private GameObject objReady;
     [SerializeField] private TMP_Text hostOrParticipant;
 
     public bool isReady = false;
 
-    public string loginId;  // or userId or 식별가능한 고유값
-
+    public string sessionId; 
 
     private void Awake()
     {
@@ -20,9 +19,9 @@ public class RoomUserSlot : MonoBehaviour
         userImage = GetComponentInChildren<Image>();
     }
     
-    public void SetRoomUser(UserData userData)
+    public void SetRoomUser(UserData userData, int i)
     {
-        if (userData.Nickname == null || userData.Nickname == "")
+        if (userData == null || userData.Nickname == null || userData.Nickname == "")
         {
             nickNameTMP.text = "EMPTY";
             return;
@@ -31,12 +30,20 @@ public class RoomUserSlot : MonoBehaviour
         {
             nickNameTMP.text = userData.Nickname;
         }
-        this.loginId = userData.LoginId;
+        this.sessionId = userData.SessionId;
+        SetImage(i);
     }
 
-    public void SetImage()
+    public void SetImage(int color)
     {
-        
+        switch (color)
+        {
+            case 0: userImage.color = Color.red; break;
+            case 1: userImage.color = Color.yellow; break;
+            case 2: userImage.color = Color.blue; break;
+            case 3: userImage.color = Color.green; break;
+            default: userImage.color = Color.grey; break;
+        }
     }
 
     public void CheckReadyState(bool isReady, bool isHost)
