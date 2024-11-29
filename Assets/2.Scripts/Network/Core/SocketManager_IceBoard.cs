@@ -7,15 +7,17 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {//202
         var response = gamePacket.IceMiniGameReadyNotification;
 
-        //ReadyUI 띄우기
-        //맵 불러오기
-        //카메라 세팅?
+        //ReadyPanel
+        UIManager.Show<UIMinigameReady>(); 
+
+        //데이터 설정, 맵 설정, BGM 설정
+        MinigameManager.Instance.SetMiniGame<GameIceSlider>();
 
         foreach (var p in response.Players)
         {//미니 토큰 위치 초기화
-            //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(p.PlayerType);
-            //miniToken.transform.position = ToVector3(p.Position);
-            //miniToken.Controller.RotateY(p.Rotation);
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.Controller.SetPos(ToVector3(p.Position));
+            miniToken.Controller.SetRotY(p.Rotation);
         }
     }
 
@@ -27,7 +29,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IceGameReadyNotification;
 
         //ReadyUI와 연계
-        //int readyId = response.sessionId;
+        string readyId = response.SessionId;
     }
 
     public void IceMiniGameStartNotification(GamePacket gamePacket)
@@ -44,10 +46,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {//207
         var response = gamePacket.IcePlayerSyncNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
-        //miniToken.transform.position = ToVector3(response.Position);
-        //miniToken.Controller.RotateY(response.Rotation);
-        //miniToken.MiniData.CurState = response.State;
+        MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
+        miniToken.Controller.SetPos(ToVector3(response.Position));
+        miniToken.Controller.SetRotY(response.Rotation);
+        miniToken.MiniData.CurState = response.State;
     }
 
     //208 : IcePlayerDamageRequest
@@ -57,15 +59,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {//209
         var response = gamePacket.IcePlayerDamageNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
-        //해당 플레이어의 HP 1스택 깎기.
+        //Player에게 데미지 주기
+        //MinigameManager.Instance.GameData.GivePlayerDamage(eGameType.GameIceSlider, response.SessionId, 1);
     }
 
     public void IcePlayerDeathNotification(GamePacket gamePacket)
     {//210
         var response = gamePacket.IcePlayerDeathNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
+        MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
         //TODO : 사망 로직
     }
 
