@@ -94,6 +94,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         if (response.Success) UIManager.Get<UILobby>().SetRoomList(response.Rooms);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -105,6 +106,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Show<UIRoom>(response.Room);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -121,6 +123,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -141,7 +144,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
         else
         {
-            // TODO:: FailCode에 맞는 알림바꾸기
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -162,7 +165,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
         else
         {
-            // TODO:: FailCode에 맞는 알림바꾸기
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
@@ -182,6 +185,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
         else
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
