@@ -831,9 +831,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3115972841650235462}
-        m_TargetAssemblyTypeName: SettingBtn, Assembly-CSharp
-        m_MethodName: 
+      - m_Target: {fileID: 41854711743819418}
+        m_TargetAssemblyTypeName: UILobby, Assembly-CSharp
+        m_MethodName: OnBtnRefresh
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1449,6 +1449,7 @@ MonoBehaviour:
     type: 3}
   otherChatObj: {fileID: 4718061246986871042, guid: 4e721f6d84e701c4ab2ab678b4e2ddef,
     type: 3}
+  btnRefresh: {fileID: 9218373925825759445}
 --- !u!1 &3226770243474648346
 GameObject:
   m_ObjectHideFlags: 0
