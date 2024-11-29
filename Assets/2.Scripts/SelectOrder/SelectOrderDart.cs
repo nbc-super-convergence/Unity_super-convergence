@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,20 +9,20 @@ public class SelectOrderDart : MonoBehaviour
     [SerializeField] private Transform target;
     private Rigidbody rgdby;
 
-    //¹ß»ç ÁØºñ»óÅÂ
+    //ë°œì‚¬ ì¤€ë¹„ìƒíƒœ
     private enum ShootingPhase { Aim, Force, Ready };  
     private ShootingPhase phase = ShootingPhase.Aim;
 
-    private bool isIncrease = true; //Áõ°¨ ¿©ºÎ
+    private bool isIncrease = true; //ì¦ê° ì—¬ë¶€
 
-    //°¢µµ Á¶Àý
-    private float _aim = 90f;
+    //ê°ë„ ì¡°ì ˆ
+    private float _aim = 0f;
     public float ShootingAim
     {
         get => _aim;
         set
         {
-            float min = 90f, max = 100f;
+            float min = 0f, max = 20f;
             _aim = Mathf.Clamp(value, min, max);
 
             if (_aim <= min)
@@ -32,14 +32,14 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
-    //Èû Á¶Àý
+    //íž˜ ì¡°ì ˆ
     private float _force = 2.5f;
     public float ShootingForce
     {
         get => _force;
         set
         {
-            float min = 1.5f, max = 3.5f;
+            float min = 1.5f, max = 3f;
             _force = Mathf.Clamp(value, min, max);
 
             if(_force <= min)
@@ -48,6 +48,9 @@ public class SelectOrderDart : MonoBehaviour
                 isIncrease = false;
         }
     }
+
+    //ë‚˜ê°ˆ ê°ë„
+    private Vector3 dartRot = Vector3.back;
 
     private void Awake()
     {
@@ -69,6 +72,8 @@ public class SelectOrderDart : MonoBehaviour
         }
 
         transform.rotation = Quaternion.Euler(ShootingAim, 0, 0);
+
+        Debug.DrawRay(transform.position, transform.position + transform.forward);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -77,7 +82,7 @@ public class SelectOrderDart : MonoBehaviour
         rgdby.constraints = RigidbodyConstraints.FreezeAll;
     }
 
-    //ÀÔ·Â ¹ÞÀ» ¶§
+    //ìž…ë ¥ ë°›ì„ ë•Œ
     public void OnShooting(InputAction.CallbackContext context)
     {
         if (InputActionPhase.Started == context.phase)
@@ -96,17 +101,22 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
+    //ê°ë„ ì¡°ì ˆ
     private void SetAim()
     {
-        float speed = 2.5f;
+        float speed = 3f;
         if (isIncrease)
             ShootingAim += Time.deltaTime * speed;
         else
             ShootingAim -= Time.deltaTime * speed;
 
+        //ë²¡í„° ê°ë„ ì¡°ì ˆ
+        dartRot.z = Mathf.Sin(ShootingAim - 90f);
+
         selectUI.GetAim(ShootingAim);
     }
 
+    //íž˜ ì¡°ì ˆ
     private void SetForce()
     {
         float speed = 1f;
@@ -118,9 +128,10 @@ public class SelectOrderDart : MonoBehaviour
         selectUI.GetForce(ShootingForce);
     }
 
+    //ë°œì‚¬
     private void NowShoot()
     {
         rgdby.useGravity = true;
-        rgdby.AddForce(Vector3.back * ShootingForce, ForceMode.Impulse);
+        rgdby.AddForce(-transform.forward * ShootingForce, ForceMode.Impulse);
     }
 }
