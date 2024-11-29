@@ -1,60 +1,82 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 
 public class UIError : UIBase
 {
-    [SerializeField] private TMP_Text errorMessage;
+    [SerializeField] private TMP_Text titleTMP;
+    [SerializeField] private TMP_Text infoTMP;
+    [SerializeField] private TMP_Text closeCountTMP;
+    [SerializeField] private GameObject Count;
 
-    private StringBuilder sbError = new();
+    [SerializeField] private int waitSeconds;
 
-    //private bool isPopup = false;
+    private StringBuilder sbTitle = new();
+    private StringBuilder sbInfo = new();
 
-    //public override void Opened(object[] param)
-    //{
-    //    sbError.Clear();
-    //    sbError.Append(param[0].ToString());
-    //    errorMessage.text = sbError.ToString();
-    //    //isPopup = true;
-    //    StartCoroutine(Close());
-    //}
+    private Task countdownTask;
+    private CancellationTokenSource countdownCts;
+
+    public override void Opened(object[] param)
+    {
+        SetInfo((GlobalFailCode)param[0]);
+        countdownCts = new();
+        countdownTask = CountDownAsync(waitSeconds, countdownCts.Token);
+    }
 
     public override void Closed(object[] param)
     {
-        StopCoroutine(Close());
+        if (countdownCts != null && !countdownCts.IsCancellationRequested)
+        {
+            countdownCts.Cancel();
+            countdownCts.Dispose();
+            countdownCts = null;
+        }
     }
 
 
-    public async void ShowError(string message) // 또는 에러메세지
+    private void FixedUpdate()
     {
-        await UIManager.Show<UIError>();
+        if (Input.GetKeyDown(KeyCode.Escape)) { OnBtnClose(); }
     }
 
-    private IEnumerator Close()
+    private async Task CountDownAsync(int countTime, CancellationToken token)
     {
-        yield return new WaitForSeconds(2f);
+        if( countTime < 1)
+        {
+            Count.SetActive(false);
+            return;
+        }
+        try
+        {
+            while (countTime > 0)
+            {
+                token.ThrowIfCancellationRequested();
+                closeCountTMP.text = countTime--.ToString();
+                await Task.Delay(1000);
+            }
+            OnBtnClose();
+        }
+        catch (OperationCanceledException)
+        {
+        }        
+    }
+
+    public void SetInfo(GlobalFailCode errorNum, string titleText = null)
+    {
+        sbTitle.Clear().Append(titleText != null ? titleText : "");
+        titleTMP.text = sbTitle.ToString();
+
+        sbInfo.Clear().AppendLine( errorNum.ToString() );
+        infoTMP.text = sbInfo.ToString();
+    }
+
+    public void OnBtnClose()
+    {
         UIManager.Hide<UIError>();
-    }
-
-    public void SetErrorMessage(int errorNum)
-    {
-        sbError.Clear().AppendLine( ((ERROR_MESSAGE)errorNum).ToString() );
-        errorMessage.text = sbError.ToString();
-        SetActive(true);
-    }
-
-    /*
-    0. 서버로부터 에러코드를 받는다.
-    1. 에러코드를 띄울 곳에서 UIManager.Show<UIError>(); 실행.
-    2. UIError가 isActiveInCreated = false로 로드된다.
-    3. 에러코드를 띄울 곳에서 UIManager.Get<UIError>().[TMP_Text.text를 바꾸는 메서드](매개변수 서버에서 받은 정보); 실행
-    4. UIManager.Get<UIError>().SetActive(true);
-    */
-}
-
-public enum ERROR_MESSAGE
-{
-    WRONG_MESSAGE,
-    IDONTKNOW
+    }   
 }
