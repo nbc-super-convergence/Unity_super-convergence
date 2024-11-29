@@ -1,5 +1,6 @@
 using UnityEngine;
 
+#pragma warning disable CS4014
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     //Sample : http://wocjf84.synology.me:8418/ExternalSharing/Sparta_Node6th_Chapter5/src/branch/main/Assets/_Project/Scripts/Manager/SocketManager.cs
@@ -38,11 +39,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.RegisterResponse;
         UIManager.Get<UIRegister>().TrySetTask(response.Success);
-        Debug.Log(response.Success);
-        Debug.Log(response.FailCode);
-
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -51,9 +50,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
-        //UILogin.Instance.TrySetTask(response.Success);
+        UIManager.Show<UILobby>();
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -68,6 +68,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -78,6 +79,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -93,6 +95,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         if (response.Success) UIManager.Get<UILobby>().SetRoomList(response.Rooms);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -104,6 +107,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Show<UIRoom>(response.Room);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -120,6 +124,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -138,9 +143,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             Debug.Log("Leave Room Success");
         }
-        else
+        if ((int)response.FailCode != 0)
         {
-            // TODO:: FailCode에 맞는 알림바꾸기
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -159,10 +164,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
         }
-        else
+        if ((int)response.FailCode != 0)
         {
-            // TODO:: FailCode에 맞는 알림바꾸기
-            Debug.LogError($"FailCode : {response.FailCode}");
+            UIManager.Show<UIError>(response.FailCode);
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
 
@@ -179,9 +184,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UIRoom>().GameStart();
         }
-        else
+        if ((int)response.FailCode != 0)
         {
-            Debug.LogError($"FailCode : {response.FailCode}");
+            UIManager.Show<UIError>(response.FailCode);
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
     #endregion

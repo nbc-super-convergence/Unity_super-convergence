@@ -15,22 +15,29 @@ public class UIMakeRoom : UIBase
 
     public async void OnApplyBtn()
     {
-        UIManager.Hide<UIMakeRoom>();
         //Send Make Room
-        GamePacket packet = new();
-        packet.CreateRoomRequest = new()
+
+        if (SocketManager.Instance.isConnected)
         {
-            SessionId = GameManager.Instance.myInfo.sessionId,
-            RoomName = RoomNameInput.text
-        };
-        sourceTcs = new();
-        SocketManager.Instance.OnSend(packet);
+            GamePacket packet = new();
+
+            packet.CreateRoomRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.sessionId,
+                RoomName = RoomNameInput.text
+            };
+
+            sourceTcs = new();
+            SocketManager.Instance.OnSend(packet);
+        }
 
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
             //await UIManager.Show<UIRoom>();
             UIManager.Hide<UILobby>();
+
+            UIManager.Hide<UIMakeRoom>();
         }
     }
     public void TrySetTask(bool isSuccess)
