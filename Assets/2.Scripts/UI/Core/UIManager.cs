@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum eUIPosition
 {
@@ -44,8 +45,10 @@ public class UIManager : Singleton<UIManager>
     {
         if (UIManager.Instance.loadingScreen == null)
         {
-            var canvas = FindObjectOfType<StartCanvas>().GetOverlapTransform();
-            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, canvas);
+            Transform canvas = FindObjectOfType<Canvas>().transform;
+            int targetIndex = canvas.childCount;
+            Transform targetCanvas = canvas.GetChild(targetIndex - 1);
+            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
             UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
         }
         else
@@ -112,5 +115,36 @@ public class UIManager : Singleton<UIManager>
     public static bool IsOpened<T>() where T : UIBase
     {
         return Instance.uiList.Exists(obj => obj.name == typeof(T).ToString());
+    }
+
+    public static void LoadBoardScene()
+    {
+        if (UIManager.Instance.loadingScreen == null)
+        {
+            Transform canvas = FindObjectOfType<Canvas>().transform;
+            int targetIndex = canvas.childCount;
+            Transform targetCanvas = canvas.GetChild(targetIndex - 1);
+            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
+            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
+        }
+        else
+        {
+            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
+            UIManager.Instance.loadingScreen.SetActive(true);
+        }
+
+        AsyncOperation asyncOper = SceneManager.LoadSceneAsync(2);
+        asyncOper.allowSceneActivation = false;
+        UIManager.Instance.loadingScreen.SetActive(false);
+        
+        while (true)
+        { 
+            if (asyncOper.isDone)
+            {
+                UIManager.Instance.loadingScreen.SetActive(false);
+                asyncOper.allowSceneActivation = true;
+                break;
+            }
+        }
     }
 }

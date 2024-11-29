@@ -11,6 +11,4 @@ public class LoadingScreen : MonoBehaviour
     {
         image.Rotate(0f, (rotateSpeed * Time.deltaTime), 0f);
     }
-
-
 }

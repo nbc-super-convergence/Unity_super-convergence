@@ -19,13 +19,8 @@ public class StartCanvas : MonoBehaviour
 
         //wait until "Game Start" input
         yield return new WaitUntil(() => GameManager.isGameStart);
-        
-        //load lobby
-        //SceneManager.LoadSceneAsync("LobbyScene");
-    }
 
-    public Transform GetOverlapTransform()
-    {
-        return parents[parents.Count - 1];
+        //load BoardScene
+        UIManager.LoadBoardScene();
     }
 }
