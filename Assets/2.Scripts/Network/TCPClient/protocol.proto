@@ -348,7 +348,7 @@ message S2C_IceMapSyncNotification {
 
 message S2C_IceGameOverNotification {
     repeated Rank ranks = 1;
-     int32 endTime = 2; 
+     int64 endTime = 2; 
  
      message Rank {
         string sessionId = 1;
