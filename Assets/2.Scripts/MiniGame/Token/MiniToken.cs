@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -16,25 +17,27 @@ public class MiniToken : MonoBehaviour
 
     /*Server*/
     private bool IsClient;
-    private Coroutine SendMoveCoroutine;
-
+    
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
         MiniData = new(animator);
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
+
+        MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.sessionId;
+        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId];
     }
 
     private void Update()
     {
         if (!IsClient)
         {
-            switch (MinigameManager.Instance.type)
+            switch (MinigameManager.Instance.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.RotateY(MiniData.rotY);
+                    Controller.SetRotY(MiniData.rotY);
                     break;
             }
         }
@@ -44,11 +47,11 @@ public class MiniToken : MonoBehaviour
     {
         if (IsClient)
         {
-            switch (MinigameManager.Instance.type)
+            switch (MinigameManager.Instance.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
-                    Controller.RotateY(MiniData.rotY);
+                    Controller.SetRotY(MiniData.rotY);
                     break;
             }
         }
@@ -56,28 +59,31 @@ public class MiniToken : MonoBehaviour
     #endregion
 
     #region IceBoard
-    //IceMiniGameStartNotification : SocketManager
-    //
+    public void EnableInputSystem()
+    {
+        if (IsClient)
+        {//방어코드
+            InputHandler.EnablePlayerInput();
+            StartCoroutine(SendClientMove());
+        }
+    }
 
-    /// <summary>
-    /// IcePlayerMoveRequest Send하기.
-    /// </summary>
     private IEnumerator SendClientMove()
     {
-        Vector3 curPos = transform.position, lastPos = transform.position;
+        Vector3 curPos = transform.localPosition, lastPos = transform.localPosition;
         while (true)
         {
-            curPos = transform.position;
+            curPos = transform.localPosition;
             if (curPos != lastPos)
             {
                 GamePacket packet = new();
                 {
                     packet.IcePlayerSyncRequest = new()
                     {
-                        //PlayerId = MiniData.miniTokenId,
-                        Position = SocketManager.ToVector(transform.position),
+                        SessionId = MinigameManager.Instance.MySessonId,
+                        Position = SocketManager.ToVector(transform.localPosition),
                         Rotation = transform.rotation.y,
-                        //State = playerData.CurState
+                        State = MiniData.CurState
                     };
                 };
                 SocketManager.Instance.OnSend(packet);

@@ -427,4 +427,4 @@ syntax = "proto3";
             S2C_IceGameOverNotification iceGameOverNotification = 211;
             S2C_IceMapSyncNotification iceMapSyncNotification = 212;
         }
-}
+    }
