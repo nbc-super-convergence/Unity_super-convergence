@@ -22,6 +22,9 @@ public class UIManager : Singleton<UIManager>
     private List<Transform> parents;
     private List<UIBase> uiList = new List<UIBase>();
 
+    [SerializeField] private GameObject prefabLoadingScreen;
+    private GameObject loadingScreen;
+
     //GameManager해서 호출함으로써 Manager간 초기화 서순 지키기.
     public async void Init()
     {
@@ -39,6 +42,18 @@ public class UIManager : Singleton<UIManager>
     /// <returns>T 반환</returns>
     public async static Task<T> Show<T>(params object[] param) where T : UIBase
     {
+        if (UIManager.Instance.loadingScreen == null)
+        {
+            var canvas = FindObjectOfType<StartCanvas>().GetOverlapTransform();
+            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, canvas);
+            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
+        }
+        else
+        {
+            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
+            UIManager.Instance.loadingScreen.SetActive(true);
+        }
+
         var ui = Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
 
         if (ui == null)
@@ -52,6 +67,7 @@ public class UIManager : Singleton<UIManager>
         ui.opened?.Invoke(param);
         ui.gameObject.SetActive(ui.isActiveInCreated);
         ui.isActiveInCreated = true;
+        UIManager.Instance.loadingScreen.SetActive(false);
         return (T)ui;
     }
 

@@ -23,4 +23,9 @@ public class StartCanvas : MonoBehaviour
         //load lobby
         //SceneManager.LoadSceneAsync("LobbyScene");
     }
+
+    public Transform GetOverlapTransform()
+    {
+        return parents[parents.Count - 1];
+    }
 }
