@@ -108,7 +108,7 @@ public static partial class ProtocolReflection
               "dGFydFJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIrMBCiBTMkNfSWNlTWlu",
               "aUdhbWVSZWFkeU5vdGlmaWNhdGlvbhI/CgdwbGF5ZXJzGAEgAygLMi4uUzJD",
               "X0ljZU1pbmlHYW1lUmVhZHlOb3RpZmljYXRpb24uc3RhcnRQbGF5ZXJzGk4K",
-              "DHN0YXJ0UGxheWVycxIRCglzZXNzaW9uSWQYASABKAUSGQoIcG9zaXRpb24Y",
+              "DHN0YXJ0UGxheWVycxIRCglzZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24Y",
               "AiABKAsyBy5WZWN0b3ISEAoIcm90YXRpb24YAyABKAIiLAoXQzJTX0ljZUdh",
               "bWVSZWFkeVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIjEKHFMyQ19JY2VH",
               "YW1lUmVhZHlOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJIiIKIFMy",
@@ -10330,14 +10330,14 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
 
             /// <summary>Field number for the "sessionId" field.</summary>
             public const int SessionIdFieldNumber = 1;
-            private int sessionId_;
+            private string sessionId_ = "";
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public int SessionId
+            public string SessionId
             {
                 get { return sessionId_; }
                 set
                 {
-                    sessionId_ = value;
+                    sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
                 }
             }
 
@@ -10394,7 +10394,7 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
             public override int GetHashCode()
             {
                 int hash = 1;
-                if (SessionId != 0) hash ^= SessionId.GetHashCode();
+                if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
                 if (position_ != null) hash ^= Position.GetHashCode();
                 if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
                 if (_unknownFields != null)
@@ -10413,10 +10413,10 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
             public void WriteTo(pb::CodedOutputStream output)
             {
-                if (SessionId != 0)
+                if (SessionId.Length != 0)
                 {
-                    output.WriteRawTag(8);
-                    output.WriteInt32(SessionId);
+                    output.WriteRawTag(10);
+                    output.WriteString(SessionId);
                 }
                 if (position_ != null)
                 {
@@ -10438,9 +10438,9 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
             public int CalculateSize()
             {
                 int size = 0;
-                if (SessionId != 0)
+                if (SessionId.Length != 0)
                 {
-                    size += 1 + pb::CodedOutputStream.ComputeInt32Size(SessionId);
+                    size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
                 }
                 if (position_ != null)
                 {
@@ -10464,7 +10464,7 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
                 {
                     return;
                 }
-                if (other.SessionId != 0)
+                if (other.SessionId.Length != 0)
                 {
                     SessionId = other.SessionId;
                 }
@@ -10494,9 +10494,9 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
                         default:
                             _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                             break;
-                        case 8:
+                        case 10:
                             {
-                                SessionId = input.ReadInt32();
+                                SessionId = input.ReadString();
                                 break;
                             }
                         case 18:
