@@ -595,7 +595,7 @@ MonoBehaviour:
   isActiveInCreated: 1
   isDestroyAtClosed: 1
   uiPosition: 2
-  RoomNameInput: {fileID: 0}
+  RoomNameInput: {fileID: 8332680290891288528}
 --- !u!1 &1882754147113777078
 GameObject:
   m_ObjectHideFlags: 0

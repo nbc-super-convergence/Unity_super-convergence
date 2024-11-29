@@ -50,6 +50,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
+        UIManager.Show<UILobby>();
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);

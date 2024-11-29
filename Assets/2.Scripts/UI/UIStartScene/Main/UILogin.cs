@@ -52,11 +52,11 @@ public class UILogin : UIBase
         SocketManager.Instance.OnSend(packet);
 
         ////Receive: 서버로부터 로그인 유효성 검사.
-        isSuccessLogin = await sourceTcs.Task;
+        bool isSuccess = await sourceTcs.Task;
 
-        if (isSuccessLogin)
+        if (isSuccess)
         {
-            await UIManager.Show<UILobby>();
+            await UIManager.Show<UILobby>();    // 문제있음.
         }
     }
 
