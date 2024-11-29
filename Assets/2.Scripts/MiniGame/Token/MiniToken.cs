@@ -30,11 +30,11 @@ public class MiniToken : MonoBehaviour
     {
         if (!IsClient)
         {
-            switch (MinigameManager.Instance.type)
+            switch (MinigameManager.Instance.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.RotateY(MiniData.rotY);
+                    Controller.SetRotY(MiniData.rotY);
                     break;
             }
         }
@@ -44,11 +44,11 @@ public class MiniToken : MonoBehaviour
     {
         if (IsClient)
         {
-            switch (MinigameManager.Instance.type)
+            switch (MinigameManager.Instance.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
-                    Controller.RotateY(MiniData.rotY);
+                    Controller.SetRotY(MiniData.rotY);
                     break;
             }
         }
@@ -64,10 +64,10 @@ public class MiniToken : MonoBehaviour
     /// </summary>
     private IEnumerator SendClientMove()
     {
-        Vector3 curPos = transform.position, lastPos = transform.position;
+        Vector3 curPos = transform.localPosition, lastPos = transform.localPosition;
         while (true)
         {
-            curPos = transform.position;
+            curPos = transform.localPosition;
             if (curPos != lastPos)
             {
                 GamePacket packet = new();
@@ -75,7 +75,7 @@ public class MiniToken : MonoBehaviour
                     packet.IcePlayerSyncRequest = new()
                     {
                         //PlayerId = MiniData.miniTokenId,
-                        Position = SocketManager.ToVector(transform.position),
+                        Position = SocketManager.ToVector(transform.localPosition),
                         Rotation = transform.rotation.y,
                         //State = playerData.CurState
                     };
