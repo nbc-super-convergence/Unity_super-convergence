@@ -18,4 +18,5 @@ public class BoardTokenData
     public int trophyAmount;
 
     public PlayerTokenState state;
+    public GameData gameData;
 }

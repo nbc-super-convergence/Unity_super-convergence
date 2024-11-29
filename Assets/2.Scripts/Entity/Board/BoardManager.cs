@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
+using System;
 
 #region 서버연결
 ///// <summary>
@@ -60,6 +60,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
     private int prevTrophyIndex = -1;
+    public event Action OnEvent;
 
     public BoardTokenHandler Curplayer
     {
@@ -140,6 +141,9 @@ public class BoardManager : Singleton<BoardManager>
             int count = playerTokenHandlers.Count;
             playerIndex = (playerIndex + 1) % (count);
             Curplayer.Ready();
+
+            //미니게임 시작
+            //OnEvent?.Invoke();
 
             #endregion
         }
