@@ -1,14 +1,50 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
 public class GameIceSlider : IGame
 {
-    private MiniGameData gameData;
-    private int[] playerHps = new int[4]; //일단 maxHP = 10
+    private GameIceSliderData gameData;
+    private UIMinigameIce ingameUI;
 
-    public void InitGame(MiniGameData data)
+    public void Init()
     {
-        gameData = data;
+        gameData = new GameIceSliderData();
+        gameData.Init();
+        SetBGM();
     }
+
+    //TODO : 배경음 설정
+    private void SetBGM()
+    {
+
+    }
+
+    public async void GameStart()
+    {
+        ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
+        MinigameManager.Instance.GetMyToken().EnableInputSystem();
+    }
+
+    //TODO : Damage 주는 바닥에도 필요.(나의 데미지)
+    public void GiveDamage(string sessionId, int dmg, bool isMe = false)
+    {
+        int idx = GameManager.Instance.SessionDic[sessionId];
+        gameData.playerHps[idx] -= dmg;
+        ingameUI.ChangeHPUI();
+    }
+
+    public void MapChangeEvent()
+    {
+        //TODO : Map조작에 관한 인터페이스 + 클래스 필요
+        //맵 크기 변경 
+        gameData.phase--;
+        MinigameManager.Instance.CurMap.transform.localScale = 
+            new UnityEngine.Vector3(gameData.phase, 1, gameData.phase);
+
+        //시간 차이 감지
+        ingameUI.CheckTime();
+    }
+    
+    public void GameEnd()
+    {
+
+    }
+
 }

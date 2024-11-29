@@ -1,7 +1,6 @@
-using UnityEngine;
-using UnityEngine.Playables;
-
 public interface IGame
 {
-    public void InitGame(MiniGameData data);
+    public void Init();
+    public void GameStart();
+    public void GameEnd();
 }
