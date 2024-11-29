@@ -2,8 +2,6 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
-using TMPro;
-using Sirenix.Utilities;
 
 
 public class BoardTokenHandler : MonoBehaviour
@@ -12,7 +10,8 @@ public class BoardTokenHandler : MonoBehaviour
     private bool isTurn = false; //내 턴인지?
     private float speed = 5f;
     private float syncTime = 0f;
-
+    public Dice diceObject;
+    private Vector3 nextPositon;
 
     public int dice { get; private set; } //주사위 눈
 
@@ -58,16 +57,20 @@ public class BoardTokenHandler : MonoBehaviour
 
         if (isReady)
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            //int rand = UnityEngine.Random.Range(0, 6);
+            //diceObject.ShowDice(rand);
+
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                GamePacket packet = new();
-                packet.RollDiceRequest = new()
-                {
 
-                };
+                //GamePacket packet = new();
+                //packet.RollDiceRequest = new() { };
 
-                SocketManager.Instance.OnSend(packet);
+                //SocketManager.Instance.OnSend(packet);
 
+                //Debug.Log(rand + 1);
+                //GetDice(4);
+                diceObject.gameObject.SetActive(false);
                 isReady = false;
             }
         }
@@ -88,28 +91,34 @@ public class BoardTokenHandler : MonoBehaviour
             if (transform.position == target)
             {
                 Transform node = queue.Peek();
+                queue.Dequeue();
 
                 if (node.TryGetComponent(out IAction n))
                     n.Action();
-
-                queue.Dequeue();
             }
 
-            if(syncTime >= 1.0f)
-            {
-                GamePacket packet = new();
+            //if (syncTime >= 1.0f)
+            //{
+            //    GamePacket packet = new();
 
-                packet.MovePlayerBoardRequest = new()
-                {
-                    SessionId = "", //세션 아이디 구해올 곳 필요함
-                    TargetPoint = SocketManager.ToVector(transform.position)
-                };
+            //    packet.MovePlayerBoardRequest = new()
+            //    {
+            //        SessionId = GameManager.Instance.sess, //세션 아이디 구해올 곳 필요함
+            //        TargetPoint = SocketManager.ToVector(transform.position)
+            //    };
 
-                syncTime = 0.0f;
-            }
+            //    syncTime = 0.0f;
+            //}
 
-            if (queue.Count == 0) isTurn = false;
+            //if (queue.Count == 0) isTurn = false;
         }
+
+        //이동 동기화, 조건필요,
+        //if()
+        //{
+        //    float d = Vector3.Distance(transform.position, nextPositon);
+        //    transform.position = Vector3.MoveTowards(transform.position, nextPositon,Time.deltaTime * d * 60);
+        //}
 
         #endregion
     }
@@ -148,7 +157,13 @@ public class BoardTokenHandler : MonoBehaviour
         if(queue.Count > 0) isTurn = true;
     }
 
-    public bool IsTurnEnd() => (dice == 0 && queue.Count == 0);
+    public bool IsTurnEnd()
+    {
+        Debug.Log(dice);
+        Debug.Log(queue.Count);
+
+        return (dice == 0 && queue.Count == 0);
+    }
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
@@ -166,5 +181,12 @@ public class BoardTokenHandler : MonoBehaviour
     public void Ready()
     {
         isReady = true;
+        diceObject.gameObject.SetActive(true);
+        //UIManager.
+    }
+
+    public void ReceivePosition(Vector3 position)
+    {
+        nextPositon = position;
     }
 }

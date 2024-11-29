@@ -61,8 +61,6 @@ public class BoardManager : Singleton<BoardManager>
     public List<AreaNode> areaNodes = new List<AreaNode>();
     private int prevTrophyIndex = -1;
 
-    
-
     public BoardTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
@@ -75,13 +73,22 @@ public class BoardManager : Singleton<BoardManager>
 
     protected override void Awake()
     {
-        //임시코드
-        //StartCoroutine(Test());
-
         base.Awake();
         isDontDestroyOnLoad = false;
 
-        for(int i =0; i < 2; i++)
+        //테스트용
+        StartCoroutine(Init());
+
+        //트로피칸 설정
+        SetTrophyNode();
+    }
+
+    //테스트용
+    private IEnumerator Init()
+    {
+        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+
+        for(int i =0; i < 1; i++)
         {
             //시작 지점에 플레이어 생성
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
@@ -89,19 +96,8 @@ public class BoardManager : Singleton<BoardManager>
             playerTokenHandlers.Add(handle);
         }
 
-        //handle.curNode = startNode.nextBoard[0];
-
         Curplayer.Ready();
-
-        //트로피칸 설정
-        SetTrophyNode();
     }
-
-    //임시코드
-    //public IEnumerator Test()
-    //{
-    //    yield return GameManager.Instance.InitApp();
-    //}
 
     public void RandomDice()
     {
@@ -131,16 +127,20 @@ public class BoardManager : Singleton<BoardManager>
 
             ////packet. = new()
             ////{
-                    
+
             ////};
 
-            //SocketManager.Instance.OnSend(packet);
+            //SocketManager.Instance.OnSend(packet);    
+
+
 
             #region Old
+
             //(현재인원 + 1) % (현재인원 + 1)
-            //int count = playerTokenHandlers.Count;
-            //playerIndex = (playerIndex + 1) % (count + 1);
-            //playerIndex++;
+            int count = playerTokenHandlers.Count;
+            playerIndex = (playerIndex + 1) % (count);
+            Curplayer.Ready();
+
             #endregion
         }
     }
