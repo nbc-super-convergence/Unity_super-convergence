@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
-    [SerializeField] SelectOrderUI selectUI;
+    [SerializeField] private SelectOrderUI selectUI;
+    [SerializeField] private Transform target;
     private Rigidbody rgdby;
 
     //발사 준비상태
@@ -38,7 +39,7 @@ public class SelectOrderDart : MonoBehaviour
         get => _force;
         set
         {
-            float min = 2.0f, max = 3.5f;
+            float min = 1.5f, max = 3.5f;
             _force = Mathf.Clamp(value, min, max);
 
             if(_force <= min)
@@ -73,8 +74,7 @@ public class SelectOrderDart : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         rgdby.useGravity = false;
-        rgdby.freezeRotation = true;
-        rgdby.constraints = RigidbodyConstraints.FreezePosition;
+        rgdby.constraints = RigidbodyConstraints.FreezeAll;
     }
 
     //입력 받을 때
