@@ -62,6 +62,8 @@ public class BoardManager : Singleton<BoardManager>
     private int prevTrophyIndex = -1;
     public event Action OnEvent;
 
+    private List<IGameResult> bonus;
+
     public BoardTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
@@ -82,6 +84,7 @@ public class BoardManager : Singleton<BoardManager>
 
         //트로피칸 설정
         SetTrophyNode();
+        SetBonus();
     }
 
     //테스트용
@@ -190,5 +193,65 @@ public class BoardManager : Singleton<BoardManager>
     public void PurChaseNode(int node,int playerIndex)
     {
         areaNodes[node].SetArea(playerIndex);
+    }
+    
+    private void SetBonus()
+    {
+        bonus = new();
+
+        List<int> num = new();
+        
+        for(int i = 0; i < 3;)
+        {
+            int rand = UnityEngine.Random.Range(0, 13);
+
+            if (num.Contains(i)) continue;
+
+            //***주의 열지마시오, 진짜 경고했음
+            switch(i)
+            {
+                case 0:
+                    bonus.Add(new FastCoinZero());
+                    break;
+                case 1:
+                    bonus.Add(new HighComebackCount());
+                    break;
+                case 2:
+                    bonus.Add(new HighDiceCount());
+                    break;
+                case 3:
+                    bonus.Add(new HighPaymentCount());
+                    break;
+                case 4:
+                    bonus.Add(new HighPurchaseCount());
+                    break;
+                case 5:
+                    bonus.Add(new HighSaveCoin());
+                    break;
+                case 6:
+                    bonus.Add(new HighSellCount());
+                    break;
+                case 7:
+                    bonus.Add(new HighTaxCount());
+                    break;
+                case 8:
+                    bonus.Add(new LoseCount());
+                    break;
+                case 9:
+                    bonus.Add(new LowDiceCount());
+                    break;
+                case 10:
+                    bonus.Add(new LowPurchaseCount());
+                    break;
+                case 11:
+                    bonus.Add(new NoneTrophy());
+                    break;
+                case 12:
+                    bonus.Add(new WinCount());
+                    break;
+            }
+
+            i++;
+        }
     }
 }
