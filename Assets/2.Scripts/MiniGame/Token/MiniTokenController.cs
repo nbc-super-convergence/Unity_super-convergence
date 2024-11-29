@@ -25,7 +25,7 @@ public class MiniTokenController
        switch (type)
         {
             case eMoveType.Server:
-                transform.position = Vector3.MoveTowards(transform.position, miniData.nextPos, 30 * Time.deltaTime * Vector3.Distance(transform.position, miniData.nextPos));
+                SetPos(Vector3.MoveTowards(transform.localPosition, miniData.nextPos, 30 * Time.deltaTime * Vector3.Distance(transform.localPosition, miniData.nextPos)));
                 //시도해볼 보간법1.
                 //transform.position = Vector3.Lerp(transform.position, nextPos, 0.1f * Time.deltaTime);
                 //시도해볼 보간법2.
@@ -40,7 +40,12 @@ public class MiniTokenController
         }
     }
 
-    public void RotateY(float rotY)
+    public void SetPos(Vector3 pos)
+    {
+        transform.localPosition = pos;
+    }
+
+    public void SetRotY(float rotY)
     {
         transform.rotation = Quaternion.Euler(0f, rotY, 0f);
     }
