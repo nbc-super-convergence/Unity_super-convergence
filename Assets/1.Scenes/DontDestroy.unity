@@ -168,6 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
+  prefabLoadingScreen: {fileID: 7590028399922601206, guid: fb33480c2340d77408ee359185d77502,
+    type: 3}
 --- !u!1 &1133101665
 GameObject:
   m_ObjectHideFlags: 0
@@ -305,7 +307,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  PlayerId: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

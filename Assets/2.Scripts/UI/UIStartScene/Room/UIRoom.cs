@@ -20,7 +20,7 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Text roomNumber;
     [SerializeField] private TMP_Text roomName;
     private RoomData roomData;
-    private RoomStateType state;
+    private RoomStateType state;    // 아직 안 씀.
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
@@ -70,8 +70,18 @@ public class UIRoom : UIBase
     {
         isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
 
-        SetDropdown();
-        if (isHost) ButtonReady();    // 방장은 자동 레디처리
+        SetDropdown();       
+        // TODO:: 해쉬같은거 써서 깔끔하게.
+        if(isHost)
+        {
+            foreach ( var item in userSlots)
+            {
+                if(item.sessionId == roomData.OwnerId)
+                {
+                    item.CheckReadyState(true, isHost);
+                }
+            }            
+        }
     }
     
     public void SetRoomInfo(RoomData data)
@@ -82,9 +92,9 @@ public class UIRoom : UIBase
 
         for (int i = 0; i < data.Users.Count; i++)
         {
-            if (data.Users[i].LoginId == GameManager.Instance.myInfo.userData.LoginId)
-            {
-                AddRoomUser(data.Users[i]);    // TODO::클라에 저장해둔 내정보를 넣기
+            if (data.Users[i].SessionId == GameManager.Instance.myInfo.sessionId)
+            { 
+                AddRoomUser(GameManager.Instance.myInfo.ToUserData());
             }
             else
             {
@@ -105,7 +115,7 @@ public class UIRoom : UIBase
             UserData userInfo = users.Count > i ? users[i] : null;
             if(userInfo != null)
             {
-                userSlots[i].SetRoomUser(userInfo);
+                userSlots[i].SetRoomUser(userInfo, i);
             }
             else
             {
@@ -114,23 +124,23 @@ public class UIRoom : UIBase
         }
     }
 
-    public void RemoveRoomUser(string userId)
+    public void RemoveRoomUser(string sessionId)
     {
         // TODO::user의 처리에 맞게 바꾸기
         foreach (RoomUserSlot user in userSlots)
         {
-            if (user.loginId == userId)
+            if (user.sessionId == sessionId)
             {
                 user.EmptyRoomUser();
                 break;
             }
         }
 
-        users.RemoveAll(obj => obj.LoginId == userId);
+        users.RemoveAll(obj => obj.SessionId == sessionId);
         for (int i = 0; i < userSlots.Count; ++i)
         {
             UserData userInfo = users.Count > i ? users[i] : null;
-            userSlots[i].SetRoomUser(userInfo);
+            userSlots[i].SetRoomUser(userInfo, i);
         }
     }
     #endregion
@@ -244,17 +254,16 @@ public class UIRoom : UIBase
         bool isError = true;
         foreach(RoomUserSlot user in userSlots)
         {
-            if(user.loginId == sessionId)
+            if(user.sessionId == sessionId)
             {
                 user.CheckReadyState(isReady, isHost);
                 readyCount = isReady ? readyCount++ : readyCount--;
                 this.state = (RoomStateType)state;
                 Debug.Log($"현재 대기방 상태: {this.state}");
 
-                if (readyCount == 4 ? true : false)
+                if (readyCount >= 4 ? true : false)
                 {
                     buttonStart.interactable = true;
-                    // TODO::버튼이미지 변경 등 실행
                     Debug.Log("모든 유저가 준비 완료. 시작버튼 활성화");
                 }
                 else
