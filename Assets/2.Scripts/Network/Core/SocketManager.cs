@@ -39,11 +39,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.RegisterResponse;
         UIManager.Get<UIRegister>().TrySetTask(response.Success);
-        Debug.Log(response.Success);
-        Debug.Log(response.FailCode);
-
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -52,9 +50,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
-        //UILogin.Instance.TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -69,6 +67,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -79,6 +78,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
+            UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
@@ -142,7 +142,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             Debug.Log("Leave Room Success");
         }
-        else
+        if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -163,10 +163,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
         }
-        else
+        if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode}");
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
 
@@ -183,10 +183,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UIRoom>().GameStart();
         }
-        else
+        if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode}");
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
         }
     }
     #endregion
