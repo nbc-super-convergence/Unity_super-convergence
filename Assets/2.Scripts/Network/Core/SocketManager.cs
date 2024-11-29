@@ -153,7 +153,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().RemoveRoomUser(response.User.LoginId);
+        UIManager.Get<UIRoom>().RemoveRoomUser(response.User.SessionId);
     }
 
     public void GamePrepareResponse(GamePacket packet)
@@ -174,7 +174,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.User.LoginId, response.IsReady, response.State);
+        UIManager.Get<UIRoom>().SetUserReady(response.User.SessionId, response.IsReady, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)
@@ -183,6 +183,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         if (response.Success)
         {
             UIManager.Get<UIRoom>().GameStart();
+            GameManager.isGameStart = true;
         }
         if ((int)response.FailCode != 0)
         {
@@ -191,5 +192,4 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
     #endregion
-
 }
