@@ -10,8 +10,8 @@ public class UIRoom : UIBase
 {
     [SerializeField] private bool isHost;
     public bool IsHost { get { return isHost; } }
+    private string currentOwnerId;
     private bool isReady = false;
-    private int readyCount = 0;
 
     [SerializeField] private List<RoomUserSlot> userSlots;
     private List<UserData> users = new();
@@ -20,7 +20,7 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Text roomNumber;
     [SerializeField] private TMP_Text roomName;
     private RoomData roomData;
-    private RoomStateType state;    // 아직 안 씀.
+    private RoomStateType state;
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
@@ -44,6 +44,7 @@ public class UIRoom : UIBase
     public override void Opened(object[] param)
     {
         roomData = (RoomData)param[0];
+        currentOwnerId = roomData.OwnerId;
 
         Init();
         if (isHost)
@@ -68,7 +69,7 @@ public class UIRoom : UIBase
 
     private void Init()
     {
-        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;        
 
         SetDropdown();       
         // TODO:: 해쉬같은거 써서 깔끔하게.
@@ -78,7 +79,7 @@ public class UIRoom : UIBase
             {
                 if(item.sessionId == roomData.OwnerId)
                 {
-                    item.CheckReadyState(true, isHost);
+                    item.CheckReadyState(true, currentOwnerId);
                 }
             }            
         }
@@ -215,7 +216,6 @@ public class UIRoom : UIBase
     {
         readyTcs = new();
 
-        // 서버에 준비취소 패킷 보내기
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
@@ -250,34 +250,38 @@ public class UIRoom : UIBase
     /// <summary>
     /// S2C_GamePrepareNotification 를 받을 때 호출
     /// 준비와 준비취소 모두 대응.
+    /// 준비한 유저의 sessionId. sessionId의 준비상태 isReady. 현재 방의 상태 state.
     /// </summary>
     public void SetUserReady(string sessionId, bool isReady, RoomStateType state)
     {
         bool isError = true;
+        // TODO::딕셔너리나 Hash를 이용.
         foreach(RoomUserSlot user in userSlots)
         {
             if(user.sessionId == sessionId)
             {
-                user.CheckReadyState(isReady, isHost);
-                readyCount = isReady ? readyCount++ : readyCount--;
-                this.state = (RoomStateType)state;
-                Debug.Log($"현재 대기방 상태: {this.state}");
-
-                if (readyCount >= 4 ? true : false)
-                {
-                    buttonStart.interactable = true;
-                    Debug.Log("모든 유저가 준비 완료. 시작버튼 활성화");
-                }
-                else
-                {
-                    buttonStart.interactable = false;
-                    Debug.Log("아직 준비되지 않은 유저가 있습니다.");
-                }
+                user.CheckReadyState(isReady, currentOwnerId);                
                 isError = false;
                 break;
             }            
         }
         if (isError) Debug.LogError($"userSlots에 {sessionId}가 없습니다.");
+
+        this.state = state;
+        Debug.Log($"현재 대기방 상태: {this.state}");    
+        if(isHost)
+        {
+            if (this.state == RoomStateType.Prepare ? true : false)
+            {
+                buttonStart.interactable = true;
+                Debug.Log("모든 유저가 준비 완료. 시작버튼 활성화");
+            }
+            else
+            {
+                buttonStart.interactable = false;
+                Debug.Log("아직 준비되지 않은 유저가 있습니다.");
+            }
+        }
     }
     #endregion
 
