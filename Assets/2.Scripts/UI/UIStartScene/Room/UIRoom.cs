@@ -37,8 +37,7 @@ public class UIRoom : UIBase
     [SerializeField] private Button buttonReady;
     [SerializeField] private Button buttonStart;
 
-    public TaskCompletionSource<bool> readyTcs;
-    public TaskCompletionSource<bool> leaveRoomTcs;
+    public TaskCompletionSource<bool> sourceTcs;
 
     #region 대기방 관리
     public override void Opened(object[] param)
@@ -65,6 +64,11 @@ public class UIRoom : UIBase
     {
         UIManager.Hide<UIRoom>();
         await UIManager.Show<UILobby>();
+    }
+    public void TrySetTask(bool isSuccess)
+    {
+        bool boolll = sourceTcs.TrySetResult(isSuccess);
+        Debug.Log(boolll ? "성공" : "실패");
     }
 
     private void Init()
@@ -151,87 +155,67 @@ public class UIRoom : UIBase
     {
         buttonReady.interactable = false;
 
+        // TODO:: 코드압축 가능. but 가독성 떨어질것 같음.
         if (isReady)
         {
             // 준비취소하기
-            bool isSuccess = await CancelReadyAsync();
+            bool isSuccess = await ReadyAsync(false);
             if (isSuccess)
             {
                 //isReady = false; 서버에서 받음
-                UpdateButtonUI("준비하기", Color.white, true);
+                UpdateButtonUI("준비하기", Color.white);
             }
             else
             {
                 Debug.Log("준비취소 실패");
-                buttonReady.interactable = true;
             }
         }
         else
         {
             // 준비하기
-            bool isSuccess = await ReadyAsync();
+            bool isSuccess = await ReadyAsync(true);
             if (isSuccess)
             {
                 //isReady = true;
-                UpdateButtonUI("준비 취소", Color.grey, true);
+                UpdateButtonUI("준비 취소", Color.grey);
             }
             else
             {
-                Debug.Log("준비완료 실패");
-                buttonReady.interactable = true;
+                Debug.Log("준비완료 실패");                
             }
         }
+        buttonReady.interactable = true;
     }
-
-    public void SetIsReady(bool isReady)
-    {
-        this.isReady = isReady;
-    }
-
+    
     /// <summary>
     /// C2S_GamePrepareRequest 
     /// S2C_GamePrepareResponse
     /// </summary>
     /// <returns></returns>
-    private async Task<bool> ReadyAsync()
+    private async Task<bool> ReadyAsync(bool isReady)
     {
-        readyTcs = new();
-
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
             SessionId = GameManager.Instance.myInfo.sessionId,
-            IsReady = true
+            IsReady = isReady
         };    
+        sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        Debug.Log("서버로 준비 완료 패킷 전송 중...");
-        bool isSuccess = await readyTcs.Task;
-        Debug.Log("준비 완료 패킷 전송 성공");
+        bool isSuccess = await sourceTcs.Task;
 
         return isSuccess ? true : false;
     }
 
-    private async Task<bool> CancelReadyAsync()
+    // GamePrepareResponse
+    public void SetIsReady(bool isReady)
     {
-        readyTcs = new();
-
-        GamePacket packet = new();
-        packet.GamePrepareRequest = new()
-        {
-            SessionId = GameManager.Instance.myInfo.sessionId,
-            IsReady = false
-        };
-        SocketManager.Instance.OnSend(packet);
-
-        Debug.Log("서버로 준비 취소 패킷 전송 중...");
-        bool isSuccess = await readyTcs.Task;
-        Debug.Log("준비 취소 패킷 전송 성공");
-
-        return isSuccess ? true : false;
+        this.isReady = isReady;
+        SetUserReady(GameManager.Instance.myInfo.sessionId, this.isReady, this.state);
     }
 
-    private void UpdateButtonUI(string buttonText, Color color, bool interactable)
+    private void UpdateButtonUI(string buttonText, Color color)
     {
         var textComponent = buttonReady.GetComponentInChildren<TMPro.TMP_Text>();
         if (textComponent != null)
@@ -244,7 +228,6 @@ public class UIRoom : UIBase
         {
             imageComponent.color = color;
         }
-        buttonReady.interactable = interactable;
     }
 
     /// <summary>
@@ -367,7 +350,7 @@ public class UIRoom : UIBase
     // 유저가 퇴장버튼UI를 누르면
     public async void LeaveRoom()
     {
-        leaveRoomTcs = new();
+        sourceTcs = new();
 
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
@@ -376,7 +359,7 @@ public class UIRoom : UIBase
         };
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await leaveRoomTcs.Task;
+        bool isSuccess = await sourceTcs.Task;
 
         if (isSuccess)
         {

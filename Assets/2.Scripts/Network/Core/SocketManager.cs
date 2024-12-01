@@ -138,11 +138,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomResponse;
-        bool isSuccess = UIManager.Get<UIRoom>().leaveRoomTcs.TrySetResult(response.Success);
-        if (isSuccess)
-        {
-            Debug.Log("Leave Room Success");
-        }
+        UIManager.Get<UIRoom>().TrySetTask(response.Success);        
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
@@ -159,8 +155,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareResponse(GamePacket packet)
     {
         var response = packet.GamePrepareResponse;
-        bool isSuccess = UIManager.Get<UIRoom>().readyTcs.TrySetResult(response.Success);
-        if (isSuccess)
+        UIManager.Get<UIRoom>().TrySetTask(response.Success);
+        if (response.Success)
         {
             UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
         }
