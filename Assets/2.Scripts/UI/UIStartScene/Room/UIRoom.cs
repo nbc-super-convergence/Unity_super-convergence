@@ -42,21 +42,8 @@ public class UIRoom : UIBase
     #region 대기방 관리
     public override void Opened(object[] param)
     {
-        roomData = (RoomData)param[0];
-        currentOwnerId = roomData.OwnerId;
-
-        Init();
-        if (isHost)
-        {
-            buttonStart.gameObject.SetActive(true);
-            buttonReady.gameObject.SetActive(false);
-            buttonStart.interactable = false;
-        }
-        else
-        {
-            buttonReady.gameObject.SetActive(true);
-            buttonStart.gameObject.SetActive(false);
-        }
+        roomData = (RoomData)param[0];        
+        Init();        
         SetRoomInfo(roomData);
     }
 
@@ -65,6 +52,7 @@ public class UIRoom : UIBase
         UIManager.Hide<UIRoom>();
         await UIManager.Show<UILobby>();
     }
+
     public void TrySetTask(bool isSuccess)
     {
         bool boolll = sourceTcs.TrySetResult(isSuccess);
@@ -73,7 +61,7 @@ public class UIRoom : UIBase
 
     private void Init()
     {
-        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;        
+        SetHost();
 
         SetDropdown();       
         // TODO:: 해쉬같은거 써서 깔끔하게.
@@ -86,6 +74,25 @@ public class UIRoom : UIBase
                     item.CheckReadyState(true, currentOwnerId);
                 }
             }            
+        }
+    }
+    
+    private void SetHost()
+    {
+        currentOwnerId = roomData.OwnerId;
+
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
+
+        if (isHost)
+        {
+            buttonStart.gameObject.SetActive(true);
+            buttonReady.gameObject.SetActive(false);
+            buttonStart.interactable = false;
+        }
+        else
+        {
+            buttonReady.gameObject.SetActive(true);
+            buttonStart.gameObject.SetActive(false);
         }
     }
     
@@ -129,9 +136,9 @@ public class UIRoom : UIBase
         }
     }
 
+    // LeaveRoomNotification
     public void RemoveRoomUser(string sessionId)
     {
-        // TODO::user의 처리에 맞게 바꾸기
         foreach (RoomUserSlot user in userSlots)
         {
             if (user.sessionId == sessionId)
@@ -142,6 +149,11 @@ public class UIRoom : UIBase
         }
 
         users.RemoveAll(obj => obj.SessionId == sessionId);
+        if (sessionId == currentOwnerId)
+        {
+            roomData.OwnerId = users[0].SessionId;
+            SetHost();
+        }
         for (int i = 0; i < userSlots.Count; ++i)
         {
             UserData userInfo = users.Count > i ? users[i] : null;
