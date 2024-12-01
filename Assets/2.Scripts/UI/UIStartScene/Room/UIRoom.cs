@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
@@ -20,7 +20,7 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Text roomNumber;
     [SerializeField] private TMP_Text roomName;
     private RoomData roomData;
-    private RoomStateType state;    // ¾ÆÁ÷ ¾È ¾¸.
+    private RoomStateType state;    // ì•„ì§ ì•ˆ ì”€.
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
@@ -40,7 +40,7 @@ public class UIRoom : UIBase
     public TaskCompletionSource<bool> readyTcs;
     public TaskCompletionSource<bool> leaveRoomTcs;
 
-    #region ´ë±â¹æ °ü¸®
+    #region ëŒ€ê¸°ë°© ê´€ë¦¬
     public override void Opened(object[] param)
     {
         roomData = (RoomData)param[0];
@@ -71,7 +71,7 @@ public class UIRoom : UIBase
         isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
 
         SetDropdown();       
-        // TODO:: ÇØ½¬°°Àº°Å ½á¼­ ±ò²ûÇÏ°Ô.
+        // TODO:: í•´ì‰¬ê°™ì€ê±° ì¨ì„œ ê¹”ë”í•˜ê²Œ.
         if(isHost)
         {
             foreach ( var item in userSlots)
@@ -126,7 +126,7 @@ public class UIRoom : UIBase
 
     public void RemoveRoomUser(string sessionId)
     {
-        // TODO::userÀÇ Ã³¸®¿¡ ¸Â°Ô ¹Ù²Ù±â
+        // TODO::userì˜ ì²˜ë¦¬ì— ë§ê²Œ ë°”ê¾¸ê¸°
         foreach (RoomUserSlot user in userSlots)
         {
             if (user.sessionId == sessionId)
@@ -145,36 +145,38 @@ public class UIRoom : UIBase
     }
     #endregion
 
-    #region ÁØºñ
+    #region ì¤€ë¹„
     private async void OnClickReadyButton()
     {
         buttonReady.interactable = false;
 
         if (isReady)
         {
+            // ì¤€ë¹„ì·¨ì†Œí•˜ê¸°
             bool isSuccess = await CancelReadyAsync();
             if (isSuccess)
             {
-                //isReady = false; ¼­¹ö¿¡¼­ ¹ŞÀ½
-                UpdateButtonUI("Ready", Color.grey, true);
+                //isReady = false; ì„œë²„ì—ì„œ ë°›ìŒ
+                UpdateButtonUI("ì¤€ë¹„í•˜ê¸°", Color.white, true);
             }
             else
             {
-                Debug.Log("ÁØºñÃë¼Ò ½ÇÆĞ");
+                Debug.Log("ì¤€ë¹„ì·¨ì†Œ ì‹¤íŒ¨");
                 buttonReady.interactable = true;
             }
         }
         else
         {
+            // ì¤€ë¹„í•˜ê¸°
             bool isSuccess = await ReadyAsync();
             if (isSuccess)
             {
                 //isReady = true;
-                UpdateButtonUI("Cancel Ready", Color.green, true);
+                UpdateButtonUI("ì¤€ë¹„ ì·¨ì†Œ", Color.grey, true);
             }
             else
             {
-                Debug.Log("ÁØºñ¿Ï·á ½ÇÆĞ");
+                Debug.Log("ì¤€ë¹„ì™„ë£Œ ì‹¤íŒ¨");
                 buttonReady.interactable = true;
             }
         }
@@ -202,9 +204,9 @@ public class UIRoom : UIBase
         };    
         SocketManager.Instance.OnSend(packet);
 
-        Debug.Log("¼­¹ö·Î ÁØºñ ¿Ï·á ÆĞÅ¶ Àü¼Û Áß...");
+        Debug.Log("ì„œë²„ë¡œ ì¤€ë¹„ ì™„ë£Œ íŒ¨í‚· ì „ì†¡ ì¤‘...");
         bool isSuccess = await readyTcs.Task;
-        Debug.Log("ÁØºñ ¿Ï·á ÆĞÅ¶ Àü¼Û ¼º°ø");
+        Debug.Log("ì¤€ë¹„ ì™„ë£Œ íŒ¨í‚· ì „ì†¡ ì„±ê³µ");
 
         return isSuccess ? true : false;
     }
@@ -213,7 +215,7 @@ public class UIRoom : UIBase
     {
         readyTcs = new();
 
-        // ¼­¹ö¿¡ ÁØºñÃë¼Ò ÆĞÅ¶ º¸³»±â
+        // ì„œë²„ì— ì¤€ë¹„ì·¨ì†Œ íŒ¨í‚· ë³´ë‚´ê¸°
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
@@ -222,9 +224,9 @@ public class UIRoom : UIBase
         };
         SocketManager.Instance.OnSend(packet);
 
-        Debug.Log("¼­¹ö·Î ÁØºñ Ãë¼Ò ÆĞÅ¶ Àü¼Û Áß...");
+        Debug.Log("ì„œë²„ë¡œ ì¤€ë¹„ ì·¨ì†Œ íŒ¨í‚· ì „ì†¡ ì¤‘...");
         bool isSuccess = await readyTcs.Task;
-        Debug.Log("ÁØºñ Ãë¼Ò ÆĞÅ¶ Àü¼Û ¼º°ø");
+        Debug.Log("ì¤€ë¹„ ì·¨ì†Œ íŒ¨í‚· ì „ì†¡ ì„±ê³µ");
 
         return isSuccess ? true : false;
     }
@@ -246,8 +248,8 @@ public class UIRoom : UIBase
     }
 
     /// <summary>
-    /// S2C_GamePrepareNotification ¸¦ ¹ŞÀ» ¶§ È£Ãâ
-    /// ÁØºñ¿Í ÁØºñÃë¼Ò ¸ğµÎ ´ëÀÀ.
+    /// S2C_GamePrepareNotification ë¥¼ ë°›ì„ ë•Œ í˜¸ì¶œ
+    /// ì¤€ë¹„ì™€ ì¤€ë¹„ì·¨ì†Œ ëª¨ë‘ ëŒ€ì‘.
     /// </summary>
     public void SetUserReady(string sessionId, bool isReady, RoomStateType state)
     {
@@ -259,30 +261,30 @@ public class UIRoom : UIBase
                 user.CheckReadyState(isReady, isHost);
                 readyCount = isReady ? readyCount++ : readyCount--;
                 this.state = (RoomStateType)state;
-                Debug.Log($"ÇöÀç ´ë±â¹æ »óÅÂ: {this.state}");
+                Debug.Log($"í˜„ì¬ ëŒ€ê¸°ë°© ìƒíƒœ: {this.state}");
 
                 if (readyCount >= 4 ? true : false)
                 {
                     buttonStart.interactable = true;
-                    Debug.Log("¸ğµç À¯Àú°¡ ÁØºñ ¿Ï·á. ½ÃÀÛ¹öÆ° È°¼ºÈ­");
+                    Debug.Log("ëª¨ë“  ìœ ì €ê°€ ì¤€ë¹„ ì™„ë£Œ. ì‹œì‘ë²„íŠ¼ í™œì„±í™”");
                 }
                 else
                 {
                     buttonStart.interactable = false;
-                    Debug.Log("¾ÆÁ÷ ÁØºñµÇÁö ¾ÊÀº À¯Àú°¡ ÀÖ½À´Ï´Ù.");
+                    Debug.Log("ì•„ì§ ì¤€ë¹„ë˜ì§€ ì•Šì€ ìœ ì €ê°€ ìˆìŠµë‹ˆë‹¤.");
                 }
                 isError = false;
                 break;
             }            
         }
-        if (isError) Debug.LogError($"userSlots¿¡ {sessionId}°¡ ¾ø½À´Ï´Ù.");
+        if (isError) Debug.LogError($"userSlotsì— {sessionId}ê°€ ì—†ìŠµë‹ˆë‹¤.");
     }
     #endregion
 
-    #region ½ÃÀÛ
+    #region ì‹œì‘
     /// <summary>
     /// C2S_GameStartRequest
-    /// ¹æÀåÀº GameStart ¹öÆ°À» ´­·¯ ¼­¹ö¿¡ °ÔÀÓ½ÃÀÛ ¿äÃ»À» º¸³½´Ù. º¸µå¾ÀÀÌ ·ÎµåµÇ´Â°Ç S2C_GameStartNotification ¾Ë¸²¿¡¼­ ½ÇÇàÇÒ°Å´Ù.
+    /// ë°©ì¥ì€ GameStart ë²„íŠ¼ì„ ëˆŒëŸ¬ ì„œë²„ì— ê²Œì„ì‹œì‘ ìš”ì²­ì„ ë³´ë‚¸ë‹¤. ë³´ë“œì”¬ì´ ë¡œë“œë˜ëŠ”ê±´ S2C_GameStartNotification ì•Œë¦¼ì—ì„œ ì‹¤í–‰í• ê±°ë‹¤.
     /// </summary>
     private void OnClickGameStartButton()
     {
@@ -303,13 +305,13 @@ public class UIRoom : UIBase
         await UIManager.Show<UIFadeScreen>("FadeOut");
         invisibleWall.SetActive(false);
 
-        // TODO:: º¸µå¾À ·Îµå
+        // TODO:: ë³´ë“œì”¬ ë¡œë“œ
         SceneManager.LoadScene("BoardScene");
     }
     #endregion
 
     #region GameSetting
-    // ÃÖ´ë ÅÏ º¯°æÀ» Àû¿ëÇÏ·Á¸é ¾Ë¸² ÆĞÅ¶ÀÌ ÇÊ¿äÇÔ.
+    // ìµœëŒ€ í„´ ë³€ê²½ì„ ì ìš©í•˜ë ¤ë©´ ì•Œë¦¼ íŒ¨í‚·ì´ í•„ìš”í•¨.
     private void SetDropdown()
     {
         if (!isHost)
@@ -344,7 +346,7 @@ public class UIRoom : UIBase
     
     public void ButtonStart()
     {
-        Debug.Log($"ÃÖ´ë ÅÏ : {maxTurn}");
+        Debug.Log($"ìµœëŒ€ í„´ : {maxTurn}");
         OnClickGameStartButton();
     }
 
@@ -354,11 +356,11 @@ public class UIRoom : UIBase
     }
     #endregion
 
-    #region À¯Àú ÅğÀå       
+    #region ìœ ì € í‡´ì¥       
 
     // S2C_LeaveRoomResponse  
-    // C2S_LeaveRoomRequest¿¡ ´ëÇÑ ¸®½ºÆù½º    
-    // À¯Àú°¡ ÅğÀå¹öÆ°UI¸¦ ´©¸£¸é
+    // C2S_LeaveRoomRequestì— ëŒ€í•œ ë¦¬ìŠ¤í°ìŠ¤    
+    // ìœ ì €ê°€ í‡´ì¥ë²„íŠ¼UIë¥¼ ëˆ„ë¥´ë©´
     public async void LeaveRoom()
     {
         leaveRoomTcs = new();
@@ -379,7 +381,7 @@ public class UIRoom : UIBase
         }
         else
         {
-            Debug.LogError("¼­¹ö¿Í Åë½Å½ÇÆĞ. ¹æ³ª°¡±â ½ÇÆĞ");
+            Debug.LogError("ì„œë²„ì™€ í†µì‹ ì‹¤íŒ¨. ë°©ë‚˜ê°€ê¸° ì‹¤íŒ¨");
         }
     }    
 

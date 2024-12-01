@@ -1318,7 +1318,7 @@ MonoBehaviour:
   objReady: {fileID: 4521291664455061697}
   hostOrParticipant: {fileID: 925158894249284002}
   isReady: 0
-  playerId: 0
+  sessionId: 
 --- !u!114 &2721437403108609146
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2675,7 +2675,7 @@ MonoBehaviour:
   objReady: {fileID: 1970649470346519190}
   hostOrParticipant: {fileID: 1289843606934954949}
   isReady: 0
-  playerId: 0
+  sessionId: 
 --- !u!114 &970568382986895236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4742,7 +4742,7 @@ MonoBehaviour:
   objReady: {fileID: 8830587292701120887}
   hostOrParticipant: {fileID: 3045178122616268100}
   isReady: 0
-  playerId: 0
+  sessionId: 
 --- !u!114 &6754909306466768328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4810,7 +4810,7 @@ MonoBehaviour:
   objReady: {fileID: 2646356795590240437}
   hostOrParticipant: {fileID: 2707183897826376819}
   isReady: 0
-  playerId: 0
+  sessionId: 
 --- !u!114 &1996595410793300711
 MonoBehaviour:
   m_ObjectHideFlags: 0
