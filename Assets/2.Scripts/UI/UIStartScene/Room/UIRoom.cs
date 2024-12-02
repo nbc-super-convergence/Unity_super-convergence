@@ -64,6 +64,7 @@ public class UIRoom : UIBase
         int num = 0;
         foreach (var user in roomData.Users)
         {
+            // TODO:: 없는 유저는 -1로 남게... 
             GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++));
         }
         SetHost();
@@ -186,13 +187,13 @@ public class UIRoom : UIBase
     }
 
     private void ReadyUsersSync(RoomData roomData)
-    {
-        foreach(RoomUserSlot user in userSlots)
+    {        
+        foreach (RoomUserSlot user in userSlots)
         {           
-            if(isHost || roomData.ReadyUsers.Contains(user.sessionId))
+            if(roomData.ReadyUsers.Contains(user.sessionId) || roomData.OwnerId == user.sessionId)
             {
                 user.CheckReadyState(true, roomData.OwnerId);
-            }            
+            }
         }
     }
 
