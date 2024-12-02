@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 public class SelectOrderDart : MonoBehaviour
 {
     [SerializeField] private SelectOrderUI selectUI;
-    [SerializeField] private Transform target;
     private Rigidbody rgdby;
 
     //발사 준비상태
@@ -57,6 +56,15 @@ public class SelectOrderDart : MonoBehaviour
         rgdby = GetComponent<Rigidbody>();
     }
 
+    private void Update()
+    {
+        //빗나가면 처음 위치로
+        if(transform.position.x < -3f)
+        {
+            ResetDart();
+        }
+    }
+
     private void FixedUpdate()
     {
         switch(phase)
@@ -80,6 +88,8 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby.useGravity = false;
         rgdby.constraints = RigidbodyConstraints.FreezeAll;
+
+        transform.SetParent(collision.transform);
     }
 
     //입력 받을 때
@@ -133,5 +143,11 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * ShootingForce, ForceMode.Impulse);
+    }
+
+    private void ResetDart()
+    {
+        transform.position = Vector3.zero;
+        phase = ShootingPhase.Aim;
     }
 }
