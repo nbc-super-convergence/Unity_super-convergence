@@ -60,6 +60,12 @@ public class UIRoom : UIBase
 
     private void Init()
     {
+        GameManager.Instance.SessionDic.Clear();
+        int num = 0;
+        foreach(var user in roomData.Users)
+        {
+            GameManager.Instance.SessionDic.Add(user.SessionId, num++);
+        }
         SetHost();
         SetDropdown();       
         // TODO:: 해쉬같은거 써서 깔끔하게.
