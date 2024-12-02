@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2523439360248456184}
   - component: {fileID: 7302753957707738756}
   m_Layer: 5
-  m_Name: Image
+  m_Name: red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 6797082394242694067}
   - component: {fileID: 1697516761090585869}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: green
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -379,6 +379,11 @@ MonoBehaviour:
   isActiveInCreated: 1
   isDestroyAtClosed: 1
   uiPosition: 1
+  RankPanels:
+  - {fileID: 2500022353942063379}
+  - {fileID: 8530963026450243626}
+  - {fileID: 3911781593923645581}
+  - {fileID: 6514295432618933025}
 --- !u!1 &6300445746437589085
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,7 +462,7 @@ GameObject:
   - component: {fileID: 4969146065514362312}
   - component: {fileID: 7039094115180161967}
   m_Layer: 5
-  m_Name: Image (3)
+  m_Name: blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -803,7 +808,7 @@ GameObject:
   - component: {fileID: 8051919910733420562}
   - component: {fileID: 4387186360020854139}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: yellow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

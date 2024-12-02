@@ -1,10 +1,11 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class MiniTokenInputHandler 
 {
     private PlayerInput playerInput;
-    private MiniTokenData miniData; 
+    private MiniTokenData miniData;
 
     public MiniTokenInputHandler(MiniTokenData data)
     {
@@ -26,6 +27,22 @@ public class MiniTokenInputHandler
 
         playerInput.MiniPlayerToken.Move.performed -= OnMove;
         playerInput.MiniPlayerToken.Move.canceled -= OnMoveCanceled;
+    }
+
+    
+
+    public IEnumerator PauseCotoutine(float time)
+    {
+        playerInput.Disable();
+
+        float elapsedTime = 0f;
+        while (elapsedTime < time)
+        {
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        playerInput.Enable();
     }
 
     #region WASD ÀÌµ¿
