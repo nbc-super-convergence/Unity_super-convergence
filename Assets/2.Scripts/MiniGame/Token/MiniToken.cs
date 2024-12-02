@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -16,8 +15,10 @@ public class MiniToken : MonoBehaviour
     public MiniTokenController Controller { get; private set; }
 
     /*Server*/
-    private bool IsClient;
-    
+    public bool IsClient { get; private set; }
+
+    Coroutine PauseInput = null;
+
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
@@ -33,7 +34,7 @@ public class MiniToken : MonoBehaviour
     {
         if (!IsClient)
         {
-            switch (MinigameManager.Instance.GameType)
+            switch (MinigameManager.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
@@ -47,7 +48,7 @@ public class MiniToken : MonoBehaviour
     {
         if (IsClient)
         {
-            switch (MinigameManager.Instance.GameType)
+            switch (MinigameManager.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
@@ -57,6 +58,15 @@ public class MiniToken : MonoBehaviour
         }
     }
     #endregion
+
+    public void PausePlayerInput(float pauseTime)
+    {
+        if (PauseInput != null)
+        {
+            StopCoroutine(PauseInput);
+        }
+        PauseInput = StartCoroutine(InputHandler.PauseCotoutine(pauseTime));
+    }
 
     #region IceBoard
     public void EnableInputSystem()
