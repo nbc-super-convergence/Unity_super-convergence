@@ -11119,7 +11119,6 @@ GameObject:
   - component: {fileID: 876840072}
   - component: {fileID: 876840071}
   - component: {fileID: 876840075}
-  - component: {fileID: 876840076}
   m_Layer: 5
   m_Name: BoardCanvas
   m_TagString: Untagged
@@ -11220,26 +11219,9 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 876840069}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 905b507a1729a974fb19da279d608121, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parents:
-  - {fileID: 1009205239}
-  - {fileID: 325324093}
-  - {fileID: 2145743878}
-  - {fileID: 1778013447}
---- !u!114 &876840076
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 876840069}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9a756b582ed20d4d9fcbf09ef7e9d6e, type: 3}
+  m_Script: {fileID: 11500000, guid: 905b507a1729a974fb19da279d608121, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parents:
