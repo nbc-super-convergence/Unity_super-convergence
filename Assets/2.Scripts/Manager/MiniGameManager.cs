@@ -16,7 +16,7 @@ public class MinigameManager : Singleton<MinigameManager>
     public static eGameType GameType { get; private set; } //게임 종류
     private IGame curMiniGame; //미니게임 관련 메서드 호출용
     
-    [SerializeField] private MiniToken[] miniTokens; //미니게임 캐릭터
+    [SerializeField] public MiniToken[] MiniTokens { get; private set; } //미니게임 캐릭터
     public string MySessonId
     {
         get { return MySessonId; }
@@ -42,7 +42,7 @@ public class MinigameManager : Singleton<MinigameManager>
     public MiniToken GetMiniToken(string sessionId)
     {
         if (GameManager.Instance.SessionDic.TryGetValue(sessionId, out int idx))
-            return miniTokens[idx];
+            return MiniTokens[idx];
         else
             return null;
     }
@@ -50,7 +50,7 @@ public class MinigameManager : Singleton<MinigameManager>
     public MiniToken GetMyToken()
     {
         int idx = GameManager.Instance.SessionDic[MySessonId];
-        return miniTokens[idx];
+        return MiniTokens[idx];
     }
 
     public T GetMap<T>() where T : MapBase
