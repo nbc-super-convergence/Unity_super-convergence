@@ -16,6 +16,7 @@ public class MiniToken : MonoBehaviour
 
     /*Server*/
     public bool IsClient { get; private set; }
+    private bool isEnabled = false;
 
     Coroutine PauseInput = null;
 
@@ -32,7 +33,7 @@ public class MiniToken : MonoBehaviour
 
     private void Update()
     {
-        if (!IsClient)
+        if (!IsClient && isEnabled)
         {
             switch (MinigameManager.GameType)
             {
@@ -46,7 +47,7 @@ public class MiniToken : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsClient)
+        if (IsClient && isEnabled)
         {
             switch (MinigameManager.GameType)
             {
@@ -112,11 +113,30 @@ public class MiniToken : MonoBehaviour
         MiniData.rotY = rotY;
         MiniData.CurState = state;
     }
-    
-    public void ReceivePlayerDespawn()
+    #endregion
+
+    public void EnableMiniToken()
+    {
+        gameObject.SetActive(true);
+        isEnabled = true;
+    }
+
+    public void DisableMyToken()
     {
         InputHandler.DisablePlayerInput();
-        Controller = null;
     }
-    #endregion
+
+    public void DisableMiniToken()
+    {
+        isEnabled = false;
+        rb.velocity = Vector3.zero; //움직임 멈춤
+        MiniData.CurState = State.Die; //사망 애니메이션 재생
+        StartCoroutine(disableDelay());
+    }
+
+    private IEnumerator disableDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
+    }
 }
