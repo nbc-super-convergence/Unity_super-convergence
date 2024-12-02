@@ -68,6 +68,7 @@ public class UIMinigameReady : UIBase
                         SessionId = GameManager.Instance.myInfo.sessionId
                     }
                 };
+                SocketManager.Instance.OnSend(packet);
 
                 break;
             }
