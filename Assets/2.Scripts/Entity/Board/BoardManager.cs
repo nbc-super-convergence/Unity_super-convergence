@@ -80,19 +80,20 @@ public class BoardManager : Singleton<BoardManager>
         isDontDestroyOnLoad = false;
 
         //테스트용
-        StartCoroutine(Init());
+        //StartCoroutine(Init());
+
+        Init();
 
         //트로피칸 설정
         SetTrophyNode();
         SetBonus();
     }
 
-    //테스트용
-    private IEnumerator Init()
+    private void Init()
     {
-        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+        int count = GameManager.Instance.SessionDic.Count;
 
-        for(int i =0; i < 2; i++)
+        for (int i = 0; i < count; i++)
         {
             //시작 지점에 플레이어 생성
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
@@ -103,6 +104,23 @@ public class BoardManager : Singleton<BoardManager>
 
         Curplayer.Ready();
     }
+
+    //테스트용
+    //private IEnumerator Init()
+    //{
+    //    //yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+
+    //    for(int i =0; i < 2; i++)
+    //    {
+    //        //시작 지점에 플레이어 생성
+    //        BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+    //        //handle.data.
+    //        //리스트에 플레이어 보관
+    //        playerTokenHandlers.Add(handle);
+    //    }
+
+    //    Curplayer.Ready();
+    //}
 
     public void RandomDice()
     {
