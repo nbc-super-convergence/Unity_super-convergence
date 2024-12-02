@@ -8,7 +8,7 @@ public class MiniToken : MonoBehaviour
     [SerializeField] private Animator animator;
 
     /*Data*/
-    public MiniTokenData MiniData { get; set; }
+    public MiniTokenData MiniData;
 
     /*Input & Control*/
     public MiniTokenInputHandler InputHandler { get; private set; }
