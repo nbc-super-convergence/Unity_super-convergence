@@ -57,18 +57,20 @@ public class AreaNode : BaseNode, IPurchase
 
     public void Purchase(int index)
     {
+        //세션id 숙지 필요
         //playerIndex = index;
         //plane.material = BoardManager.Instance.materials[index];
         //int i = BoardManager.Instance.areaNodes.IndexOf(this);
 
-        GamePacket packet = new();
+        //GamePacket packet = new();
         //packet.PurchaseTileRequest = new()
         //{
-        //    SessionId = "1",
-        //    Tile = SocketManager.ConvertVector(transform.position)
+        //    //추후 변경되면 수정
+        //    //SessionId = GameManager.Instance.,
+        //    //Tile = SocketManager.ToVector(transform.position)
         //};
 
-        SocketManager.Instance.OnSend(packet);
+        //SocketManager.Instance.OnSend(packet);
 
         Cancle();
     }

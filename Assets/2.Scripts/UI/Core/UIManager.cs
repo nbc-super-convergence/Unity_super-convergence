@@ -29,7 +29,7 @@ public class UIManager : Singleton<UIManager>
     //GameManager해서 호출함으로써 Manager간 초기화 서순 지키기.
     public async void Init()
     {
-        await Show<UILogin>(); 
+        await Show<UILogin>();
         isInitialized = true;
     }
 
@@ -43,6 +43,8 @@ public class UIManager : Singleton<UIManager>
     /// <returns>T 반환</returns>
     public async static Task<T> Show<T>(params object[] param) where T : UIBase
     {
+        UIManager.Instance.uiList.RemoveAll(obj => obj == null);
+
         if (UIManager.Instance.loadingScreen == null)
         {
             Transform canvas = FindObjectOfType<Canvas>().transform;
