@@ -57,8 +57,8 @@ public class BoardTokenHandler : MonoBehaviour
 
         if (isReady)
         {
-            //int rand = UnityEngine.Random.Range(0, 6);
-            //diceObject.ShowDice(rand);
+            int rand = UnityEngine.Random.Range(0, 6);
+            diceObject.ShowDice(rand);
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
@@ -69,7 +69,7 @@ public class BoardTokenHandler : MonoBehaviour
                 //SocketManager.Instance.OnSend(packet);
 
                 //Debug.Log(rand + 1);
-                //GetDice(4);
+                GetDice(rand + 1);
                 diceObject.gameObject.SetActive(false);
                 isReady = false;
             }
@@ -110,7 +110,7 @@ public class BoardTokenHandler : MonoBehaviour
             //    syncTime = 0.0f;
             //}
 
-            //if (queue.Count == 0) isTurn = false;
+            if (queue.Count == 0) isTurn = false;
         }
 
         //이동 동기화, 조건필요,
@@ -159,9 +159,6 @@ public class BoardTokenHandler : MonoBehaviour
 
     public bool IsTurnEnd()
     {
-        Debug.Log(dice);
-        Debug.Log(queue.Count);
-
         return (dice == 0 && queue.Count == 0);
     }
 

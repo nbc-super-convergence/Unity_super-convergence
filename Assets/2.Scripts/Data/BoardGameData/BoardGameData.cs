@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 
+[Serializable]
 public class BoardGameData
 {
     public int diceCount = 0; // 지금까지 움직인 수
