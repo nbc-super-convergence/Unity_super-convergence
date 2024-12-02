@@ -16,9 +16,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         foreach (var p in response.Players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.EnableMiniToken();
             miniToken.Controller.SetPos(ToVector3(p.Position));
             miniToken.Controller.SetRotY(p.Rotation);
-            miniToken.EnableMiniToken();
         }
     }
 

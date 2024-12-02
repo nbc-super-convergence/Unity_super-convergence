@@ -9,8 +9,18 @@ public class UIMinigameReady : UIBase
     [SerializeField] private TextMeshProUGUI gameTitle;
     [SerializeField] private GameObject[] gameDescription;
 
+    [SerializeField] private GameObject[] players;
     [SerializeField] private GameObject[] isReady;
-    
+
+    protected override void Awake()
+    {
+        base.Awake();
+        foreach (var p in players)
+        {
+            p.SetActive(true);
+        }
+    }
+
     public override void Opened(object[] param)
     {
         type = (eGameType)param[0];
@@ -32,8 +42,13 @@ public class UIMinigameReady : UIBase
         gameDescription[(int)type].SetActive(true);
 
         //ready 상태 초기화
-        for (int i = 0; i < isReady.Length; i++) 
+        int i = 0;
+        foreach (var dic in GameManager.Instance.SessionDic)
+        {
+            if (dic.Value == -1) players[i].SetActive(false);
             isReady[i].SetActive(false);
+        }
+            
 
         //R키 입력 대기
         StartCoroutine(WaitReady());
