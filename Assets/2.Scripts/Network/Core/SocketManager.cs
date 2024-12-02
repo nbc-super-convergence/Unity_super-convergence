@@ -64,7 +64,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
-        GameManager.Instance.myInfo.userData = response.User;
+        GameManager.Instance.myInfo.SetUserData(response.User);
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {

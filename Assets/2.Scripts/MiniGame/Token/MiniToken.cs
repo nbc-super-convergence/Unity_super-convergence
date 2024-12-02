@@ -27,7 +27,7 @@ public class MiniToken : MonoBehaviour
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
 
-        MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.sessionId;
+        MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.SessionId;
         IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId];
     }
 

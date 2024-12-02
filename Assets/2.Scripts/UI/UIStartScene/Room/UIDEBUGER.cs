@@ -27,10 +27,9 @@ public class UIDEBUGER : MonoBehaviour
     private void JumpBoardScene()
     {
         UserInfo debugInfo = new();
-        debugInfo.userData.SessionId = "debugSessionId";
-        debugInfo.userData.Nickname = "debugNickName";
         debugInfo.SetSessionId("debugSessionId");
-        debugInfo.SetUuid("debugUuid");
+        debugInfo.SetSessionId("debugNickName");
+        debugInfo.SetSessionId("debugSessionId");
 
         GameManager.Instance.myInfo = debugInfo;
 
@@ -40,17 +39,16 @@ public class UIDEBUGER : MonoBehaviour
     private async void JumpRoomUI()
     {
         UserInfo debugInfo = new();
-        debugInfo.userData.SessionId = "debugSessionId";
-        debugInfo.userData.Nickname = "debugNickName";
         debugInfo.SetSessionId("debugSessionId");
-        debugInfo.SetUuid("debugUuid");
+        debugInfo.SetSessionId("debugNickName");
+        debugInfo.SetSessionId("debugSessionId");
 
         GameManager.Instance.myInfo = debugInfo;
 
         RoomData roomData = new RoomData()
         {
             RoomId = "debugId",
-            OwnerId = GameManager.Instance.myInfo.sessionId,
+            OwnerId = GameManager.Instance.myInfo.SessionId,
             RoomName = "DebugRoom",
             LobbyId = "debugLobbyId",
             State = RoomStateType.Prepare,

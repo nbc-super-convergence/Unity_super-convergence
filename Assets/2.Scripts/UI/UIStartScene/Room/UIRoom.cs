@@ -61,12 +61,10 @@ public class UIRoom : UIBase
     private void Init()
     {
         GameManager.Instance.SessionDic.Clear();
-        GameManager.Instance.NicknameDic.Clear();
         int num = 0;
-        foreach(var user in roomData.Users)
+        foreach (var user in roomData.Users)
         {
-            GameManager.Instance.SessionDic.Add(user.SessionId, num++);
-            GameManager.Instance.NicknameDic.Add(user.SessionId, user.Nickname);
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++));
         }
         SetHost();
         SetDropdown();       
@@ -87,7 +85,7 @@ public class UIRoom : UIBase
     {
         currentOwnerId = roomData.OwnerId;
 
-        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.SessionId) ? true : false;
 
         if (isHost)
         {
@@ -119,7 +117,7 @@ public class UIRoom : UIBase
 
         for (int i = 0; i < data.Users.Count; i++)
         {
-            if (data.Users[i].SessionId == GameManager.Instance.myInfo.sessionId)
+            if (data.Users[i].SessionId == GameManager.Instance.myInfo.SessionId)
             { 
                 AddRoomUser(GameManager.Instance.myInfo.ToUserData());                
             }
@@ -247,7 +245,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId,
+            SessionId = GameManager.Instance.myInfo.SessionId,
             IsReady = isReady
         };    
         sourceTcs = new();
@@ -262,7 +260,7 @@ public class UIRoom : UIBase
     public void SetIsReady(bool isReady)
     {
         this.isReady = isReady;
-        SetUserReady(GameManager.Instance.myInfo.sessionId, this.isReady, this.state);
+        SetUserReady(GameManager.Instance.myInfo.SessionId, this.isReady, this.state);
     }
 
     private void UpdateButtonUI(string buttonText, Color color)
@@ -328,7 +326,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GameStartRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         SocketManager.Instance.OnSend(packet);
     }
@@ -416,7 +414,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         SocketManager.Instance.OnSend(packet);
 

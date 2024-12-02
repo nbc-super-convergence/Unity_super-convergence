@@ -62,7 +62,7 @@ public class UIMinigameReady : UIBase
     public void SetReady(string sessionId, bool isMe = false)
     {
         if (isMe) 
-            sessionId = GameManager.Instance.myInfo.sessionId;
+            sessionId = GameManager.Instance.myInfo.SessionId;
         int idx = GameManager.Instance.SessionDic[sessionId];
         isReady[idx].SetActive(true);
     }
@@ -80,7 +80,7 @@ public class UIMinigameReady : UIBase
                 {
                     IceGameReadyRequest = new()
                     {
-                        SessionId = GameManager.Instance.myInfo.sessionId
+                        SessionId = GameManager.Instance.myInfo.SessionId
                     }
                 };
                 SocketManager.Instance.OnSend(packet);
