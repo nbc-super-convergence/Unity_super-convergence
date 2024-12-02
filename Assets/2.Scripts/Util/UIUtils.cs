@@ -8,9 +8,9 @@ public static class UIUtils
     {
         while (time > 0)
         {
-            time -= Time.deltaTime;
+            time -= 1;
             timeTxt.text = time.ToString();
-            yield return null;
+            yield return new WaitForSeconds(1);
         }
     }
 }
