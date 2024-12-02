@@ -100,6 +100,8 @@ public class UIRoom : UIBase
     /// <param name="data"></param>
     public void SetRoomInfo(RoomData data)
     {
+        ClearUserSlot();
+
         roomData = data;
 
         Init();
@@ -168,6 +170,14 @@ public class UIRoom : UIBase
         }
     }
 
+    private void ClearUserSlot()
+    {
+        foreach(RoomUserSlot user in userSlots)
+        {
+            user.EmptyRoomUser();
+        }
+        users.Clear();
+    }
 
     private void ReadyUsersSync(RoomData roomData)
     {
