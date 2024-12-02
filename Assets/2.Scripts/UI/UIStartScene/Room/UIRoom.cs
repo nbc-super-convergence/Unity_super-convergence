@@ -42,8 +42,7 @@ public class UIRoom : UIBase
     #region 대기방 관리
     public override void Opened(object[] param)
     {
-        roomData = (RoomData)param[0];        
-        Init();        
+        roomData = (RoomData)param[0];
         SetRoomInfo(roomData);
     }
 
@@ -62,7 +61,6 @@ public class UIRoom : UIBase
     private void Init()
     {
         SetHost();
-
         SetDropdown();       
         // TODO:: 해쉬같은거 써서 깔끔하게.
         if(isHost)
@@ -96,14 +94,16 @@ public class UIRoom : UIBase
         }
     }
 
-    public void RefrashRoomData(RoomData roomData)
-    {
-        this.roomData = roomData;
-    }
-    
+    /// <summary>
+    /// 유저 변동이 있을 때 서버로부터 RoomData 받아서 모든 정보를 갱신함.
+    /// </summary>
+    /// <param name="data"></param>
     public void SetRoomInfo(RoomData data)
     {
         roomData = data;
+
+        Init();
+
         roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
         roomName.text = (data.RoomName != null) ? data.RoomName : "";
 
@@ -171,8 +171,6 @@ public class UIRoom : UIBase
 
     private void ReadyUsersSync(RoomData roomData)
     {
-        // 준비표시도 연동되게 하기.
-        // 룸유저슬롯도 갱신하기?
         foreach(RoomUserSlot user in userSlots)
         {
             if(roomData.ReadyUsers.Contains(user.sessionId))
@@ -319,15 +317,13 @@ public class UIRoom : UIBase
 
     /// <summary>
     /// S2C_GameStartNotification
+    /// GameStartNotification은 방장 포함 모든 유저가 받음.
     /// </summary>
     public async void GameStart()
     {
         await CountDownAsync(3);
         await UIManager.Show<UIFadeScreen>("FadeOut");
         invisibleWall.SetActive(false);
-
-        // TODO:: 보드씬 로드
-        SceneManager.LoadScene("BoardScene");
     }
     #endregion
 
@@ -408,10 +404,6 @@ public class UIRoom : UIBase
 
     #endregion
 
-    #region 싱글 버튼
-
-
-    #endregion
     private async Task CountDownAsync(int countNum)
     {
         invisibleWall.SetActive(true);
