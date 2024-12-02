@@ -16,7 +16,8 @@ public class UIDEBUGER : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Alpha0)) { JumpBoardScene(); }
+        if (Input.GetKey(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) { JumpBoardScene(); }
+        if (Input.GetKey(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) {}
     }
 
     private void JumpBoardScene()
@@ -30,5 +31,18 @@ public class UIDEBUGER : MonoBehaviour
         GameManager.Instance.myInfo = debugInfo;
 
         SceneManager.LoadScene(2);
+    }
+
+    private void JumpRoomUI()
+    {
+        UserInfo debugInfo = new();
+        debugInfo.userData.SessionId = "debugSessionId";
+        debugInfo.userData.Nickname = "debugNickName";
+        debugInfo.SetSessionId("debugSessionId");
+        debugInfo.SetUuid("debugUuid");
+
+        GameManager.Instance.myInfo = debugInfo;
+
+        UIManager.Show<UIRoom>();
     }
 }
