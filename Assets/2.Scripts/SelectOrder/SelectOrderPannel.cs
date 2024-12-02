@@ -7,9 +7,12 @@ public class SelectOrderPannel : MonoBehaviour
     private List<float> distanceRank;    //다트 거리의 매겨줄 랭킹
 
     //다트판 속성
-    private float xPositionLimit = 1.2f;  //옆으로 이동하기까지 제한
+    private float xPositionLimit = 0.5f;  //옆으로 이동하기까지 제한
     private bool swapDirection = false;
-    private bool isMove = false;
+    private bool isMove = true;
+
+    private int curDartCnt = 0;
+    public int maxDartCnt = 4;
 
     private void Awake()
     {
@@ -25,14 +28,26 @@ public class SelectOrderPannel : MonoBehaviour
         DartData dart = new DartData(dist, name);
         distanceList.Add(dart);
 
-        isMove = false;
+        Debug.Log($"{dart.Name}, {dart.Distance}");
+
+        curDartCnt += 1;
+        if (curDartCnt == maxDartCnt)
+        {
+            isMove = false;
+            DistanceRank();
+        }
+        else
+        {
+            SelectOrderDartManage.Instance.NextDart();
+        }
     }
 
-    //다트판 이동하기 (세로 한쪽만 던지면 시시하니까)
     private void FixedUpdate()
     {
         if (isMove)
         {
+            //다트판 이동하기 (세로 한쪽만 던지면 시시하니까)
+            //좌우로 왔다갔다 하게
             if (transform.position.x < -xPositionLimit)
                 swapDirection = true;
             else if (transform.position.x > xPositionLimit)
@@ -40,6 +55,34 @@ public class SelectOrderPannel : MonoBehaviour
 
             transform.Translate((swapDirection ? Vector3.right : Vector3.left) * Time.deltaTime);
         }
+    }
+
+    //중심과 가까운 다트가 우선순위
+    private void DistanceRank()
+    {
+        int rank = 1;
+        
+        foreach (DartData dart in distanceList)
+            distanceRank.Add(dart.Distance);
+
+        distanceRank.Sort();
+
+        foreach (float distance in distanceRank)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (distance.Equals(distanceList[i].Distance))
+                {
+                    distanceList[i].Rank = rank;
+                    rank++;
+                }
+            }
+        }
+
+        foreach (DartData dart in distanceList)
+        {
+            Debug.Log($"{dart.Name} {dart.Rank}");
+        }    
     }
 }
 
