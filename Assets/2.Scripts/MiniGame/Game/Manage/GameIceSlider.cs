@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameIceSlider : IGame
@@ -31,6 +32,23 @@ public class GameIceSlider : IGame
         int idx = GameManager.Instance.SessionDic[sessionId];
         gameData.playerHps[idx] -= dmg;
         ingameUI.ChangeHPUI();
+
+        /*서버 없을 때 임시 로직*/
+        if (gameData.playerHps[idx] == 0)
+        {
+            MinigameManager.Instance.GetMiniGame<GameIceSlider>()
+            .PlayerDeath(sessionId);
+        }
+    }
+
+    public void PlayerDeath(string sessionId)
+    {
+        MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
+        if (sessionId == MinigameManager.Instance.MySessonId)
+        {
+            token.DisableMyToken();
+        }
+        token.DisableMiniToken();
     }
 
     public void MapChangeEvent()
@@ -39,13 +57,16 @@ public class GameIceSlider : IGame
         gameData.phase--;
         MinigameManager.Instance.GetMap<MapGameIceSlider>()
             .MapDecreaseEvent(gameData.phase);
-
-        //시간 차이 감지
-        ingameUI.CheckTime();
     }
     
-    public void GameEnd()
+    public async void GameEnd(Dictionary<string, int> ranks)
     {
+        foreach (var mini in MinigameManager.Instance.MiniTokens)
+        {
+            mini.gameObject.SetActive(false);
+        }
 
+        await UIManager.Show<UIMinigameResult>(ranks);
+        
     }
 }
