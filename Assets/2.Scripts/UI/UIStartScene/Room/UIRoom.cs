@@ -8,9 +8,6 @@ using UnityEngine.UI;
 
 public class UIRoom : UIBase
 {
-    [SerializeField] private bool isHost;
-    public bool IsHost { get { return isHost; } }
-    private string currentOwnerId;
     private bool isReady = false;
 
     [SerializeField] private List<RoomUserSlot> userSlots;
@@ -21,6 +18,9 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Text roomName;
     private RoomData roomData;
     private RoomStateType state;
+    [SerializeField] private bool isHost;
+    public bool IsHost { get { return isHost; } }
+    private string currentOwnerId;
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
@@ -37,7 +37,7 @@ public class UIRoom : UIBase
     [SerializeField] private Button buttonReady;
     [SerializeField] private Button buttonStart;
 
-    public TaskCompletionSource<bool> sourceTcs;
+    private TaskCompletionSource<bool> sourceTcs;
 
     #region 대기방 관리
     public override void Opened(object[] param)
@@ -95,6 +95,11 @@ public class UIRoom : UIBase
             buttonStart.gameObject.SetActive(false);
         }
     }
+
+    public void RefrashRoomData(RoomData roomData)
+    {
+        this.roomData = roomData;
+    }
     
     public void SetRoomInfo(RoomData data)
     {
@@ -106,7 +111,7 @@ public class UIRoom : UIBase
         {
             if (data.Users[i].SessionId == GameManager.Instance.myInfo.sessionId)
             { 
-                AddRoomUser(GameManager.Instance.myInfo.ToUserData());
+                AddRoomUser(GameManager.Instance.myInfo.ToUserData());                
             }
             else
             {
@@ -117,6 +122,8 @@ public class UIRoom : UIBase
         {
             AddRoomUser(GameManager.Instance.myInfo.ToUserData());
         }
+
+        ReadyUsersSync(data);
     }
 
     public void AddRoomUser(UserData userData)
@@ -160,6 +167,21 @@ public class UIRoom : UIBase
             userSlots[i].SetRoomUser(userInfo, i);
         }
     }
+
+
+    private void ReadyUsersSync(RoomData roomData)
+    {
+        // 준비표시도 연동되게 하기.
+        // 룸유저슬롯도 갱신하기?
+        foreach(RoomUserSlot user in userSlots)
+        {
+            if(roomData.ReadyUsers.Contains(user.sessionId))
+            {
+                user.CheckReadyState(true, roomData.OwnerId);
+            }
+        }
+    }
+
     #endregion
 
     #region 준비
@@ -382,10 +404,14 @@ public class UIRoom : UIBase
         {
             Debug.LogError("서버와 통신실패. 방나가기 실패");
         }
-    }    
+    }
 
     #endregion
 
+    #region 싱글 버튼
+
+
+    #endregion
     private async Task CountDownAsync(int countNum)
     {
         invisibleWall.SetActive(true);

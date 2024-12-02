@@ -112,7 +112,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
@@ -133,6 +132,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.JoinRoomNotification;
         UIManager.Get<UIRoom>().AddRoomUser(response.User);
+        // UIManager.Get<UIRoom>().SetRoomInfo(response.RoomData);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
@@ -150,6 +150,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.LeaveRoomNotification;
         UIManager.Get<UIRoom>().RemoveRoomUser(response.User.SessionId);
+        //UIManager.Get<UIRoom>().SetRoomInfo(response.RoomData);
     }
 
     public void GamePrepareResponse(GamePacket packet)
