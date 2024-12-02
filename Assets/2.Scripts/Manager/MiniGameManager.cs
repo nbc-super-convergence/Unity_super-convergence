@@ -9,11 +9,11 @@ public enum eGameType
 
 public class MinigameManager : Singleton<MinigameManager>
 {
-    [SerializeField] private Transform MapParent; //맵 오브젝트 instantiate위치
-    public GameObject CurMap { get; private set; }
+    [SerializeField] private Transform MiniParent; //미니게임 오브젝트 부모
+    public MapBase CurMap;
 
     /*미니게임 정보*/
-    public eGameType GameType { get; private set; } //게임 종류
+    public static eGameType GameType { get; private set; } //게임 종류
     private IGame curMiniGame; //미니게임 관련 메서드 호출용
     
     [SerializeField] private MiniToken[] miniTokens; //미니게임 캐릭터
@@ -52,9 +52,14 @@ public class MinigameManager : Singleton<MinigameManager>
         int idx = GameManager.Instance.SessionDic[MySessonId];
         return miniTokens[idx];
     }
+
+    public T GetMap<T>() where T : MapBase
+    {
+        return (T)CurMap;
+    }
     #endregion
 
-    #region Minigame 초기화
+    #region Minigame 초기화D
     /// <summary>
     /// 서버에서 정한 미니게임 선택.
     /// </summary>
@@ -64,16 +69,15 @@ public class MinigameManager : Singleton<MinigameManager>
         GameType = (eGameType)Enum.Parse(typeof(eGameType), nameof(T));
         curMiniGame = new T();
         curMiniGame.Init();
-        SetMap(nameof(T));
+        MakeMap();
 
         return (T)curMiniGame;
     }
 
     //미니게임 맵 설정
-    private async void SetMap(string gameType)
+    private void MakeMap()
     {
-        GameObject map = await ResourceManager.Instance.LoadAsset<GameObject>($"Map{gameType}", eAddressableType.Prefab);
-        CurMap = Instantiate(map, MapParent);
+        Instantiate(CurMap.gameObject, MiniParent);
     }
     #endregion
 }
