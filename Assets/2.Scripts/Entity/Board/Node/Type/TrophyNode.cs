@@ -36,13 +36,18 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
 
     public async override void Action()
     {
+        var player = BoardManager.Instance.Curplayer;
+
         if(isTrophy)
         {
-            var player = BoardManager.Instance.Curplayer;
             int index = BoardManager.Instance.curPlayerIndex;
             IPurchase purchase = this;
 
             var ui = await UIManager.Show<PurchaseNodeUI>(purchase,index);
+        }
+        else if(player.IsTurnEnd())
+        {
+            BoardManager.Instance.TurnEnd();
         }
     }
 
@@ -53,7 +58,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
 
     public void Purchase(int index)
     {
-        ////트로피 + 1
+        //트로피 + 1
         //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
 
         //GamePacket packet = new();
