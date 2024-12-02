@@ -43,13 +43,14 @@ public class GameManager : Singleton<GameManager>
     #region Client ID
     public void SetPlayerId(string sessionId, int playerId)
     {
-        SessionDic[sessionId] = playerId;
+
+        SessionDic[sessionId].SetColor(playerId);
     }
 
     public void DeletePlayerId(string sessionId)
     {
         MinigameManager.Instance.GetMiniToken(sessionId).gameObject.SetActive(false);
-        SessionDic[sessionId] = -1;
+        SessionDic[sessionId].SetColor(-1);
     }
     #endregion
 }

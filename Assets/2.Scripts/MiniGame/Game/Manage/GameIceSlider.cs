@@ -29,7 +29,7 @@ public class GameIceSlider : IGame
     //TODO : Damage 주는 바닥에도 필요.(나의 데미지)
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
-        int idx = GameManager.Instance.SessionDic[sessionId];
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
         gameData.playerHps[idx] -= dmg;
         ingameUI.ChangeHPUI();
 
