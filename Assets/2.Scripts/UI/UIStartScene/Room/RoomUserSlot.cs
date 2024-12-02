@@ -59,7 +59,8 @@ public class RoomUserSlot : MonoBehaviour
     public void EmptyRoomUser()
     {
         nickNameTMP.text = "EMPTY";
-        objReady.SetActive(false);        
+        objReady.SetActive(false);
+        sessionId = "";
     }
 
 }

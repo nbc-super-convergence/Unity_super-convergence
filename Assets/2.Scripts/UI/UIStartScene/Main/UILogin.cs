@@ -53,10 +53,9 @@ public class UILogin : UIBase
 
         ////Receive: 서버로부터 로그인 유효성 검사.
         bool isSuccess = await sourceTcs.Task;
-
         if (isSuccess)
         {
-            await UIManager.Show<UILobby>();    // 문제있음.
+            await UIManager.Show<UILobby>();
         }
     }
 
