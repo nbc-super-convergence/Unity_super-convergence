@@ -182,11 +182,11 @@ public class UIRoom : UIBase
     private void ReadyUsersSync(RoomData roomData)
     {
         foreach(RoomUserSlot user in userSlots)
-        {
-            if(roomData.ReadyUsers.Contains(user.sessionId))
+        {           
+            if(isHost || roomData.ReadyUsers.Contains(user.sessionId))
             {
                 user.CheckReadyState(true, roomData.OwnerId);
-            }
+            }            
         }
     }
 
