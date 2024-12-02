@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -16,8 +15,11 @@ public class MiniToken : MonoBehaviour
     public MiniTokenController Controller { get; private set; }
 
     /*Server*/
-    private bool IsClient;
-    
+    public bool IsClient { get; private set; }
+    private bool isEnabled = false;
+
+    Coroutine PauseInput = null;
+
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
@@ -31,9 +33,9 @@ public class MiniToken : MonoBehaviour
 
     private void Update()
     {
-        if (!IsClient)
+        if (!IsClient && isEnabled)
         {
-            switch (MinigameManager.Instance.GameType)
+            switch (MinigameManager.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
@@ -45,9 +47,9 @@ public class MiniToken : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsClient)
+        if (IsClient && isEnabled)
         {
-            switch (MinigameManager.Instance.GameType)
+            switch (MinigameManager.GameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
@@ -57,6 +59,15 @@ public class MiniToken : MonoBehaviour
         }
     }
     #endregion
+
+    public void PausePlayerInput(float pauseTime)
+    {
+        if (PauseInput != null)
+        {
+            StopCoroutine(PauseInput);
+        }
+        PauseInput = StartCoroutine(InputHandler.PauseCotoutine(pauseTime));
+    }
 
     #region IceBoard
     public void EnableInputSystem()
@@ -102,11 +113,30 @@ public class MiniToken : MonoBehaviour
         MiniData.rotY = rotY;
         MiniData.CurState = state;
     }
-    
-    public void ReceivePlayerDespawn()
+    #endregion
+
+    public void EnableMiniToken()
+    {
+        gameObject.SetActive(true);
+        isEnabled = true;
+    }
+
+    public void DisableMyToken()
     {
         InputHandler.DisablePlayerInput();
-        Controller = null;
     }
-    #endregion
+
+    public void DisableMiniToken()
+    {
+        isEnabled = false;
+        rb.velocity = Vector3.zero; //움직임 멈춤
+        MiniData.CurState = State.Die; //사망 애니메이션 재생
+        StartCoroutine(disableDelay());
+    }
+
+    private IEnumerator disableDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        gameObject.SetActive(false);
+    }
 }

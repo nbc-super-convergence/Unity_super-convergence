@@ -1,11 +1,17 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 public class UIMinigameResult : UIBase
 {
+    [SerializeField] private GameObject[] RankPanels;
+
     public override void Opened(object[] param)
     {
-        Rank[] ranks = (Rank[])param;
-        foreach (var r in ranks)
+        //ranks의 string : sessionId, int : 등수
+        if (param.Length > 0 && param[0] is Dictionary<string, int> ranks)
         {
-            //SessionId받아서 Rank 표시.
+            
         }
     }
 }
