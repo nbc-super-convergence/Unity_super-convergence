@@ -23,7 +23,7 @@ public class UIMakeRoom : UIBase
 
             packet.CreateRoomRequest = new()
             {
-                SessionId = GameManager.Instance.myInfo.sessionId,
+                SessionId = GameManager.Instance.myInfo.SessionId,
                 RoomName = RoomNameInput.text
             };
 
