@@ -1,12 +1,15 @@
+using UnityEngine;
+
 public class GameIceSlider : IGame
 {
     private GameIceSliderData gameData;
     private UIMinigameIce ingameUI;
 
-    public void Init()
+    public async void Init()
     {
         gameData = new GameIceSliderData();
         gameData.Init();
+        MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
         SetBGM();
     }
 
@@ -32,11 +35,10 @@ public class GameIceSlider : IGame
 
     public void MapChangeEvent()
     {
-        //TODO : Map조작에 관한 인터페이스 + 클래스 필요
         //맵 크기 변경 
         gameData.phase--;
-        MinigameManager.Instance.CurMap.transform.localScale = 
-            new UnityEngine.Vector3(gameData.phase, 1, gameData.phase);
+        MinigameManager.Instance.GetMap<MapGameIceSlider>()
+            .MapDecreaseEvent(gameData.phase);
 
         //시간 차이 감지
         ingameUI.CheckTime();
@@ -46,5 +48,4 @@ public class GameIceSlider : IGame
     {
 
     }
-
 }
