@@ -45,5 +45,11 @@ public class GameManager : Singleton<GameManager>
     {
         SessionDic[sessionId] = playerId;
     }
+
+    public void DeletePlayerId(string sessionId)
+    {
+        MinigameManager.Instance.GetMiniToken(sessionId).gameObject.SetActive(false);
+        SessionDic[sessionId] = -1;
+    }
     #endregion
 }
