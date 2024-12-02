@@ -46,9 +46,12 @@ public class RoomUserSlot : MonoBehaviour
         }
     }
 
-    public void CheckReadyState(bool isReady, bool isHost)
+    public void CheckReadyState(bool isReady, string ownerId = null)
     {
-        hostOrParticipant.text = isHost ? "방장" : "준비완료";
+        if (ownerId != null)
+        {
+            hostOrParticipant.text = (sessionId == ownerId) ? "방장" : "준비완료";
+        }
         this.isReady = isReady;
         objReady.SetActive(this.isReady ? true : false);
     }

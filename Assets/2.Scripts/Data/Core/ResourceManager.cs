@@ -125,9 +125,8 @@ public class ResourceManager : Singleton<ResourceManager>
     public async Task<T> LoadAsset<T>(string key, eAddressableType group) where T : UnityEngine.Object
     {
         //UI : UIList에서 관리. 나머지 : assetPool에서 캐싱.
-        //if (group != eAddressableType.UI && assetPools[group].ContainsKey(key))
-        //    return (T)assetPools[group][key];
-
+        if (group != eAddressableType.UI && assetPools[group].ContainsKey(key))
+            return (T)assetPools[group][key];
         var path = GetAssetPath(key, group);
         return await LoadAssetAsync<T>(path);
     }
@@ -158,7 +157,7 @@ public class ResourceManager : Singleton<ResourceManager>
     /// </summary>
     private async Task<T> LoadAssetAsync<T>(string path)
     {
-        if (path.Contains(".prefab") && typeof(T) != typeof(GameObject) || path.Contains("UI/"))
+        if (path.Contains(".prefab") && typeof(T) != typeof(GameObject))
         {
             var obj = await Addressables.LoadAssetAsync<GameObject>(path).Task;
             return obj.GetComponent<T>();

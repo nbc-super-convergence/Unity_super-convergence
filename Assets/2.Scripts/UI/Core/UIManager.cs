@@ -132,19 +132,16 @@ public class UIManager : Singleton<UIManager>
             UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
             UIManager.Instance.loadingScreen.SetActive(true);
         }
-
+        //SceneManager.LoadScene(2);
         AsyncOperation asyncOper = SceneManager.LoadSceneAsync(2);
         asyncOper.allowSceneActivation = false;
         UIManager.Instance.loadingScreen.SetActive(false);
-        
-        while (true)
-        { 
-            if (asyncOper.isDone)
-            {
-                UIManager.Instance.loadingScreen.SetActive(false);
-                asyncOper.allowSceneActivation = true;
-                break;
-            }
+
+        if (asyncOper.isDone)
+        {
+            UIManager.Instance.loadingScreen.SetActive(false);
+            asyncOper.allowSceneActivation = true;
+
         }
     }
 }

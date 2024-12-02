@@ -29,7 +29,15 @@ public class UILobby : UIBase
 
     public override void Opened(object[] param)
     {
-        LobbyJoinRequest();
+        if (!SocketManager.Instance.isLobby)
+        {
+            LobbyJoinRequest();
+            SocketManager.Instance.isLobby = true;
+        }
+        else
+        {
+            nameTxt.text = GameManager.Instance.myInfo.userData.Nickname;
+        }
 
         //AddRoom("테스트룸1", 4, 10);
         //AddRoom("TestRoom22", 1, 100);

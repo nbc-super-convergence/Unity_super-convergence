@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
-
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 public class ChatSizeFitter : MonoBehaviour
 {
     [Header("Hiearchy")]
@@ -45,6 +44,7 @@ public class ChatSizeFitter : MonoBehaviour
     }
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(ChatSizeFitter))]
 public class ChatBubbleEditor : Editor
 {
@@ -59,3 +59,4 @@ public class ChatBubbleEditor : Editor
         }
     }
 }
+#endif

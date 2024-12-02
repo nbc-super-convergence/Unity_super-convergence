@@ -40,19 +40,35 @@ syntax = "proto3";
         UNKNOWN_ERROR = 1;
         INVALID_REQUEST = 2;
         AUTHENTICATION_FAILED = 3;
-        CREATE_ROOM_FAILED = 4;
-        JOIN_ROOM_FAILED = 5;
-        LEAVE_ROOM_FAILED = 6;
-        CHAT_FAIL = 7;
-        GAME_PREPARE_FAIL = 8;
-        BOARD_PLAYER_MOVE_FAIL = 9;
-        TILE_PURCHASE_FAIL = 10;
-        BACK_TO_THE_ROOM_FAIL = 11;
-        INVALID_ROOM_STATE = 12;
-        ID_OR_PASSWORD_MISS = 13; // 13 ~ 16 AUTH SERVER ERROR
-        NOT_MATCH_PASSWORD_CONFIRM = 14;
-        ALREADY_EXIST_ID = 15;
-        ALREADY_LOGGED_IN_ID = 16;
+    
+        // 100 ~ 199 AUTH SERVER ERROR
+        ID_OR_PASSWORD_MISS = 100;
+        NOT_MATCH_PASSWORD_CONFIRM = 101;
+        ALREADY_EXIST_ID = 102;
+        ALREADY_LOGGED_IN_ID = 103;
+        VALIDAION_ERROR = 104;
+        ALREADY_EXIST_NICKNAME = 105;
+    
+        // 200 ~ 299 LOBBY SERVER ERROR
+        USER_NOT_FOUND = 200;
+        ALREADY_IN_LOBBY = 201;
+        USER_NOT_IN_LOBBY = 202;
+        LOBBY_USER_LIST_ERROR = 203;
+        WRONG_LOBBY = 204;
+    
+        // 300 ~ 399 ROOM SERVER ERROR
+        ROOM_NOT_FOUND = 300;
+        USER_ALREADY_IN_ROOM = 301;
+        USER_NOT_IN_ROOM = 302;
+        INVALID_ROOM_STATE = 303;
+        OWNER_CANNOT_READY = 304;
+        ROOM_IS_FULL = 305;
+    
+        // 400 ~ 499 BOARD SERVER ERROR
+    
+        // 500 ~ 599 ICE SERVER ERROR
+        GAME_NOT_FOUND = 500;
+        USER_IN_GAME_NOT_FOUND = 501;
     }
 
     enum State {
@@ -253,7 +269,7 @@ syntax = "proto3";
     }
 
     message S2C_JoinRoomNotification {
-        UserData user = 1;
+        RoomData room = 1;
     }
 
     message C2S_LeaveRoomRequest{
@@ -266,8 +282,7 @@ syntax = "proto3";
     }
 
     message S2C_LeaveRoomNotification {
-        UserData user = 1;
-        string ownerId = 2;
+        RoomData room = 1;
     }
 
     message C2S_GamePrepareRequest {
@@ -288,16 +303,12 @@ syntax = "proto3";
     }
 
 //ICE
-    message C2S_IceMiniGameStartRequest {
-        string sessionId = 1;
-    }
-
     message S2C_IceMiniGameReadyNotification {
         repeated startPlayers players = 1;
 
         message startPlayers {
             string sessionId = 1; 
-            Vector position =2; 
+            Vector position = 2; 
             float rotation = 3;
         } 
     }
@@ -413,18 +424,17 @@ syntax = "proto3";
             C2S_StartMiniGameRequest startMiniGameRequest = 101;
             S2C_StartMiniGameNotification startMiniGameNotification = 102;
 
-            // ice  (201)
-            C2S_IceMiniGameStartRequest iceMiniGameStartRequest = 201;
-            S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 202;
-            C2S_IceGameReadyRequest iceGameReadyRequest = 203; 
-            S2C_IceGameReadyNotification iceGameReadyNotification = 204;
-            S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 205;
-            C2S_IcePlayerSyncRequest icePlayerSyncRequest = 206;
-            S2C_IcePlayerSyncNotification icePlayerSyncNotification = 207;
-            C2S_IcePlayerDamageRequest icePlayerDamageRequest = 208;
-            S2C_IcePlayerDamageNotification icePlayerDamageNotification = 209;
-            S2C_IcePlayerDeathNotification icePlayerDeathNotification = 210;
-            S2C_IceGameOverNotification iceGameOverNotification = 211;
-            S2C_IceMapSyncNotification iceMapSyncNotification = 212;
+             // ice  (201)
+            S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 201;
+            C2S_IceGameReadyRequest iceGameReadyRequest = 202; 
+            S2C_IceGameReadyNotification iceGameReadyNotification = 203;
+            S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 204;
+            C2S_IcePlayerSyncRequest icePlayerSyncRequest = 205;
+            S2C_IcePlayerSyncNotification icePlayerSyncNotification = 206;
+            C2S_IcePlayerDamageRequest icePlayerDamageRequest = 207;
+            S2C_IcePlayerDamageNotification icePlayerDamageNotification = 208;
+            S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
+            S2C_IceGameOverNotification iceGameOverNotification = 210;
+            S2C_IceMapSyncNotification iceMapSyncNotification = 211;
         }
-}
+    }

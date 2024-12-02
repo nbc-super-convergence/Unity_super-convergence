@@ -30,7 +30,21 @@ public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
     private byte[] recvBuffer = new byte[1024];
 
     private bool isPacketInit = false;
-    public bool isConnected { get; private set; }
+    private bool _isConnected;
+    public bool isConnected
+    {
+        get => _isConnected;
+        set
+        {
+            if (_isConnected != value)
+            {
+                _isConnected = value;
+                if (!_isConnected)
+                    isLobby = false;
+            }
+        }
+    }
+    public bool isLobby = false;
 
     /// <summary>
     /// 파괴시 (따로 파괴 하지 않는다면 앱 종료 시) 소켓 연결 해제
