@@ -10,6 +10,7 @@ public class GameManager : Singleton<GameManager>
 
     //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
     public Dictionary<string, int> SessionDic { get; private set; } = new();
+    public Dictionary<string, string> NicknameDic { get; private set; } = new();
 
     protected override void Awake()
     {

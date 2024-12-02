@@ -61,10 +61,12 @@ public class UIRoom : UIBase
     private void Init()
     {
         GameManager.Instance.SessionDic.Clear();
+        GameManager.Instance.NicknameDic.Clear();
         int num = 0;
         foreach(var user in roomData.Users)
         {
             GameManager.Instance.SessionDic.Add(user.SessionId, num++);
+            GameManager.Instance.NicknameDic.Add(user.SessionId, user.Nickname);
         }
         SetHost();
         SetDropdown();       
