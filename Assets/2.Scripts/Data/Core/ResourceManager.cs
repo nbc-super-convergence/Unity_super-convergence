@@ -157,7 +157,7 @@ public class ResourceManager : Singleton<ResourceManager>
     /// </summary>
     private async Task<T> LoadAssetAsync<T>(string path)
     {
-        if (path.Contains(".prefab") && typeof(T) != typeof(GameObject) || path.Contains("UI/"))
+        if (path.Contains(".prefab") && typeof(T) != typeof(GameObject))
         {
             var obj = await Addressables.LoadAssetAsync<GameObject>(path).Task;
             return obj.GetComponent<T>();
