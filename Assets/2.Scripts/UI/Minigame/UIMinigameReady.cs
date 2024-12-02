@@ -45,7 +45,7 @@ public class UIMinigameReady : UIBase
         int i = 0;
         foreach (var dic in GameManager.Instance.SessionDic)
         {
-            if (dic.Value == -1) players[i].SetActive(false);
+            if (dic.Value.Color == -1) players[i].SetActive(false);
             isReady[i].SetActive(false);
         }
             
@@ -63,7 +63,7 @@ public class UIMinigameReady : UIBase
     {
         if (isMe) 
             sessionId = GameManager.Instance.myInfo.SessionId;
-        int idx = GameManager.Instance.SessionDic[sessionId];
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
         isReady[idx].SetActive(true);
     }
 

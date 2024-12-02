@@ -28,7 +28,7 @@ public class MiniToken : MonoBehaviour
         Controller = new MiniTokenController(MiniData, transform, rb);
 
         MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.SessionId;
-        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId];
+        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
     }
 
     private void Update()
