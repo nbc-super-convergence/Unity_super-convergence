@@ -15,6 +15,7 @@ public class CSVParser : Singleton<CSVParser>
         //csv = result;
         ParseFailCode(csv);
         GameManager.Instance.failCodeDic = new(failCodeDic);
+        isInitialized = true;
     }
 
     private string[] csvLine;
