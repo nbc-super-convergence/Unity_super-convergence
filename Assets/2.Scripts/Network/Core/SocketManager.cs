@@ -177,8 +177,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.GameStartNotification;
         if (response.Success)
         {
-            UIManager.Get<UIRoom>().GameStart();
-            GameManager.isGameStart = true;
+            UIManager.Get<UIRoom>().GameStart();            
         }
         if ((int)response.FailCode != 0)
         {

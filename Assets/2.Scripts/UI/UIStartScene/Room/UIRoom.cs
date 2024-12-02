@@ -334,6 +334,19 @@ public class UIRoom : UIBase
         await CountDownAsync(3);
         await UIManager.Show<UIFadeScreen>("FadeOut");
         invisibleWall.SetActive(false);
+        GameManager.isGameStart = true;
+    }
+    private async Task CountDownAsync(int countNum)
+    {
+        invisibleWall.SetActive(true);
+        count.gameObject.SetActive(true);
+
+        while (countNum > 0)
+        {
+            count.text = countNum--.ToString();
+            await Task.Delay(1000);
+        }
+        count.gameObject.SetActive(false);
     }
     #endregion
 
@@ -414,17 +427,5 @@ public class UIRoom : UIBase
 
     #endregion
 
-    private async Task CountDownAsync(int countNum)
-    {
-        invisibleWall.SetActive(true);
-        count.gameObject.SetActive(true);
-
-        while (countNum > 0)
-        {
-            count.text = countNum--.ToString();
-            await Task.Delay(1000);
-        }
-        count.gameObject.SetActive(false);
-    }
 
 }

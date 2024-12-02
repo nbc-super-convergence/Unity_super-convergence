@@ -11,13 +11,17 @@ public class UIDEBUGER : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
-                     
+        
     }
 
     private void FixedUpdate()
     {
-        if (Input.GetKey(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) { JumpBoardScene(); }
-        if (Input.GetKey(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) {}
+        if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
+        { JumpBoardScene(); }
+        if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
+        { JumpRoomUI(); }
+        if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { UIManager.Get<UIRoom>().GameStart(); }
     }
 
     private void JumpBoardScene()
@@ -30,10 +34,10 @@ public class UIDEBUGER : MonoBehaviour
 
         GameManager.Instance.myInfo = debugInfo;
 
-        SceneManager.LoadScene(2);
+        UIManager.Get<UIRoom>().GameStart();
     }
 
-    private void JumpRoomUI()
+    private async void JumpRoomUI()
     {
         UserInfo debugInfo = new();
         debugInfo.userData.SessionId = "debugSessionId";
@@ -43,6 +47,18 @@ public class UIDEBUGER : MonoBehaviour
 
         GameManager.Instance.myInfo = debugInfo;
 
-        UIManager.Show<UIRoom>();
+        RoomData roomData = new RoomData()
+        {
+            RoomId = "debugId",
+            OwnerId = GameManager.Instance.myInfo.sessionId,
+            RoomName = "DebugRoom",
+            LobbyId = "debugLobbyId",
+            State = RoomStateType.Prepare,
+            MaxUser = 4,
+            
+        };
+        
+
+        await UIManager.Show<UIRoom>(roomData);
     }
 }
