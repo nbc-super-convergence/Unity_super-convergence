@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIDEBUGER : MonoBehaviour
@@ -10,30 +11,24 @@ public class UIDEBUGER : MonoBehaviour
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
-        ShowUI();                
+                     
     }
 
-    private async void ShowUI()
+    private void FixedUpdate()
     {
-        await UIManager.Show<UIRoom>();
+        if (Input.GetKey(KeyCode.Alpha0)) { JumpBoardScene(); }
     }
 
-    public void ButtonTest()
+    private void JumpBoardScene()
     {
-        TestCode();
-    }
-    public void ButtonTest2()
-    {
-        TestCode2();
-    }
+        UserInfo debugInfo = new();
+        debugInfo.userData.SessionId = "debugSessionId";
+        debugInfo.userData.Nickname = "debugNickName";
+        debugInfo.SetSessionId("debugSessionId");
+        debugInfo.SetUuid("debugUuid");
 
-    private async void TestCode()
-    {
-        await UIManager.Show<UIError>();
-    }
+        GameManager.Instance.myInfo = debugInfo;
 
-    private async void TestCode2()
-    {
-        await UIManager.Show<UIError>("이건 어떻게 나올까");
+        SceneManager.LoadScene(2);
     }
 }
