@@ -92,10 +92,11 @@ public class BoardManager : Singleton<BoardManager>
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
 
-        for(int i =0; i < 1; i++)
+        for(int i =0; i < 2; i++)
         {
             //시작 지점에 플레이어 생성
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+            //handle.data.
             //리스트에 플레이어 보관
             playerTokenHandlers.Add(handle);
         }
@@ -148,6 +149,8 @@ public class BoardManager : Singleton<BoardManager>
             //미니게임 시작
             //OnEvent?.Invoke();
 
+            //게임종료
+            //GameOver();
             #endregion
         }
     }
@@ -198,17 +201,16 @@ public class BoardManager : Singleton<BoardManager>
     private void SetBonus()
     {
         bonus = new();
-
         List<int> num = new();
         
         for(int i = 0; i < 3;)
         {
             int rand = UnityEngine.Random.Range(0, 13);
 
-            if (num.Contains(i)) continue;
-
+            if (num.Contains(rand)) continue;
+            num.Add(rand);
             //***주의 열지마시오, 진짜 경고했음
-            switch(i)
+            switch(rand)
             {
                 case 0:
                     bonus.Add(new FastCoinZero());
@@ -253,5 +255,28 @@ public class BoardManager : Singleton<BoardManager>
 
             i++;
         }
+    }
+
+    public async void GameOver()
+    {
+        //게임종료시 레크리에이션, 추가 트로피 증정
+        foreach (var result in bonus)
+        {
+            List<int> list = result.Result();
+
+            foreach (int i in list)
+                playerTokenHandlers[i].data.trophyAmount += 1;
+        }
+
+        //순위별로 인덱스 변경
+        playerTokenHandlers.Sort((a,b) => 
+        {
+            if(a.data.trophyAmount == b.data.trophyAmount)
+                return b.data.keyAmount.CompareTo(a.data.keyAmount);
+
+            return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+        });
+
+        await UIManager.Show<BoardResult>();
     }
 }

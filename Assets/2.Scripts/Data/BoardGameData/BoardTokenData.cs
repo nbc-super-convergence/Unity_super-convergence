@@ -14,6 +14,7 @@ public class BoardTokenData
     public Vector3 position;
     public float rotY;
 
+    public string id;
     public int keyAmount; //재화, 이름 언제든지 수정가능
     public int trophyAmount;
 
