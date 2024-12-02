@@ -4,8 +4,7 @@ using UnityEngine;
 public class MapGameIceSlider : MapBase
 {
     [SerializeField] private Transform iceBoard;
-    [SerializeField] private GameObject oceanBoard;
-
+    
     [SerializeField] private float phaseTime = 1f;
     [SerializeField] private float bounceForce = 10f;
     [SerializeField] private float inputDelay = 1f;
@@ -25,6 +24,16 @@ public class MapGameIceSlider : MapBase
             case eCollisionType.Damage:
                 MinigameManager.Instance.GetMiniGame<GameIceSlider>()
                     .GiveDamage(MinigameManager.Instance.MySessonId, 1, true);
+
+                GamePacket packet = new()
+                {
+                    IcePlayerDamageRequest = new()
+                    {
+                        SessionId = MinigameManager.Instance.MySessonId
+                    }
+                };
+                SocketManager.Instance.OnSend(packet);
+
                 break;
         }
     }
@@ -36,16 +45,16 @@ public class MapGameIceSlider : MapBase
 
     private IEnumerator DecreaseSize(int phase)
     {
-        Vector3 startScale = transform.localScale;
+        Vector3 startScale = iceBoard.localScale;
         Vector3 targetSize = new Vector3(phase, 1, phase);
         float elapsedTime = 0f;
 
         while (elapsedTime < phaseTime)
         {
-            transform.localScale = Vector3.Lerp(startScale, targetSize, elapsedTime / phaseTime);
+            iceBoard.localScale = Vector3.Lerp(startScale, targetSize, elapsedTime / phaseTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        transform.localScale = targetSize;
+        iceBoard.localScale = targetSize;
     }
 }
