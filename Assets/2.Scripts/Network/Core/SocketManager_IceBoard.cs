@@ -1,11 +1,10 @@
+using System.Collections.Generic;
 using UnityEngine.Playables;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    //201 : IceMiniGameStartRequest : 없어짐.
-    
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
-    {//202
+    {//201
         var response = gamePacket.IceMiniGameReadyNotification;
 
         //ReadyPanel 띄우기.
@@ -19,14 +18,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.Controller.SetPos(ToVector3(p.Position));
             miniToken.Controller.SetRotY(p.Rotation);
+            miniToken.EnableMiniToken();
         }
     }
 
-    //203 : IceGameReadyRequest
-    //Send 위치 : UIMinigameReady
+    //202 : IceGameReadyRequest
+    //Send 위치 : UIMinigameReady (완료)
 
     public void IceGameReadyNotification(GamePacket gamePacket)
-    {//204
+    {//203
         var response = gamePacket.IceGameReadyNotification;
 
         //ReadyUI와 연계
@@ -34,14 +34,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     public void IceMiniGameStartNotification(GamePacket gamePacket)
-    {//205
+    {//204
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
+        //GameStart 함수 호출
         MinigameManager.Instance.GetMiniGame<GameIceSlider>().GameStart();
     }
 
     //206 : IcePlayerSyncRequest
-    //Send 위치 : MiniToken
+    //Send 위치 : MiniToken (완료)
 
     public void IcePlayerSyncNotification(GamePacket gamePacket)
     {//207
@@ -55,7 +56,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     //TODO
     //208 : IcePlayerDamageRequest
-    //Send 위치 : MapFloor
+    //Send 위치 : MapGameIceSlider (완료)
 
     public void IcePlayerDamageNotification(GamePacket gamePacket)
     {//209
@@ -71,16 +72,26 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IcePlayerDeathNotification;
 
         MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
-        //TODO : 사망 로직
+        
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
+            .PlayerDeath(response.SessionId);
     }
 
     public void IceGameOverNotification(GamePacket gamePacket)
     {//211
         var response = gamePacket.IceGameOverNotification;
-        
-        UIManager.Show<UIMinigameResult>(response.Ranks);
-        
-        //TODO : 기존 맵 삭제
+
+        Dictionary<string, int> rankings = new();
+        foreach (var r in response.Ranks)
+        {
+            rankings.Add(r.SessionId, r.Rank_);
+        }
+
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
+            .GameEnd(rankings);
+
+        //미니게임 맵 삭제
+        Destroy(MinigameManager.Instance.CurMap.gameObject); 
     }
 
     public void IceMapSyncNotification(GamePacket gamePacket)
