@@ -97,7 +97,13 @@ public class BoardManager : Singleton<BoardManager>
         {
             //시작 지점에 플레이어 생성
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
-            //handle.data.
+
+            if (GameManager.Instance.myInfo.Color == i)
+            {
+                handle.isMine = true;
+                handle.SetColor(i);
+            }
+
             //리스트에 플레이어 보관
             playerTokenHandlers.Add(handle);
         }
