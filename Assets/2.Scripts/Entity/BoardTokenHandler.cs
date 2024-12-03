@@ -71,15 +71,16 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                isReady = false;
 
                 GamePacket packet = new();
-                packet.RollDiceRequest = new() { };
-
+                packet.RollDiceRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
                 SocketManager.Instance.OnSend(packet);
 
-
                 diceObject.gameObject.SetActive(false);
-                isReady = false;
             }
         }
 
@@ -112,7 +113,8 @@ public class BoardTokenHandler : MonoBehaviour
                 packet.MovePlayerBoardRequest = new()
                 {
                     SessionId = GameManager.Instance.myInfo.SessionId,
-                    TargetPoint = SocketManager.ToVector(transform.position)
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = transform.rotation.y
                 };
 
                 syncTime = 0.0f;
@@ -184,9 +186,10 @@ public class BoardTokenHandler : MonoBehaviour
         diceObject.gameObject.SetActive(true);
     }
 
-    public void ReceivePosition(Vector3 position)
+    public void ReceivePosition(Vector3 position,float rotY)
     {
         nextPositon = position;
+        transform.eulerAngles = new Vector3(0, rotY, 0);
     }
 
     public void SetColor(int index)
