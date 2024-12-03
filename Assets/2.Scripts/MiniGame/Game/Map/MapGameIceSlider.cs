@@ -9,7 +9,7 @@ public class MapGameIceSlider : MapBase
     [SerializeField] private float bounceForce = 10f;
     [SerializeField] private float inputDelay = 1f;
 
-    public override void HandleCollision(Collision collision, eCollisionType type)
+    public override void HandleCollision(eCollisionType type, Collision collision = null)
     {
         switch (type)
         {
@@ -21,6 +21,13 @@ public class MapGameIceSlider : MapBase
                 collision.rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
                 collision.gameObject.GetComponent<MiniToken>().PausePlayerInput(inputDelay);
                 break;
+        }
+    }
+
+    public override void HandleCollider(eCollisionType type, Collider other = null)
+    {
+        switch (type)
+        {
             case eCollisionType.Damage:
                 MinigameManager.Instance.GetMiniGame<GameIceSlider>()
                     .GiveDamage(MinigameManager.Instance.MySessonId, 1, true);
@@ -33,7 +40,6 @@ public class MapGameIceSlider : MapBase
                     }
                 };
                 SocketManager.Instance.OnSend(packet);
-
                 break;
         }
     }
