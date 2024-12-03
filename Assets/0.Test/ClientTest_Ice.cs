@@ -25,26 +25,26 @@ public partial class ClientTest : Singleton<ClientTest>
                             new startPlayers
                             {
                                 SessionId = "Session1",
-                                Position = new Vector { X = 1.0f, Y = 0.0f, Z = 1.0f },
-                                Rotation = 45.0f
+                                Position = new Vector { X = -4, Y = 0.2f, Z = 4 },
+                                Rotation = 135
                             },
                             new startPlayers
                             {
                                 SessionId = "Session2",
-                                Position = new Vector { X = 1.0f, Y = 0.0f, Z = 1.0f },
-                                Rotation = 45.0f
+                                Position = new Vector { X = 4, Y = 0.2f, Z = 4 },
+                                Rotation = -135
                             },
                             new startPlayers
                             {
                                 SessionId = "Session3",
-                                Position = new Vector { X = 1.0f, Y = 0.0f, Z = 1.0f },
-                                Rotation = 45.0f
+                                Position = new Vector { X = 4, Y = 0.2f, Z = -4 },
+                                Rotation = -45
                             },
                             new startPlayers
                             {
                                 SessionId = "Session4",
-                                Position = new Vector { X = 1.0f, Y = 0.0f, Z = 1.0f },
-                                Rotation = 45.0f
+                                Position = new Vector { X = -4, Y = 0.2f, Z = -4 },
+                                Rotation = 45
                             }
                         }
                     }
