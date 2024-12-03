@@ -23,8 +23,7 @@ public partial class ClientTest : Singleton<ClientTest>
 
         while (true)
         {
-            if (Input.GetKey(KeyCode.LeftControl) &&
-            Input.GetKey(KeyCode.LeftShift) &&
+            if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.B))
             {
                 //임의의 SessionDic 설정

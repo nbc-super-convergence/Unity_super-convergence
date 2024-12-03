@@ -12,8 +12,7 @@ public partial class ClientTest : Singleton<ClientTest>
         //IceMinigame으로 넘어가기
         while (true)
         {
-            if (Input.GetKey(KeyCode.LeftControl) &&
-            Input.GetKey(KeyCode.LeftShift) &&
+            if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.I))
             {
                 GamePacket packet = new()
