@@ -35,6 +35,7 @@ public partial class ClientTest : Singleton<ClientTest>
                 //BoardScene ÁøÀÔ
                 GameManager.isGameStart = true;
             }
+            yield return null;
         }
     }
 
