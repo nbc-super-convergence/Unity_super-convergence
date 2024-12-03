@@ -23,11 +23,6 @@ syntax = "proto3";
         float z = 3; 
     }
 
-    message Rank { 
-        int32 playerId = 1;
-        int32 rank = 2; 
-    }
-
     message BoardPlayerData {
         string sessionId = 1;
         int32 gold = 2;

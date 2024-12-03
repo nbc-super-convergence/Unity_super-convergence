@@ -66,7 +66,7 @@ public class UIMinigameReady : UIBase
     public override void Closed(object[] param)
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
-        gameDescription[(int)gameType].SetActive(false);
+        gameDescription[(int)gameType - 1].SetActive(false);
     }
 
     private IEnumerator WaitForReady()
@@ -86,7 +86,6 @@ public class UIMinigameReady : UIBase
                     }
                 };
                 SocketManager.Instance.OnSend(packet);
-                Debug.Log(packet); //TODO : 패킷 잘 보내지는지 테스트용. 삭제.
                 break;
             }
             yield return null;
