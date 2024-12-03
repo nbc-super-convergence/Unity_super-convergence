@@ -38,7 +38,6 @@ public class UIError : UIBase
         }
     }
 
-
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) { OnBtnClose(); }
@@ -71,7 +70,9 @@ public class UIError : UIBase
         sbTitle.Clear().Append(titleText != null ? titleText : "");
         titleTMP.text = sbTitle.ToString();
 
-        sbInfo.Clear().AppendLine( ((GlobalFailCodeKorean)(int)errorNum).ToString() );
+        //sbInfo.Clear().AppendLine( ((GlobalFailCodeKorean)(int)errorNum).ToString() );
+        sbInfo.Clear().AppendLine(GameManager.Instance.failCodeDic[(int)errorNum]);
+
         infoTMP.text = sbInfo.ToString();
     }
 

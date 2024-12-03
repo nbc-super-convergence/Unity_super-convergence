@@ -10,6 +10,8 @@ public class GameManager : Singleton<GameManager>
 
     //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
     public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
+    public Dictionary<int, string> failCodeDic;
+
 
     protected override void Awake()
     {
@@ -32,6 +34,9 @@ public class GameManager : Singleton<GameManager>
         //Initialize UIManager
         UIManager.Instance.Init();
         yield return new WaitUntil(() => UIManager.Instance.isInitialized);
+
+        CSVParser.Instance.Init();
+        yield return new WaitUntil(() => CSVParser.Instance.isInitialized);
 
         //Initialize SocketManager
         SocketManager.Instance.Init();
