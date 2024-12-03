@@ -96,11 +96,12 @@ public class BoardManager : Singleton<BoardManager>
         {
             var dict = GameManager.Instance.SessionDic;
             var info = dict[key];
+
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
             handle.data.userInfo = info;
+            handle.SetColor(info.Color);
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
-            handle.SetColor(info.Color);
 
             playerTokenHandlers.Add(handle);
         }
@@ -143,25 +144,16 @@ public class BoardManager : Singleton<BoardManager>
     //    Curplayer.Ready();
     //}
 
-    public void RandomDice()
-    {
-        //GamePacket packet = new();
+    //public void RandomDice()
+    //{
+    //    #region Old
+    //    ////주사위 돌림
+    //    //int rand = Random.Range(1, 7);
 
-        ////packet.RollDiceReqeust = new()
-        ////{
-        ////    PlayerId = playerIndex
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
-
-        #region Old
-        ////주사위 돌림
-        //int rand = Random.Range(1, 7);
-
-        ////나온 주사위의 수를 플레이어에 입력
-        //Curplayer.GetDice(rand);
-        #endregion
-    }
+    //    ////나온 주사위의 수를 플레이어에 입력
+    //    //Curplayer.GetDice(rand);
+    //    #endregion
+    //}
 
     public void TurnEnd()
     {

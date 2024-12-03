@@ -12,8 +12,8 @@ public enum PlayerTokenState
 public class BoardTokenData
 {
     public UserInfo userInfo;
-    public Vector3 position;
-    public float rotY;
+    //public Vector3 position;
+    //public float rotY;
 
     public string id;
     public int keyAmount; //재화, 이름 언제든지 수정가능

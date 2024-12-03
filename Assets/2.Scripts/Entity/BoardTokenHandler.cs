@@ -26,6 +26,7 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Awake()
     {
+        nextPositon = transform.position;
         queue = new();
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
@@ -57,10 +58,13 @@ public class BoardTokenHandler : MonoBehaviour
         #endregion
 
         //이동 동기화, 조건필요
-        float d = Vector3.Distance(transform.position, nextPositon);
-        transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
 
-        if (!isMine) return;
+        if (!isMine)
+        {
+            float d = Vector3.Distance(transform.position, nextPositon);
+            transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+            return;
+        }
 
         #region 주사위 굴림
 
@@ -71,15 +75,19 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                isReady = false;
 
                 GamePacket packet = new();
-                packet.RollDiceRequest = new() { };
-
+                packet.RollDiceRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
                 SocketManager.Instance.OnSend(packet);
+
+                Debug.Log("RollDiceRequest");
 
 
                 diceObject.gameObject.SetActive(false);
-                isReady = false;
             }
         }
 
@@ -105,15 +113,19 @@ public class BoardTokenHandler : MonoBehaviour
                     n.Action();
             }
 
-            if (syncTime >= 1.0f)
+            if (syncTime >= 0.1f)
             {
                 GamePacket packet = new();
 
                 packet.MovePlayerBoardRequest = new()
                 {
                     SessionId = GameManager.Instance.myInfo.SessionId,
-                    TargetPoint = SocketManager.ToVector(transform.position)
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = transform.rotation.y
                 };
+
+                SocketManager.Instance.OnSend(packet);
+                Debug.Log("MovePlayerBoardRequest");
 
                 syncTime = 0.0f;
             }
@@ -184,9 +196,10 @@ public class BoardTokenHandler : MonoBehaviour
         diceObject.gameObject.SetActive(true);
     }
 
-    public void ReceivePosition(Vector3 position)
+    public void ReceivePosition(Vector3 position,float rotY)
     {
         nextPositon = position;
+        transform.eulerAngles = new Vector3(0, rotY, 0);
     }
 
     public void SetColor(int index)
