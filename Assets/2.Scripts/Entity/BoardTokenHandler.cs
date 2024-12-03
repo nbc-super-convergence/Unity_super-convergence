@@ -58,10 +58,13 @@ public class BoardTokenHandler : MonoBehaviour
         #endregion
 
         //이동 동기화, 조건필요
-        float d = Vector3.Distance(transform.position, nextPositon);
-        transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
 
-        if (!isMine) return;
+        if (!isMine)
+        {
+            float d = Vector3.Distance(transform.position, nextPositon);
+            transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+            return;
+        }
 
         #region 주사위 굴림
 
@@ -80,6 +83,9 @@ public class BoardTokenHandler : MonoBehaviour
                     SessionId = GameManager.Instance.myInfo.SessionId
                 };
                 SocketManager.Instance.OnSend(packet);
+
+                Debug.Log("RollDiceRequest");
+
 
                 diceObject.gameObject.SetActive(false);
             }
@@ -107,7 +113,7 @@ public class BoardTokenHandler : MonoBehaviour
                     n.Action();
             }
 
-            if (syncTime >= 1.0f)
+            if (syncTime >= 0.1f)
             {
                 GamePacket packet = new();
 
@@ -117,6 +123,9 @@ public class BoardTokenHandler : MonoBehaviour
                     TargetPoint = SocketManager.ToVector(transform.position),
                     Rotation = transform.rotation.y
                 };
+
+                SocketManager.Instance.OnSend(packet);
+                Debug.Log("MovePlayerBoardRequest");
 
                 syncTime = 0.0f;
             }

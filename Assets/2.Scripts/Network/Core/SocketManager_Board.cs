@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -15,6 +14,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             int dice = response.DiceResult;
 
             player.GetDice(dice);
+            Debug.Log("RollDiceResponse");
         }
         else
         {
@@ -28,6 +28,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         var player = BoardManager.Instance.Curplayer;
         int dice = response.DiceResult;
+
+        Debug.Log("RollDiceNotification");
     }
 
     public void MovePlayerBoardResponse(GamePacket packet)
@@ -36,7 +38,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-
+            Debug.Log("MovePlayerBoardResponse");
         }
         else
         {
@@ -54,7 +56,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         Vector3 pos = ToVector3(response.TargetPoint);
         var players = BoardManager.Instance.playerTokenHandlers;
-        //players[index].ReceivePosition(pos);
+        float rotY = response.Rotation;
+
+        string id = response.SessionId;
+        var user = GameManager.Instance.SessionDic[id];
+        int i = user.Order;
+        BoardManager.Instance.playerTokenHandlers[i].ReceivePosition(pos, rotY);
+
+        Debug.Log("MovePlayerBoardNotification");
     }
 
     public void PurchaseTileResponse(GamePacket packet)
