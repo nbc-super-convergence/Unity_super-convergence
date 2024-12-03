@@ -45,7 +45,7 @@ public class UIMinigameReady : UIBase
         int i = 0;
         foreach (var dic in GameManager.Instance.SessionDic)
         {
-            if (dic.Value == -1) players[i].SetActive(false);
+            if (dic.Value.Color == -1) players[i].SetActive(false);
             isReady[i].SetActive(false);
         }
             
@@ -62,8 +62,8 @@ public class UIMinigameReady : UIBase
     public void SetReady(string sessionId, bool isMe = false)
     {
         if (isMe) 
-            sessionId = GameManager.Instance.myInfo.sessionId;
-        int idx = GameManager.Instance.SessionDic[sessionId];
+            sessionId = GameManager.Instance.myInfo.SessionId;
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
         isReady[idx].SetActive(true);
     }
 
@@ -80,7 +80,7 @@ public class UIMinigameReady : UIBase
                 {
                     IceGameReadyRequest = new()
                     {
-                        SessionId = GameManager.Instance.myInfo.sessionId
+                        SessionId = GameManager.Instance.myInfo.SessionId
                     }
                 };
                 SocketManager.Instance.OnSend(packet);

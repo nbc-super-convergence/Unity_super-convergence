@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
+using System;
 
 #region 서버연결
 ///// <summary>
@@ -60,8 +60,9 @@ public class BoardManager : Singleton<BoardManager>
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
     private int prevTrophyIndex = -1;
+    public event Action OnEvent;
 
-    
+    private List<IGameResult> bonus;
 
     public BoardTokenHandler Curplayer
     {
@@ -75,32 +76,50 @@ public class BoardManager : Singleton<BoardManager>
 
     protected override void Awake()
     {
-        //임시코드
-        //StartCoroutine(Test());
-
         base.Awake();
         isDontDestroyOnLoad = false;
 
-        for(int i =0; i < 2; i++)
+        //테스트용
+        //StartCoroutine(Init());
+
+        Init();
+
+        //트로피칸 설정
+        SetTrophyNode();
+        SetBonus();
+    }
+
+    private void Init()
+    {
+        int count = GameManager.Instance.SessionDic.Count;
+
+        for (int i = 0; i < count; i++)
         {
             //시작 지점에 플레이어 생성
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+            //handle.data.
             //리스트에 플레이어 보관
             playerTokenHandlers.Add(handle);
         }
 
-        //handle.curNode = startNode.nextBoard[0];
-
         Curplayer.Ready();
-
-        //트로피칸 설정
-        SetTrophyNode();
     }
 
-    //임시코드
-    //public IEnumerator Test()
+    //테스트용
+    //private IEnumerator Init()
     //{
-    //    yield return GameManager.Instance.InitApp();
+    //    //yield return new WaitUntil(() => GameManager.Instance.isInitialized);
+
+    //    for(int i =0; i < 2; i++)
+    //    {
+    //        //시작 지점에 플레이어 생성
+    //        BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+    //        //handle.data.
+    //        //리스트에 플레이어 보관
+    //        playerTokenHandlers.Add(handle);
+    //    }
+
+    //    Curplayer.Ready();
     //}
 
     public void RandomDice()
@@ -131,16 +150,25 @@ public class BoardManager : Singleton<BoardManager>
 
             ////packet. = new()
             ////{
-                    
+
             ////};
 
-            //SocketManager.Instance.OnSend(packet);
+            //SocketManager.Instance.OnSend(packet);    
+
+
 
             #region Old
+
             //(현재인원 + 1) % (현재인원 + 1)
-            //int count = playerTokenHandlers.Count;
-            //playerIndex = (playerIndex + 1) % (count + 1);
-            //playerIndex++;
+            int count = playerTokenHandlers.Count;
+            playerIndex = (playerIndex + 1) % (count);
+            Curplayer.Ready();
+
+            //미니게임 시작
+            //OnEvent?.Invoke();
+
+            //게임종료
+            //GameOver();
             #endregion
         }
     }
@@ -186,5 +214,87 @@ public class BoardManager : Singleton<BoardManager>
     public void PurChaseNode(int node,int playerIndex)
     {
         areaNodes[node].SetArea(playerIndex);
+    }
+    
+    private void SetBonus()
+    {
+        bonus = new();
+        List<int> num = new();
+        
+        for(int i = 0; i < 3;)
+        {
+            int rand = UnityEngine.Random.Range(0, 13);
+
+            if (num.Contains(rand)) continue;
+            num.Add(rand);
+            //***주의 열지마시오, 진짜 경고했음
+            switch(rand)
+            {
+                case 0:
+                    bonus.Add(new FastCoinZero());
+                    break;
+                case 1:
+                    bonus.Add(new HighComebackCount());
+                    break;
+                case 2:
+                    bonus.Add(new HighDiceCount());
+                    break;
+                case 3:
+                    bonus.Add(new HighPaymentCount());
+                    break;
+                case 4:
+                    bonus.Add(new HighPurchaseCount());
+                    break;
+                case 5:
+                    bonus.Add(new HighSaveCoin());
+                    break;
+                case 6:
+                    bonus.Add(new HighSellCount());
+                    break;
+                case 7:
+                    bonus.Add(new HighTaxCount());
+                    break;
+                case 8:
+                    bonus.Add(new LoseCount());
+                    break;
+                case 9:
+                    bonus.Add(new LowDiceCount());
+                    break;
+                case 10:
+                    bonus.Add(new LowPurchaseCount());
+                    break;
+                case 11:
+                    bonus.Add(new NoneTrophy());
+                    break;
+                case 12:
+                    bonus.Add(new WinCount());
+                    break;
+            }
+
+            i++;
+        }
+    }
+
+    public async void GameOver()
+    {
+        //게임종료시 레크리에이션, 추가 트로피 증정
+        foreach (var result in bonus)
+        {
+            List<int> list = result.Result();
+
+            foreach (int i in list)
+                playerTokenHandlers[i].data.trophyAmount += 1;
+        }
+
+        //순위별로 인덱스 변경
+        playerTokenHandlers.Sort((a,b) => 
+        {
+            if(a.data.trophyAmount == b.data.trophyAmount)
+                return b.data.keyAmount.CompareTo(a.data.keyAmount);
+
+            return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+        });
+
+        await UIManager.Show<BoardResult>();
     }
 }

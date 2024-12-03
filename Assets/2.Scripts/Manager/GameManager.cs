@@ -9,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     public UserInfo myInfo = new();
 
     //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
-    public Dictionary<string, int> SessionDic { get; private set; } = new();
+    public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
 
     protected override void Awake()
     {
@@ -43,13 +43,14 @@ public class GameManager : Singleton<GameManager>
     #region Client ID
     public void SetPlayerId(string sessionId, int playerId)
     {
-        SessionDic[sessionId] = playerId;
+
+        SessionDic[sessionId].SetColor(playerId);
     }
 
     public void DeletePlayerId(string sessionId)
     {
         MinigameManager.Instance.GetMiniToken(sessionId).gameObject.SetActive(false);
-        SessionDic[sessionId] = -1;
+        SessionDic[sessionId].SetColor(-1);
     }
     #endregion
 }

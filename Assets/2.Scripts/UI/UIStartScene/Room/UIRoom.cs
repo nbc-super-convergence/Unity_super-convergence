@@ -60,6 +60,12 @@ public class UIRoom : UIBase
 
     private void Init()
     {
+        GameManager.Instance.SessionDic.Clear();
+        int num = 0;
+        foreach (var user in roomData.Users)
+        {
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++));
+        }
         SetHost();
         SetDropdown();       
         // TODO:: 해쉬같은거 써서 깔끔하게.
@@ -79,7 +85,7 @@ public class UIRoom : UIBase
     {
         currentOwnerId = roomData.OwnerId;
 
-        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.SessionId) ? true : false;
 
         if (isHost)
         {
@@ -100,6 +106,8 @@ public class UIRoom : UIBase
     /// <param name="data"></param>
     public void SetRoomInfo(RoomData data)
     {
+        ClearUserSlot();
+
         roomData = data;
 
         Init();
@@ -109,7 +117,7 @@ public class UIRoom : UIBase
 
         for (int i = 0; i < data.Users.Count; i++)
         {
-            if (data.Users[i].SessionId == GameManager.Instance.myInfo.sessionId)
+            if (data.Users[i].SessionId == GameManager.Instance.myInfo.SessionId)
             { 
                 AddRoomUser(GameManager.Instance.myInfo.ToUserData());                
             }
@@ -168,15 +176,23 @@ public class UIRoom : UIBase
         }
     }
 
+    private void ClearUserSlot()
+    {
+        foreach(RoomUserSlot user in userSlots)
+        {
+            user.EmptyRoomUser();
+        }
+        users.Clear();
+    }
 
     private void ReadyUsersSync(RoomData roomData)
     {
         foreach(RoomUserSlot user in userSlots)
-        {
-            if(roomData.ReadyUsers.Contains(user.sessionId))
+        {           
+            if(isHost || roomData.ReadyUsers.Contains(user.sessionId))
             {
                 user.CheckReadyState(true, roomData.OwnerId);
-            }
+            }            
         }
     }
 
@@ -229,7 +245,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId,
+            SessionId = GameManager.Instance.myInfo.SessionId,
             IsReady = isReady
         };    
         sourceTcs = new();
@@ -244,7 +260,7 @@ public class UIRoom : UIBase
     public void SetIsReady(bool isReady)
     {
         this.isReady = isReady;
-        SetUserReady(GameManager.Instance.myInfo.sessionId, this.isReady, this.state);
+        SetUserReady(GameManager.Instance.myInfo.SessionId, this.isReady, this.state);
     }
 
     private void UpdateButtonUI(string buttonText, Color color)
@@ -310,7 +326,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GameStartRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         SocketManager.Instance.OnSend(packet);
     }
@@ -324,6 +340,19 @@ public class UIRoom : UIBase
         await CountDownAsync(3);
         await UIManager.Show<UIFadeScreen>("FadeOut");
         invisibleWall.SetActive(false);
+        GameManager.isGameStart = true;
+    }
+    private async Task CountDownAsync(int countNum)
+    {
+        invisibleWall.SetActive(true);
+        count.gameObject.SetActive(true);
+
+        while (countNum > 0)
+        {
+            count.text = countNum--.ToString();
+            await Task.Delay(1000);
+        }
+        count.gameObject.SetActive(false);
     }
     #endregion
 
@@ -385,7 +414,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         SocketManager.Instance.OnSend(packet);
 
@@ -404,17 +433,5 @@ public class UIRoom : UIBase
 
     #endregion
 
-    private async Task CountDownAsync(int countNum)
-    {
-        invisibleWall.SetActive(true);
-        count.gameObject.SetActive(true);
-
-        while (countNum > 0)
-        {
-            count.text = countNum--.ToString();
-            await Task.Delay(1000);
-        }
-        count.gameObject.SetActive(false);
-    }
 
 }
