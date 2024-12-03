@@ -9,7 +9,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IceMiniGameReadyNotification;
 
         //ReadyPanel 띄우기.
-        UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider); 
+#pragma warning disable CS4014 // 여기에 특정 경고 코드 입력
+        UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider);
+#pragma warning restore CS4014
 
         //데이터 설정, 맵 설정, BGM 설정
         MinigameManager.Instance.SetMiniGame<GameIceSlider>();
