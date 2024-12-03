@@ -93,6 +93,7 @@ public class UILobby : UIBase
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
+            SocketManager.Instance.isLobby = false;
             UIManager.Hide<UILobby>();
         }
         else
