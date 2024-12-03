@@ -58,7 +58,7 @@ public class BoardTokenHandler : MonoBehaviour
 
         //이동 동기화, 조건필요
         float d = Vector3.Distance(transform.position, nextPositon);
-        transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 60);
+        transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
 
         if (!isMine) return;
 

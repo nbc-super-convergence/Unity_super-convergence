@@ -11,6 +11,7 @@ public enum PlayerTokenState
 [Serializable]
 public class BoardTokenData
 {
+    public UserInfo userInfo;
     public Vector3 position;
     public float rotY;
 
