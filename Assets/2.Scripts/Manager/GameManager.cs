@@ -38,6 +38,9 @@ public class GameManager : Singleton<GameManager>
         CSVParser.Instance.Init();
         yield return new WaitUntil(() => CSVParser.Instance.isInitialized);
 
+        FadeScreen.Instance.Init();
+        yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
+
         //Initialize SocketManager
         SocketManager.Instance.Init();
 

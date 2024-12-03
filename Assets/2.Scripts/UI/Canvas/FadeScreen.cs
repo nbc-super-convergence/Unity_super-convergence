@@ -11,6 +11,10 @@ public class FadeScreen : Singleton<FadeScreen>
     [SerializeField] private Image FadeImage;
     public Sequence Sequence;
 
+    public void Init()
+    {
+        isInitialized = true;
+    }
 
     public void FadeOut(Action callback = null, float fadeTime = 1f)
     {
@@ -44,5 +48,4 @@ public class FadeScreen : Singleton<FadeScreen>
             callback?.Invoke();
         };
     }
-
 }
