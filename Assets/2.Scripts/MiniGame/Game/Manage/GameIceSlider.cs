@@ -1,3 +1,5 @@
+using Google.Protobuf.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static S2C_IceMiniGameReadyNotification.Types;
@@ -15,9 +17,9 @@ public class GameIceSlider : IGame
         MinigameManager.Instance.MakeMap();
         SetBGM();
 
-        if (param.Length > 0 && param[0] is startPlayers[] players)
+        if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
         {
-            ResetPlayers(players);
+            ResetPlayers(response.Players);
         }
         else
         {
@@ -25,13 +27,14 @@ public class GameIceSlider : IGame
         }
     }
 
+
     //TODO : 배경음 설정
     private void SetBGM()
     {
 
     }
 
-    public void ResetPlayers(startPlayers[] players)
+    public void ResetPlayers(RepeatedField<startPlayers> players)
     {
         foreach (var p in players)
         {//미니 토큰 위치 초기화

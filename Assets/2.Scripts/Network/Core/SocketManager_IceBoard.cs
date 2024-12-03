@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    //201
+    /* 201 */
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IceMiniGameReadyNotification;
@@ -15,12 +15,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         //데이터 설정, 맵 설정, BGM 설정
         MinigameManager.Instance.SetMiniGame<GameIceSlider>(response);
         MinigameManager.Instance.boardCamera.SetActive(false);
-
-        
     }
 
-    //202 : IceGameReadyRequest
-    //Send 위치 : UIMinigameReady (완료)
+    /* 202 : IceGameReadyRequest
+     * Send 위치 : UIMinigameReady (완료) */
 
     //203
     public void IceGameReadyNotification(GamePacket gamePacket)
@@ -31,7 +29,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UIMinigameReady>().SetReady(response.SessionId);
     }
 
-    //204
+    /* 204 */
     public void IceMiniGameStartNotification(GamePacket gamePacket)
     {
         //ReadyUI 숨기기

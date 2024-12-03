@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public enum eCollisionType
@@ -17,8 +18,27 @@ public class CollisionUtil : MonoBehaviour
         {
             if (mini.IsClient)
             {
-                map.HandleCollision(collision, type);
+                map.HandleCollision(type, collision);
             }
         }
+    }
+
+    public Coroutine OneSecondCoroutine;
+    private void OnTriggerStay(Collider other)
+    {
+        OneSecondCoroutine = StartCoroutine(OneSecondInvoker(other));
+    }
+
+    private IEnumerator OneSecondInvoker(Collider other)
+    {
+        if (other.gameObject.TryGetComponent(out MiniToken mini))
+        {
+            if (mini.IsClient)
+            {
+                map.HandleCollider(type);
+                yield return new WaitForSeconds(1);
+            }
+        }
+        OneSecondCoroutine = null;
     }
 }

@@ -9,7 +9,7 @@ public partial class ClientTest : Singleton<ClientTest>
     {
         yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "BoardScene");
 
-        //IceMinigame으로 넘어가기
+        //IceMiniGameReadyNotification
         while (true)
         {
             if (Input.GetKey(KeyCode.CapsLock) &&
@@ -55,6 +55,42 @@ public partial class ClientTest : Singleton<ClientTest>
             yield return null;
         }
 
-        //다음 상호작용
+        //IceMiniGameStartNotification
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) &&
+            Input.GetKeyDown(KeyCode.O))
+            {
+                GamePacket packet = new GamePacket();
+                SocketManager.Instance.IceMiniGameStartNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+
+        //IceMapSyncNotification
+        //IcePlayerExitNotification
+
+        //IceGameOverNotification
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) &&
+            Input.GetKeyDown(KeyCode.P))
+            {
+                GamePacket packet = new()
+                {
+                    IceGameOverNotification = new()
+                    {
+                        Ranks =
+                        {
+                             
+                        }
+                    }
+                };
+                SocketManager.Instance.IceGameOverNotification(packet);
+                break;
+            }
+            yield return null;
+        }
     }
 }
