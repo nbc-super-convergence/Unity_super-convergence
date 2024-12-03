@@ -62,8 +62,7 @@ public class UILogin : UIBase
     public void TrySetTask(bool isSuccess)
     {
         if (sourceTcs.TrySetResult(isSuccess))
-        {
-            Debug.Log("회원가입 성공");
+        {            
         }
     }
 
