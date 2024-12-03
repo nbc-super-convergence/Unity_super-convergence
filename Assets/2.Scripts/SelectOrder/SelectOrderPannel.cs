@@ -73,7 +73,9 @@ public class SelectOrderPannel : MonoBehaviour
             {
                 if (distance.Equals(distanceList[i].Distance))
                 {
-                    distanceList[i].Rank = rank;
+                    //각 플레이어의 순서 결정 (이게 맞나 싶나...?) 일단 임시로
+                    GameManager.Instance.SessionDic[i.ToString()].SetOrder(rank - 1);
+                    //distanceList[i].Rank = rank;
                     rank++;
                 }
             }
