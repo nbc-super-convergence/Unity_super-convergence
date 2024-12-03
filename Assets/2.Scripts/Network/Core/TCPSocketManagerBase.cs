@@ -11,7 +11,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using static GamePacket;  //Protocol.cs (자동생성)
 
-public class TCPSocketManagerBase<T> : Singleton<TCPSocketManagerBase<T>>
+public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBase<T>
 {
     private Dictionary<PayloadOneofCase, Action<GamePacket>> receiveDic = new();
     private Queue<Packet> sendQueue = new();
