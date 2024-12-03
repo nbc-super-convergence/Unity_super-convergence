@@ -1,18 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ArrowBubble : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private Image background;
+    [SerializeField] private RectTransform arrow;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    // Rotation값 90이면 왼쪽, 270이면 오른쪽
 }
