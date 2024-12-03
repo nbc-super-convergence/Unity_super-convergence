@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,8 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public static bool isGameStart; //BoardSceneÀ¸·Î ³Ñ¾î°¥ ¶§???
-    
+    public static Action<int> OnPlayerLeft; //»ö±ò Àü´Þ
+
     public UserInfo myInfo = new();
 
     //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
@@ -53,6 +55,7 @@ public class GameManager : Singleton<GameManager>
 
     public void DeleteSessionId(string sessionId)
     {
+        OnPlayerLeft?.Invoke(SessionDic[sessionId].Color);
         SessionDic.Remove(sessionId);
     }
     #endregion
