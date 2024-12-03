@@ -28,119 +28,120 @@ public static partial class ProtocolReflection {
           "CRIPCgdsb2JieUlkGAQgASgJEh0KBXN0YXRlGAUgASgOMg4uUm9vbVN0YXRl",
           "VHlwZRIYCgV1c2VycxgGIAMoCzIJLlVzZXJEYXRhEg8KB21heFVzZXIYByAB",
           "KAUSEgoKcmVhZHlVc2VycxgIIAMoCSIpCgZWZWN0b3ISCQoBeBgBIAEoAhIJ",
-          "CgF5GAIgASgCEgkKAXoYAyABKAIiJwoEUmFuaxIRCglzZXNzaW9uSWQYASAB",
-          "KAkSDAoEcmFuaxgCIAEoBSJYCg9Cb2FyZFBsYXllckRhdGESEQoJc2Vzc2lv",
-          "bklkGAEgASgJEgwKBGdvbGQYAiABKAUSDgoGdHJvcGh5GAMgASgFEhQKDHRp",
-          "bGVMb2NhdGlvbhgEIAEoBSI+CgxEaWNlR2FtZURhdGESEQoJc2Vzc2lvbklk",
-          "GAEgASgJEg0KBXZhbHVlGAIgASgFEgwKBHJhbmsYAyABKAUiYwoTQzJTX1Jl",
-          "Z2lzdGVyUmVxdWVzdBIPCgdsb2dpbklkGAEgASgJEhAKCHBhc3N3b3JkGAIg",
-          "ASgJEhcKD3Bhc3N3b3JkQ29uZmlybRgDIAEoCRIQCghuaWNrbmFtZRgEIAEo",
-          "CSJKChRTMkNfUmVnaXN0ZXJSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiEK",
-          "CGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiNQoQQzJTX0xvZ2lu",
-          "UmVxdWVzdBIPCgdsb2dpbklkGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIloK",
-          "EVMyQ19Mb2dpblJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSEQoJc2Vzc2lv",
-          "bklkGAIgASgJEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUi",
-          "JwoSQzJTX0xvZ2dvdXRSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSIpChRD",
-          "MlNfR2FtZVN0YXJ0UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiyQEKGVMy",
-          "Q19HYW1lU3RhcnROb3RpZmljYXRpb24SDwoHc3VjY2VzcxgBIAEoCBI2Cgdw",
-          "bGF5ZXJzGAIgAygLMiUuUzJDX0dhbWVTdGFydE5vdGlmaWNhdGlvbi5QbGF5",
-          "ZXJEYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUaQAoK",
-          "UGxheWVyRGF0YRIOCgZ1c2VySWQYASABKAkSEAoIbmlja25hbWUYAiABKAkS",
-          "EAoIcG9zaXRpb24YAyABKAUiKAoTQzJTX1JvbGxEaWNlUmVxdWVzdBIRCglz",
-          "ZXNzaW9uSWQYASABKAkiXgoUUzJDX1JvbGxEaWNlUmVzcG9uc2USDwoHc3Vj",
-          "Y2VzcxgBIAEoCBISCgpkaWNlUmVzdWx0GAIgASgFEiEKCGZhaWxDb2RlGAMg",
-          "ASgOMg8uR2xvYmFsRmFpbENvZGUiQAoYUzJDX1JvbGxEaWNlTm90aWZpY2F0",
-          "aW9uEhAKCHBsYXllcklkGAEgASgFEhIKCmRpY2VSZXN1bHQYAiABKAUiXwoa",
+          "CgF5GAIgASgCEgkKAXoYAyABKAIiJgoEUmFuaxIQCghwbGF5ZXJJZBgBIAEo",
+          "BRIMCgRyYW5rGAIgASgFIlgKD0JvYXJkUGxheWVyRGF0YRIRCglzZXNzaW9u",
+          "SWQYASABKAkSDAoEZ29sZBgCIAEoBRIOCgZ0cm9waHkYAyABKAUSFAoMdGls",
+          "ZUxvY2F0aW9uGAQgASgFIj4KDERpY2VHYW1lRGF0YRIRCglzZXNzaW9uSWQY",
+          "ASABKAkSDQoFdmFsdWUYAiABKAUSDAoEcmFuaxgDIAEoBSJjChNDMlNfUmVn",
+          "aXN0ZXJSZXF1ZXN0Eg8KB2xvZ2luSWQYASABKAkSEAoIcGFzc3dvcmQYAiAB",
+          "KAkSFwoPcGFzc3dvcmRDb25maXJtGAMgASgJEhAKCG5pY2tuYW1lGAQgASgJ",
+          "IkoKFFMyQ19SZWdpc3RlclJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSIQoI",
+          "ZmFpbENvZGUYAiABKA4yDy5HbG9iYWxGYWlsQ29kZSI1ChBDMlNfTG9naW5S",
+          "ZXF1ZXN0Eg8KB2xvZ2luSWQYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiWgoR",
+          "UzJDX0xvZ2luUmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIRCglzZXNzaW9u",
+          "SWQYAiABKAkSIQoIZmFpbENvZGUYAyABKA4yDy5HbG9iYWxGYWlsQ29kZSIn",
+          "ChJDMlNfTG9nZ291dFJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIikKFEMy",
+          "U19HYW1lU3RhcnRSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSLJAQoZUzJD",
+          "X0dhbWVTdGFydE5vdGlmaWNhdGlvbhIPCgdzdWNjZXNzGAEgASgIEjYKB3Bs",
+          "YXllcnMYAiADKAsyJS5TMkNfR2FtZVN0YXJ0Tm90aWZpY2F0aW9uLlBsYXll",
+          "ckRhdGESIQoIZmFpbENvZGUYAyABKA4yDy5HbG9iYWxGYWlsQ29kZRpACgpQ",
+          "bGF5ZXJEYXRhEg4KBnVzZXJJZBgBIAEoCRIQCghuaWNrbmFtZRgCIAEoCRIQ",
+          "Cghwb3NpdGlvbhgDIAEoBSIoChNDMlNfUm9sbERpY2VSZXF1ZXN0EhEKCXNl",
+          "c3Npb25JZBgBIAEoCSJeChRTMkNfUm9sbERpY2VSZXNwb25zZRIPCgdzdWNj",
+          "ZXNzGAEgASgIEhIKCmRpY2VSZXN1bHQYAiABKAUSIQoIZmFpbENvZGUYAyAB",
+          "KA4yDy5HbG9iYWxGYWlsQ29kZSJBChhTMkNfUm9sbERpY2VOb3RpZmljYXRp",
+          "b24SEQoJc2Vzc2lvbklkGAEgASgJEhIKCmRpY2VSZXN1bHQYAiABKAUiXwoa",
           "QzJTX01vdmVQbGF5ZXJCb2FyZFJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJ",
           "EhwKC3RhcmdldFBvaW50GAIgASgLMgcuVmVjdG9yEhAKCHJvdGF0aW9uGAMg",
           "ASgCIlEKG1MyQ19Nb3ZlUGxheWVyQm9hcmRSZXNwb25zZRIPCgdzdWNjZXNz",
-          "GAEgASgIEiEKCGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiYwof",
-          "UzJDX01vdmVQbGF5ZXJCb2FyZE5vdGlmaWNhdGlvbhIQCghwbGF5ZXJJZBgB",
-          "IAEoBRIcCgt0YXJnZXRQb2ludBgCIAEoCzIHLlZlY3RvchIQCghyb3RhdGlv",
-          "bhgDIAEoAiJDChdDMlNfUHVyY2hhc2VUaWxlUmVxdWVzdBIRCglzZXNzaW9u",
-          "SWQYASABKAkSFQoEdGlsZRgCIAEoCzIHLlZlY3RvciJlChhTMkNfUHVyY2hh",
-          "c2VUaWxlUmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIVCgR0aWxlGAIgASgL",
-          "MgcuVmVjdG9yEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUi",
-          "RwocUzJDX1B1cmNoYXNlVGlsZU5vdGlmaWNhdGlvbhIQCghwbGF5ZXJJZBgB",
-          "IAEoBRIVCgR0aWxlGAIgASgLMgcuVmVjdG9yIi4KF1MyQ19HYW1lRW5kTm90",
-          "aWZpY2F0aW9uEhMKBHJhbmsYASADKAsyBS5SYW5rIi0KGEMyU19CYWNrVG9U",
-          "aGVSb29tUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiaAoZUzJDX0JhY2tU",
-          "b1RoZVJvb21SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEhcKBHJvb20YAiAB",
-          "KAsyCS5Sb29tRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxD",
-          "b2RlIjIKHVMyQ19CYWNrVG9UaGVSb29tTm90aWZpY2F0aW9uEhEKCXNlc3Np",
-          "b25JZBgBIAEoCSItChhDMlNfU3RhcnRNaW5pR2FtZVJlcXVlc3QSEQoJc2Vz",
-          "c2lvbklkGAEgASgJIi0KHVMyQ19TdGFydE1pbmlHYW1lTm90aWZpY2F0aW9u",
-          "EgwKBGdhbWUYASABKAUiPAoZQzJTX1B1cmNoYXNlVHJvcGh5UmVxdWVzdBIR",
-          "CglzZXNzaW9uSWQYASABKAkSDAoEdGlsZRgCIAEoBSKIAQoaUzJDX1B1cmNo",
-          "YXNlVHJvcGh5UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIkCgpwbGF5ZXJJ",
-          "bmZvGAIgASgLMhAuQm9hcmRQbGF5ZXJEYXRhEhAKCG5leHRUaWxlGAMgASgF",
-          "EiEKCGZhaWxDb2RlGAQgASgOMg8uR2xvYmFsRmFpbENvZGUiWQoeUzJDX1B1",
-          "cmNoYXNlVHJvcGh5Tm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCRIS",
-          "CgpiZWZvcmVUaWxlGAIgASgFEhAKCG5leHRUaWxlGAMgASgFIjkKFkMyU19U",
-          "aWxlUGVuYWx0eVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJEgwKBHRpbGUY",
-          "AiABKAUidAoXUzJDX1RpbGVQZW5hbHR5UmVzcG9uc2USDwoHc3VjY2VzcxgB",
-          "IAEoCBIlCgtwbGF5ZXJzSW5mbxgCIAMoCzIQLkJvYXJkUGxheWVyRGF0YRIh",
-          "CghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlImUKG1MyQ19UaWxl",
-          "UGVuYWx0eU5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkSDAoEdGls",
-          "ZRgCIAEoBRIlCgtwbGF5ZXJzSW5mbxgDIAMoCzIQLkJvYXJkUGxheWVyRGF0",
-          "YSIoChNDMlNfRGljZUdhbWVSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSJp",
-          "ChRTMkNfRGljZUdhbWVSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEh0KBnJl",
-          "c3VsdBgCIAMoCzINLkRpY2VHYW1lRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIP",
-          "Lkdsb2JhbEZhaWxDb2RlIjkKGFMyQ19EaWNlR2FtZU5vdGlmaWNhdGlvbhId",
-          "CgZyZXN1bHQYASADKAsyDS5EaWNlR2FtZURhdGEiKQoUQzJTX0xvYmJ5Sm9p",
-          "blJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJImQKFVMyQ19Mb2JieUpvaW5S",
-          "ZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEhcKBHVzZXIYAiABKAsyCS5Vc2Vy",
-          "RGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIioKFUMy",
-          "U19Mb2JieUxlYXZlUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiTAoWUzJD",
-          "X0xvYmJ5TGVhdmVSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiEKCGZhaWxD",
-          "b2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiLQoYQzJTX0xvYmJ5VXNlckxp",
-          "c3RSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSJhChlTMkNfTG9iYnlVc2Vy",
-          "TGlzdFJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSEAoIdXNlckxpc3QYAiAD",
-          "KAkSIQoIZmFpbENvZGUYAyABKA4yDy5HbG9iYWxGYWlsQ29kZSJIChpDMlNf",
-          "TG9iYnlVc2VyRGV0YWlsUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkSFwoP",
-          "dGFyZ2V0U2Vzc2lvbklkGAIgASgJImoKG1MyQ19Mb2JieVVzZXJEZXRhaWxS",
-          "ZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEhcKBHVzZXIYAiABKAsyCS5Vc2Vy",
-          "RGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIigKE0My",
-          "U19Sb29tTGlzdFJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJImQKFFMyQ19S",
-          "b29tTGlzdFJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSGAoFcm9vbXMYAiAD",
-          "KAsyCS5Sb29tRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxD",
-          "b2RlIjwKFUMyU19DcmVhdGVSb29tUmVxdWVzdBIRCglzZXNzaW9uSWQYASAB",
-          "KAkSEAoIcm9vbU5hbWUYAiABKAkiZQoWUzJDX0NyZWF0ZVJvb21SZXNwb25z",
-          "ZRIPCgdzdWNjZXNzGAEgASgIEhcKBHJvb20YAiABKAsyCS5Sb29tRGF0YRIh",
-          "CghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIjgKE0MyU19Kb2lu",
-          "Um9vbVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJEg4KBnJvb21JZBgCIAEo",
-          "CSJjChRTMkNfSm9pblJvb21SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEhcK",
-          "BHJvb20YAiABKAsyCS5Sb29tRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkds",
-          "b2JhbEZhaWxDb2RlIjMKGFMyQ19Kb2luUm9vbU5vdGlmaWNhdGlvbhIXCgRy",
-          "b29tGAEgASgLMgkuUm9vbURhdGEiKQoUQzJTX0xlYXZlUm9vbVJlcXVlc3QS",
-          "EQoJc2Vzc2lvbklkGAEgASgJIksKFVMyQ19MZWF2ZVJvb21SZXNwb25zZRIP",
-          "CgdzdWNjZXNzGAEgASgIEiEKCGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFp",
-          "bENvZGUiNAoZUzJDX0xlYXZlUm9vbU5vdGlmaWNhdGlvbhIXCgRyb29tGAEg",
-          "ASgLMgkuUm9vbURhdGEiPAoWQzJTX0dhbWVQcmVwYXJlUmVxdWVzdBIRCglz",
-          "ZXNzaW9uSWQYASABKAkSDwoHaXNSZWFkeRgCIAEoCCJeChdTMkNfR2FtZVBy",
-          "ZXBhcmVSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEg8KB2lzUmVhZHkYAiAB",
-          "KAgSIQoIZmFpbENvZGUYAyABKA4yDy5HbG9iYWxGYWlsQ29kZSJmChtTMkNf",
-          "R2FtZVByZXBhcmVOb3RpZmljYXRpb24SFwoEdXNlchgBIAEoCzIJLlVzZXJE",
-          "YXRhEg8KB2lzUmVhZHkYAiABKAgSHQoFc3RhdGUYAyABKA4yDi5Sb29tU3Rh",
-          "dGVUeXBlIrMBCiBTMkNfSWNlTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlvbhI/",
-          "CgdwbGF5ZXJzGAEgAygLMi4uUzJDX0ljZU1pbmlHYW1lUmVhZHlOb3RpZmlj",
-          "YXRpb24uc3RhcnRQbGF5ZXJzGk4KDHN0YXJ0UGxheWVycxIRCglzZXNzaW9u",
-          "SWQYASABKAkSGQoIcG9zaXRpb24YAiABKAsyBy5WZWN0b3ISEAoIcm90YXRp",
-          "b24YAyABKAIiLAoXQzJTX0ljZUdhbWVSZWFkeVJlcXVlc3QSEQoJc2Vzc2lv",
-          "bklkGAEgASgJIjEKHFMyQ19JY2VHYW1lUmVhZHlOb3RpZmljYXRpb24SEQoJ",
-          "c2Vzc2lvbklkGAEgASgJIiIKIFMyQ19JY2VNaW5pR2FtZVN0YXJ0Tm90aWZp",
-          "Y2F0aW9uInEKGEMyU19JY2VQbGF5ZXJTeW5jUmVxdWVzdBIRCglzZXNzaW9u",
-          "SWQYASABKAkSGQoIcG9zaXRpb24YAiABKAsyBy5WZWN0b3ISEAoIcm90YXRp",
-          "b24YAyABKAISFQoFc3RhdGUYBCABKA4yBi5TdGF0ZSJ2Ch1TMkNfSWNlUGxh",
-          "eWVyU3luY05vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkSGQoIcG9z",
-          "aXRpb24YAiABKAsyBy5WZWN0b3ISEAoIcm90YXRpb24YAyABKAISFQoFc3Rh",
-          "dGUYBCABKA4yBi5TdGF0ZSIvChpDMlNfSWNlUGxheWVyRGFtYWdlUmVxdWVz",
-          "dBIRCglzZXNzaW9uSWQYASABKAkiNAofUzJDX0ljZVBsYXllckRhbWFnZU5v",
-          "dGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkiMwoeUzJDX0ljZVBsYXll",
-          "ckRlYXRoTm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCSIcChpTMkNf",
-          "SWNlTWFwU3luY05vdGlmaWNhdGlvbiJEChtTMkNfSWNlR2FtZU92ZXJOb3Rp",
-          "ZmljYXRpb24SFAoFcmFua3MYASADKAsyBS5SYW5rEg8KB2VuZFRpbWUYAiAB",
-          "KAMiMgodUzJDX0ljZVBsYXllckV4aXROb3RpZmljYXRpb24SEQoJc2Vzc2lv",
+          "GAEgASgIEiEKCGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiZAof",
+          "UzJDX01vdmVQbGF5ZXJCb2FyZE5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQY",
+          "ASABKAkSHAoLdGFyZ2V0UG9pbnQYAiABKAsyBy5WZWN0b3ISEAoIcm90YXRp",
+          "b24YAyABKAIiOgoXQzJTX1B1cmNoYXNlVGlsZVJlcXVlc3QSEQoJc2Vzc2lv",
+          "bklkGAEgASgJEgwKBHRpbGUYAiABKAUiXAoYUzJDX1B1cmNoYXNlVGlsZVJl",
+          "c3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSDAoEdGlsZRgCIAEoBRIhCghmYWls",
+          "Q29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIj8KHFMyQ19QdXJjaGFzZVRp",
+          "bGVOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJEgwKBHRpbGUYAiAB",
+          "KAUiLgoXUzJDX0dhbWVFbmROb3RpZmljYXRpb24SEwoEcmFuaxgBIAMoCzIF",
+          "LlJhbmsiLQoYQzJTX0JhY2tUb1RoZVJvb21SZXF1ZXN0EhEKCXNlc3Npb25J",
+          "ZBgBIAEoCSJoChlTMkNfQmFja1RvVGhlUm9vbVJlc3BvbnNlEg8KB3N1Y2Nl",
+          "c3MYASABKAgSFwoEcm9vbRgCIAEoCzIJLlJvb21EYXRhEiEKCGZhaWxDb2Rl",
+          "GAMgASgOMg8uR2xvYmFsRmFpbENvZGUiMgodUzJDX0JhY2tUb1RoZVJvb21O",
+          "b3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJIi0KGEMyU19TdGFydE1p",
+          "bmlHYW1lUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiLQodUzJDX1N0YXJ0",
+          "TWluaUdhbWVOb3RpZmljYXRpb24SDAoEZ2FtZRgBIAEoBSI8ChlDMlNfUHVy",
+          "Y2hhc2VUcm9waHlSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIMCgR0aWxl",
+          "GAIgASgFIogBChpTMkNfUHVyY2hhc2VUcm9waHlSZXNwb25zZRIPCgdzdWNj",
+          "ZXNzGAEgASgIEiQKCnBsYXllckluZm8YAiABKAsyEC5Cb2FyZFBsYXllckRh",
+          "dGESEAoIbmV4dFRpbGUYAyABKAUSIQoIZmFpbENvZGUYBCABKA4yDy5HbG9i",
+          "YWxGYWlsQ29kZSJZCh5TMkNfUHVyY2hhc2VUcm9waHlOb3RpZmljYXRpb24S",
+          "EQoJc2Vzc2lvbklkGAEgASgJEhIKCmJlZm9yZVRpbGUYAiABKAUSEAoIbmV4",
+          "dFRpbGUYAyABKAUiOQoWQzJTX1RpbGVQZW5hbHR5UmVxdWVzdBIRCglzZXNz",
+          "aW9uSWQYASABKAkSDAoEdGlsZRgCIAEoBSJ0ChdTMkNfVGlsZVBlbmFsdHlS",
+          "ZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiUKC3BsYXllcnNJbmZvGAIgAygL",
+          "MhAuQm9hcmRQbGF5ZXJEYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFs",
+          "RmFpbENvZGUiZQobUzJDX1RpbGVQZW5hbHR5Tm90aWZpY2F0aW9uEhEKCXNl",
+          "c3Npb25JZBgBIAEoCRIMCgR0aWxlGAIgASgFEiUKC3BsYXllcnNJbmZvGAMg",
+          "AygLMhAuQm9hcmRQbGF5ZXJEYXRhIigKE0MyU19EaWNlR2FtZVJlcXVlc3QS",
+          "EQoJc2Vzc2lvbklkGAEgASgJImkKFFMyQ19EaWNlR2FtZVJlc3BvbnNlEg8K",
+          "B3N1Y2Nlc3MYASABKAgSHQoGcmVzdWx0GAIgAygLMg0uRGljZUdhbWVEYXRh",
+          "EiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiOQoYUzJDX0Rp",
+          "Y2VHYW1lTm90aWZpY2F0aW9uEh0KBnJlc3VsdBgBIAMoCzINLkRpY2VHYW1l",
+          "RGF0YSIpChRDMlNfTG9iYnlKb2luUmVxdWVzdBIRCglzZXNzaW9uSWQYASAB",
+          "KAkiZAoVUzJDX0xvYmJ5Sm9pblJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgS",
+          "FwoEdXNlchgCIAEoCzIJLlVzZXJEYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8u",
+          "R2xvYmFsRmFpbENvZGUiKgoVQzJTX0xvYmJ5TGVhdmVSZXF1ZXN0EhEKCXNl",
+          "c3Npb25JZBgBIAEoCSJMChZTMkNfTG9iYnlMZWF2ZVJlc3BvbnNlEg8KB3N1",
+          "Y2Nlc3MYASABKAgSIQoIZmFpbENvZGUYAiABKA4yDy5HbG9iYWxGYWlsQ29k",
+          "ZSItChhDMlNfTG9iYnlVc2VyTGlzdFJlcXVlc3QSEQoJc2Vzc2lvbklkGAEg",
+          "ASgJImEKGVMyQ19Mb2JieVVzZXJMaXN0UmVzcG9uc2USDwoHc3VjY2VzcxgB",
+          "IAEoCBIQCgh1c2VyTGlzdBgCIAMoCRIhCghmYWlsQ29kZRgDIAEoDjIPLkds",
+          "b2JhbEZhaWxDb2RlIkgKGkMyU19Mb2JieVVzZXJEZXRhaWxSZXF1ZXN0EhEK",
+          "CXNlc3Npb25JZBgBIAEoCRIXCg90YXJnZXRTZXNzaW9uSWQYAiABKAkiagob",
+          "UzJDX0xvYmJ5VXNlckRldGFpbFJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgS",
+          "FwoEdXNlchgCIAEoCzIJLlVzZXJEYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8u",
+          "R2xvYmFsRmFpbENvZGUiKAoTQzJTX1Jvb21MaXN0UmVxdWVzdBIRCglzZXNz",
+          "aW9uSWQYASABKAkiZAoUUzJDX1Jvb21MaXN0UmVzcG9uc2USDwoHc3VjY2Vz",
+          "cxgBIAEoCBIYCgVyb29tcxgCIAMoCzIJLlJvb21EYXRhEiEKCGZhaWxDb2Rl",
+          "GAMgASgOMg8uR2xvYmFsRmFpbENvZGUiPAoVQzJTX0NyZWF0ZVJvb21SZXF1",
+          "ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIQCghyb29tTmFtZRgCIAEoCSJlChZT",
+          "MkNfQ3JlYXRlUm9vbVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSFwoEcm9v",
+          "bRgCIAEoCzIJLlJvb21EYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFs",
+          "RmFpbENvZGUiOAoTQzJTX0pvaW5Sb29tUmVxdWVzdBIRCglzZXNzaW9uSWQY",
+          "ASABKAkSDgoGcm9vbUlkGAIgASgJImMKFFMyQ19Kb2luUm9vbVJlc3BvbnNl",
+          "Eg8KB3N1Y2Nlc3MYASABKAgSFwoEcm9vbRgCIAEoCzIJLlJvb21EYXRhEiEK",
+          "CGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiMwoYUzJDX0pvaW5S",
+          "b29tTm90aWZpY2F0aW9uEhcKBHJvb20YASABKAsyCS5Sb29tRGF0YSIpChRD",
+          "MlNfTGVhdmVSb29tUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiSwoVUzJD",
+          "X0xlYXZlUm9vbVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSIQoIZmFpbENv",
+          "ZGUYAiABKA4yDy5HbG9iYWxGYWlsQ29kZSI0ChlTMkNfTGVhdmVSb29tTm90",
+          "aWZpY2F0aW9uEhcKBHJvb20YASABKAsyCS5Sb29tRGF0YSI8ChZDMlNfR2Ft",
+          "ZVByZXBhcmVSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIPCgdpc1JlYWR5",
+          "GAIgASgIIl4KF1MyQ19HYW1lUHJlcGFyZVJlc3BvbnNlEg8KB3N1Y2Nlc3MY",
+          "ASABKAgSDwoHaXNSZWFkeRgCIAEoCBIhCghmYWlsQ29kZRgDIAEoDjIPLkds",
+          "b2JhbEZhaWxDb2RlImYKG1MyQ19HYW1lUHJlcGFyZU5vdGlmaWNhdGlvbhIX",
+          "CgR1c2VyGAEgASgLMgkuVXNlckRhdGESDwoHaXNSZWFkeRgCIAEoCBIdCgVz",
+          "dGF0ZRgDIAEoDjIOLlJvb21TdGF0ZVR5cGUiswEKIFMyQ19JY2VNaW5pR2Ft",
+          "ZVJlYWR5Tm90aWZpY2F0aW9uEj8KB3BsYXllcnMYASADKAsyLi5TMkNfSWNl",
+          "TWluaUdhbWVSZWFkeU5vdGlmaWNhdGlvbi5zdGFydFBsYXllcnMaTgoMc3Rh",
+          "cnRQbGF5ZXJzEhEKCXNlc3Npb25JZBgBIAEoCRIZCghwb3NpdGlvbhgCIAEo",
+          "CzIHLlZlY3RvchIQCghyb3RhdGlvbhgDIAEoAiIsChdDMlNfSWNlR2FtZVJl",
+          "YWR5UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiMQocUzJDX0ljZUdhbWVS",
+          "ZWFkeU5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkiIgogUzJDX0lj",
+          "ZU1pbmlHYW1lU3RhcnROb3RpZmljYXRpb24icQoYQzJTX0ljZVBsYXllclN5",
+          "bmNSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIZCghwb3NpdGlvbhgCIAEo",
+          "CzIHLlZlY3RvchIQCghyb3RhdGlvbhgDIAEoAhIVCgVzdGF0ZRgEIAEoDjIG",
+          "LlN0YXRlInYKHVMyQ19JY2VQbGF5ZXJTeW5jTm90aWZpY2F0aW9uEhEKCXNl",
+          "c3Npb25JZBgBIAEoCRIZCghwb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIQCghy",
+          "b3RhdGlvbhgDIAEoAhIVCgVzdGF0ZRgEIAEoDjIGLlN0YXRlIi8KGkMyU19J",
+          "Y2VQbGF5ZXJEYW1hZ2VSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSI0Ch9T",
+          "MkNfSWNlUGxheWVyRGFtYWdlTm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgB",
+          "IAEoCSIzCh5TMkNfSWNlUGxheWVyRGVhdGhOb3RpZmljYXRpb24SEQoJc2Vz",
+          "c2lvbklkGAEgASgJIhwKGlMyQ19JY2VNYXBTeW5jTm90aWZpY2F0aW9uIokB",
+          "ChtTMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb24SMAoFcmFua3MYASADKAsy",
+          "IS5TMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb24uUmFuaxIPCgdlbmRUaW1l",
+          "GAIgASgDGicKBFJhbmsSEQoJc2Vzc2lvbklkGAEgASgJEgwKBHJhbmsYAiAB",
+          "KAUiMgodUzJDX0ljZVBsYXllckV4aXROb3RpZmljYXRpb24SEQoJc2Vzc2lv",
           "bklkGAEgASgJIpcdCgpHYW1lUGFja2V0Ei8KD3JlZ2lzdGVyUmVxdWVzdBgB",
           "IAEoCzIULkMyU19SZWdpc3RlclJlcXVlc3RIABIxChByZWdpc3RlclJlc3Bv",
           "bnNlGAIgASgLMhUuUzJDX1JlZ2lzdGVyUmVzcG9uc2VIABIpCgxsb2dpblJl",
@@ -246,7 +247,7 @@ public static partial class ProtocolReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::UserData), global::UserData.Parser, new[]{ "SessionId", "Nickname" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "RoomId", "OwnerId", "RoomName", "LobbyId", "State", "Users", "MaxUser", "ReadyUsers" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "SessionId", "Rank_" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "PlayerId", "Rank_" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::BoardPlayerData), global::BoardPlayerData.Parser, new[]{ "SessionId", "Gold", "Trophy", "TileLocation" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::DiceGameData), global::DiceGameData.Parser, new[]{ "SessionId", "Value", "Rank" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_RegisterRequest), global::C2S_RegisterRequest.Parser, new[]{ "LoginId", "Password", "PasswordConfirm", "Nickname" }, null, null, null, null),
@@ -258,13 +259,13 @@ public static partial class ProtocolReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameStartNotification), global::S2C_GameStartNotification.Parser, new[]{ "Success", "Players", "FailCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameStartNotification.Types.PlayerData), global::S2C_GameStartNotification.Types.PlayerData.Parser, new[]{ "UserId", "Nickname", "Position" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_RollDiceRequest), global::C2S_RollDiceRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceResponse), global::S2C_RollDiceResponse.Parser, new[]{ "Success", "DiceResult", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceNotification), global::S2C_RollDiceNotification.Parser, new[]{ "PlayerId", "DiceResult" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceNotification), global::S2C_RollDiceNotification.Parser, new[]{ "SessionId", "DiceResult" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_MovePlayerBoardRequest), global::C2S_MovePlayerBoardRequest.Parser, new[]{ "SessionId", "TargetPoint", "Rotation" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardResponse), global::S2C_MovePlayerBoardResponse.Parser, new[]{ "Success", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardNotification), global::S2C_MovePlayerBoardNotification.Parser, new[]{ "PlayerId", "TargetPoint", "Rotation" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardNotification), global::S2C_MovePlayerBoardNotification.Parser, new[]{ "SessionId", "TargetPoint", "Rotation" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_PurchaseTileRequest), global::C2S_PurchaseTileRequest.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileResponse), global::S2C_PurchaseTileResponse.Parser, new[]{ "Success", "Tile", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileNotification), global::S2C_PurchaseTileNotification.Parser, new[]{ "PlayerId", "Tile" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileNotification), global::S2C_PurchaseTileNotification.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameEndNotification), global::S2C_GameEndNotification.Parser, new[]{ "Rank" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BackToTheRoomRequest), global::C2S_BackToTheRoomRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BackToTheRoomResponse), global::S2C_BackToTheRoomResponse.Parser, new[]{ "Success", "Room", "FailCode" }, null, null, null, null),
@@ -311,7 +312,7 @@ public static partial class ProtocolReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerDamageNotification), global::S2C_IcePlayerDamageNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerDeathNotification), global::S2C_IcePlayerDeathNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceMapSyncNotification), global::S2C_IceMapSyncNotification.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification), global::S2C_IceGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification), global::S2C_IceGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification.Types.Rank), global::S2C_IceGameOverNotification.Types.Rank.Parser, new[]{ "SessionId", "Rank_" }, null, null, null, null)}),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerExitNotification), global::S2C_IcePlayerExitNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GamePacket), global::GamePacket.Parser, new[]{ "RegisterRequest", "RegisterResponse", "LoginRequest", "LoginResponse", "LogoutRequest", "LobbyJoinRequest", "LobbyJoinResponse", "LobbyLeaveRequest", "LobbyLeaveResponse", "LobbyUserListRequest", "LobbyUserListResponse", "LobbyUserDetailRequest", "LobbyUserDetailResponse", "RoomListRequest", "RoomListResponse", "CreateRoomRequest", "CreateRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "JoinRoomNotification", "LeaveRoomRequest", "LeaveRoomResponse", "LeaveRoomNotification", "GamePrepareRequest", "GamePrepareResponse", "GamePrepareNotification", "GameStartRequest", "GameStartNotification", "RollDiceRequest", "RollDiceResponse", "RollDiceNotification", "MovePlayerBoardRequest", "MovePlayerBoardResponse", "MovePlayerBoardNotification", "PurchaseTileRequest", "PurchaseTileResponse", "PurchaseTileNotification", "GameEndNotification", "PurchaseTrophyRequest", "PurchaseTrophyResponse", "PurchaseTrophyNotification", "TilePenaltyRequest", "TilePenaltyResponse", "TilePenaltyNotification", "DiceGameRequest", "DiceGameResponse", "DiceGameNotification", "BackToTheRoomRequest", "BackToTheRoomResponse", "BackToTheRoomNotification", "StartMiniGameRequest", "IceMiniGameReadyNotification", "IceGameReadyRequest", "IceGameReadyNotification", "IceMiniGameStartNotification", "IcePlayerSyncRequest", "IcePlayerSyncNotification", "IcePlayerDamageRequest", "IcePlayerDamageNotification", "IcePlayerDeathNotification", "IceGameOverNotification", "IceMapSyncNotification", "IcePlayerExitNotification" }, new[]{ "Payload" }, null, null, null)
         }));
@@ -1056,7 +1057,7 @@ public sealed partial class Rank : pb::IMessage<Rank> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public Rank(Rank other) : this() {
-    sessionId_ = other.sessionId_;
+    playerId_ = other.playerId_;
     rank_ = other.rank_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -1066,14 +1067,14 @@ public sealed partial class Rank : pb::IMessage<Rank> {
     return new Rank(this);
   }
 
-  /// <summary>Field number for the "sessionId" field.</summary>
-  public const int SessionIdFieldNumber = 1;
-  private string sessionId_ = "";
+  /// <summary>Field number for the "playerId" field.</summary>
+  public const int PlayerIdFieldNumber = 1;
+  private int playerId_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string SessionId {
-    get { return sessionId_; }
+  public int PlayerId {
+    get { return playerId_; }
     set {
-      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      playerId_ = value;
     }
   }
 
@@ -1101,7 +1102,7 @@ public sealed partial class Rank : pb::IMessage<Rank> {
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (SessionId != other.SessionId) return false;
+    if (PlayerId != other.PlayerId) return false;
     if (Rank_ != other.Rank_) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -1109,7 +1110,7 @@ public sealed partial class Rank : pb::IMessage<Rank> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
     if (Rank_ != 0) hash ^= Rank_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -1124,9 +1125,9 @@ public sealed partial class Rank : pb::IMessage<Rank> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (SessionId.Length != 0) {
-      output.WriteRawTag(10);
-      output.WriteString(SessionId);
+    if (PlayerId != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(PlayerId);
     }
     if (Rank_ != 0) {
       output.WriteRawTag(16);
@@ -1140,8 +1141,8 @@ public sealed partial class Rank : pb::IMessage<Rank> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (SessionId.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    if (PlayerId != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
     }
     if (Rank_ != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank_);
@@ -1157,8 +1158,8 @@ public sealed partial class Rank : pb::IMessage<Rank> {
     if (other == null) {
       return;
     }
-    if (other.SessionId.Length != 0) {
-      SessionId = other.SessionId;
+    if (other.PlayerId != 0) {
+      PlayerId = other.PlayerId;
     }
     if (other.Rank_ != 0) {
       Rank_ = other.Rank_;
@@ -1174,8 +1175,8 @@ public sealed partial class Rank : pb::IMessage<Rank> {
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 10: {
-          SessionId = input.ReadString();
+        case 8: {
+          PlayerId = input.ReadInt32();
           break;
         }
         case 16: {
@@ -3270,7 +3271,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public S2C_RollDiceNotification(S2C_RollDiceNotification other) : this() {
-    playerId_ = other.playerId_;
+    sessionId_ = other.sessionId_;
     diceResult_ = other.diceResult_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -3280,14 +3281,14 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     return new S2C_RollDiceNotification(this);
   }
 
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private int playerId_;
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int PlayerId {
-    get { return playerId_; }
+  public string SessionId {
+    get { return sessionId_; }
     set {
-      playerId_ = value;
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -3315,7 +3316,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
+    if (SessionId != other.SessionId) return false;
     if (DiceResult != other.DiceResult) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -3323,7 +3324,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
     if (DiceResult != 0) hash ^= DiceResult.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -3338,9 +3339,9 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (PlayerId != 0) {
-      output.WriteRawTag(8);
-      output.WriteInt32(PlayerId);
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
     }
     if (DiceResult != 0) {
       output.WriteRawTag(16);
@@ -3354,8 +3355,8 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
     }
     if (DiceResult != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(DiceResult);
@@ -3371,8 +3372,8 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     if (other == null) {
       return;
     }
-    if (other.PlayerId != 0) {
-      PlayerId = other.PlayerId;
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
     }
     if (other.DiceResult != 0) {
       DiceResult = other.DiceResult;
@@ -3388,8 +3389,8 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 8: {
-          PlayerId = input.ReadInt32();
+        case 10: {
+          SessionId = input.ReadString();
           break;
         }
         case 16: {
@@ -3775,7 +3776,7 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public S2C_MovePlayerBoardNotification(S2C_MovePlayerBoardNotification other) : this() {
-    playerId_ = other.playerId_;
+    sessionId_ = other.sessionId_;
     targetPoint_ = other.targetPoint_ != null ? other.targetPoint_.Clone() : null;
     rotation_ = other.rotation_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
@@ -3786,14 +3787,14 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     return new S2C_MovePlayerBoardNotification(this);
   }
 
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private int playerId_;
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int PlayerId {
-    get { return playerId_; }
+  public string SessionId {
+    get { return sessionId_; }
     set {
-      playerId_ = value;
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -3832,7 +3833,7 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
+    if (SessionId != other.SessionId) return false;
     if (!object.Equals(TargetPoint, other.TargetPoint)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -3841,7 +3842,7 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
     if (targetPoint_ != null) hash ^= TargetPoint.GetHashCode();
     if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
     if (_unknownFields != null) {
@@ -3857,9 +3858,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (PlayerId != 0) {
-      output.WriteRawTag(8);
-      output.WriteInt32(PlayerId);
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
     }
     if (targetPoint_ != null) {
       output.WriteRawTag(18);
@@ -3877,8 +3878,8 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
     }
     if (targetPoint_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(TargetPoint);
@@ -3897,8 +3898,8 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     if (other == null) {
       return;
     }
-    if (other.PlayerId != 0) {
-      PlayerId = other.PlayerId;
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
     }
     if (other.targetPoint_ != null) {
       if (targetPoint_ == null) {
@@ -3920,8 +3921,8 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 8: {
-          PlayerId = input.ReadInt32();
+        case 10: {
+          SessionId = input.ReadString();
           break;
         }
         case 18: {
@@ -3967,7 +3968,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public C2S_PurchaseTileRequest(C2S_PurchaseTileRequest other) : this() {
     sessionId_ = other.sessionId_;
-    tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+    tile_ = other.tile_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -3989,9 +3990,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
 
   /// <summary>Field number for the "tile" field.</summary>
   public const int TileFieldNumber = 2;
-  private global::Vector tile_;
+  private int tile_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector Tile {
+  public int Tile {
     get { return tile_; }
     set {
       tile_ = value;
@@ -4012,7 +4013,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
       return true;
     }
     if (SessionId != other.SessionId) return false;
-    if (!object.Equals(Tile, other.Tile)) return false;
+    if (Tile != other.Tile) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -4020,7 +4021,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
   public override int GetHashCode() {
     int hash = 1;
     if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-    if (tile_ != null) hash ^= Tile.GetHashCode();
+    if (Tile != 0) hash ^= Tile.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -4038,9 +4039,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
       output.WriteRawTag(10);
       output.WriteString(SessionId);
     }
-    if (tile_ != null) {
-      output.WriteRawTag(18);
-      output.WriteMessage(Tile);
+    if (Tile != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(Tile);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -4053,8 +4054,8 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
     if (SessionId.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
     }
-    if (tile_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+    if (Tile != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -4070,11 +4071,8 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
     if (other.SessionId.Length != 0) {
       SessionId = other.SessionId;
     }
-    if (other.tile_ != null) {
-      if (tile_ == null) {
-        Tile = new global::Vector();
-      }
-      Tile.MergeFrom(other.Tile);
+    if (other.Tile != 0) {
+      Tile = other.Tile;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -4091,11 +4089,8 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
           SessionId = input.ReadString();
           break;
         }
-        case 18: {
-          if (tile_ == null) {
-            Tile = new global::Vector();
-          }
-          input.ReadMessage(Tile);
+        case 16: {
+          Tile = input.ReadInt32();
           break;
         }
       }
@@ -4130,7 +4125,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public S2C_PurchaseTileResponse(S2C_PurchaseTileResponse other) : this() {
     success_ = other.success_;
-    tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+    tile_ = other.tile_;
     failCode_ = other.failCode_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -4153,9 +4148,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
 
   /// <summary>Field number for the "tile" field.</summary>
   public const int TileFieldNumber = 2;
-  private global::Vector tile_;
+  private int tile_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector Tile {
+  public int Tile {
     get { return tile_; }
     set {
       tile_ = value;
@@ -4187,7 +4182,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
       return true;
     }
     if (Success != other.Success) return false;
-    if (!object.Equals(Tile, other.Tile)) return false;
+    if (Tile != other.Tile) return false;
     if (FailCode != other.FailCode) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -4196,7 +4191,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
   public override int GetHashCode() {
     int hash = 1;
     if (Success != false) hash ^= Success.GetHashCode();
-    if (tile_ != null) hash ^= Tile.GetHashCode();
+    if (Tile != 0) hash ^= Tile.GetHashCode();
     if (FailCode != global::GlobalFailCode.NoneFailcode) hash ^= FailCode.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -4215,9 +4210,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
       output.WriteRawTag(8);
       output.WriteBool(Success);
     }
-    if (tile_ != null) {
-      output.WriteRawTag(18);
-      output.WriteMessage(Tile);
+    if (Tile != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(Tile);
     }
     if (FailCode != global::GlobalFailCode.NoneFailcode) {
       output.WriteRawTag(24);
@@ -4234,8 +4229,8 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
     if (Success != false) {
       size += 1 + 1;
     }
-    if (tile_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+    if (Tile != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
     }
     if (FailCode != global::GlobalFailCode.NoneFailcode) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) FailCode);
@@ -4254,11 +4249,8 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
     if (other.Success != false) {
       Success = other.Success;
     }
-    if (other.tile_ != null) {
-      if (tile_ == null) {
-        Tile = new global::Vector();
-      }
-      Tile.MergeFrom(other.Tile);
+    if (other.Tile != 0) {
+      Tile = other.Tile;
     }
     if (other.FailCode != global::GlobalFailCode.NoneFailcode) {
       FailCode = other.FailCode;
@@ -4278,11 +4270,8 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
           Success = input.ReadBool();
           break;
         }
-        case 18: {
-          if (tile_ == null) {
-            Tile = new global::Vector();
-          }
-          input.ReadMessage(Tile);
+        case 16: {
+          Tile = input.ReadInt32();
           break;
         }
         case 24: {
@@ -4320,8 +4309,8 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public S2C_PurchaseTileNotification(S2C_PurchaseTileNotification other) : this() {
-    playerId_ = other.playerId_;
-    tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+    sessionId_ = other.sessionId_;
+    tile_ = other.tile_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -4330,22 +4319,22 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     return new S2C_PurchaseTileNotification(this);
   }
 
-  /// <summary>Field number for the "playerId" field.</summary>
-  public const int PlayerIdFieldNumber = 1;
-  private int playerId_;
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int PlayerId {
-    get { return playerId_; }
+  public string SessionId {
+    get { return sessionId_; }
     set {
-      playerId_ = value;
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "tile" field.</summary>
   public const int TileFieldNumber = 2;
-  private global::Vector tile_;
+  private int tile_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::Vector Tile {
+  public int Tile {
     get { return tile_; }
     set {
       tile_ = value;
@@ -4365,16 +4354,16 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (PlayerId != other.PlayerId) return false;
-    if (!object.Equals(Tile, other.Tile)) return false;
+    if (SessionId != other.SessionId) return false;
+    if (Tile != other.Tile) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
-    if (tile_ != null) hash ^= Tile.GetHashCode();
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (Tile != 0) hash ^= Tile.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -4388,13 +4377,13 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (PlayerId != 0) {
-      output.WriteRawTag(8);
-      output.WriteInt32(PlayerId);
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
     }
-    if (tile_ != null) {
-      output.WriteRawTag(18);
-      output.WriteMessage(Tile);
+    if (Tile != 0) {
+      output.WriteRawTag(16);
+      output.WriteInt32(Tile);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -4404,11 +4393,11 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (PlayerId != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
     }
-    if (tile_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+    if (Tile != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -4421,14 +4410,11 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     if (other == null) {
       return;
     }
-    if (other.PlayerId != 0) {
-      PlayerId = other.PlayerId;
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
     }
-    if (other.tile_ != null) {
-      if (tile_ == null) {
-        Tile = new global::Vector();
-      }
-      Tile.MergeFrom(other.Tile);
+    if (other.Tile != 0) {
+      Tile = other.Tile;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -4441,15 +4427,12 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 8: {
-          PlayerId = input.ReadInt32();
+        case 10: {
+          SessionId = input.ReadString();
           break;
         }
-        case 18: {
-          if (tile_ == null) {
-            Tile = new global::Vector();
-          }
-          input.ReadMessage(Tile);
+        case 16: {
+          Tile = input.ReadInt32();
           break;
         }
       }
@@ -11792,11 +11775,11 @@ public sealed partial class S2C_IceGameOverNotification : pb::IMessage<S2C_IceGa
 
   /// <summary>Field number for the "ranks" field.</summary>
   public const int RanksFieldNumber = 1;
-  private static readonly pb::FieldCodec<global::Rank> _repeated_ranks_codec
-      = pb::FieldCodec.ForMessage(10, global::Rank.Parser);
-  private readonly pbc::RepeatedField<global::Rank> ranks_ = new pbc::RepeatedField<global::Rank>();
+  private static readonly pb::FieldCodec<global::S2C_IceGameOverNotification.Types.Rank> _repeated_ranks_codec
+      = pb::FieldCodec.ForMessage(10, global::S2C_IceGameOverNotification.Types.Rank.Parser);
+  private readonly pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank> ranks_ = new pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<global::Rank> Ranks {
+  public pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank> Ranks {
     get { return ranks_; }
   }
 
@@ -11901,6 +11884,170 @@ public sealed partial class S2C_IceGameOverNotification : pb::IMessage<S2C_IceGa
       }
     }
   }
+
+  #region Nested types
+  /// <summary>Container for nested types declared in the S2C_IceGameOverNotification message type.</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static partial class Types {
+    public sealed partial class Rank : pb::IMessage<Rank> {
+      private static readonly pb::MessageParser<Rank> _parser = new pb::MessageParser<Rank>(() => new Rank());
+      private pb::UnknownFieldSet _unknownFields;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pb::MessageParser<Rank> Parser { get { return _parser; } }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pbr::MessageDescriptor Descriptor {
+        get { return global::S2C_IceGameOverNotification.Descriptor.NestedTypes[0]; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      pbr::MessageDescriptor pb::IMessage.Descriptor {
+        get { return Descriptor; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank() {
+        OnConstruction();
+      }
+
+      partial void OnConstruction();
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank(Rank other) : this() {
+        sessionId_ = other.sessionId_;
+        rank_ = other.rank_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank Clone() {
+        return new Rank(this);
+      }
+
+      /// <summary>Field number for the "sessionId" field.</summary>
+      public const int SessionIdFieldNumber = 1;
+      private string sessionId_ = "";
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public string SessionId {
+        get { return sessionId_; }
+        set {
+          sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+      }
+
+      /// <summary>Field number for the "rank" field.</summary>
+      public const int Rank_FieldNumber = 2;
+      private int rank_;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int Rank_ {
+        get { return rank_; }
+        set {
+          rank_ = value;
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override bool Equals(object other) {
+        return Equals(other as Rank);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public bool Equals(Rank other) {
+        if (ReferenceEquals(other, null)) {
+          return false;
+        }
+        if (ReferenceEquals(other, this)) {
+          return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Rank_ != other.Rank_) return false;
+        return Equals(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override int GetHashCode() {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Rank_ != 0) hash ^= Rank_.GetHashCode();
+        if (_unknownFields != null) {
+          hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override string ToString() {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void WriteTo(pb::CodedOutputStream output) {
+        if (SessionId.Length != 0) {
+          output.WriteRawTag(10);
+          output.WriteString(SessionId);
+        }
+        if (Rank_ != 0) {
+          output.WriteRawTag(16);
+          output.WriteInt32(Rank_);
+        }
+        if (_unknownFields != null) {
+          _unknownFields.WriteTo(output);
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int CalculateSize() {
+        int size = 0;
+        if (SessionId.Length != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Rank_ != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank_);
+        }
+        if (_unknownFields != null) {
+          size += _unknownFields.CalculateSize();
+        }
+        return size;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(Rank other) {
+        if (other == null) {
+          return;
+        }
+        if (other.SessionId.Length != 0) {
+          SessionId = other.SessionId;
+        }
+        if (other.Rank_ != 0) {
+          Rank_ = other.Rank_;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(pb::CodedInputStream input) {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0) {
+          switch(tag) {
+            default:
+              _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+              break;
+            case 10: {
+              SessionId = input.ReadString();
+              break;
+            }
+            case 16: {
+              Rank_ = input.ReadInt32();
+              break;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+  #endregion
 
 }
 
