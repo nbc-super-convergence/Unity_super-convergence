@@ -9,10 +9,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IceMiniGameReadyNotification;
 
         //ReadyPanel 띄우기.
-        UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider); 
+#pragma warning disable CS4014 
+        UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider);
+#pragma warning restore CS4014
 
         //데이터 설정, 맵 설정, BGM 설정
         MinigameManager.Instance.SetMiniGame<GameIceSlider>();
+        MinigameManager.Instance.boardCamera.SetActive(false);
 
         foreach (var p in response.Players)
         {//미니 토큰 위치 초기화
@@ -97,7 +100,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             .GameEnd(rankings);
 
         //미니게임 맵 삭제
-        Destroy(MinigameManager.Instance.CurMap.gameObject); 
+        MinigameManager.Instance.boardCamera.SetActive(true);
+        Destroy(MinigameManager.Instance.CurMap.gameObject);
     }
 
     //211

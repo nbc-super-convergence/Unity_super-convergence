@@ -11,6 +11,7 @@ public class GameIceSlider : IGame
         gameData = new GameIceSliderData();
         gameData.Init();
         MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMap();
         SetBGM();
     }
 
