@@ -5,7 +5,8 @@ public enum eGameType
 {//실존 클래스명과 일치해야 함. 서순 절대 바꾸지 말 것.
     Default,
     GameIceSlider,
-    GameBombDelivery
+    GameBombDelivery,
+    GameCourtshipDance
 }
 
 public class MinigameManager : Singleton<MinigameManager>
