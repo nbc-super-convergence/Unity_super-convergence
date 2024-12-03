@@ -3,8 +3,9 @@ using UnityEngine.Playables;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
+    //201
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
-    {//201
+    {
         var response = gamePacket.IceMiniGameReadyNotification;
 
         //ReadyPanel 띄우기.
@@ -25,27 +26,30 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //202 : IceGameReadyRequest
     //Send 위치 : UIMinigameReady (완료)
 
+    //203
     public void IceGameReadyNotification(GamePacket gamePacket)
-    {//203
+    {
         var response = gamePacket.IceGameReadyNotification;
 
         //ReadyUI와 연계
         UIManager.Get<UIMinigameReady>().SetReady(response.SessionId);
     }
 
+    //204
     public void IceMiniGameStartNotification(GamePacket gamePacket)
-    {//204
+    {
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
         MinigameManager.Instance.GetMiniGame<GameIceSlider>().GameStart();
     }
 
-    //206 : IcePlayerSyncRequest
+    //205 : IcePlayerSyncRequest
     //Send 위치 : MiniToken (완료)
 
+    //206
     public void IcePlayerSyncNotification(GamePacket gamePacket)
-    {//207
+    {
         var response = gamePacket.IcePlayerSyncNotification;
 
         MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
@@ -54,12 +58,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         miniToken.MiniData.CurState = response.State;
     }
 
-    //TODO
-    //208 : IcePlayerDamageRequest
+    //207 : IcePlayerDamageRequest
     //Send 위치 : MapGameIceSlider (완료)
 
+    //208
     public void IcePlayerDamageNotification(GamePacket gamePacket)
-    {//209
+    {
         var response = gamePacket.IcePlayerDamageNotification;
 
         //Player에게 데미지 주기
@@ -67,8 +71,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             .GiveDamage(response.SessionId, 1);
     }
 
+    //209
     public void IcePlayerDeathNotification(GamePacket gamePacket)
-    {//210
+    {
         var response = gamePacket.IcePlayerDeathNotification;
 
         MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
@@ -77,8 +82,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             .PlayerDeath(response.SessionId);
     }
 
+    //210
     public void IceGameOverNotification(GamePacket gamePacket)
-    {//211
+    {
         var response = gamePacket.IceGameOverNotification;
 
         Dictionary<string, int> rankings = new();
@@ -94,9 +100,17 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         Destroy(MinigameManager.Instance.CurMap.gameObject); 
     }
 
+    //211
     public void IceMapSyncNotification(GamePacket gamePacket)
-    {//212
+    {
         MinigameManager.Instance.GetMiniGame<GameIceSlider>()
             .MapChangeEvent();
+    }
+
+    //212
+    public void IcePlayerExitNotification(GamePacket gamePacket)
+    {
+        var response = gamePacket.IcePlayerExitNotification;
+        GameManager.Instance.DeleteSessionId(response.SessionId);
     }
 }

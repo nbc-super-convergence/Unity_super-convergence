@@ -36,7 +36,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-            
+
         }
         else
         {
@@ -50,11 +50,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         //int index = GameManager.Instance.SessionDic //response.PlayerId;
 
         //플레이어id 활용방안 숙지 필요
-        //int index = 0;
+        int index = response.PlayerId;
 
-        //Vector3 pos = ToVector3(response.TargetPoint);
-        //var players = BoardManager.Instance.playerTokenHandlers;
-        //players[index].ReceivePosition(pos);
+        Vector3 pos = ToVector3(response.TargetPoint);
+        var players = BoardManager.Instance.playerTokenHandlers;
+        players[index].ReceivePosition(pos);
     }
 
     public void PurchaseTileResponse(GamePacket packet)
