@@ -10,7 +10,9 @@ public class ChmChmOwner : MonoBehaviour
     //서버에서 받아야 할것들
     //플레이어 Color : Owner가 몇P인지 결정해야 되서
     //총 라운드 회수 : 3회로 생각하고 있는데
+    //결정시간 : 제시간 안에 보는 쪽으로 빨리 정하기 최소 3초(?)
     public int Round = 0;
+    private float curTime = 0f;
 
     /// <summary>
     /// 결과를 검사
@@ -26,6 +28,8 @@ public class ChmChmOwner : MonoBehaviour
                 checkSame.Remove(other);    //끝나면 이자리에서 제거
             }
         }
+
+        Round++;
 
         //라운드 초과시
         if(Round > 3)
