@@ -46,10 +46,9 @@ public class GameManager : Singleton<GameManager>
         SessionDic.Add(sessionId, new UserInfo(sessionId, nickname, color, order));
     }
 
-    public void DeletePlayerId(string sessionId)
+    public void DeleteSessionId(string sessionId)
     {
-        MinigameManager.Instance.GetMiniToken(sessionId).gameObject.SetActive(false);
-        SessionDic[sessionId].SetColor(-1);
+        SessionDic.Remove(sessionId);
     }
     #endregion
 }
