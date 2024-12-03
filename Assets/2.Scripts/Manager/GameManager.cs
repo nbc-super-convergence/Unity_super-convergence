@@ -40,11 +40,10 @@ public class GameManager : Singleton<GameManager>
         isInitialized = true;
     }
 
-    #region Client ID
-    public void SetPlayerId(string sessionId, int playerId)
+    #region SessionDic
+    public void AddNewPlayer(string sessionId, string nickname, int color, int order)
     {
-
-        SessionDic[sessionId].SetColor(playerId);
+        SessionDic.Add(sessionId, new UserInfo(sessionId, nickname, color, order));
     }
 
     public void DeletePlayerId(string sessionId)
