@@ -339,9 +339,13 @@ public class UIRoom : UIBase
     public async void GameStart()
     {
         await CountDownAsync(3);
-        await UIManager.Show<UIFadeScreen>("FadeOut");
-        invisibleWall.SetActive(false);
-        GameManager.isGameStart = true;
+        //await UIManager.Show<UIFadeScreen>("FadeOut");
+        FadeScreen.Instance.FadeOut(Capsule, 1.5f);        
+        void Capsule()
+        {
+            invisibleWall.SetActive(false);
+            GameManager.isGameStart = true;
+        }
     }
     private async Task CountDownAsync(int countNum)
     {

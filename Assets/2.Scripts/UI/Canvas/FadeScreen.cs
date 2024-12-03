@@ -11,6 +11,7 @@ public class FadeScreen : Singleton<FadeScreen>
     [SerializeField] private Image FadeImage;
     public Sequence Sequence;
 
+
     public void FadeOut(Action callback = null, float fadeTime = 1f)
     {
         if (Instance.Sequence != null)
@@ -18,11 +19,11 @@ public class FadeScreen : Singleton<FadeScreen>
             Instance.Sequence.Kill();
             Instance.Sequence.onComplete = null;
         }
-
-
+        FadeImage.gameObject.SetActive(true);
         Instance.Sequence = DOTween.Sequence().Append(Instance.FadeImage.DOFade(1f, fadeTime));
         Instance.Sequence.onComplete = () =>
         {
+            FadeImage.gameObject.SetActive(false);
             //SoundManager.StopAllEffectSound();
             callback?.Invoke();
         };
@@ -35,10 +36,13 @@ public class FadeScreen : Singleton<FadeScreen>
             Instance.Sequence.onComplete = null;
         }
 
+        FadeImage.gameObject.SetActive(true);
         Instance.Sequence = DOTween.Sequence().Append(Instance.FadeImage.DOFade(0f, fadeTime));
         Instance.Sequence.onComplete = () =>
         {
+            FadeImage.gameObject.SetActive(false);
             callback?.Invoke();
         };
     }
+
 }
