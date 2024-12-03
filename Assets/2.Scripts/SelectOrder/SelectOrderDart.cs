@@ -56,15 +56,6 @@ public class SelectOrderDart : MonoBehaviour
         rgdby = GetComponent<Rigidbody>();
     }
 
-    private void Update()
-    {
-        //빗나가면 처음 위치로
-        if(transform.position.x < -3f)
-        {
-            ResetDart();
-        }
-    }
-
     private void FixedUpdate()
     {
         switch(phase)
@@ -81,7 +72,7 @@ public class SelectOrderDart : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(ShootingAim, 0, 0);
 
-        Debug.DrawRay(transform.position, transform.position + transform.forward);
+        //Debug.DrawRay(transform.position, transform.position + transform.forward);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -89,7 +80,13 @@ public class SelectOrderDart : MonoBehaviour
         rgdby.useGravity = false;
         rgdby.constraints = RigidbodyConstraints.FreezeAll;
 
+        //다트가 판을 따라가게
         transform.SetParent(collision.transform);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        ResetDart();
     }
 
     //입력 받을 때
@@ -111,7 +108,9 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
-    //각도 조절
+    /// <summary>
+    /// 각도 조절
+    /// </summary>
     private void SetAim()
     {
         float speed = 3f;
@@ -126,7 +125,9 @@ public class SelectOrderDart : MonoBehaviour
         selectUI.GetAim(ShootingAim);
     }
 
-    //힘 조절
+    /// <summary>
+    /// 힘 조절
+    /// </summary>
     private void SetForce()
     {
         float speed = 1f;
@@ -138,16 +139,28 @@ public class SelectOrderDart : MonoBehaviour
         selectUI.GetForce(ShootingForce);
     }
 
-    //발사
+    /// <summary>
+    /// 발사
+    /// </summary>
     private void NowShoot()
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * ShootingForce, ForceMode.Impulse);
     }
 
+    /// <summary>
+    /// 다트 초기화
+    /// </summary>
     private void ResetDart()
     {
-        transform.position = Vector3.zero;
+        rgdby.useGravity = false;
+        rgdby.velocity = Vector3.zero;
+
+        transform.localPosition = Vector3.zero;
+
+        ShootingAim = 0f;
+        ShootingForce = 2.5f;
+
         phase = ShootingPhase.Aim;
     }
 }
