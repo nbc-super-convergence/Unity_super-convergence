@@ -65,7 +65,7 @@ public class UIRoom : UIBase
         foreach (var user in roomData.Users)
         {
             // TODO:: 없는 유저는 -1로 남게... 
-            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++));
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++, num++));
         }
         SetHost();
         SetDropdown();       
@@ -339,9 +339,13 @@ public class UIRoom : UIBase
     public async void GameStart()
     {
         await CountDownAsync(3);
-        await UIManager.Show<UIFadeScreen>("FadeOut");
-        invisibleWall.SetActive(false);
-        GameManager.isGameStart = true;
+        //await UIManager.Show<UIFadeScreen>("FadeOut");
+        FadeScreen.Instance.FadeOut(Capsule, 1.5f);        
+        void Capsule()
+        {
+            invisibleWall.SetActive(false);
+            GameManager.isGameStart = true;
+        }
     }
     private async Task CountDownAsync(int countNum)
     {
