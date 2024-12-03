@@ -3,13 +3,15 @@ using UnityEngine;
 
 public enum eGameType
 {//실존 클래스명과 일치해야 함. 서순 절대 바꾸지 말 것.
+    Default,
     GameIceSlider,
-    GameBombDelivery,
+    GameBombDelivery
 }
 
 public class MinigameManager : Singleton<MinigameManager>
 {
     [SerializeField] private Transform MiniParent; //미니게임 오브젝트 부모
+    public GameObject boardCamera; //보드게임 카메라
     public MapBase CurMap;
 
     /*미니게임 정보*/
@@ -66,16 +68,15 @@ public class MinigameManager : Singleton<MinigameManager>
     /// <typeparam name="T">IGame의 자식 클래스</typeparam>
     public T SetMiniGame<T>() where T : IGame, new()
     {
-        GameType = (eGameType)Enum.Parse(typeof(eGameType), nameof(T));
+        GameType = (eGameType)Enum.Parse(typeof(eGameType), typeof(T).Name);
         curMiniGame = new T();
         curMiniGame.Init();
-        MakeMap();
-
+        
         return (T)curMiniGame;
     }
 
     //미니게임 맵 설정
-    private void MakeMap()
+    public void MakeMap()
     {
         Instantiate(CurMap.gameObject, MiniParent);
     }
