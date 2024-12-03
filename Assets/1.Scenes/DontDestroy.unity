@@ -338,7 +338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 0
-  csv: {fileID: 4900000, guid: a9b8c8844e2a5fa4ebcf0813bb1bc5fd, type: 3}
+  csv: {fileID: 0}
 --- !u!4 &2040335072
 Transform:
   m_ObjectHideFlags: 0

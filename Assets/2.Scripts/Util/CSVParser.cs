@@ -11,8 +11,12 @@ public class CSVParser : Singleton<CSVParser>
     //private string[] m_Headers = new string[] { "Id", "Name", "IsBool", "Float", "CODE", "INFO", "KOR" };
     public async void Init()
     {
-        //var result = await ResourceManager.Instance.LoadAsset<TextAsset>("HolyMolyPolyFailCode", eAddressableType.Data);
-        //csv = result;
+        if (csv == null)
+        {
+            var result = await ResourceManager.Instance.LoadAsset<TextAsset>("HolyMolyPolyFailCode", eAddressableType.Data);
+            if(result == null ) Debug.Log($"로드 실패" );
+            csv = result;
+        }
         ParseFailCode(csv);
         GameManager.Instance.failCodeDic = new(failCodeDic);
         isInitialized = true;
