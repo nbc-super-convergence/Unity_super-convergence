@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
 using System;
 
 #region 서버연결
@@ -91,16 +90,38 @@ public class BoardManager : Singleton<BoardManager>
 
     private void Init()
     {
-        int count = GameManager.Instance.SessionDic.Count;
+        var ids = GameManager.Instance.SessionDic.Keys;
 
-        for (int i = 0; i < count; i++)
+        foreach (string key in ids)
         {
-            //시작 지점에 플레이어 생성
+            var dict = GameManager.Instance.SessionDic;
+            var info = dict[key];
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
-            //handle.data.
-            //리스트에 플레이어 보관
+            handle.data.userInfo = info;
+
+            if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
+            handle.SetColor(info.Color);
+
             playerTokenHandlers.Add(handle);
         }
+
+
+        #region Old
+        //for (int i = 0; i < count; i++)
+        //{
+        //    //시작 지점에 플레이어 생성
+        //    BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+
+        //    if (GameManager.Instance.myInfo.Color == i) handle.isMine = true;
+
+        //    handle.SetColor(i);
+
+        //    //GameManager.Instance.
+
+        //    //리스트에 플레이어 보관
+        //    playerTokenHandlers.Add(handle);
+        //}
+        #endregion
 
         Curplayer.Ready();
     }
@@ -296,5 +317,10 @@ public class BoardManager : Singleton<BoardManager>
         });
 
         await UIManager.Show<BoardResult>();
+    }
+
+    private void SeqeunceUpdate()
+    {
+        playerTokenHandlers.Sort((a,b) => { return a.data.userInfo.Order.CompareTo(b.data.userInfo.Order); });
     }
 }

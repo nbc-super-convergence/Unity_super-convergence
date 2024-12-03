@@ -348,7 +348,6 @@ syntax = "proto3";
 
     message S2C_IcePlayerDeathNotification {
         string sessionId = 1;
-        Vector position = 2;
     }
 
     message S2C_IceMapSyncNotification {
@@ -362,6 +361,10 @@ syntax = "proto3";
             string sessionId = 1;
             int32 rank = 2; 
         }
+    }
+
+    message S2C_IcePlayerExitNotification {
+        string sessionId = 1;
     }
 
 // 게임패킷
@@ -425,16 +428,17 @@ syntax = "proto3";
             S2C_StartMiniGameNotification startMiniGameNotification = 102;
 
              // ice  (201)
-            S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 201;
-            C2S_IceGameReadyRequest iceGameReadyRequest = 202; 
-            S2C_IceGameReadyNotification iceGameReadyNotification = 203;
-            S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 204;
-            C2S_IcePlayerSyncRequest icePlayerSyncRequest = 205;
-            S2C_IcePlayerSyncNotification icePlayerSyncNotification = 206;
-            C2S_IcePlayerDamageRequest icePlayerDamageRequest = 207;
-            S2C_IcePlayerDamageNotification icePlayerDamageNotification = 208;
-            S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
-            S2C_IceGameOverNotification iceGameOverNotification = 210;
-            S2C_IceMapSyncNotification iceMapSyncNotification = 211;
+             S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 201;
+             C2S_IceGameReadyRequest iceGameReadyRequest = 202; 
+             S2C_IceGameReadyNotification iceGameReadyNotification = 203;
+             S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 204;
+             C2S_IcePlayerSyncRequest icePlayerSyncRequest = 205;
+             S2C_IcePlayerSyncNotification icePlayerSyncNotification = 206;
+             C2S_IcePlayerDamageRequest icePlayerDamageRequest = 207;
+             S2C_IcePlayerDamageNotification icePlayerDamageNotification = 208;
+             S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
+             S2C_IceGameOverNotification iceGameOverNotification = 210;
+             S2C_IceMapSyncNotification iceMapSyncNotification = 211;
+             S2C_IcePlayerExitNotification icePlayerExitNotification = 212;
         }
     }
