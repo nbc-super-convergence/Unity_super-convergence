@@ -55,7 +55,7 @@ public class UIMinigameResult : UIBase
                 Debug.LogError("param 오류 : idx0이 ranks가 아님");
             }
 
-            if (param[1] is DateTime returnTime)
+            if (param[1] is long returnTime)
             {
                 StartCoroutine(ReturnTxt());
                 StartCoroutine(ReturnBoard(returnTime));
@@ -79,9 +79,9 @@ public class UIMinigameResult : UIBase
         }
     }
 
-    private IEnumerator ReturnBoard(DateTime returnTime)
+    private IEnumerator ReturnBoard(long returnTime)
     {
-        yield return new WaitUntil(() => DateTime.Now == returnTime);
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeSeconds() >= returnTime);
         UIManager.Hide<UIMinigameResult>();
     }
 }
