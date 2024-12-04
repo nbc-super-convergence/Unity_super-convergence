@@ -1225,10 +1225,10 @@ MonoBehaviour:
   isDestroyAtClosed: 1
   uiPosition: 1
   RankPanels:
-  - {fileID: 2500022353942063379}
-  - {fileID: 8530963026450243626}
-  - {fileID: 3911781593923645581}
-  - {fileID: 6514295432618933025}
+  - {fileID: 7302753957707738756}
+  - {fileID: 4387186360020854139}
+  - {fileID: 1697516761090585869}
+  - {fileID: 7039094115180161967}
   RankPanelsSprites:
   - {fileID: -183415229, guid: f818260ed9f788949937edcb1fa2e110, type: 3}
   - {fileID: -1544120770, guid: 9f4a5c1763a9af342b790c33c2b9a18b, type: 3}
@@ -1239,7 +1239,7 @@ MonoBehaviour:
   - {fileID: 8138811727469940944}
   - {fileID: 8202213217939954935}
   - {fileID: 2139601362762881324}
-  returnTxt: {fileID: 0}
+  returnTxt: {fileID: 1140623483724248895}
 --- !u!1 &6300445746437589085
 GameObject:
   m_ObjectHideFlags: 0
