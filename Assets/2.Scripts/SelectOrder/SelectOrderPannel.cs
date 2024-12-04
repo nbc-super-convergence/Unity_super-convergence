@@ -8,6 +8,7 @@ public class SelectOrderPannel : MonoBehaviour
 
     //다트판 속성
     private float xPositionLimit = 0.5f;  //옆으로 이동하기까지 제한
+    private float pannelSpeed = 0.3f;   //다트판 이동 속도
     private bool swapDirection = false;
     private bool isMove = true;
 
@@ -22,14 +23,17 @@ public class SelectOrderPannel : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
-        string name = collision.gameObject.name;
+        if(collision.gameObject.TryGetComponent(out SelectOrderDart dart))
+        {
+            float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
+            string name = collision.gameObject.name;
 
-        //입력 데이터를 서버에 전송
-        DartData dart = new DartData(dist, name);
-        distanceList.Add(dart);
+            //맞은 다트의 거리와 이름을 클래스에 전송
+            dart.SetDartDistance(dist);
 
-        Debug.Log($"{dart.Name}, {dart.Distance}");
+            //맞추면 UI숨김
+            SelectOrderManager.Instance.HideDartUI();
+        }
     }
 
     private void FixedUpdate()
@@ -43,7 +47,7 @@ public class SelectOrderPannel : MonoBehaviour
             else if (transform.position.x > xPositionLimit)
                 swapDirection = false;
 
-            transform.Translate((swapDirection ? Vector3.right : Vector3.left) * Time.deltaTime);
+            transform.Translate((swapDirection ? Vector3.right : Vector3.left) * (Time.deltaTime * pannelSpeed));
         }
     }
 
