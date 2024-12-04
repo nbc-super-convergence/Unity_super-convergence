@@ -2,6 +2,7 @@ using static S2C_IceMiniGameReadyNotification.Types;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public partial class ClientTest : Singleton<ClientTest>
 {
@@ -77,6 +78,9 @@ public partial class ClientTest : Singleton<ClientTest>
             if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.P))
             {
+                DateTime dateTime = DateTime.Now.AddSeconds(6);
+                long unixTimeSeconds = new DateTimeOffset(dateTime).ToUnixTimeSeconds();
+
                 GamePacket packet = new()
                 {
                     IceGameOverNotification = new()
@@ -103,7 +107,8 @@ public partial class ClientTest : Singleton<ClientTest>
                                  SessionId = "Session4",
                                  Rank_ = 1,
                              },
-                        }
+                        },
+                        EndTime = unixTimeSeconds
                     }
                 };
                 SocketManager.Instance.IceGameOverNotification(packet);
@@ -111,5 +116,6 @@ public partial class ClientTest : Singleton<ClientTest>
             }
             yield return null;
         }
+
     }
 }

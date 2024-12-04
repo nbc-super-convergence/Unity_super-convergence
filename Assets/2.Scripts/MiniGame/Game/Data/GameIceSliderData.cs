@@ -15,6 +15,6 @@ public class GameIceSliderData : IGameData
             playerHps[i] = maxHP;
         }
 
-        phase = 3;
+        phase = 1;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class Player
 {
@@ -55,10 +56,6 @@ public class GameCourtshipDance : IGame
         //{
         //    Debug.LogError("startPlayers 자료형 전달 과정에서 문제 발생");
         //}
-    }
-    public void GameEnd(Dictionary<string, int> ranks)
-    {
-        throw new System.NotImplementedException();
     }
 
     /// <summary>
