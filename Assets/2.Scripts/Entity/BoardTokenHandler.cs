@@ -106,6 +106,17 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (transform.position == target)
             {
+                GamePacket packet = new();
+
+                packet.MovePlayerBoardRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = character.transform.eulerAngles.y
+                };
+
+                SocketManager.Instance.OnSend(packet);
+
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
@@ -121,7 +132,7 @@ public class BoardTokenHandler : MonoBehaviour
                 {
                     SessionId = GameManager.Instance.myInfo.SessionId,
                     TargetPoint = SocketManager.ToVector(transform.position),
-                    Rotation = transform.rotation.y
+                    Rotation = character.transform.eulerAngles.y
                 };
 
                 SocketManager.Instance.OnSend(packet);
@@ -199,7 +210,7 @@ public class BoardTokenHandler : MonoBehaviour
     public void ReceivePosition(Vector3 position,float rotY)
     {
         nextPositon = position;
-        transform.eulerAngles = new Vector3(0, rotY, 0);
+        character.transform.eulerAngles = new Vector3(0, rotY, 0);
     }
 
     public void SetColor(int index)
