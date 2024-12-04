@@ -3,7 +3,10 @@ using UnityEngine.UIElements;
 
 public class AreaNode : BaseNode, IPurchase
 {
-    private int playerIndex = -1;
+    private int owner = -1;
+    private int saleAmount = 10; //매수금은 판매액의 2배
+
+
     [SerializeField] MeshRenderer plane;
     int price;
 
@@ -34,25 +37,23 @@ public class AreaNode : BaseNode, IPurchase
         //    return;
         //}
 
-        if (playerIndex != index)
+        if (owner != index)
         {
-            if (playerIndex != -1) Damage(player.data);
+            if (owner != -1) Penalty(player.data);
             var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         }
     }
-    private void Damage(BoardTokenData p)
+    private void Penalty(BoardTokenData p)
     {
-        //임시 주석
-        //p.hp -= 0;
+        GamePacket packet = new();
 
-        //GamePacket packet = new();
+        packet.TilePenaltyRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+        };
 
-        ////packet. = new()
-        ////{
-
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
+        SocketManager.Instance.OnSend(packet);
     }
 
     public void Purchase(int index)
@@ -62,15 +63,18 @@ public class AreaNode : BaseNode, IPurchase
         //plane.material = BoardManager.Instance.materials[index];
         //int i = BoardManager.Instance.areaNodes.IndexOf(this);
 
-        //GamePacket packet = new();
-        //packet.PurchaseTileRequest = new()
-        //{
-        //    //추후 변경되면 수정
-        //    //SessionId = GameManager.Instance.,
-        //    //Tile = SocketManager.ToVector(transform.position)
-        //};
+        GamePacket packet = new();
+        packet.PurchaseTileRequest = new()
+        {
+            //추후 변경되면 수정
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            //Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+        };
 
-        //SocketManager.Instance.OnSend(packet);
+        SocketManager.Instance.OnSend(packet);
+
+
+
 
         Cancle();
     }
@@ -84,9 +88,9 @@ public class AreaNode : BaseNode, IPurchase
         BoardManager.Instance.TurnEnd();
     }
 
-    public void SetArea(int index)
+    public void SetArea(int owner,int color)
     {
-        //playerIndex = index;
-        plane.material = BoardManager.Instance.materials[index];
+        this.owner = owner;
+        plane.material = BoardManager.Instance.materials[color];
     }
 }

@@ -63,6 +63,19 @@ public class BoardManager : Singleton<BoardManager>
 
     private List<IGameResult> bonus;
 
+    public BoardTokenHandler GetToken(string sessionID)
+    {
+        string id = sessionID;
+        var user = GameManager.Instance.SessionDic[id];
+        int i = user.Order;
+
+        var player = playerTokenHandlers.Find((obj) => obj.data.userInfo == user);
+
+        //TODO 순위 정하는 게임의 부재로 Order 인덱스가 이상한 이유로 주석처리
+        //return playerTokenHandlers[i]; 
+        return player;
+    }
+
     public BoardTokenHandler Curplayer
     {
         get { return playerTokenHandlers[playerIndex]; }
@@ -96,11 +109,13 @@ public class BoardManager : Singleton<BoardManager>
         {
             var dict = GameManager.Instance.SessionDic;
             var info = dict[key];
+
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
             handle.data.userInfo = info;
+            handle.SetColor(info.Color);
+            handle.gameObject.name = key;
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
-            handle.SetColor(info.Color);
 
             playerTokenHandlers.Add(handle);
         }
@@ -143,25 +158,16 @@ public class BoardManager : Singleton<BoardManager>
     //    Curplayer.Ready();
     //}
 
-    public void RandomDice()
-    {
-        //GamePacket packet = new();
+    //public void RandomDice()
+    //{
+    //    #region Old
+    //    ////주사위 돌림
+    //    //int rand = Random.Range(1, 7);
 
-        ////packet.RollDiceReqeust = new()
-        ////{
-        ////    PlayerId = playerIndex
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
-
-        #region Old
-        ////주사위 돌림
-        //int rand = Random.Range(1, 7);
-
-        ////나온 주사위의 수를 플레이어에 입력
-        //Curplayer.GetDice(rand);
-        #endregion
-    }
+    //    ////나온 주사위의 수를 플레이어에 입력
+    //    //Curplayer.GetDice(rand);
+    //    #endregion
+    //}
 
     public void TurnEnd()
     {
@@ -232,10 +238,10 @@ public class BoardManager : Singleton<BoardManager>
         //SocketManager.Instance.OnSend(packet);
     }
 
-    public void PurChaseNode(int node,int playerIndex)
-    {
-        areaNodes[node].SetArea(playerIndex);
-    }
+    //public void PurChaseNode(int node,int playerIndex)
+    //{
+    //    areaNodes[node].SetArea(playerIndex);
+    //}
     
     private void SetBonus()
     {

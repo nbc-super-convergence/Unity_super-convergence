@@ -58,17 +58,17 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
 
     public void Purchase(int index)
     {
-        //Æ®·ÎÇÇ + 1
-        //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
+        GamePacket packet = new();
 
-        //GamePacket packet = new();
+        packet.PurchaseTrophyRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Tile = BoardManager.Instance.trophyNode.IndexOf(this)
+        };
 
-        ////packet. = new()
-        ////{
+        SocketManager.Instance.OnSend(packet);
 
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
+        Toggle();
 
         Cancle();
     }

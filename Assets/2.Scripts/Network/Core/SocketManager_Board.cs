@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -15,6 +14,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             int dice = response.DiceResult;
 
             player.GetDice(dice);
+            Debug.Log("RollDiceResponse");
         }
         else
         {
@@ -28,6 +28,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         var player = BoardManager.Instance.Curplayer;
         int dice = response.DiceResult;
+
+        Debug.Log("RollDiceNotification");
     }
 
     public void MovePlayerBoardResponse(GamePacket packet)
@@ -36,7 +38,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-
+            Debug.Log("MovePlayerBoardResponse");
         }
         else
         {
@@ -47,14 +49,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void MovePlayerBoardNotification(GamePacket packet)
     {
         var response = packet.MovePlayerBoardNotification;
-        //int index = GameManager.Instance.SessionDic //response.PlayerId;
-
-        //플레이어id 활용방안 숙지 필요
-        int index = response.PlayerId;
 
         Vector3 pos = ToVector3(response.TargetPoint);
-        var players = BoardManager.Instance.playerTokenHandlers;
-        players[index].ReceivePosition(pos);
+        float rotY = response.Rotation;
+
+        var token = BoardManager.Instance.GetToken(response.SessionId);
+        token.ReceivePosition(pos, rotY);
+
+        Debug.Log("MovePlayerBoardNotification");
     }
 
     public void PurchaseTileResponse(GamePacket packet)
@@ -63,11 +65,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-            //플레이어id 숙지 필요
+            int i = response.Tile;
+            var player = BoardManager.Instance.Curplayer;
+            int p = BoardManager.Instance.Curplayer.data.userInfo.Order;
+            int c = BoardManager.Instance.Curplayer.data.userInfo.Color;
 
-            //int index = response.Tile; //Vector -> int로 변경 필요
-            //int p = BoardManager.Instance.curPlayerIndex;
-            //BoardManager.Instance.areaNodes[0].SetArea(p);
+            BoardManager.Instance.areaNodes[i].SetArea(p,c);
         }
         else
         {
@@ -79,9 +82,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTileNotification;
 
-        int id = response.PlayerId;
-        //int index = response.Tile; //Vector -> int로 변경 필요
-        //BoardManager.Instance.PurChaseNode(indexer,id);
+        var player = BoardManager.Instance.GetToken(response.SessionId);
+        int i = response.Tile;
+        int p = player.data.userInfo.Order;
+        int c = player.data.userInfo.Color;
+
+        BoardManager.Instance.areaNodes[i].SetArea(p, c);
     }
 
     #endregion
