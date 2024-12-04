@@ -7,7 +7,7 @@ public class ChmChmBase : MonoBehaviour
 {
     public Vector3 LookDirection { get; protected set; }
 
-    //오브젝트 속성
+    [Header("오브젝트 속성")]
     [SerializeField] protected Transform ResultWindow;
     [SerializeField] protected GameObject PlayerAvatar;
 
@@ -20,6 +20,9 @@ public class ChmChmBase : MonoBehaviour
     //열고 닫을 때 연출
     private WaitForSeconds windowDelay; 
 
+
+
+
     private void Awake()
     {
         windowDelay = new WaitForSeconds(Time.deltaTime);
@@ -28,6 +31,7 @@ public class ChmChmBase : MonoBehaviour
         closedSpeed *= Time.deltaTime;
     }
 
+    #region 창문 동작
     /// <summary>
     /// 창문 개방
     /// </summary>
@@ -64,7 +68,9 @@ public class ChmChmBase : MonoBehaviour
         MatchWindowLimit();
     }
 
-    //y좌표의 한계 이상으로 넘어가면 (세밀한 오차 방지)
+    /// <summary>
+    /// y좌표의 한계 이상으로 넘어가면 (세밀한 오차 방지)
+    /// </summary>
     private void MatchWindowLimit()
     {
         float limitPos = Mathf.Clamp(ResultWindow.localPosition.y,
@@ -72,5 +78,12 @@ public class ChmChmBase : MonoBehaviour
         Vector3 matchPos = ResultWindow.localPosition;
         matchPos.y = limitPos;
         ResultWindow.localPosition = matchPos;
+    }
+    #endregion
+
+    //캐릭터 동작
+    protected void ApplyCharacterRotate()
+    {
+
     }
 }
