@@ -73,7 +73,8 @@ public class PoolManager : Singleton<PoolManager>
     {
         item.SetActive(false);
         var prefab = prefabList.Find(obj => obj.data.rCode == item.name);
-        item.transform.parent = prefab.data.parent;
+        //item.transform.parent = prefab.data.parent;
+        item.transform.SetParent(prefab.data.parent, false);
         pools[item.name].Enqueue(item);
     }
 
