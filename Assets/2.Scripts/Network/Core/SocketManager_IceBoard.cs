@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -87,8 +88,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             rankings.Add(r.SessionId, r.Rank_);
         }
 
+        DateTime time = DateTimeOffset.FromUnixTimeMilliseconds(response.EndTime).UtcDateTime;
+
         MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .GameEnd(rankings);
+            .GameEnd(rankings, time);
 
         //미니게임 맵 삭제
         MinigameManager.Instance.boardCamera.SetActive(true);
