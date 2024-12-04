@@ -8,6 +8,7 @@ public class MiniToken : MonoBehaviour
     [SerializeField] private Animator animator;
 
     /*Data*/
+    public int MyColor;
     public MiniTokenData MiniData;
 
     /*Input & Control*/
@@ -23,10 +24,10 @@ public class MiniToken : MonoBehaviour
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
-        MiniData = new(animator);
+        MiniData = new(animator, MyColor);
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
-        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
+        IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
     }
 
     private void Update()
@@ -37,7 +38,7 @@ public class MiniToken : MonoBehaviour
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.SetRotY(MiniData.rotY);
+                    Controller.RotateToken(MiniData.rotY);
                     break;
             }
         }
@@ -51,7 +52,7 @@ public class MiniToken : MonoBehaviour
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
-                    Controller.SetRotY(MiniData.rotY);
+                    Controller.RotateToken(MiniData.rotY);
                     break;
             }
         }

@@ -1,6 +1,4 @@
 using Google.Protobuf.Collections;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using static S2C_IceMiniGameReadyNotification.Types;
 
@@ -40,8 +38,9 @@ public class GameIceSlider : IGame
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            miniToken.Controller.SetPos(SocketManager.ToVector3(p.Position));
-            miniToken.Controller.SetRotY(p.Rotation);
+            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
+            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
+            miniToken.MiniData.rotY = p.Rotation;
         }
     }
 
@@ -78,20 +77,8 @@ public class GameIceSlider : IGame
 
     public void MapChangeEvent()
     {
-        //맵 크기 변경 
-        gameData.phase--;
+        gameData.phase++; //맵 변경 단계
         MinigameManager.Instance.GetMap<MapGameIceSlider>()
             .MapDecreaseEvent(gameData.phase);
-    }
-    
-    public async void GameEnd(Dictionary<string, int> ranks)
-    {
-        foreach (var mini in MinigameManager.Instance.MiniTokens)
-        {
-            mini.gameObject.SetActive(false);
-        }
-
-        await UIManager.Show<UIMinigameResult>(ranks);
-        
     }
 }

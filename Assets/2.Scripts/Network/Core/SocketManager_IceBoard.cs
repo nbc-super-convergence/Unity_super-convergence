@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -18,7 +19,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     /* 202 : IceGameReadyRequest
-     * Send 위치 : UIMinigameReady (완료) */
+     * Send 위치 : UIMinigameReady */
 
     //203
     public void IceGameReadyNotification(GamePacket gamePacket)
@@ -39,7 +40,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     //205 : IcePlayerSyncRequest
-    //Send 위치 : MiniToken (완료)
+    //Send 위치 : MiniToken
 
     //206
     public void IcePlayerSyncNotification(GamePacket gamePacket)
@@ -47,22 +48,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IcePlayerSyncNotification;
 
         MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
-        miniToken.Controller.SetNextPos(ToVector3(response.Position));
-        miniToken.Controller.SetRotY(response.Rotation);
+        miniToken.MiniData.nextPos = ToVector3(response.Position);
+        miniToken.MiniData.rotY = response.Rotation;
         miniToken.MiniData.CurState = response.State;
     }
 
     //207 : IcePlayerDamageRequest
-    //Send 위치 : MapGameIceSlider (완료)
+    //Send 위치 : MapGameIceSlider
 
     //208
     public void IcePlayerDamageNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerDamageNotification;
 
-        //Player에게 데미지 주기
-        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .GiveDamage(response.SessionId, 1);
+        //Player 데미지 이벤트
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().GiveDamage(response.SessionId, 1);
     }
 
     //209
@@ -70,10 +70,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.IcePlayerDeathNotification;
 
-        MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
-        
-        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .PlayerDeath(response.SessionId);
+        //플레이어 사망 이벤트
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().PlayerDeath(response.SessionId);
     }
 
     //210
@@ -81,15 +79,17 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.IceGameOverNotification;
 
+        /*필요 데이터 파싱*/
         Dictionary<string, int> rankings = new();
         foreach (var r in response.Ranks)
         {
             rankings.Add(r.SessionId, r.Rank_);
         }
+        DateTime time = DateTimeOffset.FromUnixTimeMilliseconds(response.EndTime).UtcDateTime;
 
-        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .GameEnd(rankings);
-
+        //UI Minigame Result 판넬 호출
+        MinigameManager.Instance.curMiniGame.GameEnd(rankings, time);
+        
         //미니게임 맵 삭제
         MinigameManager.Instance.boardCamera.SetActive(true);
         Destroy(MinigameManager.Instance.CurMap.gameObject);
@@ -98,11 +98,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //211
     public void IceMapSyncNotification(GamePacket gamePacket)
     {
-        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .MapChangeEvent();
+        //맵 작아지는 이벤트
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().MapChangeEvent();
     }
 
-    //212
+    //212 -> 공통 패킷으로 변경 예정
     public void IcePlayerExitNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IcePlayerExitNotification;

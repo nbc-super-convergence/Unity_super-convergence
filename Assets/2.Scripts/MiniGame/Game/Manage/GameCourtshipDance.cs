@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 public class GameCourtshipDance : IGame
 {
@@ -9,10 +10,6 @@ public class GameCourtshipDance : IGame
     public void Init(params object[] param)
     {
 
-    }
-    public void GameEnd(Dictionary<string, int> ranks)
-    {
-        throw new System.NotImplementedException();
     }
 
     public void GameStart()

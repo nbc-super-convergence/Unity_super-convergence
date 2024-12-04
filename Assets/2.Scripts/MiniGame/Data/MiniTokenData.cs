@@ -7,7 +7,7 @@ public class MiniTokenData
     private readonly Animator animator;
 
     #region common : 모든 게임에서 사용
-    public int miniTokenId;
+    public int tokenColor;
     private State curState;
     public State CurState
     {
@@ -26,13 +26,14 @@ public class MiniTokenData
     #region Inputs
     public Vector2 wasdVector;
     public Vector3 nextPos;
-    public readonly float icePlayerSpeed = 10f;
     public float rotY = 0f;
+    public float PlayerSpeed = 15f;
     #endregion
 
-    public MiniTokenData(Animator _anim)
+    public MiniTokenData(Animator _anim, int color)
     {
         animator = _anim;
+        tokenColor = color;
         curState = State.Idle;
     }
 }
