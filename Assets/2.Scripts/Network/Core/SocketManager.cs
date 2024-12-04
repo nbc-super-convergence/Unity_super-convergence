@@ -50,7 +50,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
-        UIManager.Show<UILobby>();
+        UIManager.Get<UILogin>().TrySetTask(response.Success);        
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
@@ -64,7 +64,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
-        GameManager.Instance.myInfo.userData = response.User;
+        GameManager.Instance.myInfo.SetUserData(response.User);
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
@@ -177,8 +177,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.GameStartNotification;
         if (response.Success)
         {
-            UIManager.Get<UIRoom>().GameStart();
-            GameManager.isGameStart = true;
+            UIManager.Get<UIRoom>().GameStart();            
         }
         if ((int)response.FailCode != 0)
         {

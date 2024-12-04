@@ -1,58 +1,75 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIMinigameReady : UIBase
 {
-    private eGameType type;
+    [Serializable]
+    private class ReadyPanels
+    {
+        public Outline outline;
+        public TextMeshProUGUI txt;
+        public GameObject mask;
+    }
+
+    private eGameType gameType;
 
     [SerializeField] private TextMeshProUGUI gameTitle;
     [SerializeField] private GameObject[] gameDescription;
 
-    [SerializeField] private GameObject[] isReady;
-    
+    [SerializeField] private ReadyPanels[] readyPanels;
+
     public override void Opened(object[] param)
     {
-        type = (eGameType)param[0];
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
 
-        //제목 설정
-        switch (type)
+        gameType = (eGameType)param[0]; // 게임 타입
+
+        //게임 제목
+        gameTitle.text = gameType switch
         {
-            case eGameType.GameIceSlider:
-                gameTitle.text = "미끌미끌 얼음판";
-                break;
-            case eGameType.GameBombDelivery:
-                break;
-            default:
-                gameTitle.text = "ERROR!!!";
-                break;
-        }
+            eGameType.GameIceSlider => "미끌미끌 얼음판",
+            eGameType.GameBombDelivery => "폭탄 배달왔어요",
+            _ => "ERROR!!!",
+        };
 
-        //게임에 맞는 설명
-        gameDescription[(int)type].SetActive(true);
+        //게임 설명
+        gameDescription[(int)gameType - 1].SetActive(true);
 
         //ready 상태 초기화
-        for (int i = 0; i < isReady.Length; i++) 
-            isReady[i].SetActive(false);
+        HashSet<int> usedColors = new HashSet<int>();
+        foreach (var dic in GameManager.Instance.SessionDic)
+        {
+            int color = dic.Value.Color;
+            usedColors.Add(color);
 
-        //R키 입력 대기
-        StartCoroutine(WaitReady());
+            readyPanels[color].outline.enabled = false;
+            readyPanels[color].txt.text = "준비중...";
+        }
+        for (int i = 0; i < readyPanels.Length; i++)
+        {
+            if (!usedColors.Contains(i))
+            {
+                readyPanels[i].outline.enabled = false;
+                readyPanels[i].txt.text = "오프라인";
+                readyPanels[i].mask.SetActive(true);
+            }
+        }
+
+        //R키(레디 입력) 대기
+        StartCoroutine(WaitForReady());
     }
 
     public override void Closed(object[] param)
     {
-        gameDescription[(int)type].SetActive(false);
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
+        gameDescription[(int)gameType - 1].SetActive(false);
     }
 
-    public void SetReady(string sessionId, bool isMe = false)
-    {
-        if (isMe) 
-            sessionId = GameManager.Instance.myInfo.sessionId;
-        int idx = GameManager.Instance.SessionDic[sessionId];
-        isReady[idx].SetActive(true);
-    }
-
-    private IEnumerator WaitReady()
+    private IEnumerator WaitForReady()
     {
         while (true)
         {
@@ -65,14 +82,30 @@ public class UIMinigameReady : UIBase
                 {
                     IceGameReadyRequest = new()
                     {
-                        SessionId = GameManager.Instance.myInfo.sessionId
+                        SessionId = GameManager.Instance.myInfo.SessionId
                     }
                 };
                 SocketManager.Instance.OnSend(packet);
-
                 break;
             }
             yield return null;
         }
+    }
+
+    public void SetReady(string sessionId, bool isMe = false)
+    {
+        if (isMe) sessionId = GameManager.Instance.myInfo.SessionId;
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
+
+        //준비상태 전환
+        readyPanels[idx].outline.enabled = true;
+        readyPanels[idx].txt.text = "준비 완료!";
+    }
+
+    private void PlayerLeftEvent(int color)
+    {
+        readyPanels[color].outline.enabled = false;
+        readyPanels[color].txt.text = "오프라인";
+        readyPanels[color].mask.SetActive(true);
     }
 }

@@ -23,9 +23,22 @@ syntax = "proto3";
         float z = 3; 
     }
 
-    message Rank { 
-        int32 playerId = 1;
+    message Rank {
+        string sessionId = 1;
         int32 rank = 2; 
+    }
+
+    message BoardPlayerData {
+        string sessionId = 1;
+        int32 gold = 2;
+        int32 trophy = 3;
+        int32 tileLocation = 4;
+    }
+    
+    message DiceGameData {
+        string sessionId = 1;
+        int32 value = 2;
+        int32 rank = 3; 
     }
 //ENUM
     enum RoomStateType  {
@@ -124,6 +137,7 @@ syntax = "proto3";
     }
 
     message C2S_RollDiceRequest {
+        string sessionId = 1;
     }
 
     message S2C_RollDiceResponse {
@@ -133,13 +147,14 @@ syntax = "proto3";
     }
 
     message S2C_RollDiceNotification {
-        int32 playerId = 1;
+        string sessionId = 1;
         int32 diceResult = 2;
     }
 
     message C2S_MovePlayerBoardRequest {
         string sessionId = 1;
         Vector targetPoint = 2;
+        float rotation = 3; 
     }
 
     message  S2C_MovePlayerBoardResponse {
@@ -148,24 +163,25 @@ syntax = "proto3";
     }
 
     message  S2C_MovePlayerBoardNotification {
-        int32 playerId = 1;
+        string sessionId = 1;
         Vector targetPoint = 2;
+        float rotation = 3;
     }
 
     message  C2S_PurchaseTileRequest {
         string sessionId = 1;
-        Vector tile = 2;
+        int32 tile = 2;
     }
 
     message  S2C_PurchaseTileResponse {
         bool success = 1;
-        Vector tile = 2;
+        int32 tile = 2;
         GlobalFailCode failCode = 3;
     }
 
     message  S2C_PurchaseTileNotification {
-        int32 playerId = 1;
-        Vector tile = 2;
+        string sessionId = 1;
+        int32 tile = 2;
     }
 
     message S2C_GameEndNotification {
@@ -173,7 +189,7 @@ syntax = "proto3";
     }
 
     message C2S_BackToTheRoomRequest {
-        int32 userId = 1;
+        string sessionId = 1;
     }
 
     message S2C_BackToTheRoomResponse {
@@ -183,7 +199,7 @@ syntax = "proto3";
     }
 
     message S2C_BackToTheRoomNotification {
-        int32 playerId = 1;
+        string sessionId = 1;
     }
 
     message C2S_StartMiniGameRequest {
@@ -192,6 +208,55 @@ syntax = "proto3";
 
     message S2C_StartMiniGameNotification {
         int32 game = 1; // 랜덤으로 돌린 미니 게임 중 하나
+    }
+
+    message  C2S_PurchaseTrophyRequest {
+        string sessionId = 1;
+        int32 tile = 2;
+    }
+    
+    message  S2C_PurchaseTrophyResponse {
+          bool success = 1;
+          BoardPlayerData playerInfo = 2; ///
+          int32 nextTile = 3;
+          GlobalFailCode failCode = 4;
+    }
+    
+    message  S2C_PurchaseTrophyNotification {
+        string sessionId = 1;
+        int32 beforeTile = 2;
+        int32 nextTile = 3;
+    }
+    
+    message  C2S_TilePenaltyRequest {
+        string sessionId = 1;
+        int32 tile = 2;
+    }
+    
+    message  S2C_TilePenaltyResponse {
+          bool success = 1;
+          repeated BoardPlayerData playersInfo = 2;
+        GlobalFailCode failCode = 3;
+    }
+    
+    message  S2C_TilePenaltyNotification {
+        string sessionId = 1;
+        int32 tile = 2;
+        repeated BoardPlayerData playersInfo = 3;
+    }
+    
+    message C2S_DiceGameRequest{
+        string sessionId = 1;
+    }
+    
+    message S2C_DiceGameResponse{
+        bool success = 1;
+        repeated DiceGameData result = 2;
+          GlobalFailCode failCode = 3;
+    }
+    
+    message S2C_DiceGameNotification {
+        repeated DiceGameData result = 1;
     }
 
 //LOBBY
@@ -348,7 +413,6 @@ syntax = "proto3";
 
     message S2C_IcePlayerDeathNotification {
         string sessionId = 1;
-        Vector position = 2;
     }
 
     message S2C_IceMapSyncNotification {
@@ -357,11 +421,10 @@ syntax = "proto3";
     message S2C_IceGameOverNotification {
         repeated Rank ranks = 1;
         int64 endTime = 2; 
-    
-        message Rank {
-            string sessionId = 1;
-            int32 rank = 2; 
-        }
+    }
+
+    message S2C_IcePlayerExitNotification {
+        string sessionId = 1;
     }
 
 // 게임패킷
@@ -414,6 +477,15 @@ syntax = "proto3";
             S2C_PurchaseTileResponse purchaseTileResponse = 68;
             S2C_PurchaseTileNotification purchaseTileNotification = 69;
             S2C_GameEndNotification gameEndNotification = 70;
+            C2S_PurchaseTrophyRequest purchaseTrophyRequest = 71;
+            S2C_PurchaseTrophyResponse purchaseTrophyResponse = 72;
+            S2C_PurchaseTrophyNotification purchaseTrophyNotification = 73;
+            C2S_TilePenaltyRequest tilePenaltyRequest = 74;
+            S2C_TilePenaltyResponse tilePenaltyResponse = 75;
+            S2C_TilePenaltyNotification tilePenaltyNotification = 76;
+            C2S_DiceGameRequest diceGameRequest = 77;
+            S2C_DiceGameResponse diceGameResponse = 78;
+            S2C_DiceGameNotification diceGameNotification = 79;
 
             // Post Game (91-100)
             C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
@@ -422,19 +494,19 @@ syntax = "proto3";
 
             // Mini Game (101-110)
             C2S_StartMiniGameRequest startMiniGameRequest = 101;
-            S2C_StartMiniGameNotification startMiniGameNotification = 102;
 
              // ice  (201)
-            S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 201;
-            C2S_IceGameReadyRequest iceGameReadyRequest = 202; 
-            S2C_IceGameReadyNotification iceGameReadyNotification = 203;
-            S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 204;
-            C2S_IcePlayerSyncRequest icePlayerSyncRequest = 205;
-            S2C_IcePlayerSyncNotification icePlayerSyncNotification = 206;
-            C2S_IcePlayerDamageRequest icePlayerDamageRequest = 207;
-            S2C_IcePlayerDamageNotification icePlayerDamageNotification = 208;
-            S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
-            S2C_IceGameOverNotification iceGameOverNotification = 210;
-            S2C_IceMapSyncNotification iceMapSyncNotification = 211;
+             S2C_IceMiniGameReadyNotification iceMiniGameReadyNotification = 201;
+             C2S_IceGameReadyRequest iceGameReadyRequest = 202; 
+             S2C_IceGameReadyNotification iceGameReadyNotification = 203;
+             S2C_IceMiniGameStartNotification iceMiniGameStartNotification = 204;
+             C2S_IcePlayerSyncRequest icePlayerSyncRequest = 205;
+             S2C_IcePlayerSyncNotification icePlayerSyncNotification = 206;
+             C2S_IcePlayerDamageRequest icePlayerDamageRequest = 207;
+             S2C_IcePlayerDamageNotification icePlayerDamageNotification = 208;
+             S2C_IcePlayerDeathNotification icePlayerDeathNotification = 209;
+             S2C_IceGameOverNotification iceGameOverNotification = 210;
+             S2C_IceMapSyncNotification iceMapSyncNotification = 211;
+             S2C_IcePlayerExitNotification icePlayerExitNotification = 212;
         }
     }

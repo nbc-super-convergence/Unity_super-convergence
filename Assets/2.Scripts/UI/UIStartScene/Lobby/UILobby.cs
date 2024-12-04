@@ -36,7 +36,7 @@ public class UILobby : UIBase
         }
         else
         {
-            nameTxt.text = GameManager.Instance.myInfo.userData.Nickname;
+            nameTxt.text = GameManager.Instance.myInfo.Nickname;
         }
 
         //AddRoom("테스트룸1", 4, 10);
@@ -47,7 +47,7 @@ public class UILobby : UIBase
         GamePacket packet = new();
         packet.LobbyJoinRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
@@ -56,7 +56,7 @@ public class UILobby : UIBase
         if(isSuccess)
         {
             //닉네임 설정하기
-            nameTxt.text = GameManager.Instance.myInfo.userData.Nickname;
+            nameTxt.text = GameManager.Instance.myInfo.Nickname;
         }
         else
         {
@@ -85,7 +85,7 @@ public class UILobby : UIBase
         GamePacket packet = new();
         packet.LobbyLeaveRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
@@ -93,6 +93,7 @@ public class UILobby : UIBase
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
+            SocketManager.Instance.isLobby = false;
             UIManager.Hide<UILobby>();
         }
         else
@@ -135,7 +136,7 @@ public class UILobby : UIBase
         GamePacket packet = new();
         packet.RoomListRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId
         };
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
@@ -154,7 +155,7 @@ public class UILobby : UIBase
         GamePacket packet = new();
         packet.JoinRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId,
+            SessionId = GameManager.Instance.myInfo.SessionId,
             RoomId = roomData.RoomId
         };
         sourceTcs = new();

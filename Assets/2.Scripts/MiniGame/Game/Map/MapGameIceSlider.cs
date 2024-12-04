@@ -9,32 +9,45 @@ public class MapGameIceSlider : MapBase
     [SerializeField] private float bounceForce = 10f;
     [SerializeField] private float inputDelay = 1f;
 
-    public override void HandleCollision(Collision collision, eCollisionType type)
+    public override void HandleCollision(eCollisionType type, Collision collision)
     {
-        switch (type)
+        if (collision.gameObject.GetComponent<MiniToken>().IsClient)
         {
-            case eCollisionType.Bounce:
-                // 충돌 방향 계산
-                Vector3 collisionNormal = collision.contacts[0].normal;
-                Vector3 bounceDirection = -collisionNormal.normalized;
+            switch (type)
+            {
+                case eCollisionType.Bounce:
+                    // 충돌 방향 계산
+                    Vector3 collisionNormal = collision.contacts[0].normal;
+                    Vector3 bounceDirection = -collisionNormal.normalized;
 
-                collision.rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
-                collision.gameObject.GetComponent<MiniToken>().PausePlayerInput(inputDelay);
-                break;
-            case eCollisionType.Damage:
-                MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-                    .GiveDamage(MinigameManager.Instance.MySessonId, 1, true);
+                    collision.rigidbody.AddForce(bounceDirection * bounceForce, ForceMode.Impulse);
+                    collision.gameObject.GetComponent<MiniToken>().PausePlayerInput(inputDelay);
+                    break;
+            }
+        }
+    }
+            
 
-                GamePacket packet = new()
-                {
-                    IcePlayerDamageRequest = new()
+    public override void HandleCollider(eCollisionType type, Collider other)
+    {
+        if (other.gameObject.GetComponent<MiniToken>().IsClient)
+        {
+            switch (type)
+            {
+                case eCollisionType.Damage:
+                    MinigameManager.Instance.GetMiniGame<GameIceSlider>()
+                        .GiveDamage(MinigameManager.Instance.MySessonId, 1, true);
+
+                    GamePacket packet = new()
                     {
-                        SessionId = MinigameManager.Instance.MySessonId
-                    }
-                };
-                SocketManager.Instance.OnSend(packet);
-
-                break;
+                        IcePlayerDamageRequest = new()
+                        {
+                            SessionId = MinigameManager.Instance.MySessonId
+                        }
+                    };
+                    SocketManager.Instance.OnSend(packet);
+                    break;
+            }
         }
     }
 

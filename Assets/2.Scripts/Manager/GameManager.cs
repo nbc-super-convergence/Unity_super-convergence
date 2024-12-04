@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,11 +6,14 @@ using UnityEngine;
 public class GameManager : Singleton<GameManager>
 {
     public static bool isGameStart; //BoardSceneÀ¸·Î ³Ñ¾î°¥ ¶§???
-    
+    public static Action<int> OnPlayerLeft; //»ö±ò Àü´Þ
+
     public UserInfo myInfo = new();
 
     //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
-    public Dictionary<string, int> SessionDic { get; private set; } = new();
+    public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
+    public Dictionary<int, string> failCodeDic;
+
 
     protected override void Awake()
     {
@@ -33,6 +37,12 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.Init();
         yield return new WaitUntil(() => UIManager.Instance.isInitialized);
 
+        CSVParser.Instance.Init();
+        yield return new WaitUntil(() => CSVParser.Instance.isInitialized);
+
+        FadeScreen.Instance.Init();
+        yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
+
         //Initialize SocketManager
         SocketManager.Instance.Init();
 
@@ -40,10 +50,16 @@ public class GameManager : Singleton<GameManager>
         isInitialized = true;
     }
 
-    #region Client ID
-    public void SetPlayerId(string sessionId, int playerId)
+    #region SessionDic
+    public void AddNewPlayer(string sessionId, string nickname, int color, int order)
     {
-        SessionDic[sessionId] = playerId;
+        SessionDic.Add(sessionId, new UserInfo(sessionId, nickname, color, order));
+    }
+
+    public void DeleteSessionId(string sessionId)
+    {
+        OnPlayerLeft?.Invoke(SessionDic[sessionId].Color);
+        SessionDic.Remove(sessionId);
     }
     #endregion
 }

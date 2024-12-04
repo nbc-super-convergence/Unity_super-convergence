@@ -2,17 +2,19 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
-using TMPro;
-using Sirenix.Utilities;
 
 
 public class BoardTokenHandler : MonoBehaviour
 {
     private bool isReady = false;
     private bool isTurn = false; //내 턴인지?
+    public bool isMine = false;
+
     private float speed = 5f;
     private float syncTime = 0f;
-
+    public Dice diceObject;
+    private Vector3 nextPositon;
+    public MeshRenderer renderer;
 
     public int dice { get; private set; } //주사위 눈
 
@@ -24,6 +26,7 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Awake()
     {
+        nextPositon = transform.position;
         queue = new();
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
@@ -54,21 +57,37 @@ public class BoardTokenHandler : MonoBehaviour
         //}
         #endregion
 
+        //이동 동기화, 조건필요
+
+        if (!isMine)
+        {
+            float d = Vector3.Distance(transform.position, nextPositon);
+            transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+            return;
+        }
+
         #region 주사위 굴림
 
         if (isReady)
         {
-            if(Input.GetKeyDown(KeyCode.Space))
+            int rand = UnityEngine.Random.Range(0, 6);
+            diceObject.ShowDice(rand);
+
+            if (Input.GetKeyDown(KeyCode.Space))
             {
+                isReady = false;
+
                 GamePacket packet = new();
                 packet.RollDiceRequest = new()
                 {
-
+                    SessionId = GameManager.Instance.myInfo.SessionId
                 };
-
                 SocketManager.Instance.OnSend(packet);
 
-                isReady = false;
+                Debug.Log("RollDiceRequest");
+
+
+                diceObject.gameObject.SetActive(false);
             }
         }
 
@@ -87,23 +106,37 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (transform.position == target)
             {
+                GamePacket packet = new();
+
+                packet.MovePlayerBoardRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = character.transform.eulerAngles.y
+                };
+
+                SocketManager.Instance.OnSend(packet);
+
                 Transform node = queue.Peek();
+                queue.Dequeue();
 
                 if (node.TryGetComponent(out IAction n))
                     n.Action();
-
-                queue.Dequeue();
             }
 
-            if(syncTime >= 1.0f)
+            if (syncTime >= 0.1f)
             {
                 GamePacket packet = new();
 
                 packet.MovePlayerBoardRequest = new()
                 {
-                    SessionId = "", //세션 아이디 구해올 곳 필요함
-                    TargetPoint = SocketManager.ToVector(transform.position)
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = character.transform.eulerAngles.y
                 };
+
+                SocketManager.Instance.OnSend(packet);
+                Debug.Log("MovePlayerBoardRequest");
 
                 syncTime = 0.0f;
             }
@@ -148,7 +181,10 @@ public class BoardTokenHandler : MonoBehaviour
         if(queue.Count > 0) isTurn = true;
     }
 
-    public bool IsTurnEnd() => (dice == 0 && queue.Count == 0);
+    public bool IsTurnEnd()
+    {
+        return (dice == 0 && queue.Count == 0);
+    }
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
@@ -165,6 +201,20 @@ public class BoardTokenHandler : MonoBehaviour
 
     public void Ready()
     {
+        if (!isMine) return;
+
         isReady = true;
+        diceObject.gameObject.SetActive(true);
+    }
+
+    public void ReceivePosition(Vector3 position,float rotY)
+    {
+        nextPositon = position;
+        character.transform.eulerAngles = new Vector3(0, rotY, 0);
+    }
+
+    public void SetColor(int index)
+    {
+        renderer.material = BoardManager.Instance.materials[index];
     }
 }

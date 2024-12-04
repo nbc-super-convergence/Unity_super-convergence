@@ -31,192 +31,226 @@ public static partial class ProtocolReflection
               "CRIPCgdsb2JieUlkGAQgASgJEh0KBXN0YXRlGAUgASgOMg4uUm9vbVN0YXRl",
               "VHlwZRIYCgV1c2VycxgGIAMoCzIJLlVzZXJEYXRhEg8KB21heFVzZXIYByAB",
               "KAUSEgoKcmVhZHlVc2VycxgIIAMoCSIpCgZWZWN0b3ISCQoBeBgBIAEoAhIJ",
-              "CgF5GAIgASgCEgkKAXoYAyABKAIiJgoEUmFuaxIQCghwbGF5ZXJJZBgBIAEo",
-              "BRIMCgRyYW5rGAIgASgFImMKE0MyU19SZWdpc3RlclJlcXVlc3QSDwoHbG9n",
-              "aW5JZBgBIAEoCRIQCghwYXNzd29yZBgCIAEoCRIXCg9wYXNzd29yZENvbmZp",
-              "cm0YAyABKAkSEAoIbmlja25hbWUYBCABKAkiSgoUUzJDX1JlZ2lzdGVyUmVz",
-              "cG9uc2USDwoHc3VjY2VzcxgBIAEoCBIhCghmYWlsQ29kZRgCIAEoDjIPLkds",
-              "b2JhbEZhaWxDb2RlIjUKEEMyU19Mb2dpblJlcXVlc3QSDwoHbG9naW5JZBgB",
-              "IAEoCRIQCghwYXNzd29yZBgCIAEoCSJaChFTMkNfTG9naW5SZXNwb25zZRIP",
-              "CgdzdWNjZXNzGAEgASgIEhEKCXNlc3Npb25JZBgCIAEoCRIhCghmYWlsQ29k",
-              "ZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIicKEkMyU19Mb2dnb3V0UmVxdWVz",
-              "dBIRCglzZXNzaW9uSWQYASABKAkiKQoUQzJTX0dhbWVTdGFydFJlcXVlc3QS",
-              "EQoJc2Vzc2lvbklkGAEgASgJIskBChlTMkNfR2FtZVN0YXJ0Tm90aWZpY2F0",
-              "aW9uEg8KB3N1Y2Nlc3MYASABKAgSNgoHcGxheWVycxgCIAMoCzIlLlMyQ19H",
-              "YW1lU3RhcnROb3RpZmljYXRpb24uUGxheWVyRGF0YRIhCghmYWlsQ29kZRgD",
-              "IAEoDjIPLkdsb2JhbEZhaWxDb2RlGkAKClBsYXllckRhdGESDgoGdXNlcklk",
-              "GAEgASgJEhAKCG5pY2tuYW1lGAIgASgJEhAKCHBvc2l0aW9uGAMgASgFIhUK",
-              "E0MyU19Sb2xsRGljZVJlcXVlc3QiXgoUUzJDX1JvbGxEaWNlUmVzcG9uc2US",
-              "DwoHc3VjY2VzcxgBIAEoCBISCgpkaWNlUmVzdWx0GAIgASgFEiEKCGZhaWxD",
-              "b2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiQAoYUzJDX1JvbGxEaWNlTm90",
-              "aWZpY2F0aW9uEhAKCHBsYXllcklkGAEgASgFEhIKCmRpY2VSZXN1bHQYAiAB",
-              "KAUiTQoaQzJTX01vdmVQbGF5ZXJCb2FyZFJlcXVlc3QSEQoJc2Vzc2lvbklk",
-              "GAEgASgJEhwKC3RhcmdldFBvaW50GAIgASgLMgcuVmVjdG9yIlEKG1MyQ19N",
-              "b3ZlUGxheWVyQm9hcmRSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiEKCGZh",
-              "aWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiUQofUzJDX01vdmVQbGF5",
-              "ZXJCb2FyZE5vdGlmaWNhdGlvbhIQCghwbGF5ZXJJZBgBIAEoBRIcCgt0YXJn",
-              "ZXRQb2ludBgCIAEoCzIHLlZlY3RvciJDChdDMlNfUHVyY2hhc2VUaWxlUmVx",
-              "dWVzdBIRCglzZXNzaW9uSWQYASABKAkSFQoEdGlsZRgCIAEoCzIHLlZlY3Rv",
-              "ciJlChhTMkNfUHVyY2hhc2VUaWxlUmVzcG9uc2USDwoHc3VjY2VzcxgBIAEo",
-              "CBIVCgR0aWxlGAIgASgLMgcuVmVjdG9yEiEKCGZhaWxDb2RlGAMgASgOMg8u",
-              "R2xvYmFsRmFpbENvZGUiRwocUzJDX1B1cmNoYXNlVGlsZU5vdGlmaWNhdGlv",
-              "bhIQCghwbGF5ZXJJZBgBIAEoBRIVCgR0aWxlGAIgASgLMgcuVmVjdG9yIi4K",
-              "F1MyQ19HYW1lRW5kTm90aWZpY2F0aW9uEhMKBHJhbmsYASADKAsyBS5SYW5r",
-              "IioKGEMyU19CYWNrVG9UaGVSb29tUmVxdWVzdBIOCgZ1c2VySWQYASABKAUi",
-              "aAoZUzJDX0JhY2tUb1RoZVJvb21SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgI",
-              "EhcKBHJvb20YAiABKAsyCS5Sb29tRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIP",
-              "Lkdsb2JhbEZhaWxDb2RlIjEKHVMyQ19CYWNrVG9UaGVSb29tTm90aWZpY2F0",
-              "aW9uEhAKCHBsYXllcklkGAEgASgFIi0KGEMyU19TdGFydE1pbmlHYW1lUmVx",
-              "dWVzdBIRCglzZXNzaW9uSWQYASABKAkiLQodUzJDX1N0YXJ0TWluaUdhbWVO",
-              "b3RpZmljYXRpb24SDAoEZ2FtZRgBIAEoBSIpChRDMlNfTG9iYnlKb2luUmVx",
-              "dWVzdBIRCglzZXNzaW9uSWQYASABKAkiZAoVUzJDX0xvYmJ5Sm9pblJlc3Bv",
-              "bnNlEg8KB3N1Y2Nlc3MYASABKAgSFwoEdXNlchgCIAEoCzIJLlVzZXJEYXRh",
-              "EiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiKgoVQzJTX0xv",
-              "YmJ5TGVhdmVSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSJMChZTMkNfTG9i",
-              "YnlMZWF2ZVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSIQoIZmFpbENvZGUY",
-              "AiABKA4yDy5HbG9iYWxGYWlsQ29kZSItChhDMlNfTG9iYnlVc2VyTGlzdFJl",
-              "cXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJImEKGVMyQ19Mb2JieVVzZXJMaXN0",
-              "UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIQCgh1c2VyTGlzdBgCIAMoCRIh",
-              "CghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIkgKGkMyU19Mb2Ji",
-              "eVVzZXJEZXRhaWxSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIXCg90YXJn",
-              "ZXRTZXNzaW9uSWQYAiABKAkiagobUzJDX0xvYmJ5VXNlckRldGFpbFJlc3Bv",
-              "bnNlEg8KB3N1Y2Nlc3MYASABKAgSFwoEdXNlchgCIAEoCzIJLlVzZXJEYXRh",
-              "EiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiKAoTQzJTX1Jv",
-              "b21MaXN0UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiZAoUUzJDX1Jvb21M",
-              "aXN0UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIYCgVyb29tcxgCIAMoCzIJ",
-              "LlJvb21EYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUi",
-              "PAoVQzJTX0NyZWF0ZVJvb21SZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCRIQ",
-              "Cghyb29tTmFtZRgCIAEoCSJlChZTMkNfQ3JlYXRlUm9vbVJlc3BvbnNlEg8K",
-              "B3N1Y2Nlc3MYASABKAgSFwoEcm9vbRgCIAEoCzIJLlJvb21EYXRhEiEKCGZh",
-              "aWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUiOAoTQzJTX0pvaW5Sb29t",
-              "UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkSDgoGcm9vbUlkGAIgASgJImMK",
-              "FFMyQ19Kb2luUm9vbVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSFwoEcm9v",
-              "bRgCIAEoCzIJLlJvb21EYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFs",
-              "RmFpbENvZGUiMwoYUzJDX0pvaW5Sb29tTm90aWZpY2F0aW9uEhcKBHJvb20Y",
-              "ASABKAsyCS5Sb29tRGF0YSIpChRDMlNfTGVhdmVSb29tUmVxdWVzdBIRCglz",
-              "ZXNzaW9uSWQYASABKAkiSwoVUzJDX0xlYXZlUm9vbVJlc3BvbnNlEg8KB3N1",
-              "Y2Nlc3MYASABKAgSIQoIZmFpbENvZGUYAiABKA4yDy5HbG9iYWxGYWlsQ29k",
-              "ZSI0ChlTMkNfTGVhdmVSb29tTm90aWZpY2F0aW9uEhcKBHJvb20YASABKAsy",
-              "CS5Sb29tRGF0YSI8ChZDMlNfR2FtZVByZXBhcmVSZXF1ZXN0EhEKCXNlc3Np",
-              "b25JZBgBIAEoCRIPCgdpc1JlYWR5GAIgASgIIl4KF1MyQ19HYW1lUHJlcGFy",
-              "ZVJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSDwoHaXNSZWFkeRgCIAEoCBIh",
-              "CghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlImYKG1MyQ19HYW1l",
-              "UHJlcGFyZU5vdGlmaWNhdGlvbhIXCgR1c2VyGAEgASgLMgkuVXNlckRhdGES",
-              "DwoHaXNSZWFkeRgCIAEoCBIdCgVzdGF0ZRgDIAEoDjIOLlJvb21TdGF0ZVR5",
-              "cGUiswEKIFMyQ19JY2VNaW5pR2FtZVJlYWR5Tm90aWZpY2F0aW9uEj8KB3Bs",
-              "YXllcnMYASADKAsyLi5TMkNfSWNlTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlv",
-              "bi5zdGFydFBsYXllcnMaTgoMc3RhcnRQbGF5ZXJzEhEKCXNlc3Npb25JZBgB",
-              "IAEoCRIZCghwb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIQCghyb3RhdGlvbhgD",
-              "IAEoAiIsChdDMlNfSWNlR2FtZVJlYWR5UmVxdWVzdBIRCglzZXNzaW9uSWQY",
-              "ASABKAkiMQocUzJDX0ljZUdhbWVSZWFkeU5vdGlmaWNhdGlvbhIRCglzZXNz",
-              "aW9uSWQYASABKAkiIgogUzJDX0ljZU1pbmlHYW1lU3RhcnROb3RpZmljYXRp",
-              "b24icQoYQzJTX0ljZVBsYXllclN5bmNSZXF1ZXN0EhEKCXNlc3Npb25JZBgB",
-              "IAEoCRIZCghwb3NpdGlvbhgCIAEoCzIHLlZlY3RvchIQCghyb3RhdGlvbhgD",
-              "IAEoAhIVCgVzdGF0ZRgEIAEoDjIGLlN0YXRlInYKHVMyQ19JY2VQbGF5ZXJT",
-              "eW5jTm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCRIZCghwb3NpdGlv",
-              "bhgCIAEoCzIHLlZlY3RvchIQCghyb3RhdGlvbhgDIAEoAhIVCgVzdGF0ZRgE",
-              "IAEoDjIGLlN0YXRlIi8KGkMyU19JY2VQbGF5ZXJEYW1hZ2VSZXF1ZXN0EhEK",
-              "CXNlc3Npb25JZBgBIAEoCSI0Ch9TMkNfSWNlUGxheWVyRGFtYWdlTm90aWZp",
-              "Y2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCSJOCh5TMkNfSWNlUGxheWVyRGVh",
-              "dGhOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJEhkKCHBvc2l0aW9u",
-              "GAIgASgLMgcuVmVjdG9yIhwKGlMyQ19JY2VNYXBTeW5jTm90aWZpY2F0aW9u",
-              "IokBChtTMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb24SMAoFcmFua3MYASAD",
-              "KAsyIS5TMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb24uUmFuaxIPCgdlbmRU",
-              "aW1lGAIgASgDGicKBFJhbmsSEQoJc2Vzc2lvbklkGAEgASgJEgwKBHJhbmsY",
-              "AiABKAUigxkKCkdhbWVQYWNrZXQSLwoPcmVnaXN0ZXJSZXF1ZXN0GAEgASgL",
-              "MhQuQzJTX1JlZ2lzdGVyUmVxdWVzdEgAEjEKEHJlZ2lzdGVyUmVzcG9uc2UY",
-              "AiABKAsyFS5TMkNfUmVnaXN0ZXJSZXNwb25zZUgAEikKDGxvZ2luUmVxdWVz",
-              "dBgDIAEoCzIRLkMyU19Mb2dpblJlcXVlc3RIABIrCg1sb2dpblJlc3BvbnNl",
-              "GAQgASgLMhIuUzJDX0xvZ2luUmVzcG9uc2VIABIsCg1sb2dvdXRSZXF1ZXN0",
-              "GAUgASgLMhMuQzJTX0xvZ2dvdXRSZXF1ZXN0SAASMQoQbG9iYnlKb2luUmVx",
-              "dWVzdBgLIAEoCzIVLkMyU19Mb2JieUpvaW5SZXF1ZXN0SAASMwoRbG9iYnlK",
-              "b2luUmVzcG9uc2UYDCABKAsyFi5TMkNfTG9iYnlKb2luUmVzcG9uc2VIABIz",
-              "ChFsb2JieUxlYXZlUmVxdWVzdBgNIAEoCzIWLkMyU19Mb2JieUxlYXZlUmVx",
-              "dWVzdEgAEjUKEmxvYmJ5TGVhdmVSZXNwb25zZRgOIAEoCzIXLlMyQ19Mb2Ji",
-              "eUxlYXZlUmVzcG9uc2VIABI5ChRsb2JieVVzZXJMaXN0UmVxdWVzdBgPIAEo",
-              "CzIZLkMyU19Mb2JieVVzZXJMaXN0UmVxdWVzdEgAEjsKFWxvYmJ5VXNlckxp",
-              "c3RSZXNwb25zZRgQIAEoCzIaLlMyQ19Mb2JieVVzZXJMaXN0UmVzcG9uc2VI",
-              "ABI9ChZsb2JieVVzZXJEZXRhaWxSZXF1ZXN0GBEgASgLMhsuQzJTX0xvYmJ5",
-              "VXNlckRldGFpbFJlcXVlc3RIABI/Chdsb2JieVVzZXJEZXRhaWxSZXNwb25z",
-              "ZRgSIAEoCzIcLlMyQ19Mb2JieVVzZXJEZXRhaWxSZXNwb25zZUgAEi8KD3Jv",
-              "b21MaXN0UmVxdWVzdBgfIAEoCzIULkMyU19Sb29tTGlzdFJlcXVlc3RIABIx",
-              "ChByb29tTGlzdFJlc3BvbnNlGCAgASgLMhUuUzJDX1Jvb21MaXN0UmVzcG9u",
-              "c2VIABIzChFjcmVhdGVSb29tUmVxdWVzdBghIAEoCzIWLkMyU19DcmVhdGVS",
-              "b29tUmVxdWVzdEgAEjUKEmNyZWF0ZVJvb21SZXNwb25zZRgiIAEoCzIXLlMy",
-              "Q19DcmVhdGVSb29tUmVzcG9uc2VIABIvCg9qb2luUm9vbVJlcXVlc3QYIyAB",
-              "KAsyFC5DMlNfSm9pblJvb21SZXF1ZXN0SAASMQoQam9pblJvb21SZXNwb25z",
-              "ZRgkIAEoCzIVLlMyQ19Kb2luUm9vbVJlc3BvbnNlSAASOQoUam9pblJvb21O",
-              "b3RpZmljYXRpb24YJSABKAsyGS5TMkNfSm9pblJvb21Ob3RpZmljYXRpb25I",
-              "ABIxChBsZWF2ZVJvb21SZXF1ZXN0GCYgASgLMhUuQzJTX0xlYXZlUm9vbVJl",
-              "cXVlc3RIABIzChFsZWF2ZVJvb21SZXNwb25zZRgnIAEoCzIWLlMyQ19MZWF2",
-              "ZVJvb21SZXNwb25zZUgAEjsKFWxlYXZlUm9vbU5vdGlmaWNhdGlvbhgoIAEo",
-              "CzIaLlMyQ19MZWF2ZVJvb21Ob3RpZmljYXRpb25IABI1ChJnYW1lUHJlcGFy",
-              "ZVJlcXVlc3QYKSABKAsyFy5DMlNfR2FtZVByZXBhcmVSZXF1ZXN0SAASNwoT",
-              "Z2FtZVByZXBhcmVSZXNwb25zZRgqIAEoCzIYLlMyQ19HYW1lUHJlcGFyZVJl",
-              "c3BvbnNlSAASPwoXZ2FtZVByZXBhcmVOb3RpZmljYXRpb24YKyABKAsyHC5T",
-              "MkNfR2FtZVByZXBhcmVOb3RpZmljYXRpb25IABIxChBnYW1lU3RhcnRSZXF1",
-              "ZXN0GDMgASgLMhUuQzJTX0dhbWVTdGFydFJlcXVlc3RIABI7ChVnYW1lU3Rh",
-              "cnROb3RpZmljYXRpb24YNCABKAsyGi5TMkNfR2FtZVN0YXJ0Tm90aWZpY2F0",
-              "aW9uSAASLwoPcm9sbERpY2VSZXF1ZXN0GD0gASgLMhQuQzJTX1JvbGxEaWNl",
-              "UmVxdWVzdEgAEjEKEHJvbGxEaWNlUmVzcG9uc2UYPiABKAsyFS5TMkNfUm9s",
-              "bERpY2VSZXNwb25zZUgAEjkKFHJvbGxEaWNlTm90aWZpY2F0aW9uGD8gASgL",
-              "MhkuUzJDX1JvbGxEaWNlTm90aWZpY2F0aW9uSAASPQoWbW92ZVBsYXllckJv",
-              "YXJkUmVxdWVzdBhAIAEoCzIbLkMyU19Nb3ZlUGxheWVyQm9hcmRSZXF1ZXN0",
-              "SAASPwoXbW92ZVBsYXllckJvYXJkUmVzcG9uc2UYQSABKAsyHC5TMkNfTW92",
-              "ZVBsYXllckJvYXJkUmVzcG9uc2VIABJHChttb3ZlUGxheWVyQm9hcmROb3Rp",
-              "ZmljYXRpb24YQiABKAsyIC5TMkNfTW92ZVBsYXllckJvYXJkTm90aWZpY2F0",
-              "aW9uSAASNwoTcHVyY2hhc2VUaWxlUmVxdWVzdBhDIAEoCzIYLkMyU19QdXJj",
-              "aGFzZVRpbGVSZXF1ZXN0SAASOQoUcHVyY2hhc2VUaWxlUmVzcG9uc2UYRCAB",
-              "KAsyGS5TMkNfUHVyY2hhc2VUaWxlUmVzcG9uc2VIABJBChhwdXJjaGFzZVRp",
-              "bGVOb3RpZmljYXRpb24YRSABKAsyHS5TMkNfUHVyY2hhc2VUaWxlTm90aWZp",
-              "Y2F0aW9uSAASNwoTZ2FtZUVuZE5vdGlmaWNhdGlvbhhGIAEoCzIYLlMyQ19H",
-              "YW1lRW5kTm90aWZpY2F0aW9uSAASOQoUYmFja1RvVGhlUm9vbVJlcXVlc3QY",
-              "WyABKAsyGS5DMlNfQmFja1RvVGhlUm9vbVJlcXVlc3RIABI7ChViYWNrVG9U",
-              "aGVSb29tUmVzcG9uc2UYXCABKAsyGi5TMkNfQmFja1RvVGhlUm9vbVJlc3Bv",
-              "bnNlSAASQwoZYmFja1RvVGhlUm9vbU5vdGlmaWNhdGlvbhhdIAEoCzIeLlMy",
-              "Q19CYWNrVG9UaGVSb29tTm90aWZpY2F0aW9uSAASOQoUc3RhcnRNaW5pR2Ft",
-              "ZVJlcXVlc3QYZSABKAsyGS5DMlNfU3RhcnRNaW5pR2FtZVJlcXVlc3RIABJD",
-              "ChlzdGFydE1pbmlHYW1lTm90aWZpY2F0aW9uGGYgASgLMh4uUzJDX1N0YXJ0",
-              "TWluaUdhbWVOb3RpZmljYXRpb25IABJKChxpY2VNaW5pR2FtZVJlYWR5Tm90",
-              "aWZpY2F0aW9uGMkBIAEoCzIhLlMyQ19JY2VNaW5pR2FtZVJlYWR5Tm90aWZp",
-              "Y2F0aW9uSAASOAoTaWNlR2FtZVJlYWR5UmVxdWVzdBjKASABKAsyGC5DMlNf",
-              "SWNlR2FtZVJlYWR5UmVxdWVzdEgAEkIKGGljZUdhbWVSZWFkeU5vdGlmaWNh",
-              "dGlvbhjLASABKAsyHS5TMkNfSWNlR2FtZVJlYWR5Tm90aWZpY2F0aW9uSAAS",
-              "SgocaWNlTWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbhjMASABKAsyIS5TMkNf",
-              "SWNlTWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbkgAEjoKFGljZVBsYXllclN5",
-              "bmNSZXF1ZXN0GM0BIAEoCzIZLkMyU19JY2VQbGF5ZXJTeW5jUmVxdWVzdEgA",
-              "EkQKGWljZVBsYXllclN5bmNOb3RpZmljYXRpb24YzgEgASgLMh4uUzJDX0lj",
-              "ZVBsYXllclN5bmNOb3RpZmljYXRpb25IABI+ChZpY2VQbGF5ZXJEYW1hZ2VS",
-              "ZXF1ZXN0GM8BIAEoCzIbLkMyU19JY2VQbGF5ZXJEYW1hZ2VSZXF1ZXN0SAAS",
-              "SAobaWNlUGxheWVyRGFtYWdlTm90aWZpY2F0aW9uGNABIAEoCzIgLlMyQ19J",
-              "Y2VQbGF5ZXJEYW1hZ2VOb3RpZmljYXRpb25IABJGChppY2VQbGF5ZXJEZWF0",
-              "aE5vdGlmaWNhdGlvbhjRASABKAsyHy5TMkNfSWNlUGxheWVyRGVhdGhOb3Rp",
-              "ZmljYXRpb25IABJAChdpY2VHYW1lT3Zlck5vdGlmaWNhdGlvbhjSASABKAsy",
-              "HC5TMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb25IABI+ChZpY2VNYXBTeW5j",
-              "Tm90aWZpY2F0aW9uGNMBIAEoCzIbLlMyQ19JY2VNYXBTeW5jTm90aWZpY2F0",
-              "aW9uSABCCQoHcGF5bG9hZCo7Cg1Sb29tU3RhdGVUeXBlEggKBFdBSVQQABIL",
-              "CgdQUkVQQVJFEAESCQoFQk9BUkQQAhIICgRNSU5JEAMqsAQKDkdsb2JhbEZh",
-              "aWxDb2RlEhEKDU5PTkVfRkFJTENPREUQABIRCg1VTktOT1dOX0VSUk9SEAES",
-              "EwoPSU5WQUxJRF9SRVFVRVNUEAISGQoVQVVUSEVOVElDQVRJT05fRkFJTEVE",
-              "EAMSFwoTSURfT1JfUEFTU1dPUkRfTUlTUxBkEh4KGk5PVF9NQVRDSF9QQVNT",
-              "V09SRF9DT05GSVJNEGUSFAoQQUxSRUFEWV9FWElTVF9JRBBmEhgKFEFMUkVB",
-              "RFlfTE9HR0VEX0lOX0lEEGcSEwoPVkFMSURBSU9OX0VSUk9SEGgSGgoWQUxS",
-              "RUFEWV9FWElTVF9OSUNLTkFNRRBpEhMKDlVTRVJfTk9UX0ZPVU5EEMgBEhUK",
-              "EEFMUkVBRFlfSU5fTE9CQlkQyQESFgoRVVNFUl9OT1RfSU5fTE9CQlkQygES",
-              "GgoVTE9CQllfVVNFUl9MSVNUX0VSUk9SEMsBEhAKC1dST05HX0xPQkJZEMwB",
-              "EhMKDlJPT01fTk9UX0ZPVU5EEKwCEhkKFFVTRVJfQUxSRUFEWV9JTl9ST09N",
-              "EK0CEhUKEFVTRVJfTk9UX0lOX1JPT00QrgISFwoSSU5WQUxJRF9ST09NX1NU",
-              "QVRFEK8CEhcKEk9XTkVSX0NBTk5PVF9SRUFEWRCwAhIRCgxST09NX0lTX0ZV",
-              "TEwQsQISEwoOR0FNRV9OT1RfRk9VTkQQ9AMSGwoWVVNFUl9JTl9HQU1FX05P",
-              "VF9GT1VORBD1AyokCgVTdGF0ZRIICgRJRExFEAASCAoETU9WRRABEgcKA0RJ",
-              "RRACYgZwcm90bzM="));
+              "CgF5GAIgASgCEgkKAXoYAyABKAIiJwoEUmFuaxIRCglzZXNzaW9uSWQYASAB",
+              "KAkSDAoEcmFuaxgCIAEoBSJYCg9Cb2FyZFBsYXllckRhdGESEQoJc2Vzc2lv",
+              "bklkGAEgASgJEgwKBGdvbGQYAiABKAUSDgoGdHJvcGh5GAMgASgFEhQKDHRp",
+              "bGVMb2NhdGlvbhgEIAEoBSI+CgxEaWNlR2FtZURhdGESEQoJc2Vzc2lvbklk",
+              "GAEgASgJEg0KBXZhbHVlGAIgASgFEgwKBHJhbmsYAyABKAUiYwoTQzJTX1Jl",
+              "Z2lzdGVyUmVxdWVzdBIPCgdsb2dpbklkGAEgASgJEhAKCHBhc3N3b3JkGAIg",
+              "ASgJEhcKD3Bhc3N3b3JkQ29uZmlybRgDIAEoCRIQCghuaWNrbmFtZRgEIAEo",
+              "CSJKChRTMkNfUmVnaXN0ZXJSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiEK",
+              "CGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiNQoQQzJTX0xvZ2lu",
+              "UmVxdWVzdBIPCgdsb2dpbklkGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIloK",
+              "EVMyQ19Mb2dpblJlc3BvbnNlEg8KB3N1Y2Nlc3MYASABKAgSEQoJc2Vzc2lv",
+              "bklkGAIgASgJEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUi",
+              "JwoSQzJTX0xvZ2dvdXRSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEoCSIpChRD",
+              "MlNfR2FtZVN0YXJ0UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiyQEKGVMy",
+              "Q19HYW1lU3RhcnROb3RpZmljYXRpb24SDwoHc3VjY2VzcxgBIAEoCBI2Cgdw",
+              "bGF5ZXJzGAIgAygLMiUuUzJDX0dhbWVTdGFydE5vdGlmaWNhdGlvbi5QbGF5",
+              "ZXJEYXRhEiEKCGZhaWxDb2RlGAMgASgOMg8uR2xvYmFsRmFpbENvZGUaQAoK",
+              "UGxheWVyRGF0YRIOCgZ1c2VySWQYASABKAkSEAoIbmlja25hbWUYAiABKAkS",
+              "EAoIcG9zaXRpb24YAyABKAUiKAoTQzJTX1JvbGxEaWNlUmVxdWVzdBIRCglz",
+              "ZXNzaW9uSWQYASABKAkiXgoUUzJDX1JvbGxEaWNlUmVzcG9uc2USDwoHc3Vj",
+              "Y2VzcxgBIAEoCBISCgpkaWNlUmVzdWx0GAIgASgFEiEKCGZhaWxDb2RlGAMg",
+              "ASgOMg8uR2xvYmFsRmFpbENvZGUiQQoYUzJDX1JvbGxEaWNlTm90aWZpY2F0",
+              "aW9uEhEKCXNlc3Npb25JZBgBIAEoCRISCgpkaWNlUmVzdWx0GAIgASgFIl8K",
+              "GkMyU19Nb3ZlUGxheWVyQm9hcmRSZXF1ZXN0EhEKCXNlc3Npb25JZBgBIAEo",
+              "CRIcCgt0YXJnZXRQb2ludBgCIAEoCzIHLlZlY3RvchIQCghyb3RhdGlvbhgD",
+              "IAEoAiJRChtTMkNfTW92ZVBsYXllckJvYXJkUmVzcG9uc2USDwoHc3VjY2Vz",
+              "cxgBIAEoCBIhCghmYWlsQ29kZRgCIAEoDjIPLkdsb2JhbEZhaWxDb2RlImQK",
+              "H1MyQ19Nb3ZlUGxheWVyQm9hcmROb3RpZmljYXRpb24SEQoJc2Vzc2lvbklk",
+              "GAEgASgJEhwKC3RhcmdldFBvaW50GAIgASgLMgcuVmVjdG9yEhAKCHJvdGF0",
+              "aW9uGAMgASgCIjoKF0MyU19QdXJjaGFzZVRpbGVSZXF1ZXN0EhEKCXNlc3Np",
+              "b25JZBgBIAEoCRIMCgR0aWxlGAIgASgFIlwKGFMyQ19QdXJjaGFzZVRpbGVS",
+              "ZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEgwKBHRpbGUYAiABKAUSIQoIZmFp",
+              "bENvZGUYAyABKA4yDy5HbG9iYWxGYWlsQ29kZSI/ChxTMkNfUHVyY2hhc2VU",
+              "aWxlTm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCRIMCgR0aWxlGAIg",
+              "ASgFIi4KF1MyQ19HYW1lRW5kTm90aWZpY2F0aW9uEhMKBHJhbmsYASADKAsy",
+              "BS5SYW5rIi0KGEMyU19CYWNrVG9UaGVSb29tUmVxdWVzdBIRCglzZXNzaW9u",
+              "SWQYASABKAkiaAoZUzJDX0JhY2tUb1RoZVJvb21SZXNwb25zZRIPCgdzdWNj",
+              "ZXNzGAEgASgIEhcKBHJvb20YAiABKAsyCS5Sb29tRGF0YRIhCghmYWlsQ29k",
+              "ZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIjIKHVMyQ19CYWNrVG9UaGVSb29t",
+              "Tm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCSItChhDMlNfU3RhcnRN",
+              "aW5pR2FtZVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIi0KHVMyQ19TdGFy",
+              "dE1pbmlHYW1lTm90aWZpY2F0aW9uEgwKBGdhbWUYASABKAUiPAoZQzJTX1B1",
+              "cmNoYXNlVHJvcGh5UmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkSDAoEdGls",
+              "ZRgCIAEoBSKIAQoaUzJDX1B1cmNoYXNlVHJvcGh5UmVzcG9uc2USDwoHc3Vj",
+              "Y2VzcxgBIAEoCBIkCgpwbGF5ZXJJbmZvGAIgASgLMhAuQm9hcmRQbGF5ZXJE",
+              "YXRhEhAKCG5leHRUaWxlGAMgASgFEiEKCGZhaWxDb2RlGAQgASgOMg8uR2xv",
+              "YmFsRmFpbENvZGUiWQoeUzJDX1B1cmNoYXNlVHJvcGh5Tm90aWZpY2F0aW9u",
+              "EhEKCXNlc3Npb25JZBgBIAEoCRISCgpiZWZvcmVUaWxlGAIgASgFEhAKCG5l",
+              "eHRUaWxlGAMgASgFIjkKFkMyU19UaWxlUGVuYWx0eVJlcXVlc3QSEQoJc2Vz",
+              "c2lvbklkGAEgASgJEgwKBHRpbGUYAiABKAUidAoXUzJDX1RpbGVQZW5hbHR5",
+              "UmVzcG9uc2USDwoHc3VjY2VzcxgBIAEoCBIlCgtwbGF5ZXJzSW5mbxgCIAMo",
+              "CzIQLkJvYXJkUGxheWVyRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2Jh",
+              "bEZhaWxDb2RlImUKG1MyQ19UaWxlUGVuYWx0eU5vdGlmaWNhdGlvbhIRCglz",
+              "ZXNzaW9uSWQYASABKAkSDAoEdGlsZRgCIAEoBRIlCgtwbGF5ZXJzSW5mbxgD",
+              "IAMoCzIQLkJvYXJkUGxheWVyRGF0YSIoChNDMlNfRGljZUdhbWVSZXF1ZXN0",
+              "EhEKCXNlc3Npb25JZBgBIAEoCSJpChRTMkNfRGljZUdhbWVSZXNwb25zZRIP",
+              "CgdzdWNjZXNzGAEgASgIEh0KBnJlc3VsdBgCIAMoCzINLkRpY2VHYW1lRGF0",
+              "YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIjkKGFMyQ19E",
+              "aWNlR2FtZU5vdGlmaWNhdGlvbhIdCgZyZXN1bHQYASADKAsyDS5EaWNlR2Ft",
+              "ZURhdGEiKQoUQzJTX0xvYmJ5Sm9pblJlcXVlc3QSEQoJc2Vzc2lvbklkGAEg",
+              "ASgJImQKFVMyQ19Mb2JieUpvaW5SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgI",
+              "EhcKBHVzZXIYAiABKAsyCS5Vc2VyRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIP",
+              "Lkdsb2JhbEZhaWxDb2RlIioKFUMyU19Mb2JieUxlYXZlUmVxdWVzdBIRCglz",
+              "ZXNzaW9uSWQYASABKAkiTAoWUzJDX0xvYmJ5TGVhdmVSZXNwb25zZRIPCgdz",
+              "dWNjZXNzGAEgASgIEiEKCGZhaWxDb2RlGAIgASgOMg8uR2xvYmFsRmFpbENv",
+              "ZGUiLQoYQzJTX0xvYmJ5VXNlckxpc3RSZXF1ZXN0EhEKCXNlc3Npb25JZBgB",
+              "IAEoCSJhChlTMkNfTG9iYnlVc2VyTGlzdFJlc3BvbnNlEg8KB3N1Y2Nlc3MY",
+              "ASABKAgSEAoIdXNlckxpc3QYAiADKAkSIQoIZmFpbENvZGUYAyABKA4yDy5H",
+              "bG9iYWxGYWlsQ29kZSJIChpDMlNfTG9iYnlVc2VyRGV0YWlsUmVxdWVzdBIR",
+              "CglzZXNzaW9uSWQYASABKAkSFwoPdGFyZ2V0U2Vzc2lvbklkGAIgASgJImoK",
+              "G1MyQ19Mb2JieVVzZXJEZXRhaWxSZXNwb25zZRIPCgdzdWNjZXNzGAEgASgI",
+              "EhcKBHVzZXIYAiABKAsyCS5Vc2VyRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIP",
+              "Lkdsb2JhbEZhaWxDb2RlIigKE0MyU19Sb29tTGlzdFJlcXVlc3QSEQoJc2Vz",
+              "c2lvbklkGAEgASgJImQKFFMyQ19Sb29tTGlzdFJlc3BvbnNlEg8KB3N1Y2Nl",
+              "c3MYASABKAgSGAoFcm9vbXMYAiADKAsyCS5Sb29tRGF0YRIhCghmYWlsQ29k",
+              "ZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIjwKFUMyU19DcmVhdGVSb29tUmVx",
+              "dWVzdBIRCglzZXNzaW9uSWQYASABKAkSEAoIcm9vbU5hbWUYAiABKAkiZQoW",
+              "UzJDX0NyZWF0ZVJvb21SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEhcKBHJv",
+              "b20YAiABKAsyCS5Sb29tRGF0YRIhCghmYWlsQ29kZRgDIAEoDjIPLkdsb2Jh",
+              "bEZhaWxDb2RlIjgKE0MyU19Kb2luUm9vbVJlcXVlc3QSEQoJc2Vzc2lvbklk",
+              "GAEgASgJEg4KBnJvb21JZBgCIAEoCSJjChRTMkNfSm9pblJvb21SZXNwb25z",
+              "ZRIPCgdzdWNjZXNzGAEgASgIEhcKBHJvb20YAiABKAsyCS5Sb29tRGF0YRIh",
+              "CghmYWlsQ29kZRgDIAEoDjIPLkdsb2JhbEZhaWxDb2RlIjMKGFMyQ19Kb2lu",
+              "Um9vbU5vdGlmaWNhdGlvbhIXCgRyb29tGAEgASgLMgkuUm9vbURhdGEiKQoU",
+              "QzJTX0xlYXZlUm9vbVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIksKFVMy",
+              "Q19MZWF2ZVJvb21SZXNwb25zZRIPCgdzdWNjZXNzGAEgASgIEiEKCGZhaWxD",
+              "b2RlGAIgASgOMg8uR2xvYmFsRmFpbENvZGUiNAoZUzJDX0xlYXZlUm9vbU5v",
+              "dGlmaWNhdGlvbhIXCgRyb29tGAEgASgLMgkuUm9vbURhdGEiPAoWQzJTX0dh",
+              "bWVQcmVwYXJlUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkSDwoHaXNSZWFk",
+              "eRgCIAEoCCJeChdTMkNfR2FtZVByZXBhcmVSZXNwb25zZRIPCgdzdWNjZXNz",
+              "GAEgASgIEg8KB2lzUmVhZHkYAiABKAgSIQoIZmFpbENvZGUYAyABKA4yDy5H",
+              "bG9iYWxGYWlsQ29kZSJmChtTMkNfR2FtZVByZXBhcmVOb3RpZmljYXRpb24S",
+              "FwoEdXNlchgBIAEoCzIJLlVzZXJEYXRhEg8KB2lzUmVhZHkYAiABKAgSHQoF",
+              "c3RhdGUYAyABKA4yDi5Sb29tU3RhdGVUeXBlIrMBCiBTMkNfSWNlTWluaUdh",
+              "bWVSZWFkeU5vdGlmaWNhdGlvbhI/CgdwbGF5ZXJzGAEgAygLMi4uUzJDX0lj",
+              "ZU1pbmlHYW1lUmVhZHlOb3RpZmljYXRpb24uc3RhcnRQbGF5ZXJzGk4KDHN0",
+              "YXJ0UGxheWVycxIRCglzZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24YAiAB",
+              "KAsyBy5WZWN0b3ISEAoIcm90YXRpb24YAyABKAIiLAoXQzJTX0ljZUdhbWVS",
+              "ZWFkeVJlcXVlc3QSEQoJc2Vzc2lvbklkGAEgASgJIjEKHFMyQ19JY2VHYW1l",
+              "UmVhZHlOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJIiIKIFMyQ19J",
+              "Y2VNaW5pR2FtZVN0YXJ0Tm90aWZpY2F0aW9uInEKGEMyU19JY2VQbGF5ZXJT",
+              "eW5jUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24YAiAB",
+              "KAsyBy5WZWN0b3ISEAoIcm90YXRpb24YAyABKAISFQoFc3RhdGUYBCABKA4y",
+              "Bi5TdGF0ZSJ2Ch1TMkNfSWNlUGxheWVyU3luY05vdGlmaWNhdGlvbhIRCglz",
+              "ZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24YAiABKAsyBy5WZWN0b3ISEAoI",
+              "cm90YXRpb24YAyABKAISFQoFc3RhdGUYBCABKA4yBi5TdGF0ZSIvChpDMlNf",
+              "SWNlUGxheWVyRGFtYWdlUmVxdWVzdBIRCglzZXNzaW9uSWQYASABKAkiNAof",
+              "UzJDX0ljZVBsYXllckRhbWFnZU5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQY",
+              "ASABKAkiMwoeUzJDX0ljZVBsYXllckRlYXRoTm90aWZpY2F0aW9uEhEKCXNl",
+              "c3Npb25JZBgBIAEoCSIcChpTMkNfSWNlTWFwU3luY05vdGlmaWNhdGlvbiJE",
+              "ChtTMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb24SFAoFcmFua3MYASADKAsy",
+              "BS5SYW5rEg8KB2VuZFRpbWUYAiABKAMiMgodUzJDX0ljZVBsYXllckV4aXRO",
+              "b3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJIpcdCgpHYW1lUGFja2V0",
+              "Ei8KD3JlZ2lzdGVyUmVxdWVzdBgBIAEoCzIULkMyU19SZWdpc3RlclJlcXVl",
+              "c3RIABIxChByZWdpc3RlclJlc3BvbnNlGAIgASgLMhUuUzJDX1JlZ2lzdGVy",
+              "UmVzcG9uc2VIABIpCgxsb2dpblJlcXVlc3QYAyABKAsyES5DMlNfTG9naW5S",
+              "ZXF1ZXN0SAASKwoNbG9naW5SZXNwb25zZRgEIAEoCzISLlMyQ19Mb2dpblJl",
+              "c3BvbnNlSAASLAoNbG9nb3V0UmVxdWVzdBgFIAEoCzITLkMyU19Mb2dnb3V0",
+              "UmVxdWVzdEgAEjEKEGxvYmJ5Sm9pblJlcXVlc3QYCyABKAsyFS5DMlNfTG9i",
+              "YnlKb2luUmVxdWVzdEgAEjMKEWxvYmJ5Sm9pblJlc3BvbnNlGAwgASgLMhYu",
+              "UzJDX0xvYmJ5Sm9pblJlc3BvbnNlSAASMwoRbG9iYnlMZWF2ZVJlcXVlc3QY",
+              "DSABKAsyFi5DMlNfTG9iYnlMZWF2ZVJlcXVlc3RIABI1ChJsb2JieUxlYXZl",
+              "UmVzcG9uc2UYDiABKAsyFy5TMkNfTG9iYnlMZWF2ZVJlc3BvbnNlSAASOQoU",
+              "bG9iYnlVc2VyTGlzdFJlcXVlc3QYDyABKAsyGS5DMlNfTG9iYnlVc2VyTGlz",
+              "dFJlcXVlc3RIABI7ChVsb2JieVVzZXJMaXN0UmVzcG9uc2UYECABKAsyGi5T",
+              "MkNfTG9iYnlVc2VyTGlzdFJlc3BvbnNlSAASPQoWbG9iYnlVc2VyRGV0YWls",
+              "UmVxdWVzdBgRIAEoCzIbLkMyU19Mb2JieVVzZXJEZXRhaWxSZXF1ZXN0SAAS",
+              "PwoXbG9iYnlVc2VyRGV0YWlsUmVzcG9uc2UYEiABKAsyHC5TMkNfTG9iYnlV",
+              "c2VyRGV0YWlsUmVzcG9uc2VIABIvCg9yb29tTGlzdFJlcXVlc3QYHyABKAsy",
+              "FC5DMlNfUm9vbUxpc3RSZXF1ZXN0SAASMQoQcm9vbUxpc3RSZXNwb25zZRgg",
+              "IAEoCzIVLlMyQ19Sb29tTGlzdFJlc3BvbnNlSAASMwoRY3JlYXRlUm9vbVJl",
+              "cXVlc3QYISABKAsyFi5DMlNfQ3JlYXRlUm9vbVJlcXVlc3RIABI1ChJjcmVh",
+              "dGVSb29tUmVzcG9uc2UYIiABKAsyFy5TMkNfQ3JlYXRlUm9vbVJlc3BvbnNl",
+              "SAASLwoPam9pblJvb21SZXF1ZXN0GCMgASgLMhQuQzJTX0pvaW5Sb29tUmVx",
+              "dWVzdEgAEjEKEGpvaW5Sb29tUmVzcG9uc2UYJCABKAsyFS5TMkNfSm9pblJv",
+              "b21SZXNwb25zZUgAEjkKFGpvaW5Sb29tTm90aWZpY2F0aW9uGCUgASgLMhku",
+              "UzJDX0pvaW5Sb29tTm90aWZpY2F0aW9uSAASMQoQbGVhdmVSb29tUmVxdWVz",
+              "dBgmIAEoCzIVLkMyU19MZWF2ZVJvb21SZXF1ZXN0SAASMwoRbGVhdmVSb29t",
+              "UmVzcG9uc2UYJyABKAsyFi5TMkNfTGVhdmVSb29tUmVzcG9uc2VIABI7ChVs",
+              "ZWF2ZVJvb21Ob3RpZmljYXRpb24YKCABKAsyGi5TMkNfTGVhdmVSb29tTm90",
+              "aWZpY2F0aW9uSAASNQoSZ2FtZVByZXBhcmVSZXF1ZXN0GCkgASgLMhcuQzJT",
+              "X0dhbWVQcmVwYXJlUmVxdWVzdEgAEjcKE2dhbWVQcmVwYXJlUmVzcG9uc2UY",
+              "KiABKAsyGC5TMkNfR2FtZVByZXBhcmVSZXNwb25zZUgAEj8KF2dhbWVQcmVw",
+              "YXJlTm90aWZpY2F0aW9uGCsgASgLMhwuUzJDX0dhbWVQcmVwYXJlTm90aWZp",
+              "Y2F0aW9uSAASMQoQZ2FtZVN0YXJ0UmVxdWVzdBgzIAEoCzIVLkMyU19HYW1l",
+              "U3RhcnRSZXF1ZXN0SAASOwoVZ2FtZVN0YXJ0Tm90aWZpY2F0aW9uGDQgASgL",
+              "MhouUzJDX0dhbWVTdGFydE5vdGlmaWNhdGlvbkgAEi8KD3JvbGxEaWNlUmVx",
+              "dWVzdBg9IAEoCzIULkMyU19Sb2xsRGljZVJlcXVlc3RIABIxChByb2xsRGlj",
+              "ZVJlc3BvbnNlGD4gASgLMhUuUzJDX1JvbGxEaWNlUmVzcG9uc2VIABI5ChRy",
+              "b2xsRGljZU5vdGlmaWNhdGlvbhg/IAEoCzIZLlMyQ19Sb2xsRGljZU5vdGlm",
+              "aWNhdGlvbkgAEj0KFm1vdmVQbGF5ZXJCb2FyZFJlcXVlc3QYQCABKAsyGy5D",
+              "MlNfTW92ZVBsYXllckJvYXJkUmVxdWVzdEgAEj8KF21vdmVQbGF5ZXJCb2Fy",
+              "ZFJlc3BvbnNlGEEgASgLMhwuUzJDX01vdmVQbGF5ZXJCb2FyZFJlc3BvbnNl",
+              "SAASRwobbW92ZVBsYXllckJvYXJkTm90aWZpY2F0aW9uGEIgASgLMiAuUzJD",
+              "X01vdmVQbGF5ZXJCb2FyZE5vdGlmaWNhdGlvbkgAEjcKE3B1cmNoYXNlVGls",
+              "ZVJlcXVlc3QYQyABKAsyGC5DMlNfUHVyY2hhc2VUaWxlUmVxdWVzdEgAEjkK",
+              "FHB1cmNoYXNlVGlsZVJlc3BvbnNlGEQgASgLMhkuUzJDX1B1cmNoYXNlVGls",
+              "ZVJlc3BvbnNlSAASQQoYcHVyY2hhc2VUaWxlTm90aWZpY2F0aW9uGEUgASgL",
+              "Mh0uUzJDX1B1cmNoYXNlVGlsZU5vdGlmaWNhdGlvbkgAEjcKE2dhbWVFbmRO",
+              "b3RpZmljYXRpb24YRiABKAsyGC5TMkNfR2FtZUVuZE5vdGlmaWNhdGlvbkgA",
+              "EjsKFXB1cmNoYXNlVHJvcGh5UmVxdWVzdBhHIAEoCzIaLkMyU19QdXJjaGFz",
+              "ZVRyb3BoeVJlcXVlc3RIABI9ChZwdXJjaGFzZVRyb3BoeVJlc3BvbnNlGEgg",
+              "ASgLMhsuUzJDX1B1cmNoYXNlVHJvcGh5UmVzcG9uc2VIABJFChpwdXJjaGFz",
+              "ZVRyb3BoeU5vdGlmaWNhdGlvbhhJIAEoCzIfLlMyQ19QdXJjaGFzZVRyb3Bo",
+              "eU5vdGlmaWNhdGlvbkgAEjUKEnRpbGVQZW5hbHR5UmVxdWVzdBhKIAEoCzIX",
+              "LkMyU19UaWxlUGVuYWx0eVJlcXVlc3RIABI3ChN0aWxlUGVuYWx0eVJlc3Bv",
+              "bnNlGEsgASgLMhguUzJDX1RpbGVQZW5hbHR5UmVzcG9uc2VIABI/Chd0aWxl",
+              "UGVuYWx0eU5vdGlmaWNhdGlvbhhMIAEoCzIcLlMyQ19UaWxlUGVuYWx0eU5v",
+              "dGlmaWNhdGlvbkgAEi8KD2RpY2VHYW1lUmVxdWVzdBhNIAEoCzIULkMyU19E",
+              "aWNlR2FtZVJlcXVlc3RIABIxChBkaWNlR2FtZVJlc3BvbnNlGE4gASgLMhUu",
+              "UzJDX0RpY2VHYW1lUmVzcG9uc2VIABI5ChRkaWNlR2FtZU5vdGlmaWNhdGlv",
+              "bhhPIAEoCzIZLlMyQ19EaWNlR2FtZU5vdGlmaWNhdGlvbkgAEjkKFGJhY2tU",
+              "b1RoZVJvb21SZXF1ZXN0GFsgASgLMhkuQzJTX0JhY2tUb1RoZVJvb21SZXF1",
+              "ZXN0SAASOwoVYmFja1RvVGhlUm9vbVJlc3BvbnNlGFwgASgLMhouUzJDX0Jh",
+              "Y2tUb1RoZVJvb21SZXNwb25zZUgAEkMKGWJhY2tUb1RoZVJvb21Ob3RpZmlj",
+              "YXRpb24YXSABKAsyHi5TMkNfQmFja1RvVGhlUm9vbU5vdGlmaWNhdGlvbkgA",
+              "EjkKFHN0YXJ0TWluaUdhbWVSZXF1ZXN0GGUgASgLMhkuQzJTX1N0YXJ0TWlu",
+              "aUdhbWVSZXF1ZXN0SAASSgocaWNlTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlv",
+              "bhjJASABKAsyIS5TMkNfSWNlTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlvbkgA",
+              "EjgKE2ljZUdhbWVSZWFkeVJlcXVlc3QYygEgASgLMhguQzJTX0ljZUdhbWVS",
+              "ZWFkeVJlcXVlc3RIABJCChhpY2VHYW1lUmVhZHlOb3RpZmljYXRpb24YywEg",
+              "ASgLMh0uUzJDX0ljZUdhbWVSZWFkeU5vdGlmaWNhdGlvbkgAEkoKHGljZU1p",
+              "bmlHYW1lU3RhcnROb3RpZmljYXRpb24YzAEgASgLMiEuUzJDX0ljZU1pbmlH",
+              "YW1lU3RhcnROb3RpZmljYXRpb25IABI6ChRpY2VQbGF5ZXJTeW5jUmVxdWVz",
+              "dBjNASABKAsyGS5DMlNfSWNlUGxheWVyU3luY1JlcXVlc3RIABJEChlpY2VQ",
+              "bGF5ZXJTeW5jTm90aWZpY2F0aW9uGM4BIAEoCzIeLlMyQ19JY2VQbGF5ZXJT",
+              "eW5jTm90aWZpY2F0aW9uSAASPgoWaWNlUGxheWVyRGFtYWdlUmVxdWVzdBjP",
+              "ASABKAsyGy5DMlNfSWNlUGxheWVyRGFtYWdlUmVxdWVzdEgAEkgKG2ljZVBs",
+              "YXllckRhbWFnZU5vdGlmaWNhdGlvbhjQASABKAsyIC5TMkNfSWNlUGxheWVy",
+              "RGFtYWdlTm90aWZpY2F0aW9uSAASRgoaaWNlUGxheWVyRGVhdGhOb3RpZmlj",
+              "YXRpb24Y0QEgASgLMh8uUzJDX0ljZVBsYXllckRlYXRoTm90aWZpY2F0aW9u",
+              "SAASQAoXaWNlR2FtZU92ZXJOb3RpZmljYXRpb24Y0gEgASgLMhwuUzJDX0lj",
+              "ZUdhbWVPdmVyTm90aWZpY2F0aW9uSAASPgoWaWNlTWFwU3luY05vdGlmaWNh",
+              "dGlvbhjTASABKAsyGy5TMkNfSWNlTWFwU3luY05vdGlmaWNhdGlvbkgAEkQK",
+              "GWljZVBsYXllckV4aXROb3RpZmljYXRpb24Y1AEgASgLMh4uUzJDX0ljZVBs",
+              "YXllckV4aXROb3RpZmljYXRpb25IAEIJCgdwYXlsb2FkKjsKDVJvb21TdGF0",
+              "ZVR5cGUSCAoEV0FJVBAAEgsKB1BSRVBBUkUQARIJCgVCT0FSRBACEggKBE1J",
+              "TkkQAyqwBAoOR2xvYmFsRmFpbENvZGUSEQoNTk9ORV9GQUlMQ09ERRAAEhEK",
+              "DVVOS05PV05fRVJST1IQARITCg9JTlZBTElEX1JFUVVFU1QQAhIZChVBVVRI",
+              "RU5USUNBVElPTl9GQUlMRUQQAxIXChNJRF9PUl9QQVNTV09SRF9NSVNTEGQS",
+              "HgoaTk9UX01BVENIX1BBU1NXT1JEX0NPTkZJUk0QZRIUChBBTFJFQURZX0VY",
+              "SVNUX0lEEGYSGAoUQUxSRUFEWV9MT0dHRURfSU5fSUQQZxITCg9WQUxJREFJ",
+              "T05fRVJST1IQaBIaChZBTFJFQURZX0VYSVNUX05JQ0tOQU1FEGkSEwoOVVNF",
+              "Ul9OT1RfRk9VTkQQyAESFQoQQUxSRUFEWV9JTl9MT0JCWRDJARIWChFVU0VS",
+              "X05PVF9JTl9MT0JCWRDKARIaChVMT0JCWV9VU0VSX0xJU1RfRVJST1IQywES",
+              "EAoLV1JPTkdfTE9CQlkQzAESEwoOUk9PTV9OT1RfRk9VTkQQrAISGQoUVVNF",
+              "Ul9BTFJFQURZX0lOX1JPT00QrQISFQoQVVNFUl9OT1RfSU5fUk9PTRCuAhIX",
+              "ChJJTlZBTElEX1JPT01fU1RBVEUQrwISFwoST1dORVJfQ0FOTk9UX1JFQURZ",
+              "ELACEhEKDFJPT01fSVNfRlVMTBCxAhITCg5HQU1FX05PVF9GT1VORBD0AxIb",
+              "ChZVU0VSX0lOX0dBTUVfTk9UX0ZPVU5EEPUDKiQKBVN0YXRlEggKBElETEUQ",
+              "ABIICgRNT1ZFEAESBwoDRElFEAJiBnByb3RvMw=="));
         descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
             new pbr::FileDescriptor[] { },
             new pbr::GeneratedClrTypeInfo(new[] { typeof(global::RoomStateType), typeof(global::GlobalFailCode), typeof(global::State), }, null, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::UserData), global::UserData.Parser, new[]{ "SessionId", "Nickname" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "RoomId", "OwnerId", "RoomName", "LobbyId", "State", "Users", "MaxUser", "ReadyUsers" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::Vector), global::Vector.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "PlayerId", "Rank_" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::Rank), global::Rank.Parser, new[]{ "SessionId", "Rank_" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::BoardPlayerData), global::BoardPlayerData.Parser, new[]{ "SessionId", "Gold", "Trophy", "TileLocation" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::DiceGameData), global::DiceGameData.Parser, new[]{ "SessionId", "Value", "Rank" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_RegisterRequest), global::C2S_RegisterRequest.Parser, new[]{ "LoginId", "Password", "PasswordConfirm", "Nickname" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RegisterResponse), global::S2C_RegisterResponse.Parser, new[]{ "Success", "FailCode" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_LoginRequest), global::C2S_LoginRequest.Parser, new[]{ "LoginId", "Password" }, null, null, null, null),
@@ -224,21 +258,30 @@ public static partial class ProtocolReflection
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_LoggoutRequest), global::C2S_LoggoutRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_GameStartRequest), global::C2S_GameStartRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameStartNotification), global::S2C_GameStartNotification.Parser, new[]{ "Success", "Players", "FailCode" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameStartNotification.Types.PlayerData), global::S2C_GameStartNotification.Types.PlayerData.Parser, new[]{ "UserId", "Nickname", "Position" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_RollDiceRequest), global::C2S_RollDiceRequest.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_RollDiceRequest), global::C2S_RollDiceRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceResponse), global::S2C_RollDiceResponse.Parser, new[]{ "Success", "DiceResult", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceNotification), global::S2C_RollDiceNotification.Parser, new[]{ "PlayerId", "DiceResult" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_MovePlayerBoardRequest), global::C2S_MovePlayerBoardRequest.Parser, new[]{ "SessionId", "TargetPoint" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_RollDiceNotification), global::S2C_RollDiceNotification.Parser, new[]{ "SessionId", "DiceResult" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_MovePlayerBoardRequest), global::C2S_MovePlayerBoardRequest.Parser, new[]{ "SessionId", "TargetPoint", "Rotation" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardResponse), global::S2C_MovePlayerBoardResponse.Parser, new[]{ "Success", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardNotification), global::S2C_MovePlayerBoardNotification.Parser, new[]{ "PlayerId", "TargetPoint" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_MovePlayerBoardNotification), global::S2C_MovePlayerBoardNotification.Parser, new[]{ "SessionId", "TargetPoint", "Rotation" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_PurchaseTileRequest), global::C2S_PurchaseTileRequest.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileResponse), global::S2C_PurchaseTileResponse.Parser, new[]{ "Success", "Tile", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileNotification), global::S2C_PurchaseTileNotification.Parser, new[]{ "PlayerId", "Tile" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTileNotification), global::S2C_PurchaseTileNotification.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_GameEndNotification), global::S2C_GameEndNotification.Parser, new[]{ "Rank" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BackToTheRoomRequest), global::C2S_BackToTheRoomRequest.Parser, new[]{ "UserId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BackToTheRoomRequest), global::C2S_BackToTheRoomRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BackToTheRoomResponse), global::S2C_BackToTheRoomResponse.Parser, new[]{ "Success", "Room", "FailCode" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BackToTheRoomNotification), global::S2C_BackToTheRoomNotification.Parser, new[]{ "PlayerId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BackToTheRoomNotification), global::S2C_BackToTheRoomNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_StartMiniGameRequest), global::C2S_StartMiniGameRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_StartMiniGameNotification), global::S2C_StartMiniGameNotification.Parser, new[]{ "Game" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_PurchaseTrophyRequest), global::C2S_PurchaseTrophyRequest.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTrophyResponse), global::S2C_PurchaseTrophyResponse.Parser, new[]{ "Success", "PlayerInfo", "NextTile", "FailCode" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_PurchaseTrophyNotification), global::S2C_PurchaseTrophyNotification.Parser, new[]{ "SessionId", "BeforeTile", "NextTile" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_TilePenaltyRequest), global::C2S_TilePenaltyRequest.Parser, new[]{ "SessionId", "Tile" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_TilePenaltyResponse), global::S2C_TilePenaltyResponse.Parser, new[]{ "Success", "PlayersInfo", "FailCode" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_TilePenaltyNotification), global::S2C_TilePenaltyNotification.Parser, new[]{ "SessionId", "Tile", "PlayersInfo" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_DiceGameRequest), global::C2S_DiceGameRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_DiceGameResponse), global::S2C_DiceGameResponse.Parser, new[]{ "Success", "Result", "FailCode" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_DiceGameNotification), global::S2C_DiceGameNotification.Parser, new[]{ "Result" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_LobbyJoinRequest), global::C2S_LobbyJoinRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_LobbyJoinResponse), global::S2C_LobbyJoinResponse.Parser, new[]{ "Success", "User", "FailCode" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_LobbyLeaveRequest), global::C2S_LobbyLeaveRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
@@ -268,10 +311,11 @@ public static partial class ProtocolReflection
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerSyncNotification), global::S2C_IcePlayerSyncNotification.Parser, new[]{ "SessionId", "Position", "Rotation", "State" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::C2S_IcePlayerDamageRequest), global::C2S_IcePlayerDamageRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerDamageNotification), global::S2C_IcePlayerDamageNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerDeathNotification), global::S2C_IcePlayerDeathNotification.Parser, new[]{ "SessionId", "Position" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerDeathNotification), global::S2C_IcePlayerDeathNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceMapSyncNotification), global::S2C_IceMapSyncNotification.Parser, null, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification), global::S2C_IceGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification.Types.Rank), global::S2C_IceGameOverNotification.Types.Rank.Parser, new[]{ "SessionId", "Rank_" }, null, null, null, null)}),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GamePacket), global::GamePacket.Parser, new[]{ "RegisterRequest", "RegisterResponse", "LoginRequest", "LoginResponse", "LogoutRequest", "LobbyJoinRequest", "LobbyJoinResponse", "LobbyLeaveRequest", "LobbyLeaveResponse", "LobbyUserListRequest", "LobbyUserListResponse", "LobbyUserDetailRequest", "LobbyUserDetailResponse", "RoomListRequest", "RoomListResponse", "CreateRoomRequest", "CreateRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "JoinRoomNotification", "LeaveRoomRequest", "LeaveRoomResponse", "LeaveRoomNotification", "GamePrepareRequest", "GamePrepareResponse", "GamePrepareNotification", "GameStartRequest", "GameStartNotification", "RollDiceRequest", "RollDiceResponse", "RollDiceNotification", "MovePlayerBoardRequest", "MovePlayerBoardResponse", "MovePlayerBoardNotification", "PurchaseTileRequest", "PurchaseTileResponse", "PurchaseTileNotification", "GameEndNotification", "BackToTheRoomRequest", "BackToTheRoomResponse", "BackToTheRoomNotification", "StartMiniGameRequest", "StartMiniGameNotification", "IceMiniGameReadyNotification", "IceGameReadyRequest", "IceGameReadyNotification", "IceMiniGameStartNotification", "IcePlayerSyncRequest", "IcePlayerSyncNotification", "IcePlayerDamageRequest", "IcePlayerDamageNotification", "IcePlayerDeathNotification", "IceGameOverNotification", "IceMapSyncNotification" }, new[]{ "Payload" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IceGameOverNotification), global::S2C_IceGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_IcePlayerExitNotification), global::S2C_IcePlayerExitNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GamePacket), global::GamePacket.Parser, new[]{ "RegisterRequest", "RegisterResponse", "LoginRequest", "LoginResponse", "LogoutRequest", "LobbyJoinRequest", "LobbyJoinResponse", "LobbyLeaveRequest", "LobbyLeaveResponse", "LobbyUserListRequest", "LobbyUserListResponse", "LobbyUserDetailRequest", "LobbyUserDetailResponse", "RoomListRequest", "RoomListResponse", "CreateRoomRequest", "CreateRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "JoinRoomNotification", "LeaveRoomRequest", "LeaveRoomResponse", "LeaveRoomNotification", "GamePrepareRequest", "GamePrepareResponse", "GamePrepareNotification", "GameStartRequest", "GameStartNotification", "RollDiceRequest", "RollDiceResponse", "RollDiceNotification", "MovePlayerBoardRequest", "MovePlayerBoardResponse", "MovePlayerBoardNotification", "PurchaseTileRequest", "PurchaseTileResponse", "PurchaseTileNotification", "GameEndNotification", "PurchaseTrophyRequest", "PurchaseTrophyResponse", "PurchaseTrophyNotification", "TilePenaltyRequest", "TilePenaltyResponse", "TilePenaltyNotification", "DiceGameRequest", "DiceGameResponse", "DiceGameNotification", "BackToTheRoomRequest", "BackToTheRoomResponse", "BackToTheRoomNotification", "StartMiniGameRequest", "IceMiniGameReadyNotification", "IceGameReadyRequest", "IceGameReadyNotification", "IceMiniGameStartNotification", "IcePlayerSyncRequest", "IcePlayerSyncNotification", "IcePlayerDamageRequest", "IcePlayerDamageNotification", "IcePlayerDeathNotification", "IceGameOverNotification", "IceMapSyncNotification", "IcePlayerExitNotification" }, new[]{ "Payload" }, null, null, null)
             }));
     }
     #endregion
@@ -1158,7 +1202,7 @@ public sealed partial class Rank : pb::IMessage<Rank>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public Rank(Rank other) : this()
     {
-        playerId_ = other.playerId_;
+        sessionId_ = other.sessionId_;
         rank_ = other.rank_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -1169,16 +1213,16 @@ public sealed partial class Rank : pb::IMessage<Rank>
         return new Rank(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private int playerId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PlayerId
+    public string SessionId
     {
-        get { return playerId_; }
+        get { return sessionId_; }
         set
         {
-            playerId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
@@ -1212,7 +1256,7 @@ public sealed partial class Rank : pb::IMessage<Rank>
         {
             return true;
         }
-        if (PlayerId != other.PlayerId) return false;
+        if (SessionId != other.SessionId) return false;
         if (Rank_ != other.Rank_) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
@@ -1221,7 +1265,7 @@ public sealed partial class Rank : pb::IMessage<Rank>
     public override int GetHashCode()
     {
         int hash = 1;
-        if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (Rank_ != 0) hash ^= Rank_.GetHashCode();
         if (_unknownFields != null)
         {
@@ -1239,10 +1283,10 @@ public sealed partial class Rank : pb::IMessage<Rank>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(PlayerId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
         if (Rank_ != 0)
         {
@@ -1259,9 +1303,9 @@ public sealed partial class Rank : pb::IMessage<Rank>
     public int CalculateSize()
     {
         int size = 0;
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (Rank_ != 0)
         {
@@ -1281,9 +1325,9 @@ public sealed partial class Rank : pb::IMessage<Rank>
         {
             return;
         }
-        if (other.PlayerId != 0)
+        if (other.SessionId.Length != 0)
         {
-            PlayerId = other.PlayerId;
+            SessionId = other.SessionId;
         }
         if (other.Rank_ != 0)
         {
@@ -1303,14 +1347,498 @@ public sealed partial class Rank : pb::IMessage<Rank>
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        PlayerId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
                 case 16:
                     {
                         Rank_ = input.ReadInt32();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class BoardPlayerData : pb::IMessage<BoardPlayerData>
+{
+    private static readonly pb::MessageParser<BoardPlayerData> _parser = new pb::MessageParser<BoardPlayerData>(() => new BoardPlayerData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<BoardPlayerData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[4]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BoardPlayerData()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BoardPlayerData(BoardPlayerData other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        gold_ = other.gold_;
+        trophy_ = other.trophy_;
+        tileLocation_ = other.tileLocation_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public BoardPlayerData Clone()
+    {
+        return new BoardPlayerData(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "gold" field.</summary>
+    public const int GoldFieldNumber = 2;
+    private int gold_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Gold
+    {
+        get { return gold_; }
+        set
+        {
+            gold_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "trophy" field.</summary>
+    public const int TrophyFieldNumber = 3;
+    private int trophy_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Trophy
+    {
+        get { return trophy_; }
+        set
+        {
+            trophy_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "tileLocation" field.</summary>
+    public const int TileLocationFieldNumber = 4;
+    private int tileLocation_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int TileLocation
+    {
+        get { return tileLocation_; }
+        set
+        {
+            tileLocation_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as BoardPlayerData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(BoardPlayerData other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Gold != other.Gold) return false;
+        if (Trophy != other.Trophy) return false;
+        if (TileLocation != other.TileLocation) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Gold != 0) hash ^= Gold.GetHashCode();
+        if (Trophy != 0) hash ^= Trophy.GetHashCode();
+        if (TileLocation != 0) hash ^= TileLocation.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (Gold != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(Gold);
+        }
+        if (Trophy != 0)
+        {
+            output.WriteRawTag(24);
+            output.WriteInt32(Trophy);
+        }
+        if (TileLocation != 0)
+        {
+            output.WriteRawTag(32);
+            output.WriteInt32(TileLocation);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Gold != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Gold);
+        }
+        if (Trophy != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Trophy);
+        }
+        if (TileLocation != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(TileLocation);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(BoardPlayerData other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.Gold != 0)
+        {
+            Gold = other.Gold;
+        }
+        if (other.Trophy != 0)
+        {
+            Trophy = other.Trophy;
+        }
+        if (other.TileLocation != 0)
+        {
+            TileLocation = other.TileLocation;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        Gold = input.ReadInt32();
+                        break;
+                    }
+                case 24:
+                    {
+                        Trophy = input.ReadInt32();
+                        break;
+                    }
+                case 32:
+                    {
+                        TileLocation = input.ReadInt32();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class DiceGameData : pb::IMessage<DiceGameData>
+{
+    private static readonly pb::MessageParser<DiceGameData> _parser = new pb::MessageParser<DiceGameData>(() => new DiceGameData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<DiceGameData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[5]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DiceGameData()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DiceGameData(DiceGameData other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        value_ = other.value_;
+        rank_ = other.rank_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public DiceGameData Clone()
+    {
+        return new DiceGameData(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "value" field.</summary>
+    public const int ValueFieldNumber = 2;
+    private int value_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Value
+    {
+        get { return value_; }
+        set
+        {
+            value_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "rank" field.</summary>
+    public const int RankFieldNumber = 3;
+    private int rank_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Rank
+    {
+        get { return rank_; }
+        set
+        {
+            rank_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as DiceGameData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(DiceGameData other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Value != other.Value) return false;
+        if (Rank != other.Rank) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Value != 0) hash ^= Value.GetHashCode();
+        if (Rank != 0) hash ^= Rank.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (Value != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(Value);
+        }
+        if (Rank != 0)
+        {
+            output.WriteRawTag(24);
+            output.WriteInt32(Rank);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Value != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Value);
+        }
+        if (Rank != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(DiceGameData other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.Value != 0)
+        {
+            Value = other.Value;
+        }
+        if (other.Rank != 0)
+        {
+            Rank = other.Rank;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        Value = input.ReadInt32();
+                        break;
+                    }
+                case 24:
+                    {
+                        Rank = input.ReadInt32();
                         break;
                     }
             }
@@ -1332,7 +1860,7 @@ public sealed partial class C2S_RegisterRequest : pb::IMessage<C2S_RegisterReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[4]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[6]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1591,7 +2119,7 @@ public sealed partial class S2C_RegisterResponse : pb::IMessage<S2C_RegisterResp
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[5]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[7]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1782,7 +2310,7 @@ public sealed partial class C2S_LoginRequest : pb::IMessage<C2S_LoginRequest>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[6]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[8]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1973,7 +2501,7 @@ public sealed partial class S2C_LoginResponse : pb::IMessage<S2C_LoginResponse>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[7]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[9]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2198,7 +2726,7 @@ public sealed partial class C2S_LoggoutRequest : pb::IMessage<C2S_LoggoutRequest
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[8]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[10]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2358,7 +2886,7 @@ public sealed partial class C2S_GameStartRequest : pb::IMessage<C2S_GameStartReq
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[9]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[11]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2515,7 +3043,7 @@ public sealed partial class S2C_GameStartNotification : pb::IMessage<S2C_GameSta
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[10]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[12]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2961,7 +3489,7 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[11]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[13]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2981,6 +3509,7 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public C2S_RollDiceRequest(C2S_RollDiceRequest other) : this()
     {
+        sessionId_ = other.sessionId_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -2988,6 +3517,19 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     public C2S_RollDiceRequest Clone()
     {
         return new C2S_RollDiceRequest(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3007,6 +3549,7 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
         {
             return true;
         }
+        if (SessionId != other.SessionId) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3014,6 +3557,7 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     public override int GetHashCode()
     {
         int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -3030,6 +3574,11 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
         if (_unknownFields != null)
         {
             _unknownFields.WriteTo(output);
@@ -3040,6 +3589,10 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
     public int CalculateSize()
     {
         int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
         if (_unknownFields != null)
         {
             size += _unknownFields.CalculateSize();
@@ -3053,6 +3606,10 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
         if (other == null)
         {
             return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3068,6 +3625,11 @@ public sealed partial class C2S_RollDiceRequest : pb::IMessage<C2S_RollDiceReque
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
             }
         }
     }
@@ -3084,7 +3646,7 @@ public sealed partial class S2C_RollDiceResponse : pb::IMessage<S2C_RollDiceResp
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[12]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[14]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3309,7 +3871,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[13]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[15]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3329,7 +3891,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public S2C_RollDiceNotification(S2C_RollDiceNotification other) : this()
     {
-        playerId_ = other.playerId_;
+        sessionId_ = other.sessionId_;
         diceResult_ = other.diceResult_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -3340,16 +3902,16 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
         return new S2C_RollDiceNotification(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private int playerId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PlayerId
+    public string SessionId
     {
-        get { return playerId_; }
+        get { return sessionId_; }
         set
         {
-            playerId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
@@ -3383,7 +3945,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
         {
             return true;
         }
-        if (PlayerId != other.PlayerId) return false;
+        if (SessionId != other.SessionId) return false;
         if (DiceResult != other.DiceResult) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
@@ -3392,7 +3954,7 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     public override int GetHashCode()
     {
         int hash = 1;
-        if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (DiceResult != 0) hash ^= DiceResult.GetHashCode();
         if (_unknownFields != null)
         {
@@ -3410,10 +3972,10 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(PlayerId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
         if (DiceResult != 0)
         {
@@ -3430,9 +3992,9 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
     public int CalculateSize()
     {
         int size = 0;
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (DiceResult != 0)
         {
@@ -3452,9 +4014,9 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
         {
             return;
         }
-        if (other.PlayerId != 0)
+        if (other.SessionId.Length != 0)
         {
-            PlayerId = other.PlayerId;
+            SessionId = other.SessionId;
         }
         if (other.DiceResult != 0)
         {
@@ -3474,9 +4036,9 @@ public sealed partial class S2C_RollDiceNotification : pb::IMessage<S2C_RollDice
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        PlayerId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
                 case 16:
@@ -3500,7 +4062,7 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[14]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[16]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3522,6 +4084,7 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
     {
         sessionId_ = other.sessionId_;
         targetPoint_ = other.targetPoint_ != null ? other.targetPoint_.Clone() : null;
+        rotation_ = other.rotation_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3557,6 +4120,19 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
         }
     }
 
+    /// <summary>Field number for the "rotation" field.</summary>
+    public const int RotationFieldNumber = 3;
+    private float rotation_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Rotation
+    {
+        get { return rotation_; }
+        set
+        {
+            rotation_ = value;
+        }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other)
     {
@@ -3576,6 +4152,7 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
         }
         if (SessionId != other.SessionId) return false;
         if (!object.Equals(TargetPoint, other.TargetPoint)) return false;
+        if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3585,6 +4162,7 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
         int hash = 1;
         if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (targetPoint_ != null) hash ^= TargetPoint.GetHashCode();
+        if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -3611,6 +4189,11 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
             output.WriteRawTag(18);
             output.WriteMessage(TargetPoint);
         }
+        if (Rotation != 0F)
+        {
+            output.WriteRawTag(29);
+            output.WriteFloat(Rotation);
+        }
         if (_unknownFields != null)
         {
             _unknownFields.WriteTo(output);
@@ -3628,6 +4211,10 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
         if (targetPoint_ != null)
         {
             size += 1 + pb::CodedOutputStream.ComputeMessageSize(TargetPoint);
+        }
+        if (Rotation != 0F)
+        {
+            size += 1 + 4;
         }
         if (_unknownFields != null)
         {
@@ -3654,6 +4241,10 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
                 TargetPoint = new global::Vector();
             }
             TargetPoint.MergeFrom(other.TargetPoint);
+        }
+        if (other.Rotation != 0F)
+        {
+            Rotation = other.Rotation;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -3683,6 +4274,11 @@ public sealed partial class C2S_MovePlayerBoardRequest : pb::IMessage<C2S_MovePl
                         input.ReadMessage(TargetPoint);
                         break;
                     }
+                case 29:
+                    {
+                        Rotation = input.ReadFloat();
+                        break;
+                    }
             }
         }
     }
@@ -3699,7 +4295,7 @@ public sealed partial class S2C_MovePlayerBoardResponse : pb::IMessage<S2C_MoveP
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[15]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3890,7 +4486,7 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[16]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -3910,8 +4506,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public S2C_MovePlayerBoardNotification(S2C_MovePlayerBoardNotification other) : this()
     {
-        playerId_ = other.playerId_;
+        sessionId_ = other.sessionId_;
         targetPoint_ = other.targetPoint_ != null ? other.targetPoint_.Clone() : null;
+        rotation_ = other.rotation_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -3921,16 +4518,16 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
         return new S2C_MovePlayerBoardNotification(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private int playerId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PlayerId
+    public string SessionId
     {
-        get { return playerId_; }
+        get { return sessionId_; }
         set
         {
-            playerId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
@@ -3944,6 +4541,19 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
         set
         {
             targetPoint_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "rotation" field.</summary>
+    public const int RotationFieldNumber = 3;
+    private float rotation_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public float Rotation
+    {
+        get { return rotation_; }
+        set
+        {
+            rotation_ = value;
         }
     }
 
@@ -3964,8 +4574,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
         {
             return true;
         }
-        if (PlayerId != other.PlayerId) return false;
+        if (SessionId != other.SessionId) return false;
         if (!object.Equals(TargetPoint, other.TargetPoint)) return false;
+        if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -3973,8 +4584,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     public override int GetHashCode()
     {
         int hash = 1;
-        if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (targetPoint_ != null) hash ^= TargetPoint.GetHashCode();
+        if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -3991,15 +4603,20 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(PlayerId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
         if (targetPoint_ != null)
         {
             output.WriteRawTag(18);
             output.WriteMessage(TargetPoint);
+        }
+        if (Rotation != 0F)
+        {
+            output.WriteRawTag(29);
+            output.WriteFloat(Rotation);
         }
         if (_unknownFields != null)
         {
@@ -4011,13 +4628,17 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
     public int CalculateSize()
     {
         int size = 0;
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (targetPoint_ != null)
         {
             size += 1 + pb::CodedOutputStream.ComputeMessageSize(TargetPoint);
+        }
+        if (Rotation != 0F)
+        {
+            size += 1 + 4;
         }
         if (_unknownFields != null)
         {
@@ -4033,9 +4654,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
         {
             return;
         }
-        if (other.PlayerId != 0)
+        if (other.SessionId.Length != 0)
         {
-            PlayerId = other.PlayerId;
+            SessionId = other.SessionId;
         }
         if (other.targetPoint_ != null)
         {
@@ -4044,6 +4665,10 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
                 TargetPoint = new global::Vector();
             }
             TargetPoint.MergeFrom(other.TargetPoint);
+        }
+        if (other.Rotation != 0F)
+        {
+            Rotation = other.Rotation;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4059,9 +4684,9 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        PlayerId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
                 case 18:
@@ -4071,6 +4696,11 @@ public sealed partial class S2C_MovePlayerBoardNotification : pb::IMessage<S2C_M
                             TargetPoint = new global::Vector();
                         }
                         input.ReadMessage(TargetPoint);
+                        break;
+                    }
+                case 29:
+                    {
+                        Rotation = input.ReadFloat();
                         break;
                     }
             }
@@ -4089,7 +4719,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[17]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[19]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4110,7 +4740,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
     public C2S_PurchaseTileRequest(C2S_PurchaseTileRequest other) : this()
     {
         sessionId_ = other.sessionId_;
-        tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+        tile_ = other.tile_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4135,9 +4765,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
 
     /// <summary>Field number for the "tile" field.</summary>
     public const int TileFieldNumber = 2;
-    private global::Vector tile_;
+    private int tile_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Vector Tile
+    public int Tile
     {
         get { return tile_; }
         set
@@ -4164,7 +4794,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
             return true;
         }
         if (SessionId != other.SessionId) return false;
-        if (!object.Equals(Tile, other.Tile)) return false;
+        if (Tile != other.Tile) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4173,7 +4803,7 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
     {
         int hash = 1;
         if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-        if (tile_ != null) hash ^= Tile.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -4195,10 +4825,10 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
             output.WriteRawTag(10);
             output.WriteString(SessionId);
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            output.WriteRawTag(18);
-            output.WriteMessage(Tile);
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
         }
         if (_unknownFields != null)
         {
@@ -4214,9 +4844,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
         {
             size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
         }
         if (_unknownFields != null)
         {
@@ -4236,13 +4866,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
         {
             SessionId = other.SessionId;
         }
-        if (other.tile_ != null)
+        if (other.Tile != 0)
         {
-            if (tile_ == null)
-            {
-                Tile = new global::Vector();
-            }
-            Tile.MergeFrom(other.Tile);
+            Tile = other.Tile;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4263,13 +4889,9 @@ public sealed partial class C2S_PurchaseTileRequest : pb::IMessage<C2S_PurchaseT
                         SessionId = input.ReadString();
                         break;
                     }
-                case 18:
+                case 16:
                     {
-                        if (tile_ == null)
-                        {
-                            Tile = new global::Vector();
-                        }
-                        input.ReadMessage(Tile);
+                        Tile = input.ReadInt32();
                         break;
                     }
             }
@@ -4288,7 +4910,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[18]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[20]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4309,7 +4931,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
     public S2C_PurchaseTileResponse(S2C_PurchaseTileResponse other) : this()
     {
         success_ = other.success_;
-        tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+        tile_ = other.tile_;
         failCode_ = other.failCode_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
@@ -4335,9 +4957,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
 
     /// <summary>Field number for the "tile" field.</summary>
     public const int TileFieldNumber = 2;
-    private global::Vector tile_;
+    private int tile_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Vector Tile
+    public int Tile
     {
         get { return tile_; }
         set
@@ -4377,7 +4999,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
             return true;
         }
         if (Success != other.Success) return false;
-        if (!object.Equals(Tile, other.Tile)) return false;
+        if (Tile != other.Tile) return false;
         if (FailCode != other.FailCode) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
@@ -4387,7 +5009,7 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
     {
         int hash = 1;
         if (Success != false) hash ^= Success.GetHashCode();
-        if (tile_ != null) hash ^= Tile.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
         if (FailCode != global::GlobalFailCode.NoneFailcode) hash ^= FailCode.GetHashCode();
         if (_unknownFields != null)
         {
@@ -4410,10 +5032,10 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
             output.WriteRawTag(8);
             output.WriteBool(Success);
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            output.WriteRawTag(18);
-            output.WriteMessage(Tile);
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
         }
         if (FailCode != global::GlobalFailCode.NoneFailcode)
         {
@@ -4434,9 +5056,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
         {
             size += 1 + 1;
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
         }
         if (FailCode != global::GlobalFailCode.NoneFailcode)
         {
@@ -4460,13 +5082,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
         {
             Success = other.Success;
         }
-        if (other.tile_ != null)
+        if (other.Tile != 0)
         {
-            if (tile_ == null)
-            {
-                Tile = new global::Vector();
-            }
-            Tile.MergeFrom(other.Tile);
+            Tile = other.Tile;
         }
         if (other.FailCode != global::GlobalFailCode.NoneFailcode)
         {
@@ -4491,13 +5109,9 @@ public sealed partial class S2C_PurchaseTileResponse : pb::IMessage<S2C_Purchase
                         Success = input.ReadBool();
                         break;
                     }
-                case 18:
+                case 16:
                     {
-                        if (tile_ == null)
-                        {
-                            Tile = new global::Vector();
-                        }
-                        input.ReadMessage(Tile);
+                        Tile = input.ReadInt32();
                         break;
                     }
                 case 24:
@@ -4521,7 +5135,7 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[19]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[21]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4541,8 +5155,8 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public S2C_PurchaseTileNotification(S2C_PurchaseTileNotification other) : this()
     {
-        playerId_ = other.playerId_;
-        tile_ = other.tile_ != null ? other.tile_.Clone() : null;
+        sessionId_ = other.sessionId_;
+        tile_ = other.tile_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4552,24 +5166,24 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
         return new S2C_PurchaseTileNotification(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private int playerId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PlayerId
+    public string SessionId
     {
-        get { return playerId_; }
+        get { return sessionId_; }
         set
         {
-            playerId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
     /// <summary>Field number for the "tile" field.</summary>
     public const int TileFieldNumber = 2;
-    private global::Vector tile_;
+    private int tile_;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Vector Tile
+    public int Tile
     {
         get { return tile_; }
         set
@@ -4595,8 +5209,8 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
         {
             return true;
         }
-        if (PlayerId != other.PlayerId) return false;
-        if (!object.Equals(Tile, other.Tile)) return false;
+        if (SessionId != other.SessionId) return false;
+        if (Tile != other.Tile) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4604,8 +5218,8 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     public override int GetHashCode()
     {
         int hash = 1;
-        if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
-        if (tile_ != null) hash ^= Tile.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -4622,15 +5236,15 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(PlayerId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            output.WriteRawTag(18);
-            output.WriteMessage(Tile);
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
         }
         if (_unknownFields != null)
         {
@@ -4642,13 +5256,13 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
     public int CalculateSize()
     {
         int size = 0;
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
-        if (tile_ != null)
+        if (Tile != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Tile);
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
         }
         if (_unknownFields != null)
         {
@@ -4664,17 +5278,13 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
         {
             return;
         }
-        if (other.PlayerId != 0)
+        if (other.SessionId.Length != 0)
         {
-            PlayerId = other.PlayerId;
+            SessionId = other.SessionId;
         }
-        if (other.tile_ != null)
+        if (other.Tile != 0)
         {
-            if (tile_ == null)
-            {
-                Tile = new global::Vector();
-            }
-            Tile.MergeFrom(other.Tile);
+            Tile = other.Tile;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -4690,18 +5300,14 @@ public sealed partial class S2C_PurchaseTileNotification : pb::IMessage<S2C_Purc
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        PlayerId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
-                case 18:
+                case 16:
                     {
-                        if (tile_ == null)
-                        {
-                            Tile = new global::Vector();
-                        }
-                        input.ReadMessage(Tile);
+                        Tile = input.ReadInt32();
                         break;
                     }
             }
@@ -4720,7 +5326,7 @@ public sealed partial class S2C_GameEndNotification : pb::IMessage<S2C_GameEndNo
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[20]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[22]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4865,7 +5471,7 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[21]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[23]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4885,7 +5491,7 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public C2S_BackToTheRoomRequest(C2S_BackToTheRoomRequest other) : this()
     {
-        userId_ = other.userId_;
+        sessionId_ = other.sessionId_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -4895,16 +5501,16 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
         return new C2S_BackToTheRoomRequest(this);
     }
 
-    /// <summary>Field number for the "userId" field.</summary>
-    public const int UserIdFieldNumber = 1;
-    private int userId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int UserId
+    public string SessionId
     {
-        get { return userId_; }
+        get { return sessionId_; }
         set
         {
-            userId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
@@ -4925,7 +5531,7 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
         {
             return true;
         }
-        if (UserId != other.UserId) return false;
+        if (SessionId != other.SessionId) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -4933,7 +5539,7 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
     public override int GetHashCode()
     {
         int hash = 1;
-        if (UserId != 0) hash ^= UserId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -4950,10 +5556,10 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (UserId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(UserId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
         if (_unknownFields != null)
         {
@@ -4965,9 +5571,9 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
     public int CalculateSize()
     {
         int size = 0;
-        if (UserId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(UserId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (_unknownFields != null)
         {
@@ -4983,9 +5589,9 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
         {
             return;
         }
-        if (other.UserId != 0)
+        if (other.SessionId.Length != 0)
         {
-            UserId = other.UserId;
+            SessionId = other.SessionId;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5001,9 +5607,9 @@ public sealed partial class C2S_BackToTheRoomRequest : pb::IMessage<C2S_BackToTh
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        UserId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
             }
@@ -5022,7 +5628,7 @@ public sealed partial class S2C_BackToTheRoomResponse : pb::IMessage<S2C_BackToT
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[22]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[24]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5255,7 +5861,7 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[23]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[25]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5275,7 +5881,7 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public S2C_BackToTheRoomNotification(S2C_BackToTheRoomNotification other) : this()
     {
-        playerId_ = other.playerId_;
+        sessionId_ = other.sessionId_;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -5285,16 +5891,16 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
         return new S2C_BackToTheRoomNotification(this);
     }
 
-    /// <summary>Field number for the "playerId" field.</summary>
-    public const int PlayerIdFieldNumber = 1;
-    private int playerId_;
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public int PlayerId
+    public string SessionId
     {
-        get { return playerId_; }
+        get { return sessionId_; }
         set
         {
-            playerId_ = value;
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
     }
 
@@ -5315,7 +5921,7 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
         {
             return true;
         }
-        if (PlayerId != other.PlayerId) return false;
+        if (SessionId != other.SessionId) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -5323,7 +5929,7 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
     public override int GetHashCode()
     {
         int hash = 1;
-        if (PlayerId != 0) hash ^= PlayerId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -5340,10 +5946,10 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public void WriteTo(pb::CodedOutputStream output)
     {
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            output.WriteRawTag(8);
-            output.WriteInt32(PlayerId);
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
         }
         if (_unknownFields != null)
         {
@@ -5355,9 +5961,9 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
     public int CalculateSize()
     {
         int size = 0;
-        if (PlayerId != 0)
+        if (SessionId.Length != 0)
         {
-            size += 1 + pb::CodedOutputStream.ComputeInt32Size(PlayerId);
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (_unknownFields != null)
         {
@@ -5373,9 +5979,9 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
         {
             return;
         }
-        if (other.PlayerId != 0)
+        if (other.SessionId.Length != 0)
         {
-            PlayerId = other.PlayerId;
+            SessionId = other.SessionId;
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -5391,9 +5997,9 @@ public sealed partial class S2C_BackToTheRoomNotification : pb::IMessage<S2C_Bac
                 default:
                     _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
                     break;
-                case 8:
+                case 10:
                     {
-                        PlayerId = input.ReadInt32();
+                        SessionId = input.ReadString();
                         break;
                     }
             }
@@ -5412,7 +6018,7 @@ public sealed partial class C2S_StartMiniGameRequest : pb::IMessage<C2S_StartMin
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[24]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[26]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5569,7 +6175,7 @@ public sealed partial class S2C_StartMiniGameNotification : pb::IMessage<S2C_Sta
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[25]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[27]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5719,6 +6325,1824 @@ public sealed partial class S2C_StartMiniGameNotification : pb::IMessage<S2C_Sta
 
 }
 
+public sealed partial class C2S_PurchaseTrophyRequest : pb::IMessage<C2S_PurchaseTrophyRequest>
+{
+    private static readonly pb::MessageParser<C2S_PurchaseTrophyRequest> _parser = new pb::MessageParser<C2S_PurchaseTrophyRequest>(() => new C2S_PurchaseTrophyRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<C2S_PurchaseTrophyRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[28]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_PurchaseTrophyRequest()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_PurchaseTrophyRequest(C2S_PurchaseTrophyRequest other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        tile_ = other.tile_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_PurchaseTrophyRequest Clone()
+    {
+        return new C2S_PurchaseTrophyRequest(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "tile" field.</summary>
+    public const int TileFieldNumber = 2;
+    private int tile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Tile
+    {
+        get { return tile_; }
+        set
+        {
+            tile_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as C2S_PurchaseTrophyRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(C2S_PurchaseTrophyRequest other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Tile != other.Tile) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (Tile != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Tile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(C2S_PurchaseTrophyRequest other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.Tile != 0)
+        {
+            Tile = other.Tile;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        Tile = input.ReadInt32();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_PurchaseTrophyResponse : pb::IMessage<S2C_PurchaseTrophyResponse>
+{
+    private static readonly pb::MessageParser<S2C_PurchaseTrophyResponse> _parser = new pb::MessageParser<S2C_PurchaseTrophyResponse>(() => new S2C_PurchaseTrophyResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_PurchaseTrophyResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[29]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyResponse()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyResponse(S2C_PurchaseTrophyResponse other) : this()
+    {
+        success_ = other.success_;
+        playerInfo_ = other.playerInfo_ != null ? other.playerInfo_.Clone() : null;
+        nextTile_ = other.nextTile_;
+        failCode_ = other.failCode_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyResponse Clone()
+    {
+        return new S2C_PurchaseTrophyResponse(this);
+    }
+
+    /// <summary>Field number for the "success" field.</summary>
+    public const int SuccessFieldNumber = 1;
+    private bool success_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Success
+    {
+        get { return success_; }
+        set
+        {
+            success_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "playerInfo" field.</summary>
+    public const int PlayerInfoFieldNumber = 2;
+    private global::BoardPlayerData playerInfo_;
+    /// <summary>
+    ////
+    /// </summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::BoardPlayerData PlayerInfo
+    {
+        get { return playerInfo_; }
+        set
+        {
+            playerInfo_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "nextTile" field.</summary>
+    public const int NextTileFieldNumber = 3;
+    private int nextTile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int NextTile
+    {
+        get { return nextTile_; }
+        set
+        {
+            nextTile_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "failCode" field.</summary>
+    public const int FailCodeFieldNumber = 4;
+    private global::GlobalFailCode failCode_ = global::GlobalFailCode.NoneFailcode;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::GlobalFailCode FailCode
+    {
+        get { return failCode_; }
+        set
+        {
+            failCode_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_PurchaseTrophyResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_PurchaseTrophyResponse other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (Success != other.Success) return false;
+        if (!object.Equals(PlayerInfo, other.PlayerInfo)) return false;
+        if (NextTile != other.NextTile) return false;
+        if (FailCode != other.FailCode) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (Success != false) hash ^= Success.GetHashCode();
+        if (playerInfo_ != null) hash ^= PlayerInfo.GetHashCode();
+        if (NextTile != 0) hash ^= NextTile.GetHashCode();
+        if (FailCode != global::GlobalFailCode.NoneFailcode) hash ^= FailCode.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (Success != false)
+        {
+            output.WriteRawTag(8);
+            output.WriteBool(Success);
+        }
+        if (playerInfo_ != null)
+        {
+            output.WriteRawTag(18);
+            output.WriteMessage(PlayerInfo);
+        }
+        if (NextTile != 0)
+        {
+            output.WriteRawTag(24);
+            output.WriteInt32(NextTile);
+        }
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            output.WriteRawTag(32);
+            output.WriteEnum((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (Success != false)
+        {
+            size += 1 + 1;
+        }
+        if (playerInfo_ != null)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfo);
+        }
+        if (NextTile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(NextTile);
+        }
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_PurchaseTrophyResponse other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.Success != false)
+        {
+            Success = other.Success;
+        }
+        if (other.playerInfo_ != null)
+        {
+            if (playerInfo_ == null)
+            {
+                PlayerInfo = new global::BoardPlayerData();
+            }
+            PlayerInfo.MergeFrom(other.PlayerInfo);
+        }
+        if (other.NextTile != 0)
+        {
+            NextTile = other.NextTile;
+        }
+        if (other.FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            FailCode = other.FailCode;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 8:
+                    {
+                        Success = input.ReadBool();
+                        break;
+                    }
+                case 18:
+                    {
+                        if (playerInfo_ == null)
+                        {
+                            PlayerInfo = new global::BoardPlayerData();
+                        }
+                        input.ReadMessage(PlayerInfo);
+                        break;
+                    }
+                case 24:
+                    {
+                        NextTile = input.ReadInt32();
+                        break;
+                    }
+                case 32:
+                    {
+                        FailCode = (global::GlobalFailCode)input.ReadEnum();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_PurchaseTrophyNotification : pb::IMessage<S2C_PurchaseTrophyNotification>
+{
+    private static readonly pb::MessageParser<S2C_PurchaseTrophyNotification> _parser = new pb::MessageParser<S2C_PurchaseTrophyNotification>(() => new S2C_PurchaseTrophyNotification());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_PurchaseTrophyNotification> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[30]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyNotification()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyNotification(S2C_PurchaseTrophyNotification other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        beforeTile_ = other.beforeTile_;
+        nextTile_ = other.nextTile_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_PurchaseTrophyNotification Clone()
+    {
+        return new S2C_PurchaseTrophyNotification(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "beforeTile" field.</summary>
+    public const int BeforeTileFieldNumber = 2;
+    private int beforeTile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int BeforeTile
+    {
+        get { return beforeTile_; }
+        set
+        {
+            beforeTile_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "nextTile" field.</summary>
+    public const int NextTileFieldNumber = 3;
+    private int nextTile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int NextTile
+    {
+        get { return nextTile_; }
+        set
+        {
+            nextTile_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_PurchaseTrophyNotification);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_PurchaseTrophyNotification other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (BeforeTile != other.BeforeTile) return false;
+        if (NextTile != other.NextTile) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (BeforeTile != 0) hash ^= BeforeTile.GetHashCode();
+        if (NextTile != 0) hash ^= NextTile.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (BeforeTile != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(BeforeTile);
+        }
+        if (NextTile != 0)
+        {
+            output.WriteRawTag(24);
+            output.WriteInt32(NextTile);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (BeforeTile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(BeforeTile);
+        }
+        if (NextTile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(NextTile);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_PurchaseTrophyNotification other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.BeforeTile != 0)
+        {
+            BeforeTile = other.BeforeTile;
+        }
+        if (other.NextTile != 0)
+        {
+            NextTile = other.NextTile;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        BeforeTile = input.ReadInt32();
+                        break;
+                    }
+                case 24:
+                    {
+                        NextTile = input.ReadInt32();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class C2S_TilePenaltyRequest : pb::IMessage<C2S_TilePenaltyRequest>
+{
+    private static readonly pb::MessageParser<C2S_TilePenaltyRequest> _parser = new pb::MessageParser<C2S_TilePenaltyRequest>(() => new C2S_TilePenaltyRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<C2S_TilePenaltyRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[31]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_TilePenaltyRequest()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_TilePenaltyRequest(C2S_TilePenaltyRequest other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        tile_ = other.tile_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_TilePenaltyRequest Clone()
+    {
+        return new C2S_TilePenaltyRequest(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "tile" field.</summary>
+    public const int TileFieldNumber = 2;
+    private int tile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Tile
+    {
+        get { return tile_; }
+        set
+        {
+            tile_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as C2S_TilePenaltyRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(C2S_TilePenaltyRequest other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Tile != other.Tile) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (Tile != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Tile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(C2S_TilePenaltyRequest other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.Tile != 0)
+        {
+            Tile = other.Tile;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        Tile = input.ReadInt32();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_TilePenaltyResponse : pb::IMessage<S2C_TilePenaltyResponse>
+{
+    private static readonly pb::MessageParser<S2C_TilePenaltyResponse> _parser = new pb::MessageParser<S2C_TilePenaltyResponse>(() => new S2C_TilePenaltyResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_TilePenaltyResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[32]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyResponse()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyResponse(S2C_TilePenaltyResponse other) : this()
+    {
+        success_ = other.success_;
+        playersInfo_ = other.playersInfo_.Clone();
+        failCode_ = other.failCode_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyResponse Clone()
+    {
+        return new S2C_TilePenaltyResponse(this);
+    }
+
+    /// <summary>Field number for the "success" field.</summary>
+    public const int SuccessFieldNumber = 1;
+    private bool success_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Success
+    {
+        get { return success_; }
+        set
+        {
+            success_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "playersInfo" field.</summary>
+    public const int PlayersInfoFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::BoardPlayerData> _repeated_playersInfo_codec
+        = pb::FieldCodec.ForMessage(18, global::BoardPlayerData.Parser);
+    private readonly pbc::RepeatedField<global::BoardPlayerData> playersInfo_ = new pbc::RepeatedField<global::BoardPlayerData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::BoardPlayerData> PlayersInfo
+    {
+        get { return playersInfo_; }
+    }
+
+    /// <summary>Field number for the "failCode" field.</summary>
+    public const int FailCodeFieldNumber = 3;
+    private global::GlobalFailCode failCode_ = global::GlobalFailCode.NoneFailcode;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::GlobalFailCode FailCode
+    {
+        get { return failCode_; }
+        set
+        {
+            failCode_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_TilePenaltyResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_TilePenaltyResponse other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (Success != other.Success) return false;
+        if (!playersInfo_.Equals(other.playersInfo_)) return false;
+        if (FailCode != other.FailCode) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (Success != false) hash ^= Success.GetHashCode();
+        hash ^= playersInfo_.GetHashCode();
+        if (FailCode != global::GlobalFailCode.NoneFailcode) hash ^= FailCode.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (Success != false)
+        {
+            output.WriteRawTag(8);
+            output.WriteBool(Success);
+        }
+        playersInfo_.WriteTo(output, _repeated_playersInfo_codec);
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            output.WriteRawTag(24);
+            output.WriteEnum((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (Success != false)
+        {
+            size += 1 + 1;
+        }
+        size += playersInfo_.CalculateSize(_repeated_playersInfo_codec);
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_TilePenaltyResponse other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.Success != false)
+        {
+            Success = other.Success;
+        }
+        playersInfo_.Add(other.playersInfo_);
+        if (other.FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            FailCode = other.FailCode;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 8:
+                    {
+                        Success = input.ReadBool();
+                        break;
+                    }
+                case 18:
+                    {
+                        playersInfo_.AddEntriesFrom(input, _repeated_playersInfo_codec);
+                        break;
+                    }
+                case 24:
+                    {
+                        FailCode = (global::GlobalFailCode)input.ReadEnum();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_TilePenaltyNotification : pb::IMessage<S2C_TilePenaltyNotification>
+{
+    private static readonly pb::MessageParser<S2C_TilePenaltyNotification> _parser = new pb::MessageParser<S2C_TilePenaltyNotification>(() => new S2C_TilePenaltyNotification());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_TilePenaltyNotification> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[33]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyNotification()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyNotification(S2C_TilePenaltyNotification other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        tile_ = other.tile_;
+        playersInfo_ = other.playersInfo_.Clone();
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_TilePenaltyNotification Clone()
+    {
+        return new S2C_TilePenaltyNotification(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    /// <summary>Field number for the "tile" field.</summary>
+    public const int TileFieldNumber = 2;
+    private int tile_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int Tile
+    {
+        get { return tile_; }
+        set
+        {
+            tile_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "playersInfo" field.</summary>
+    public const int PlayersInfoFieldNumber = 3;
+    private static readonly pb::FieldCodec<global::BoardPlayerData> _repeated_playersInfo_codec
+        = pb::FieldCodec.ForMessage(26, global::BoardPlayerData.Parser);
+    private readonly pbc::RepeatedField<global::BoardPlayerData> playersInfo_ = new pbc::RepeatedField<global::BoardPlayerData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::BoardPlayerData> PlayersInfo
+    {
+        get { return playersInfo_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_TilePenaltyNotification);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_TilePenaltyNotification other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Tile != other.Tile) return false;
+        if (!playersInfo_.Equals(other.playersInfo_)) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (Tile != 0) hash ^= Tile.GetHashCode();
+        hash ^= playersInfo_.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (Tile != 0)
+        {
+            output.WriteRawTag(16);
+            output.WriteInt32(Tile);
+        }
+        playersInfo_.WriteTo(output, _repeated_playersInfo_codec);
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (Tile != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeInt32Size(Tile);
+        }
+        size += playersInfo_.CalculateSize(_repeated_playersInfo_codec);
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_TilePenaltyNotification other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        if (other.Tile != 0)
+        {
+            Tile = other.Tile;
+        }
+        playersInfo_.Add(other.playersInfo_);
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+                case 16:
+                    {
+                        Tile = input.ReadInt32();
+                        break;
+                    }
+                case 26:
+                    {
+                        playersInfo_.AddEntriesFrom(input, _repeated_playersInfo_codec);
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class C2S_DiceGameRequest : pb::IMessage<C2S_DiceGameRequest>
+{
+    private static readonly pb::MessageParser<C2S_DiceGameRequest> _parser = new pb::MessageParser<C2S_DiceGameRequest>(() => new C2S_DiceGameRequest());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<C2S_DiceGameRequest> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[34]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_DiceGameRequest()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_DiceGameRequest(C2S_DiceGameRequest other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public C2S_DiceGameRequest Clone()
+    {
+        return new C2S_DiceGameRequest(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as C2S_DiceGameRequest);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(C2S_DiceGameRequest other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(C2S_DiceGameRequest other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_DiceGameResponse : pb::IMessage<S2C_DiceGameResponse>
+{
+    private static readonly pb::MessageParser<S2C_DiceGameResponse> _parser = new pb::MessageParser<S2C_DiceGameResponse>(() => new S2C_DiceGameResponse());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_DiceGameResponse> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[35]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameResponse()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameResponse(S2C_DiceGameResponse other) : this()
+    {
+        success_ = other.success_;
+        result_ = other.result_.Clone();
+        failCode_ = other.failCode_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameResponse Clone()
+    {
+        return new S2C_DiceGameResponse(this);
+    }
+
+    /// <summary>Field number for the "success" field.</summary>
+    public const int SuccessFieldNumber = 1;
+    private bool success_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Success
+    {
+        get { return success_; }
+        set
+        {
+            success_ = value;
+        }
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 2;
+    private static readonly pb::FieldCodec<global::DiceGameData> _repeated_result_codec
+        = pb::FieldCodec.ForMessage(18, global::DiceGameData.Parser);
+    private readonly pbc::RepeatedField<global::DiceGameData> result_ = new pbc::RepeatedField<global::DiceGameData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::DiceGameData> Result
+    {
+        get { return result_; }
+    }
+
+    /// <summary>Field number for the "failCode" field.</summary>
+    public const int FailCodeFieldNumber = 3;
+    private global::GlobalFailCode failCode_ = global::GlobalFailCode.NoneFailcode;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::GlobalFailCode FailCode
+    {
+        get { return failCode_; }
+        set
+        {
+            failCode_ = value;
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_DiceGameResponse);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_DiceGameResponse other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (Success != other.Success) return false;
+        if (!result_.Equals(other.result_)) return false;
+        if (FailCode != other.FailCode) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (Success != false) hash ^= Success.GetHashCode();
+        hash ^= result_.GetHashCode();
+        if (FailCode != global::GlobalFailCode.NoneFailcode) hash ^= FailCode.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (Success != false)
+        {
+            output.WriteRawTag(8);
+            output.WriteBool(Success);
+        }
+        result_.WriteTo(output, _repeated_result_codec);
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            output.WriteRawTag(24);
+            output.WriteEnum((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (Success != false)
+        {
+            size += 1 + 1;
+        }
+        size += result_.CalculateSize(_repeated_result_codec);
+        if (FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeEnumSize((int)FailCode);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_DiceGameResponse other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.Success != false)
+        {
+            Success = other.Success;
+        }
+        result_.Add(other.result_);
+        if (other.FailCode != global::GlobalFailCode.NoneFailcode)
+        {
+            FailCode = other.FailCode;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 8:
+                    {
+                        Success = input.ReadBool();
+                        break;
+                    }
+                case 18:
+                    {
+                        result_.AddEntriesFrom(input, _repeated_result_codec);
+                        break;
+                    }
+                case 24:
+                    {
+                        FailCode = (global::GlobalFailCode)input.ReadEnum();
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
+public sealed partial class S2C_DiceGameNotification : pb::IMessage<S2C_DiceGameNotification>
+{
+    private static readonly pb::MessageParser<S2C_DiceGameNotification> _parser = new pb::MessageParser<S2C_DiceGameNotification>(() => new S2C_DiceGameNotification());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pb::MessageParser<S2C_DiceGameNotification> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
+    {
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[36]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameNotification()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameNotification(S2C_DiceGameNotification other) : this()
+    {
+        result_ = other.result_.Clone();
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_DiceGameNotification Clone()
+    {
+        return new S2C_DiceGameNotification(this);
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::DiceGameData> _repeated_result_codec
+        = pb::FieldCodec.ForMessage(10, global::DiceGameData.Parser);
+    private readonly pbc::RepeatedField<global::DiceGameData> result_ = new pbc::RepeatedField<global::DiceGameData>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public pbc::RepeatedField<global::DiceGameData> Result
+    {
+        get { return result_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_DiceGameNotification);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_DiceGameNotification other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (!result_.Equals(other.result_)) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        hash ^= result_.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        result_.WriteTo(output, _repeated_result_codec);
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        size += result_.CalculateSize(_repeated_result_codec);
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_DiceGameNotification other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        result_.Add(other.result_);
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        result_.AddEntriesFrom(input, _repeated_result_codec);
+                        break;
+                    }
+            }
+        }
+    }
+
+}
+
 /// <summary>
 ///LOBBY
 /// </summary>
@@ -5732,7 +8156,7 @@ public sealed partial class C2S_LobbyJoinRequest : pb::IMessage<C2S_LobbyJoinReq
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[26]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[37]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -5889,7 +8313,7 @@ public sealed partial class S2C_LobbyJoinResponse : pb::IMessage<S2C_LobbyJoinRe
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[27]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[38]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6122,7 +8546,7 @@ public sealed partial class C2S_LobbyLeaveRequest : pb::IMessage<C2S_LobbyLeaveR
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[28]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[39]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6279,7 +8703,7 @@ public sealed partial class S2C_LobbyLeaveResponse : pb::IMessage<S2C_LobbyLeave
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[29]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[40]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6470,7 +8894,7 @@ public sealed partial class C2S_LobbyUserListRequest : pb::IMessage<C2S_LobbyUse
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[30]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[41]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6627,7 +9051,7 @@ public sealed partial class S2C_LobbyUserListResponse : pb::IMessage<S2C_LobbyUs
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[31]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[42]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -6840,7 +9264,7 @@ public sealed partial class C2S_LobbyUserDetailRequest : pb::IMessage<C2S_LobbyU
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[32]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[43]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7031,7 +9455,7 @@ public sealed partial class S2C_LobbyUserDetailResponse : pb::IMessage<S2C_Lobby
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[33]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[44]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7267,7 +9691,7 @@ public sealed partial class C2S_RoomListRequest : pb::IMessage<C2S_RoomListReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[34]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[45]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7424,7 +9848,7 @@ public sealed partial class S2C_RoomListResponse : pb::IMessage<S2C_RoomListResp
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[35]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[46]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7637,7 +10061,7 @@ public sealed partial class C2S_CreateRoomRequest : pb::IMessage<C2S_CreateRoomR
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[36]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[47]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -7828,7 +10252,7 @@ public sealed partial class S2C_CreateRoomResponse : pb::IMessage<S2C_CreateRoom
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[37]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[48]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8061,7 +10485,7 @@ public sealed partial class C2S_JoinRoomRequest : pb::IMessage<C2S_JoinRoomReque
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[38]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[49]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8252,7 +10676,7 @@ public sealed partial class S2C_JoinRoomResponse : pb::IMessage<S2C_JoinRoomResp
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[39]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[50]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8485,7 +10909,7 @@ public sealed partial class S2C_JoinRoomNotification : pb::IMessage<S2C_JoinRoom
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[40]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[51]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8650,7 +11074,7 @@ public sealed partial class C2S_LeaveRoomRequest : pb::IMessage<C2S_LeaveRoomReq
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[41]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[52]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8807,7 +11231,7 @@ public sealed partial class S2C_LeaveRoomResponse : pb::IMessage<S2C_LeaveRoomRe
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[42]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[53]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -8998,7 +11422,7 @@ public sealed partial class S2C_LeaveRoomNotification : pb::IMessage<S2C_LeaveRo
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[43]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[54]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9163,7 +11587,7 @@ public sealed partial class C2S_GamePrepareRequest : pb::IMessage<C2S_GamePrepar
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[44]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[55]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9354,7 +11778,7 @@ public sealed partial class S2C_GamePrepareResponse : pb::IMessage<S2C_GamePrepa
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[45]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[56]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9579,7 +12003,7 @@ public sealed partial class S2C_GamePrepareNotification : pb::IMessage<S2C_GameP
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[46]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[57]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -9815,7 +12239,7 @@ public sealed partial class S2C_IceMiniGameReadyNotification : pb::IMessage<S2C_
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[47]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[58]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10201,7 +12625,7 @@ public sealed partial class C2S_IceGameReadyRequest : pb::IMessage<C2S_IceGameRe
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[48]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[59]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10358,7 +12782,7 @@ public sealed partial class S2C_IceGameReadyNotification : pb::IMessage<S2C_IceG
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[49]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[60]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10515,7 +12939,7 @@ public sealed partial class S2C_IceMiniGameStartNotification : pb::IMessage<S2C_
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[50]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[61]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10638,7 +13062,7 @@ public sealed partial class C2S_IcePlayerSyncRequest : pb::IMessage<C2S_IcePlaye
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[51]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[62]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -10905,7 +13329,7 @@ public sealed partial class S2C_IcePlayerSyncNotification : pb::IMessage<S2C_Ice
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[52]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[63]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11172,7 +13596,7 @@ public sealed partial class C2S_IcePlayerDamageRequest : pb::IMessage<C2S_IcePla
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[53]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[64]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11329,7 +13753,7 @@ public sealed partial class S2C_IcePlayerDamageNotification : pb::IMessage<S2C_I
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[54]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[65]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11486,7 +13910,7 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[55]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[66]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11507,7 +13931,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
     public S2C_IcePlayerDeathNotification(S2C_IcePlayerDeathNotification other) : this()
     {
         sessionId_ = other.sessionId_;
-        position_ = other.position_ != null ? other.position_.Clone() : null;
         _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -11530,19 +13953,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
         }
     }
 
-    /// <summary>Field number for the "position" field.</summary>
-    public const int PositionFieldNumber = 2;
-    private global::Vector position_;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::Vector Position
-    {
-        get { return position_; }
-        set
-        {
-            position_ = value;
-        }
-    }
-
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public override bool Equals(object other)
     {
@@ -11561,7 +13971,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
             return true;
         }
         if (SessionId != other.SessionId) return false;
-        if (!object.Equals(Position, other.Position)) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -11570,7 +13979,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
     {
         int hash = 1;
         if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-        if (position_ != null) hash ^= Position.GetHashCode();
         if (_unknownFields != null)
         {
             hash ^= _unknownFields.GetHashCode();
@@ -11592,11 +14000,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
             output.WriteRawTag(10);
             output.WriteString(SessionId);
         }
-        if (position_ != null)
-        {
-            output.WriteRawTag(18);
-            output.WriteMessage(Position);
-        }
         if (_unknownFields != null)
         {
             _unknownFields.WriteTo(output);
@@ -11610,10 +14013,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
         if (SessionId.Length != 0)
         {
             size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
-        }
-        if (position_ != null)
-        {
-            size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
         }
         if (_unknownFields != null)
         {
@@ -11632,14 +14031,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
         if (other.SessionId.Length != 0)
         {
             SessionId = other.SessionId;
-        }
-        if (other.position_ != null)
-        {
-            if (position_ == null)
-            {
-                Position = new global::Vector();
-            }
-            Position.MergeFrom(other.Position);
         }
         _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -11660,15 +14051,6 @@ public sealed partial class S2C_IcePlayerDeathNotification : pb::IMessage<S2C_Ic
                         SessionId = input.ReadString();
                         break;
                     }
-                case 18:
-                    {
-                        if (position_ == null)
-                        {
-                            Position = new global::Vector();
-                        }
-                        input.ReadMessage(Position);
-                        break;
-                    }
             }
         }
     }
@@ -11685,7 +14067,7 @@ public sealed partial class S2C_IceMapSyncNotification : pb::IMessage<S2C_IceMap
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[56]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[67]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11808,7 +14190,7 @@ public sealed partial class S2C_IceGameOverNotification : pb::IMessage<S2C_IceGa
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[57]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[68]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -11841,11 +14223,11 @@ public sealed partial class S2C_IceGameOverNotification : pb::IMessage<S2C_IceGa
 
     /// <summary>Field number for the "ranks" field.</summary>
     public const int RanksFieldNumber = 1;
-    private static readonly pb::FieldCodec<global::S2C_IceGameOverNotification.Types.Rank> _repeated_ranks_codec
-        = pb::FieldCodec.ForMessage(10, global::S2C_IceGameOverNotification.Types.Rank.Parser);
-    private readonly pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank> ranks_ = new pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank>();
+    private static readonly pb::FieldCodec<global::Rank> _repeated_ranks_codec
+        = pb::FieldCodec.ForMessage(10, global::Rank.Parser);
+    private readonly pbc::RepeatedField<global::Rank> ranks_ = new pbc::RepeatedField<global::Rank>();
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public pbc::RepeatedField<global::S2C_IceGameOverNotification.Types.Rank> Ranks
+    public pbc::RepeatedField<global::Rank> Ranks
     {
         get { return ranks_; }
     }
@@ -11975,204 +14357,162 @@ public sealed partial class S2C_IceGameOverNotification : pb::IMessage<S2C_IceGa
         }
     }
 
-    #region Nested types
-    /// <summary>Container for nested types declared in the S2C_IceGameOverNotification message type.</summary>
+}
+
+public sealed partial class S2C_IcePlayerExitNotification : pb::IMessage<S2C_IcePlayerExitNotification>
+{
+    private static readonly pb::MessageParser<S2C_IcePlayerExitNotification> _parser = new pb::MessageParser<S2C_IcePlayerExitNotification>(() => new S2C_IcePlayerExitNotification());
+    private pb::UnknownFieldSet _unknownFields;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public static partial class Types
+    public static pb::MessageParser<S2C_IcePlayerExitNotification> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public static pbr::MessageDescriptor Descriptor
     {
-        public sealed partial class Rank : pb::IMessage<Rank>
-        {
-            private static readonly pb::MessageParser<Rank> _parser = new pb::MessageParser<Rank>(() => new Rank());
-            private pb::UnknownFieldSet _unknownFields;
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public static pb::MessageParser<Rank> Parser { get { return _parser; } }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public static pbr::MessageDescriptor Descriptor
-            {
-                get { return global::S2C_IceGameOverNotification.Descriptor.NestedTypes[0]; }
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            pbr::MessageDescriptor pb::IMessage.Descriptor
-            {
-                get { return Descriptor; }
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public Rank()
-            {
-                OnConstruction();
-            }
-
-            partial void OnConstruction();
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public Rank(Rank other) : this()
-            {
-                sessionId_ = other.sessionId_;
-                rank_ = other.rank_;
-                _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public Rank Clone()
-            {
-                return new Rank(this);
-            }
-
-            /// <summary>Field number for the "sessionId" field.</summary>
-            public const int SessionIdFieldNumber = 1;
-            private string sessionId_ = "";
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public string SessionId
-            {
-                get { return sessionId_; }
-                set
-                {
-                    sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-                }
-            }
-
-            /// <summary>Field number for the "rank" field.</summary>
-            public const int Rank_FieldNumber = 2;
-            private int rank_;
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public int Rank_
-            {
-                get { return rank_; }
-                set
-                {
-                    rank_ = value;
-                }
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public override bool Equals(object other)
-            {
-                return Equals(other as Rank);
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public bool Equals(Rank other)
-            {
-                if (ReferenceEquals(other, null))
-                {
-                    return false;
-                }
-                if (ReferenceEquals(other, this))
-                {
-                    return true;
-                }
-                if (SessionId != other.SessionId) return false;
-                if (Rank_ != other.Rank_) return false;
-                return Equals(_unknownFields, other._unknownFields);
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public override int GetHashCode()
-            {
-                int hash = 1;
-                if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
-                if (Rank_ != 0) hash ^= Rank_.GetHashCode();
-                if (_unknownFields != null)
-                {
-                    hash ^= _unknownFields.GetHashCode();
-                }
-                return hash;
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public override string ToString()
-            {
-                return pb::JsonFormatter.ToDiagnosticString(this);
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public void WriteTo(pb::CodedOutputStream output)
-            {
-                if (SessionId.Length != 0)
-                {
-                    output.WriteRawTag(10);
-                    output.WriteString(SessionId);
-                }
-                if (Rank_ != 0)
-                {
-                    output.WriteRawTag(16);
-                    output.WriteInt32(Rank_);
-                }
-                if (_unknownFields != null)
-                {
-                    _unknownFields.WriteTo(output);
-                }
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public int CalculateSize()
-            {
-                int size = 0;
-                if (SessionId.Length != 0)
-                {
-                    size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
-                }
-                if (Rank_ != 0)
-                {
-                    size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank_);
-                }
-                if (_unknownFields != null)
-                {
-                    size += _unknownFields.CalculateSize();
-                }
-                return size;
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public void MergeFrom(Rank other)
-            {
-                if (other == null)
-                {
-                    return;
-                }
-                if (other.SessionId.Length != 0)
-                {
-                    SessionId = other.SessionId;
-                }
-                if (other.Rank_ != 0)
-                {
-                    Rank_ = other.Rank_;
-                }
-                _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
-            }
-
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-            public void MergeFrom(pb::CodedInputStream input)
-            {
-                uint tag;
-                while ((tag = input.ReadTag()) != 0)
-                {
-                    switch (tag)
-                    {
-                        default:
-                            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
-                            break;
-                        case 10:
-                            {
-                                SessionId = input.ReadString();
-                                break;
-                            }
-                        case 16:
-                            {
-                                Rank_ = input.ReadInt32();
-                                break;
-                            }
-                    }
-                }
-            }
-
-        }
-
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[69]; }
     }
-    #endregion
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    pbr::MessageDescriptor pb::IMessage.Descriptor
+    {
+        get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_IcePlayerExitNotification()
+    {
+        OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_IcePlayerExitNotification(S2C_IcePlayerExitNotification other) : this()
+    {
+        sessionId_ = other.sessionId_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public S2C_IcePlayerExitNotification Clone()
+    {
+        return new S2C_IcePlayerExitNotification(this);
+    }
+
+    /// <summary>Field number for the "sessionId" field.</summary>
+    public const int SessionIdFieldNumber = 1;
+    private string sessionId_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public string SessionId
+    {
+        get { return sessionId_; }
+        set
+        {
+            sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override bool Equals(object other)
+    {
+        return Equals(other as S2C_IcePlayerExitNotification);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public bool Equals(S2C_IcePlayerExitNotification other)
+    {
+        if (ReferenceEquals(other, null))
+        {
+            return false;
+        }
+        if (ReferenceEquals(other, this))
+        {
+            return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override int GetHashCode()
+    {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (_unknownFields != null)
+        {
+            hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public override string ToString()
+    {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void WriteTo(pb::CodedOutputStream output)
+    {
+        if (SessionId.Length != 0)
+        {
+            output.WriteRawTag(10);
+            output.WriteString(SessionId);
+        }
+        if (_unknownFields != null)
+        {
+            _unknownFields.WriteTo(output);
+        }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public int CalculateSize()
+    {
+        int size = 0;
+        if (SessionId.Length != 0)
+        {
+            size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (_unknownFields != null)
+        {
+            size += _unknownFields.CalculateSize();
+        }
+        return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(S2C_IcePlayerExitNotification other)
+    {
+        if (other == null)
+        {
+            return;
+        }
+        if (other.SessionId.Length != 0)
+        {
+            SessionId = other.SessionId;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public void MergeFrom(pb::CodedInputStream input)
+    {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0)
+        {
+            switch (tag)
+            {
+                default:
+                    _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+                    break;
+                case 10:
+                    {
+                        SessionId = input.ReadString();
+                        break;
+                    }
+            }
+        }
+    }
 
 }
 
@@ -12189,7 +14529,7 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     public static pbr::MessageDescriptor Descriptor
     {
-        get { return global::ProtocolReflection.Descriptor.MessageTypes[58]; }
+        get { return global::ProtocolReflection.Descriptor.MessageTypes[70]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -12325,6 +14665,33 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
             case PayloadOneofCase.GameEndNotification:
                 GameEndNotification = other.GameEndNotification.Clone();
                 break;
+            case PayloadOneofCase.PurchaseTrophyRequest:
+                PurchaseTrophyRequest = other.PurchaseTrophyRequest.Clone();
+                break;
+            case PayloadOneofCase.PurchaseTrophyResponse:
+                PurchaseTrophyResponse = other.PurchaseTrophyResponse.Clone();
+                break;
+            case PayloadOneofCase.PurchaseTrophyNotification:
+                PurchaseTrophyNotification = other.PurchaseTrophyNotification.Clone();
+                break;
+            case PayloadOneofCase.TilePenaltyRequest:
+                TilePenaltyRequest = other.TilePenaltyRequest.Clone();
+                break;
+            case PayloadOneofCase.TilePenaltyResponse:
+                TilePenaltyResponse = other.TilePenaltyResponse.Clone();
+                break;
+            case PayloadOneofCase.TilePenaltyNotification:
+                TilePenaltyNotification = other.TilePenaltyNotification.Clone();
+                break;
+            case PayloadOneofCase.DiceGameRequest:
+                DiceGameRequest = other.DiceGameRequest.Clone();
+                break;
+            case PayloadOneofCase.DiceGameResponse:
+                DiceGameResponse = other.DiceGameResponse.Clone();
+                break;
+            case PayloadOneofCase.DiceGameNotification:
+                DiceGameNotification = other.DiceGameNotification.Clone();
+                break;
             case PayloadOneofCase.BackToTheRoomRequest:
                 BackToTheRoomRequest = other.BackToTheRoomRequest.Clone();
                 break;
@@ -12336,9 +14703,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                 break;
             case PayloadOneofCase.StartMiniGameRequest:
                 StartMiniGameRequest = other.StartMiniGameRequest.Clone();
-                break;
-            case PayloadOneofCase.StartMiniGameNotification:
-                StartMiniGameNotification = other.StartMiniGameNotification.Clone();
                 break;
             case PayloadOneofCase.IceMiniGameReadyNotification:
                 IceMiniGameReadyNotification = other.IceMiniGameReadyNotification.Clone();
@@ -12372,6 +14736,9 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                 break;
             case PayloadOneofCase.IceMapSyncNotification:
                 IceMapSyncNotification = other.IceMapSyncNotification.Clone();
+                break;
+            case PayloadOneofCase.IcePlayerExitNotification:
+                IcePlayerExitNotification = other.IcePlayerExitNotification.Clone();
                 break;
         }
 
@@ -12893,6 +15260,123 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         }
     }
 
+    /// <summary>Field number for the "purchaseTrophyRequest" field.</summary>
+    public const int PurchaseTrophyRequestFieldNumber = 71;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::C2S_PurchaseTrophyRequest PurchaseTrophyRequest
+    {
+        get { return payloadCase_ == PayloadOneofCase.PurchaseTrophyRequest ? (global::C2S_PurchaseTrophyRequest)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.PurchaseTrophyRequest;
+        }
+    }
+
+    /// <summary>Field number for the "purchaseTrophyResponse" field.</summary>
+    public const int PurchaseTrophyResponseFieldNumber = 72;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_PurchaseTrophyResponse PurchaseTrophyResponse
+    {
+        get { return payloadCase_ == PayloadOneofCase.PurchaseTrophyResponse ? (global::S2C_PurchaseTrophyResponse)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.PurchaseTrophyResponse;
+        }
+    }
+
+    /// <summary>Field number for the "purchaseTrophyNotification" field.</summary>
+    public const int PurchaseTrophyNotificationFieldNumber = 73;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_PurchaseTrophyNotification PurchaseTrophyNotification
+    {
+        get { return payloadCase_ == PayloadOneofCase.PurchaseTrophyNotification ? (global::S2C_PurchaseTrophyNotification)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.PurchaseTrophyNotification;
+        }
+    }
+
+    /// <summary>Field number for the "tilePenaltyRequest" field.</summary>
+    public const int TilePenaltyRequestFieldNumber = 74;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::C2S_TilePenaltyRequest TilePenaltyRequest
+    {
+        get { return payloadCase_ == PayloadOneofCase.TilePenaltyRequest ? (global::C2S_TilePenaltyRequest)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.TilePenaltyRequest;
+        }
+    }
+
+    /// <summary>Field number for the "tilePenaltyResponse" field.</summary>
+    public const int TilePenaltyResponseFieldNumber = 75;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_TilePenaltyResponse TilePenaltyResponse
+    {
+        get { return payloadCase_ == PayloadOneofCase.TilePenaltyResponse ? (global::S2C_TilePenaltyResponse)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.TilePenaltyResponse;
+        }
+    }
+
+    /// <summary>Field number for the "tilePenaltyNotification" field.</summary>
+    public const int TilePenaltyNotificationFieldNumber = 76;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_TilePenaltyNotification TilePenaltyNotification
+    {
+        get { return payloadCase_ == PayloadOneofCase.TilePenaltyNotification ? (global::S2C_TilePenaltyNotification)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.TilePenaltyNotification;
+        }
+    }
+
+    /// <summary>Field number for the "diceGameRequest" field.</summary>
+    public const int DiceGameRequestFieldNumber = 77;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::C2S_DiceGameRequest DiceGameRequest
+    {
+        get { return payloadCase_ == PayloadOneofCase.DiceGameRequest ? (global::C2S_DiceGameRequest)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DiceGameRequest;
+        }
+    }
+
+    /// <summary>Field number for the "diceGameResponse" field.</summary>
+    public const int DiceGameResponseFieldNumber = 78;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_DiceGameResponse DiceGameResponse
+    {
+        get { return payloadCase_ == PayloadOneofCase.DiceGameResponse ? (global::S2C_DiceGameResponse)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DiceGameResponse;
+        }
+    }
+
+    /// <summary>Field number for the "diceGameNotification" field.</summary>
+    public const int DiceGameNotificationFieldNumber = 79;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_DiceGameNotification DiceGameNotification
+    {
+        get { return payloadCase_ == PayloadOneofCase.DiceGameNotification ? (global::S2C_DiceGameNotification)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.DiceGameNotification;
+        }
+    }
+
     /// <summary>Field number for the "backToTheRoomRequest" field.</summary>
     public const int BackToTheRoomRequestFieldNumber = 91;
     /// <summary>
@@ -12948,19 +15432,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         {
             payload_ = value;
             payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.StartMiniGameRequest;
-        }
-    }
-
-    /// <summary>Field number for the "startMiniGameNotification" field.</summary>
-    public const int StartMiniGameNotificationFieldNumber = 102;
-    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-    public global::S2C_StartMiniGameNotification StartMiniGameNotification
-    {
-        get { return payloadCase_ == PayloadOneofCase.StartMiniGameNotification ? (global::S2C_StartMiniGameNotification)payload_ : null; }
-        set
-        {
-            payload_ = value;
-            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.StartMiniGameNotification;
         }
     }
 
@@ -13110,6 +15581,19 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         }
     }
 
+    /// <summary>Field number for the "icePlayerExitNotification" field.</summary>
+    public const int IcePlayerExitNotificationFieldNumber = 212;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    public global::S2C_IcePlayerExitNotification IcePlayerExitNotification
+    {
+        get { return payloadCase_ == PayloadOneofCase.IcePlayerExitNotification ? (global::S2C_IcePlayerExitNotification)payload_ : null; }
+        set
+        {
+            payload_ = value;
+            payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.IcePlayerExitNotification;
+        }
+    }
+
     private object payload_;
     /// <summary>Enum of possible cases for the "payload" oneof.</summary>
     public enum PayloadOneofCase
@@ -13153,11 +15637,19 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         PurchaseTileResponse = 68,
         PurchaseTileNotification = 69,
         GameEndNotification = 70,
+        PurchaseTrophyRequest = 71,
+        PurchaseTrophyResponse = 72,
+        PurchaseTrophyNotification = 73,
+        TilePenaltyRequest = 74,
+        TilePenaltyResponse = 75,
+        TilePenaltyNotification = 76,
+        DiceGameRequest = 77,
+        DiceGameResponse = 78,
+        DiceGameNotification = 79,
         BackToTheRoomRequest = 91,
         BackToTheRoomResponse = 92,
         BackToTheRoomNotification = 93,
         StartMiniGameRequest = 101,
-        StartMiniGameNotification = 102,
         IceMiniGameReadyNotification = 201,
         IceGameReadyRequest = 202,
         IceGameReadyNotification = 203,
@@ -13169,6 +15661,7 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         IcePlayerDeathNotification = 209,
         IceGameOverNotification = 210,
         IceMapSyncNotification = 211,
+        IcePlayerExitNotification = 212,
     }
     private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -13239,11 +15732,19 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (!object.Equals(PurchaseTileResponse, other.PurchaseTileResponse)) return false;
         if (!object.Equals(PurchaseTileNotification, other.PurchaseTileNotification)) return false;
         if (!object.Equals(GameEndNotification, other.GameEndNotification)) return false;
+        if (!object.Equals(PurchaseTrophyRequest, other.PurchaseTrophyRequest)) return false;
+        if (!object.Equals(PurchaseTrophyResponse, other.PurchaseTrophyResponse)) return false;
+        if (!object.Equals(PurchaseTrophyNotification, other.PurchaseTrophyNotification)) return false;
+        if (!object.Equals(TilePenaltyRequest, other.TilePenaltyRequest)) return false;
+        if (!object.Equals(TilePenaltyResponse, other.TilePenaltyResponse)) return false;
+        if (!object.Equals(TilePenaltyNotification, other.TilePenaltyNotification)) return false;
+        if (!object.Equals(DiceGameRequest, other.DiceGameRequest)) return false;
+        if (!object.Equals(DiceGameResponse, other.DiceGameResponse)) return false;
+        if (!object.Equals(DiceGameNotification, other.DiceGameNotification)) return false;
         if (!object.Equals(BackToTheRoomRequest, other.BackToTheRoomRequest)) return false;
         if (!object.Equals(BackToTheRoomResponse, other.BackToTheRoomResponse)) return false;
         if (!object.Equals(BackToTheRoomNotification, other.BackToTheRoomNotification)) return false;
         if (!object.Equals(StartMiniGameRequest, other.StartMiniGameRequest)) return false;
-        if (!object.Equals(StartMiniGameNotification, other.StartMiniGameNotification)) return false;
         if (!object.Equals(IceMiniGameReadyNotification, other.IceMiniGameReadyNotification)) return false;
         if (!object.Equals(IceGameReadyRequest, other.IceGameReadyRequest)) return false;
         if (!object.Equals(IceGameReadyNotification, other.IceGameReadyNotification)) return false;
@@ -13255,6 +15756,7 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (!object.Equals(IcePlayerDeathNotification, other.IcePlayerDeathNotification)) return false;
         if (!object.Equals(IceGameOverNotification, other.IceGameOverNotification)) return false;
         if (!object.Equals(IceMapSyncNotification, other.IceMapSyncNotification)) return false;
+        if (!object.Equals(IcePlayerExitNotification, other.IcePlayerExitNotification)) return false;
         if (PayloadCase != other.PayloadCase) return false;
         return Equals(_unknownFields, other._unknownFields);
     }
@@ -13301,11 +15803,19 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (payloadCase_ == PayloadOneofCase.PurchaseTileResponse) hash ^= PurchaseTileResponse.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.PurchaseTileNotification) hash ^= PurchaseTileNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.GameEndNotification) hash ^= GameEndNotification.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyRequest) hash ^= PurchaseTrophyRequest.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyResponse) hash ^= PurchaseTrophyResponse.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyNotification) hash ^= PurchaseTrophyNotification.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyRequest) hash ^= TilePenaltyRequest.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyResponse) hash ^= TilePenaltyResponse.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyNotification) hash ^= TilePenaltyNotification.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.DiceGameRequest) hash ^= DiceGameRequest.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.DiceGameResponse) hash ^= DiceGameResponse.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.DiceGameNotification) hash ^= DiceGameNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.BackToTheRoomRequest) hash ^= BackToTheRoomRequest.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.BackToTheRoomResponse) hash ^= BackToTheRoomResponse.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.BackToTheRoomNotification) hash ^= BackToTheRoomNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.StartMiniGameRequest) hash ^= StartMiniGameRequest.GetHashCode();
-        if (payloadCase_ == PayloadOneofCase.StartMiniGameNotification) hash ^= StartMiniGameNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.IceMiniGameReadyNotification) hash ^= IceMiniGameReadyNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.IceGameReadyRequest) hash ^= IceGameReadyRequest.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.IceGameReadyNotification) hash ^= IceGameReadyNotification.GetHashCode();
@@ -13317,6 +15827,7 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (payloadCase_ == PayloadOneofCase.IcePlayerDeathNotification) hash ^= IcePlayerDeathNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.IceGameOverNotification) hash ^= IceGameOverNotification.GetHashCode();
         if (payloadCase_ == PayloadOneofCase.IceMapSyncNotification) hash ^= IceMapSyncNotification.GetHashCode();
+        if (payloadCase_ == PayloadOneofCase.IcePlayerExitNotification) hash ^= IcePlayerExitNotification.GetHashCode();
         hash ^= (int)payloadCase_;
         if (_unknownFields != null)
         {
@@ -13524,6 +16035,51 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
             output.WriteRawTag(178, 4);
             output.WriteMessage(GameEndNotification);
         }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyRequest)
+        {
+            output.WriteRawTag(186, 4);
+            output.WriteMessage(PurchaseTrophyRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyResponse)
+        {
+            output.WriteRawTag(194, 4);
+            output.WriteMessage(PurchaseTrophyResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyNotification)
+        {
+            output.WriteRawTag(202, 4);
+            output.WriteMessage(PurchaseTrophyNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyRequest)
+        {
+            output.WriteRawTag(210, 4);
+            output.WriteMessage(TilePenaltyRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyResponse)
+        {
+            output.WriteRawTag(218, 4);
+            output.WriteMessage(TilePenaltyResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyNotification)
+        {
+            output.WriteRawTag(226, 4);
+            output.WriteMessage(TilePenaltyNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameRequest)
+        {
+            output.WriteRawTag(234, 4);
+            output.WriteMessage(DiceGameRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameResponse)
+        {
+            output.WriteRawTag(242, 4);
+            output.WriteMessage(DiceGameResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameNotification)
+        {
+            output.WriteRawTag(250, 4);
+            output.WriteMessage(DiceGameNotification);
+        }
         if (payloadCase_ == PayloadOneofCase.BackToTheRoomRequest)
         {
             output.WriteRawTag(218, 5);
@@ -13543,11 +16099,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         {
             output.WriteRawTag(170, 6);
             output.WriteMessage(StartMiniGameRequest);
-        }
-        if (payloadCase_ == PayloadOneofCase.StartMiniGameNotification)
-        {
-            output.WriteRawTag(178, 6);
-            output.WriteMessage(StartMiniGameNotification);
         }
         if (payloadCase_ == PayloadOneofCase.IceMiniGameReadyNotification)
         {
@@ -13603,6 +16154,11 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         {
             output.WriteRawTag(154, 13);
             output.WriteMessage(IceMapSyncNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.IcePlayerExitNotification)
+        {
+            output.WriteRawTag(162, 13);
+            output.WriteMessage(IcePlayerExitNotification);
         }
         if (_unknownFields != null)
         {
@@ -13766,6 +16322,42 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         {
             size += 2 + pb::CodedOutputStream.ComputeMessageSize(GameEndNotification);
         }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyRequest)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(PurchaseTrophyRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyResponse)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(PurchaseTrophyResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyNotification)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(PurchaseTrophyNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyRequest)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(TilePenaltyRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyResponse)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(TilePenaltyResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.TilePenaltyNotification)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(TilePenaltyNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameRequest)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(DiceGameRequest);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameResponse)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(DiceGameResponse);
+        }
+        if (payloadCase_ == PayloadOneofCase.DiceGameNotification)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(DiceGameNotification);
+        }
         if (payloadCase_ == PayloadOneofCase.BackToTheRoomRequest)
         {
             size += 2 + pb::CodedOutputStream.ComputeMessageSize(BackToTheRoomRequest);
@@ -13781,10 +16373,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (payloadCase_ == PayloadOneofCase.StartMiniGameRequest)
         {
             size += 2 + pb::CodedOutputStream.ComputeMessageSize(StartMiniGameRequest);
-        }
-        if (payloadCase_ == PayloadOneofCase.StartMiniGameNotification)
-        {
-            size += 2 + pb::CodedOutputStream.ComputeMessageSize(StartMiniGameNotification);
         }
         if (payloadCase_ == PayloadOneofCase.IceMiniGameReadyNotification)
         {
@@ -13829,6 +16417,10 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
         if (payloadCase_ == PayloadOneofCase.IceMapSyncNotification)
         {
             size += 2 + pb::CodedOutputStream.ComputeMessageSize(IceMapSyncNotification);
+        }
+        if (payloadCase_ == PayloadOneofCase.IcePlayerExitNotification)
+        {
+            size += 2 + pb::CodedOutputStream.ComputeMessageSize(IcePlayerExitNotification);
         }
         if (_unknownFields != null)
         {
@@ -14112,6 +16704,69 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                 }
                 GameEndNotification.MergeFrom(other.GameEndNotification);
                 break;
+            case PayloadOneofCase.PurchaseTrophyRequest:
+                if (PurchaseTrophyRequest == null)
+                {
+                    PurchaseTrophyRequest = new global::C2S_PurchaseTrophyRequest();
+                }
+                PurchaseTrophyRequest.MergeFrom(other.PurchaseTrophyRequest);
+                break;
+            case PayloadOneofCase.PurchaseTrophyResponse:
+                if (PurchaseTrophyResponse == null)
+                {
+                    PurchaseTrophyResponse = new global::S2C_PurchaseTrophyResponse();
+                }
+                PurchaseTrophyResponse.MergeFrom(other.PurchaseTrophyResponse);
+                break;
+            case PayloadOneofCase.PurchaseTrophyNotification:
+                if (PurchaseTrophyNotification == null)
+                {
+                    PurchaseTrophyNotification = new global::S2C_PurchaseTrophyNotification();
+                }
+                PurchaseTrophyNotification.MergeFrom(other.PurchaseTrophyNotification);
+                break;
+            case PayloadOneofCase.TilePenaltyRequest:
+                if (TilePenaltyRequest == null)
+                {
+                    TilePenaltyRequest = new global::C2S_TilePenaltyRequest();
+                }
+                TilePenaltyRequest.MergeFrom(other.TilePenaltyRequest);
+                break;
+            case PayloadOneofCase.TilePenaltyResponse:
+                if (TilePenaltyResponse == null)
+                {
+                    TilePenaltyResponse = new global::S2C_TilePenaltyResponse();
+                }
+                TilePenaltyResponse.MergeFrom(other.TilePenaltyResponse);
+                break;
+            case PayloadOneofCase.TilePenaltyNotification:
+                if (TilePenaltyNotification == null)
+                {
+                    TilePenaltyNotification = new global::S2C_TilePenaltyNotification();
+                }
+                TilePenaltyNotification.MergeFrom(other.TilePenaltyNotification);
+                break;
+            case PayloadOneofCase.DiceGameRequest:
+                if (DiceGameRequest == null)
+                {
+                    DiceGameRequest = new global::C2S_DiceGameRequest();
+                }
+                DiceGameRequest.MergeFrom(other.DiceGameRequest);
+                break;
+            case PayloadOneofCase.DiceGameResponse:
+                if (DiceGameResponse == null)
+                {
+                    DiceGameResponse = new global::S2C_DiceGameResponse();
+                }
+                DiceGameResponse.MergeFrom(other.DiceGameResponse);
+                break;
+            case PayloadOneofCase.DiceGameNotification:
+                if (DiceGameNotification == null)
+                {
+                    DiceGameNotification = new global::S2C_DiceGameNotification();
+                }
+                DiceGameNotification.MergeFrom(other.DiceGameNotification);
+                break;
             case PayloadOneofCase.BackToTheRoomRequest:
                 if (BackToTheRoomRequest == null)
                 {
@@ -14139,13 +16794,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                     StartMiniGameRequest = new global::C2S_StartMiniGameRequest();
                 }
                 StartMiniGameRequest.MergeFrom(other.StartMiniGameRequest);
-                break;
-            case PayloadOneofCase.StartMiniGameNotification:
-                if (StartMiniGameNotification == null)
-                {
-                    StartMiniGameNotification = new global::S2C_StartMiniGameNotification();
-                }
-                StartMiniGameNotification.MergeFrom(other.StartMiniGameNotification);
                 break;
             case PayloadOneofCase.IceMiniGameReadyNotification:
                 if (IceMiniGameReadyNotification == null)
@@ -14223,6 +16871,13 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                     IceMapSyncNotification = new global::S2C_IceMapSyncNotification();
                 }
                 IceMapSyncNotification.MergeFrom(other.IceMapSyncNotification);
+                break;
+            case PayloadOneofCase.IcePlayerExitNotification:
+                if (IcePlayerExitNotification == null)
+                {
+                    IcePlayerExitNotification = new global::S2C_IcePlayerExitNotification();
+                }
+                IcePlayerExitNotification.MergeFrom(other.IcePlayerExitNotification);
                 break;
         }
 
@@ -14658,6 +17313,105 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                         GameEndNotification = subBuilder;
                         break;
                     }
+                case 570:
+                    {
+                        global::C2S_PurchaseTrophyRequest subBuilder = new global::C2S_PurchaseTrophyRequest();
+                        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyRequest)
+                        {
+                            subBuilder.MergeFrom(PurchaseTrophyRequest);
+                        }
+                        input.ReadMessage(subBuilder);
+                        PurchaseTrophyRequest = subBuilder;
+                        break;
+                    }
+                case 578:
+                    {
+                        global::S2C_PurchaseTrophyResponse subBuilder = new global::S2C_PurchaseTrophyResponse();
+                        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyResponse)
+                        {
+                            subBuilder.MergeFrom(PurchaseTrophyResponse);
+                        }
+                        input.ReadMessage(subBuilder);
+                        PurchaseTrophyResponse = subBuilder;
+                        break;
+                    }
+                case 586:
+                    {
+                        global::S2C_PurchaseTrophyNotification subBuilder = new global::S2C_PurchaseTrophyNotification();
+                        if (payloadCase_ == PayloadOneofCase.PurchaseTrophyNotification)
+                        {
+                            subBuilder.MergeFrom(PurchaseTrophyNotification);
+                        }
+                        input.ReadMessage(subBuilder);
+                        PurchaseTrophyNotification = subBuilder;
+                        break;
+                    }
+                case 594:
+                    {
+                        global::C2S_TilePenaltyRequest subBuilder = new global::C2S_TilePenaltyRequest();
+                        if (payloadCase_ == PayloadOneofCase.TilePenaltyRequest)
+                        {
+                            subBuilder.MergeFrom(TilePenaltyRequest);
+                        }
+                        input.ReadMessage(subBuilder);
+                        TilePenaltyRequest = subBuilder;
+                        break;
+                    }
+                case 602:
+                    {
+                        global::S2C_TilePenaltyResponse subBuilder = new global::S2C_TilePenaltyResponse();
+                        if (payloadCase_ == PayloadOneofCase.TilePenaltyResponse)
+                        {
+                            subBuilder.MergeFrom(TilePenaltyResponse);
+                        }
+                        input.ReadMessage(subBuilder);
+                        TilePenaltyResponse = subBuilder;
+                        break;
+                    }
+                case 610:
+                    {
+                        global::S2C_TilePenaltyNotification subBuilder = new global::S2C_TilePenaltyNotification();
+                        if (payloadCase_ == PayloadOneofCase.TilePenaltyNotification)
+                        {
+                            subBuilder.MergeFrom(TilePenaltyNotification);
+                        }
+                        input.ReadMessage(subBuilder);
+                        TilePenaltyNotification = subBuilder;
+                        break;
+                    }
+                case 618:
+                    {
+                        global::C2S_DiceGameRequest subBuilder = new global::C2S_DiceGameRequest();
+                        if (payloadCase_ == PayloadOneofCase.DiceGameRequest)
+                        {
+                            subBuilder.MergeFrom(DiceGameRequest);
+                        }
+                        input.ReadMessage(subBuilder);
+                        DiceGameRequest = subBuilder;
+                        break;
+                    }
+                case 626:
+                    {
+                        global::S2C_DiceGameResponse subBuilder = new global::S2C_DiceGameResponse();
+                        if (payloadCase_ == PayloadOneofCase.DiceGameResponse)
+                        {
+                            subBuilder.MergeFrom(DiceGameResponse);
+                        }
+                        input.ReadMessage(subBuilder);
+                        DiceGameResponse = subBuilder;
+                        break;
+                    }
+                case 634:
+                    {
+                        global::S2C_DiceGameNotification subBuilder = new global::S2C_DiceGameNotification();
+                        if (payloadCase_ == PayloadOneofCase.DiceGameNotification)
+                        {
+                            subBuilder.MergeFrom(DiceGameNotification);
+                        }
+                        input.ReadMessage(subBuilder);
+                        DiceGameNotification = subBuilder;
+                        break;
+                    }
                 case 730:
                     {
                         global::C2S_BackToTheRoomRequest subBuilder = new global::C2S_BackToTheRoomRequest();
@@ -14700,17 +17454,6 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                         }
                         input.ReadMessage(subBuilder);
                         StartMiniGameRequest = subBuilder;
-                        break;
-                    }
-                case 818:
-                    {
-                        global::S2C_StartMiniGameNotification subBuilder = new global::S2C_StartMiniGameNotification();
-                        if (payloadCase_ == PayloadOneofCase.StartMiniGameNotification)
-                        {
-                            subBuilder.MergeFrom(StartMiniGameNotification);
-                        }
-                        input.ReadMessage(subBuilder);
-                        StartMiniGameNotification = subBuilder;
                         break;
                     }
                 case 1610:
@@ -14832,6 +17575,17 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket>
                         }
                         input.ReadMessage(subBuilder);
                         IceMapSyncNotification = subBuilder;
+                        break;
+                    }
+                case 1698:
+                    {
+                        global::S2C_IcePlayerExitNotification subBuilder = new global::S2C_IcePlayerExitNotification();
+                        if (payloadCase_ == PayloadOneofCase.IcePlayerExitNotification)
+                        {
+                            subBuilder.MergeFrom(IcePlayerExitNotification);
+                        }
+                        input.ReadMessage(subBuilder);
+                        IcePlayerExitNotification = subBuilder;
                         break;
                     }
             }

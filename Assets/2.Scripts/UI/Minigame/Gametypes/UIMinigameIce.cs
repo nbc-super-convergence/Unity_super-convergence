@@ -22,7 +22,9 @@ public class UIMinigameIce : UIBase
     {
         yield return new WaitForSeconds(120f);
         Rank[] sampleRanks = new Rank[4];
+#pragma warning disable CS4014
         UIManager.Show<UIMinigameResult>(sampleRanks);
+#pragma warning restore CS4014
     }
 
     public void ChangeHPUI()

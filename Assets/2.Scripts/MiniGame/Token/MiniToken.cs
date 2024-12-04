@@ -8,7 +8,7 @@ public class MiniToken : MonoBehaviour
     [SerializeField] private Animator animator;
 
     /*Data*/
-    public MiniTokenData MiniData { get; set; }
+    public MiniTokenData MiniData;
 
     /*Input & Control*/
     public MiniTokenInputHandler InputHandler { get; private set; }
@@ -26,9 +26,7 @@ public class MiniToken : MonoBehaviour
         MiniData = new(animator);
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
-
-        MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.sessionId;
-        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId];
+        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
     }
 
     private void Update()
