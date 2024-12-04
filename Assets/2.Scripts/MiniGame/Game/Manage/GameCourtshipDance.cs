@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using Google.Protobuf.Collections;
-using UnityEngine.Playables;
-using static S2C_IceMiniGameReadyNotification.Types;
 
 public class Player
 {
     public string SessionId;
 }
 
+// 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
+    public UICommandBoardHandler commandBoardHandler;
+
     private CommandGenerator commandGenerator;
     private Queue<Queue<BubbleInfo>> commandInfoPool;
     private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
@@ -37,15 +37,15 @@ public class GameCourtshipDance : IGame
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
-            commandInfoPool = commandGenerator.GenerateBoardPool(players.Count);
+            commandInfoPool = commandGenerator.GenerateBoardPool(10);
 
-            // 색 정보등 입력.
             commandGenerator.SetBoardPoolColor(commandInfoPool, players);
-            // 커맨드보드에 info 적용하기.
-        }
+        } // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
 
-        MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap();
+
+
+        //MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
+        //MinigameManager.Instance.MakeMap();
 
         //if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
         //{
@@ -64,9 +64,10 @@ public class GameCourtshipDance : IGame
     /// <summary>
     /// S2C게임시작알림 서버의 알림에 따라 실행.
     /// </summary>
-    public void GameStart()
+    public async void GameStart()
     {
-        //ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
+        var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
+        commandBoardHandler.Make(players.Count);
         //MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
 
@@ -75,8 +76,18 @@ public class GameCourtshipDance : IGame
         return commandInfoPool;
     }
 
-    #region 소켓
+    // 팀 가르기
 
+
+
+
+    #region 소켓
+    // S2C GameStartNoti
+    public void GameStartNoti(GamePacket packet)
+    {
+        var response = packet.GameStartNotification;
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
+    }
     #endregion
 
 #if UNITY_EDITOR

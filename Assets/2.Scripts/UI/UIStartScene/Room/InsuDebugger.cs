@@ -1,9 +1,7 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 #if UNITY_EDITOR
 public class InsuDebugger : Singleton<InsuDebugger>
@@ -20,6 +18,10 @@ public class InsuDebugger : Singleton<InsuDebugger>
         { UIManager.Get<UIRoom>().GameStart(); }
         if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { JumpExecuteCourtshipDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { StartDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { UIManager.Get<UICommandBoardHandler>().Next(); }
     }
 
     private void JumpBoardScene()
@@ -53,14 +55,21 @@ public class InsuDebugger : Singleton<InsuDebugger>
             MaxUser = 4,
             
         };
-        
-
         await UIManager.Show<UIRoom>(roomData);
     }
 
     private void JumpExecuteCourtshipDance()
     {
+        GameManager.Instance.myInfo.SetSessionId("debugInsu");
         SceneManager.LoadScene(3);
+    }
+    private void StartDance()
+    {        
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(new List<Player>()
+        {
+            new Player(){ SessionId = GameManager.Instance.myInfo.SessionId }
+        });
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
     }
 }
 #endif

@@ -13,7 +13,8 @@ public class CommandGenerator
         Queue<Queue<BubbleInfo>> pool = new();
         for (int i = 0; i < poolCount; ++i)
         {
-            pool.Enqueue(GenerateBoard(i + 5));
+            int bubbleCount = Math.Clamp(i, 0, 13);
+            pool.Enqueue(GenerateBoard(bubbleCount));
         }
         return pool;
     }
@@ -35,8 +36,7 @@ public class CommandGenerator
             SetBoardColor(queue, players);
         }
     }
-
-    
+        
     private void SetBoardColor(Queue<BubbleInfo> queue, List<Player> teamPlayers)
     {
         List<int> colors = new();
