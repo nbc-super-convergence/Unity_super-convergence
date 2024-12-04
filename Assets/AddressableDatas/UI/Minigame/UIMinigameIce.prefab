@@ -639,8 +639,12 @@ MonoBehaviour:
   isActiveInCreated: 1
   isDestroyAtClosed: 1
   uiPosition: 0
-  timeTxt: {fileID: 0}
-  hpBars: []
+  timeTxt: {fileID: 2056105038961083311}
+  hpBars:
+  - {fileID: 780664302835227380}
+  - {fileID: 2057213476854742959}
+  - {fileID: 398184281651749306}
+  - {fileID: 1647829216986833517}
 --- !u!1 &4888791608813800646
 GameObject:
   m_ObjectHideFlags: 0
