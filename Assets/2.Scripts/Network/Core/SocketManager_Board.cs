@@ -90,7 +90,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-    public void purchaseTileNotification(GamePacket packet)
+    public void PurchaseTileNotification(GamePacket packet)
     {
         var response = packet.PurchaseTileNotification;
 

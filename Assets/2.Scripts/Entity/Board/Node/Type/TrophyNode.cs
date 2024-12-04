@@ -43,7 +43,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
             int index = BoardManager.Instance.curPlayerIndex;
             IPurchase purchase = this;
 
-            var ui = await UIManager.Show<PurchaseNodeUI>(purchase,index);
+            var ui = await UIManager.Show<PurchaseNodeUI>(purchase);
         }
         else if(player.IsTurnEnd())
         {
@@ -56,7 +56,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         return isTrophy;
     }
 
-    public void Purchase(int index)
+    public void Purchase()
     {
         GamePacket packet = new();
 

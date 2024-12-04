@@ -186,9 +186,9 @@ public class BoardManager : Singleton<BoardManager>
             #region Old
 
             //(현재인원 + 1) % (현재인원 + 1)
-            int count = playerTokenHandlers.Count;
-            playerIndex = (playerIndex + 1) % (count);
-            Curplayer.Ready();
+            //int count = playerTokenHandlers.Count;
+            //playerIndex = (playerIndex + 1) % (count);
+            //Curplayer.Ready();
 
             //미니게임 시작
             //OnEvent?.Invoke();
@@ -198,7 +198,12 @@ public class BoardManager : Singleton<BoardManager>
             #endregion
         }
     }
-
+    public void NextTurn()
+    {
+        int count = playerTokenHandlers.Count;
+        playerIndex = (playerIndex + 1) % (count);
+        Curplayer.Ready();
+    }
     public void SetTrophyNode()
     {
         //GamePacket packet = new();

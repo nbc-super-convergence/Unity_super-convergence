@@ -70,7 +70,10 @@ public class BoardTokenHandler : MonoBehaviour
             {
                 float d = Vector3.Distance(transform.position, nextPositon);
                 transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+                SetAnimation(true);
             }
+            else
+                SetAnimation(false);
 
             return;
         }
@@ -148,7 +151,11 @@ public class BoardTokenHandler : MonoBehaviour
                 syncTime = 0.0f;
             }
 
-            if (queue.Count == 0) isTurn = false;
+            if (queue.Count == 0)
+            {
+                isTurn = false;
+                SetAnimation(isTurn);
+            }
         }
 
         #endregion
@@ -185,7 +192,11 @@ public class BoardTokenHandler : MonoBehaviour
             }
         }
 
-        if(queue.Count > 0) isTurn = true;
+        if(queue.Count > 0)
+        {
+            isTurn = true;
+            SetAnimation(isTurn);
+        }
     }
 
     public bool IsTurnEnd()
@@ -195,7 +206,6 @@ public class BoardTokenHandler : MonoBehaviour
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
-        SetAnimation(true);
 
         while (true)
         {
@@ -204,8 +214,6 @@ public class BoardTokenHandler : MonoBehaviour
 
             yield return null;
         }
-
-        SetAnimation(false);
 
         action?.Invoke();
     }

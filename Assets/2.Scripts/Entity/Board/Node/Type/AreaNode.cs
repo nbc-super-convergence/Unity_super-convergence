@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text;
 using UnityEngine;
 
@@ -43,7 +44,7 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
+            var ui = await UIManager.Show<PurchaseNodeUI>(purchase);
         }
     }
     private void Penalty(BoardTokenData p)
@@ -59,17 +60,20 @@ public class AreaNode : BaseNode, IPurchase
         SocketManager.Instance.OnSend(packet);
     }
 
-    public void Purchase(int index)
+    public void Purchase()
     {
+        string id = GameManager.Instance.myInfo.SessionId;
+
         GamePacket packet = new();
         packet.PurchaseTileRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId,
+            SessionId = id,
             Tile = BoardManager.Instance.areaNodes.IndexOf(this)
         };
 
         SocketManager.Instance.OnSend(packet);
 
+        SetArea(id);
         Cancle();
     }
 
