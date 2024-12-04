@@ -27,14 +27,14 @@ public class MiniToken : MonoBehaviour
         MiniData = new(animator, MyColor);
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
-        IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
+        IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color;
     }
 
     private void Update()
     {
         if (!IsClient && isEnabled)
         {
-            switch (MinigameManager.GameType)
+            switch (MinigameManager.gameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
@@ -48,7 +48,7 @@ public class MiniToken : MonoBehaviour
     {
         if (IsClient && isEnabled)
         {
-            switch (MinigameManager.GameType)
+            switch (MinigameManager.gameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
@@ -90,7 +90,7 @@ public class MiniToken : MonoBehaviour
                 {
                     packet.IcePlayerSyncRequest = new()
                     {
-                        SessionId = MinigameManager.Instance.MySessonId,
+                        SessionId = MinigameManager.Instance.mySessonId,
                         Position = SocketManager.ToVector(transform.localPosition),
                         Rotation = transform.rotation.y,
                         State = MiniData.CurState

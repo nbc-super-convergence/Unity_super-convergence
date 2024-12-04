@@ -7,11 +7,12 @@ public class GameIceSlider : IGame
     private GameIceSliderData gameData;
     private UIMinigameIce ingameUI;
 
+    #region IGame
     public async void Init(params object[] param)
     {
         gameData = new GameIceSliderData();
         gameData.Init();
-        MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMap();
         SetBGM();
 
@@ -24,15 +25,20 @@ public class GameIceSlider : IGame
             Debug.LogError("startPlayers 자료형 전달 과정에서 문제 발생");
         }
     }
+    public async void GameStart()
+    {
+        ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
+        MinigameManager.Instance.GetMyToken().EnableInputSystem();
+    }
+    #endregion
 
-
-    //TODO : 배경음 설정
+    #region 초기화
     private void SetBGM()
     {
 
     }
 
-    public void ResetPlayers(RepeatedField<startPlayers> players)
+    private void ResetPlayers(RepeatedField<startPlayers> players)
     {
         foreach (var p in players)
         {//미니 토큰 위치 초기화
@@ -43,14 +49,10 @@ public class GameIceSlider : IGame
             miniToken.MiniData.rotY = p.Rotation;
         }
     }
+    #endregion
 
-    public async void GameStart()
-    {
-        ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
-        MinigameManager.Instance.GetMyToken().EnableInputSystem();
-    }
 
-    //TODO : Damage 주는 바닥에도 필요.(나의 데미지)
+    #region 인게임 이벤트
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
@@ -68,7 +70,7 @@ public class GameIceSlider : IGame
     public void PlayerDeath(string sessionId)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
-        if (sessionId == MinigameManager.Instance.MySessonId)
+        if (sessionId == MinigameManager.Instance.mySessonId)
         {
             token.DisableMyToken();
         }
@@ -81,4 +83,5 @@ public class GameIceSlider : IGame
         MinigameManager.Instance.GetMap<MapGameIceSlider>()
             .MapDecreaseEvent(gameData.phase);
     }
+    #endregion
 }

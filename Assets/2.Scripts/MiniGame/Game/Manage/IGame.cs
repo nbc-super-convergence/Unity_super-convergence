@@ -7,7 +7,7 @@ public interface IGame
     public void GameStart();
     public async void GameEnd(Dictionary<string, int> ranks, long boardTime)
     {
-        foreach (var mini in MinigameManager.Instance.MiniTokens)
+        foreach (var mini in MinigameManager.Instance.miniTokens)
         {
             mini.gameObject.SetActive(false);
         }

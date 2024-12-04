@@ -15,12 +15,11 @@ public class UIMinigameReady : UIBase
         public GameObject mask;
     }
 
-    private eGameType gameType;
-
     [SerializeField] private TextMeshProUGUI gameTitle;
     [SerializeField] private GameObject[] gameDescription;
-
     [SerializeField] private ReadyPanels[] readyPanels;
+    
+    private eGameType gameType;
 
     public override void Opened(object[] param)
     {
@@ -69,6 +68,16 @@ public class UIMinigameReady : UIBase
         gameDescription[(int)gameType - 1].SetActive(false);
     }
 
+    public void SetReady(string sessionId, bool isMe = false)
+    {
+        if (isMe) sessionId = GameManager.Instance.myInfo.SessionId;
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
+
+        //준비상태 전환
+        readyPanels[idx].outline.enabled = true;
+        readyPanels[idx].txt.text = "준비 완료!";
+    }
+
     private IEnumerator WaitForReady()
     {
         while (true)
@@ -90,16 +99,6 @@ public class UIMinigameReady : UIBase
             }
             yield return null;
         }
-    }
-
-    public void SetReady(string sessionId, bool isMe = false)
-    {
-        if (isMe) sessionId = GameManager.Instance.myInfo.SessionId;
-        int idx = GameManager.Instance.SessionDic[sessionId].Color;
-
-        //준비상태 전환
-        readyPanels[idx].outline.enabled = true;
-        readyPanels[idx].txt.text = "준비 완료!";
     }
 
     private void PlayerLeftEvent(int color)

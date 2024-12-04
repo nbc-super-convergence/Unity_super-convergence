@@ -36,13 +36,13 @@ public class MapGameIceSlider : MapBase
             {
                 case eCollisionType.Damage:
                     MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-                        .GiveDamage(MinigameManager.Instance.MySessonId, 1, true);
+                        .GiveDamage(MinigameManager.Instance.mySessonId, 1, true);
 
                     GamePacket packet = new()
                     {
                         IcePlayerDamageRequest = new()
                         {
-                            SessionId = MinigameManager.Instance.MySessonId
+                            SessionId = MinigameManager.Instance.mySessonId
                         }
                     };
                     SocketManager.Instance.OnSend(packet);
