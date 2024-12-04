@@ -4,19 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UIMinigameResult : UIBase
 {
+    [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image[] RankPanels;
     [SerializeField] private Sprite[] RankPanelsSprites;
-
     [SerializeField] private TextMeshProUGUI[] RankTxts;
     [SerializeField] private TextMeshProUGUI returnTxt;
+
+    private Dictionary<int, int> colorIdxs = new();
     private Dictionary<int, int> coinDics = new()
     { { 1, 20 }, { 2, 10 }, { 3, 5 }, { 4, 1 } };
 
     public override void Opened(object[] param)
     {
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
+
         UIManager.Hide<UIMinigameIce>();
 
         foreach (var panel in RankPanels)
@@ -34,6 +39,7 @@ public class UIMinigameResult : UIBase
                     string sessionid = rank.Key; //id
                     int rankNum = rank.Value; //등수
                     int color = GameManager.Instance.SessionDic[sessionid].Color; //색깔
+                    colorIdxs.Add(color, rankNum);
 
                     RankPanels[color].gameObject.SetActive(true);
 
@@ -55,7 +61,7 @@ public class UIMinigameResult : UIBase
                 Debug.LogError("param 오류 : idx0이 ranks가 아님");
             }
 
-            if (param[1] is DateTime returnTime)
+            if (param[1] is long returnTime)
             {
                 StartCoroutine(ReturnTxt());
                 StartCoroutine(ReturnBoard(returnTime));
@@ -65,6 +71,18 @@ public class UIMinigameResult : UIBase
         {
             Debug.LogError("param 오류 : object[] length가 다름");
         }
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(titleText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack));
+        sequence.Append(titleText.transform.DOScale(1f, 0.3f).SetEase(Ease.InOutBounce));
+        sequence.Join(titleText.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20, 90, false, true));
+    }
+
+    public override void Closed(object[] param)
+    {
+        base.Closed(param);
+        colorIdxs.Clear();
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
     }
 
     private IEnumerator ReturnTxt()
@@ -79,9 +97,16 @@ public class UIMinigameResult : UIBase
         }
     }
 
-    private IEnumerator ReturnBoard(DateTime returnTime)
+    private IEnumerator ReturnBoard(long returnTime)
     {
-        yield return new WaitUntil(() => DateTime.Now == returnTime);
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeSeconds() >= returnTime);
         UIManager.Hide<UIMinigameResult>();
+    }
+
+    private void PlayerLeftEvent(int color)
+    {
+        RankPanels[colorIdxs[color]].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
+        RankTxts[colorIdxs[color]].text = "오프라인";
+        RankTxts[colorIdxs[color]].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
     }
 }
