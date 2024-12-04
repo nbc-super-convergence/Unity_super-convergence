@@ -1,12 +1,50 @@
-using System.Collections;
+Ôªøusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArrowBubble : MonoBehaviour
+public class ArrowBubble : ObjectPoolBase
 {
     [SerializeField] private Image background;
     [SerializeField] private RectTransform arrow;
 
-    // Rotation∞™ 90¿Ã∏È øﬁ¬ , 270¿Ã∏È ø¿∏•¬ 
+    // RotationÍ∞í 90Ïù¥Î©¥ ÏôºÏ™Ω, 270Ïù¥Î©¥ Ïò§Î•∏Ï™Ω    
+        
+    public void SetArrowBubble(Color backColor, float dir)
+    {
+        this.background.color = backColor;
+        this.arrow.rotation = Quaternion.Euler(0, 0, dir);
+    }
+    public void SetArrowBubble(BubbleInfo info)
+    {
+        switch (info.Color)
+        {
+            case 0:
+                this.background.color = Color.red;
+                break;
+            case 1:
+                this.background.color = Color.yellow;
+                break;
+            case 2:
+                this.background.color = Color.green;
+                break;
+            case 3:
+                this.background.color = Color.blue;
+                break;
+            default:
+                this.background.color = Color.gray;
+                break;
+        }
+        this.arrow.rotation = Quaternion.Euler(0, 0, info.Rotation);
+    }
+
+    public void ColorChange(Color backColor)
+    {
+        background.color = backColor;
+    }
+
+    public override void Init(params object[] param)
+    {
+        throw new System.NotImplementedException();
+    }
 }

@@ -84,6 +84,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4076595398325356451}
+  - component: {fileID: 8800452630777174160}
   m_Layer: 5
   m_Name: ArrowBubble
   m_TagString: Untagged
@@ -112,6 +113,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 29}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8800452630777174160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838461386428819803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a419a9cfd3021c4885bb1ee59ba3160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data:
+    rCode: ArrowBubble
+    count: 42
+    velocity: 0
+    prefab: {fileID: 0}
+    parent: {fileID: 0}
+  background: {fileID: 1619846545876929704}
+  arrow: {fileID: 3636180747155375093}
 --- !u!1 &3505491492179469447
 GameObject:
   m_ObjectHideFlags: 0

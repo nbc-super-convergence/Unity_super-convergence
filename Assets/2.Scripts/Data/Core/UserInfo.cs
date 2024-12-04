@@ -30,6 +30,7 @@
         };
         return userData;
     }
+
     public void SetUserData(UserData userData)
     {
         SessionId = userData.SessionId;
@@ -40,16 +41,24 @@
     {
         this.SessionId = sessionId;
     }
-    public void SetNickname(string nickname) {  this.Nickname = nickname; }
+    public void SetNickname(string nickname)
+    {
+        this.Nickname = nickname; 
+    }
+
     public void SetUserData(string sessionId, string nickname)
     {
         this.SessionId= sessionId;
         this.Nickname = nickname;
     }
+
     public void SetColor(int color)
     {
         this.Color = color;
     }
+
     public void SetOrder(int order)
-    { this.Order = order; }
+    { 
+        this.Order = order; 
+    }
 }

@@ -1,19 +1,13 @@
-using System;
-using System.Collections;
+
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
-public class UIDEBUGER : MonoBehaviour
+#if UNITY_EDITOR
+public class InsuDebugger : Singleton<InsuDebugger>
 {
-    public Button[] button;
-
-    private IEnumerator Start()
-    {
-        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
-        
-    }
-
+    public bool isSingle;
+   
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
@@ -22,6 +16,12 @@ public class UIDEBUGER : MonoBehaviour
         { JumpRoomUI(); }
         if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { UIManager.Get<UIRoom>().GameStart(); }
+        if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { JumpExecuteCourtshipDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { StartDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { UIManager.Get<UICommandBoardHandler>().Next(); }
     }
 
     private void JumpBoardScene()
@@ -55,8 +55,21 @@ public class UIDEBUGER : MonoBehaviour
             MaxUser = 4,
             
         };
-        
-
         await UIManager.Show<UIRoom>(roomData);
     }
+
+    private void JumpExecuteCourtshipDance()
+    {
+        GameManager.Instance.myInfo.SetSessionId("debugInsu");
+        SceneManager.LoadScene(3);
+    }
+    private void StartDance()
+    {        
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(new List<Player>()
+        {
+            new Player(){ SessionId = GameManager.Instance.myInfo.SessionId }
+        });
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
+    }
 }
+#endif
