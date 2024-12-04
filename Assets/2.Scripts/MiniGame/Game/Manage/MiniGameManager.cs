@@ -17,7 +17,7 @@ public class MinigameManager : Singleton<MinigameManager>
 
     /*미니게임 정보*/
     public static eGameType GameType { get; private set; } //게임 종류
-    private IGame curMiniGame; //미니게임 관련 메서드 호출용
+    public IGame curMiniGame; //미니게임 관련 메서드 호출용
 
     public MiniToken[] MiniTokens; //미니게임 캐릭터
     public string MySessonId => GameManager.Instance.myInfo.SessionId;

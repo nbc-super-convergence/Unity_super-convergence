@@ -38,7 +38,7 @@ public class MiniToken : MonoBehaviour
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.SetRotY(MiniData.rotY);
+                    Controller.RotateToken(MiniData.rotY);
                     break;
             }
         }
@@ -52,7 +52,7 @@ public class MiniToken : MonoBehaviour
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.AddForce);
-                    Controller.SetRotY(MiniData.rotY);
+                    Controller.RotateToken(MiniData.rotY);
                     break;
             }
         }
