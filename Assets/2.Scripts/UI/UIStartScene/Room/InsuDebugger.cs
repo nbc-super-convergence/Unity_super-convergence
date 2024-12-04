@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,12 +9,7 @@ using UnityEngine.UI;
 public class InsuDebugger : Singleton<InsuDebugger>
 {
     public bool isSingle;
-    private IEnumerator Start()
-    {
-        yield return new WaitUntil(() => GameManager.Instance.isInitialized);
-        
-    }
-
+   
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
@@ -64,7 +60,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
 
     private void JumpExecuteCourtshipDance()
     {
-
+        SceneManager.LoadScene(3);
     }
 }
 #endif

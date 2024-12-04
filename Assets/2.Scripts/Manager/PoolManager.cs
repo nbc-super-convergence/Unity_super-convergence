@@ -27,6 +27,7 @@ public class PoolManager : Singleton<PoolManager>
             }
         }
         isInit = true;
+        isInitialized = true;
     }
 
     public T Spawn<T>(string rcode, params object[] param) where T : ObjectPoolBase

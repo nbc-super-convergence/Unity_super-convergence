@@ -44,6 +44,10 @@ public class GameManager : Singleton<GameManager>
         FadeScreen.Instance.Init();
         yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
 
+        PoolManager.Instance.Init();
+        yield return new WaitUntil(() => PoolManager.Instance.isInitialized);
+
+
         //Initialize SocketManager
         SocketManager.Instance.Init();
 

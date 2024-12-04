@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ArrowBubble : MonoBehaviour
+public class ArrowBubble : ObjectPoolBase
 {
     [SerializeField] private Image background;
     [SerializeField] private RectTransform arrow;
@@ -19,5 +19,10 @@ public class ArrowBubble : MonoBehaviour
     public void ColorChange(Color backColor)
     {
         background.color = backColor;
+    }
+
+    public override void Init(params object[] param)
+    {
+        throw new System.NotImplementedException();
     }
 }
