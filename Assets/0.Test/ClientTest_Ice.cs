@@ -80,7 +80,6 @@ public partial class ClientTest : Singleton<ClientTest>
             {
                 DateTime dateTime = DateTime.Now.AddSeconds(6);
                 long unixTimeSeconds = new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-                Debug.Log($"DateTime: {dateTime:HH:mm:ss}, UnixTimeSeconds: {unixTimeSeconds}");
 
                 GamePacket packet = new()
                 {
@@ -117,5 +116,6 @@ public partial class ClientTest : Singleton<ClientTest>
             }
             yield return null;
         }
+
     }
 }
