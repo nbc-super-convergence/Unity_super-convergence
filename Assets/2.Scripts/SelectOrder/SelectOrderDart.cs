@@ -156,7 +156,7 @@ public class SelectOrderDart : MonoBehaviour
         transform.localPosition = Vector3.zero;
 
         CurAim = 0f;
-        //CurForce = 2.5f;
+        CurForce = 2f;
 
         phase = ShootingPhase.Aim;
     }
