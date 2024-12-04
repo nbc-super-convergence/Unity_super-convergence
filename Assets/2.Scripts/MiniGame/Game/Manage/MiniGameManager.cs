@@ -30,8 +30,8 @@ public class MinigameManager : Singleton<MinigameManager>
 
     public MiniToken GetMiniToken(string sessionId)
     {
-        if (GameManager.Instance.SessionDic.TryGetValue(sessionId, out UserInfo idx))
-            return MiniTokens[idx.Color];
+        if (GameManager.Instance.SessionDic.TryGetValue(sessionId, out UserInfo info))
+            return MiniTokens[info.Color];
         else
             return null;
     }
