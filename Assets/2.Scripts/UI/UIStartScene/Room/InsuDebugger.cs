@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIDEBUGER : MonoBehaviour
+#if UNITY_EDITOR
+public class InsuDebugger : Singleton<InsuDebugger>
 {
-    public Button[] button;
-
+    public bool isSingle;
     private IEnumerator Start()
     {
         yield return new WaitUntil(() => GameManager.Instance.isInitialized);
@@ -22,6 +22,8 @@ public class UIDEBUGER : MonoBehaviour
         { JumpRoomUI(); }
         if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { UIManager.Get<UIRoom>().GameStart(); }
+        if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { JumpExecuteCourtshipDance(); }
     }
 
     private void JumpBoardScene()
@@ -59,4 +61,10 @@ public class UIDEBUGER : MonoBehaviour
 
         await UIManager.Show<UIRoom>(roomData);
     }
+
+    private void JumpExecuteCourtshipDance()
+    {
+
+    }
 }
+#endif
