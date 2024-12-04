@@ -88,9 +88,9 @@ public class AreaNode : BaseNode, IPurchase
         BoardManager.Instance.TurnEnd();
     }
 
-    public void SetArea(int index)
+    public void SetArea(int owner,int color)
     {
-        //playerIndex = index;
-        plane.material = BoardManager.Instance.materials[index];
+        this.owner = owner;
+        plane.material = BoardManager.Instance.materials[color];
     }
 }
