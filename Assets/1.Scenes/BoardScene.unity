@@ -13067,9 +13067,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
   boardCamera: {fileID: 259411973}
-  miniParent: {fileID: 0}
+  miniParent: {fileID: 1316574483}
   curMap: {fileID: 0}
-  miniTokens: []
+  miniTokens:
+  - {fileID: 392397087}
+  - {fileID: 1699288607}
+  - {fileID: 289646676}
+  - {fileID: 1588247821}
 --- !u!1001 &1192393537
 PrefabInstance:
   m_ObjectHideFlags: 0
