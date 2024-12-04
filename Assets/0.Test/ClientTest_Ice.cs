@@ -83,7 +83,26 @@ public partial class ClientTest : Singleton<ClientTest>
                     {
                         Ranks =
                         {
-                             
+                             new Rank
+                             {
+                                 SessionId = "Session1",
+                                 Rank_ = 4,
+                             },
+                             new Rank
+                             {
+                                 SessionId = "Session2",
+                                 Rank_ = 2,
+                             },
+                             new Rank
+                             {
+                                 SessionId = "Session3",
+                                 Rank_ = 3,
+                             },
+                             new Rank
+                             {
+                                 SessionId = "Session4",
+                                 Rank_ = 1,
+                             },
                         }
                     }
                 };
