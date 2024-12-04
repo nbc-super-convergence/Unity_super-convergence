@@ -35,7 +35,7 @@ public class CollisionUtil : MonoBehaviour
         {
             if (mini.IsClient)
             {
-                map.HandleCollider(type);
+                map.HandleCollider(type, other);
                 yield return new WaitForSeconds(1);
             }
         }
