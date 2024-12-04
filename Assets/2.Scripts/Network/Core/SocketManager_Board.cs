@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -74,8 +75,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             int i = response.Tile;
 
-            var player = BoardManager.Instance.Curplayer.data;
-            string id = player.userInfo.SessionId;
+            var playerinfo = response.PlayerInfo;
+            string id = playerinfo.SessionId;
+
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfo.Gold;
+            data.trophyAmount = playerinfo.Trophy;
 
             BoardManager.Instance.areaNodes[i].SetArea(id);
         }
@@ -107,6 +112,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             int i = response.NextTile;
 
+            var playerinfo = response.PlayerInfo;
+            string id = playerinfo.SessionId;
+
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfo.Gold;
+            data.trophyAmount = playerinfo.Trophy;
+
             var list = BoardManager.Instance.trophyNode;
             list[i].Toggle();
         }
@@ -120,28 +132,44 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTrophyNotification;
 
-        string id = response.SessionId;
-        var player = BoardManager.Instance.GetToken(id).data;
-        player.trophyAmount += 1;
+        var playerinfos = response.PlayersInfo.ToList();
 
-        int i = response.BeforeTile;
-        int j = response.NextTile;
+        for(int i = 0; i < playerinfos.Count; i++)
+        {
+            string id = playerinfos[i].SessionId;
 
-        BoardManager.Instance.trophyNode[i].Toggle();
-        BoardManager.Instance.trophyNode[j].Toggle();
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfos[i].Gold;
+            data.trophyAmount = playerinfos[i].Trophy;
+        }
+
+        int b = response.BeforeTile;
+        int n = response.NextTile;
+
+        BoardManager.Instance.trophyNode[b].Toggle();
+        BoardManager.Instance.trophyNode[n].Toggle();
     }
 
     #endregion
 
     #region 타일 패널티
 
-    public void TilePenaltyRequest(GamePacket packet)
+    public void TilePenaltyResponse(GamePacket packet)
     {
         var response = packet.TilePenaltyResponse;
 
         if (response.Success)
         {
+            var playerinfos = response.PlayersInfo.ToList();
 
+            for(int i = 0; i < playerinfos.Count; i++)
+            {
+                string id = playerinfos[i].SessionId;
+
+                var data = BoardManager.Instance.GetToken(id).data;
+                data.keyAmount = playerinfos[i].Gold;
+                data.trophyAmount = playerinfos[i].Trophy;
+            }
         }
         else
         {
@@ -149,10 +177,20 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-    public void TilePenaltyResponse(GamePacket packet)
+    public void TilePenaltyNotification(GamePacket packet)
     {
         var response = packet.TilePenaltyNotification;
 
+        var playerinfos = response.PlayersInfo.ToList();
+
+        for (int i = 0; i < playerinfos.Count; i++)
+        {
+            string id = playerinfos[i].SessionId;
+
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfos[i].Gold;
+            data.trophyAmount = playerinfos[i].Trophy;
+        }
     }
 
     #endregion
