@@ -6,6 +6,8 @@ public class CommandGenerator
     private int[] rotations = { 0, 90, 180, 270 };
     private Random random = new();
 
+    private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;
+
     public Queue<Queue<BubbleInfo>> GenerateBoardPool(int poolCount)
     {
         Queue<Queue<BubbleInfo>> pool = new();
@@ -26,20 +28,26 @@ public class CommandGenerator
         return queue;
     }
 
-    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, int color0, int color1 = -1, int color2 = -1, int color3 = -1)
+    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, List<Player> players)
     {
         foreach ( var queue in pool)
         {
-            SetBoardColor(queue, color0, color1, color2, color3);
+            SetBoardColor(queue, players);
         }
     }
 
-    private void SetBoardColor(Queue<BubbleInfo> queue, int color0, int color1 = -1, int color2 = -1, int color3 = -1)
+    
+    private void SetBoardColor(Queue<BubbleInfo> queue, List<Player> teamPlayers)
     {
-        List<int> colors = new List<int> { color0 };
-        if(color1 != -1) colors.Add(color1);
-        if (color2 != -1) colors.Add(color2);
-        if (color3 != -1) colors.Add(color3);
+        List<int> colors = new();
+        foreach ( var player in teamPlayers)
+        {
+            if(SessionDic.TryGetValue(player.SessionId, out UserInfo userInfo))
+            {
+                colors.Add(userInfo.Color);
+            }
+        }
+        if (colors.Count == 0) return;
 
         int colorIndex = 0;
 
