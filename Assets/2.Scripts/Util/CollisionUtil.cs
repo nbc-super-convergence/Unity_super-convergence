@@ -26,7 +26,7 @@ public class CollisionUtil : MonoBehaviour
     public Coroutine OneSecondCoroutine;
     private void OnTriggerStay(Collider other)
     {
-        OneSecondCoroutine = StartCoroutine(OneSecondInvoker(other));
+        OneSecondCoroutine ??= StartCoroutine(OneSecondInvoker(other));
     }
 
     private IEnumerator OneSecondInvoker(Collider other)
@@ -35,7 +35,7 @@ public class CollisionUtil : MonoBehaviour
         {
             if (mini.IsClient)
             {
-                map.HandleCollider(type);
+                map.HandleCollider(type, other);
                 yield return new WaitForSeconds(1);
             }
         }

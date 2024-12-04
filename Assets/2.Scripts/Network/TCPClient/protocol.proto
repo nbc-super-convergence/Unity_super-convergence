@@ -23,6 +23,11 @@ syntax = "proto3";
         float z = 3; 
     }
 
+    message Rank {
+        string sessionId = 1;
+        int32 rank = 2; 
+    }
+
     message BoardPlayerData {
         string sessionId = 1;
         int32 gold = 2;
@@ -416,11 +421,6 @@ syntax = "proto3";
     message S2C_IceGameOverNotification {
         repeated Rank ranks = 1;
         int64 endTime = 2; 
-    
-        message Rank {
-            string sessionId = 1;
-            int32 rank = 2; 
-        }
     }
 
     message S2C_IcePlayerExitNotification {
