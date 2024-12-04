@@ -13070,10 +13070,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  MiniParent: {fileID: 1316574483}
   boardCamera: {fileID: 259411973}
-  CurMap: {fileID: 0}
-  MiniTokens:
+  miniParent: {fileID: 1316574483}
+  curMap: {fileID: 0}
+  miniTokens:
   - {fileID: 392397087}
   - {fileID: 1699288607}
   - {fileID: 289646676}
