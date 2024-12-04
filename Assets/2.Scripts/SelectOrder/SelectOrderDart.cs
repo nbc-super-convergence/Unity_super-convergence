@@ -86,6 +86,7 @@ public class SelectOrderDart : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        //다트가 빗나가면
         ResetDart();
     }
 

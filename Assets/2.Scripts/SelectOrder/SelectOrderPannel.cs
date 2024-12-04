@@ -25,21 +25,11 @@ public class SelectOrderPannel : MonoBehaviour
         float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
         string name = collision.gameObject.name;
 
+        //입력 데이터를 서버에 전송
         DartData dart = new DartData(dist, name);
         distanceList.Add(dart);
 
         Debug.Log($"{dart.Name}, {dart.Distance}");
-
-        curDartCnt += 1;
-        if (curDartCnt == maxDartCnt)
-        {
-            isMove = false;
-            DistanceRank();
-        }
-        else
-        {
-            SelectOrderDartManage.Instance.NextDart();
-        }
     }
 
     private void FixedUpdate()
