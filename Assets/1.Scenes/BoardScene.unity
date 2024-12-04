@@ -8784,7 +8784,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
   startNode: {fileID: 930751182}
-  TestPlayerPrefab: {fileID: 5534125269793065704, guid: 6ced1e63505196f4189954636b602b16,
+  TestPlayerPrefab: {fileID: 6072940022074981736, guid: 36e8e3e4884437943a14696ae672fc3e,
     type: 3}
   playerTokenHandlers: []
   materials:
