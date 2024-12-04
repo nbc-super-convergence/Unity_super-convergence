@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class UIMinigameResult : UIBase
 {
+    [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image[] RankPanels;
     [SerializeField] private Sprite[] RankPanelsSprites;
-
     [SerializeField] private TextMeshProUGUI[] RankTxts;
     [SerializeField] private TextMeshProUGUI returnTxt;
 
@@ -70,6 +71,11 @@ public class UIMinigameResult : UIBase
         {
             Debug.LogError("param 오류 : object[] length가 다름");
         }
+
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(titleText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack));
+        sequence.Append(titleText.transform.DOScale(1f, 0.3f).SetEase(Ease.InOutBounce));
+        sequence.Join(titleText.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20, 90, false, true));
     }
 
     public override void Closed(object[] param)
