@@ -65,7 +65,8 @@ public class UIRoom : UIBase
         foreach (var user in roomData.Users)
         {
             // TODO:: 없는 유저는 -1로 남게... 
-            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++, num++));
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num, num));
+            num += 1;
         }
         SetHost();
         SetDropdown();       
