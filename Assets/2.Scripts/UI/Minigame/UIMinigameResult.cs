@@ -12,11 +12,15 @@ public class UIMinigameResult : UIBase
 
     [SerializeField] private TextMeshProUGUI[] RankTxts;
     [SerializeField] private TextMeshProUGUI returnTxt;
+
+    private Dictionary<int, int> colorIdxs = new();
     private Dictionary<int, int> coinDics = new()
     { { 1, 20 }, { 2, 10 }, { 3, 5 }, { 4, 1 } };
 
     public override void Opened(object[] param)
     {
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
+
         UIManager.Hide<UIMinigameIce>();
 
         foreach (var panel in RankPanels)
@@ -34,6 +38,7 @@ public class UIMinigameResult : UIBase
                     string sessionid = rank.Key; //id
                     int rankNum = rank.Value; //등수
                     int color = GameManager.Instance.SessionDic[sessionid].Color; //색깔
+                    colorIdxs.Add(color, rankNum);
 
                     RankPanels[color].gameObject.SetActive(true);
 
@@ -67,6 +72,13 @@ public class UIMinigameResult : UIBase
         }
     }
 
+    public override void Closed(object[] param)
+    {
+        base.Closed(param);
+        colorIdxs.Clear();
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
+    }
+
     private IEnumerator ReturnTxt()
     {
         int leftSeconds = 5;
@@ -83,5 +95,12 @@ public class UIMinigameResult : UIBase
     {
         yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeSeconds() >= returnTime);
         UIManager.Hide<UIMinigameResult>();
+    }
+
+    private void PlayerLeftEvent(int color)
+    {
+        RankPanels[colorIdxs[color]].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
+        RankTxts[colorIdxs[color]].text = "오프라인";
+        RankTxts[colorIdxs[color]].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
     }
 }
