@@ -1,11 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
-    [SerializeField] private SelectOrderUI selectUI;
     private Rigidbody rgdby;
 
     //발사 준비상태
@@ -14,36 +11,32 @@ public class SelectOrderDart : MonoBehaviour
 
     private bool isIncrease = true; //증감 여부
 
-    //각도 조절
-    private float _aim = 0f;
-    public float ShootingAim
+    private float curAim = 0f;
+    private float minAim, maxAim;
+    public float CurAim
     {
-        get => _aim;
+        get => curAim;
         set
         {
-            float min = 0f, max = 20f;
-            _aim = Mathf.Clamp(value, min, max);
-
-            if (_aim <= min)
+            curAim = Mathf.Clamp(value, minAim, maxAim);
+            if (curAim <= minAim)
                 isIncrease = true;
-            else if (_aim >= max)
+            if (curAim >= maxAim)
                 isIncrease = false;
         }
     }
 
-    //힘 조절
-    private float _force = 2.5f;
-    public float ShootingForce
+    private float curForce = 2f;
+    private float minForce, maxForce;
+    public float CurForce
     {
-        get => _force;
+        get => curForce;
         set
         {
-            float min = 1.5f, max = 3f;
-            _force = Mathf.Clamp(value, min, max);
-
-            if(_force <= min)
+            curForce = Mathf.Clamp(value, minForce, maxForce);
+            if(curForce <= minForce)
                 isIncrease = true;
-            else if(_force >= max)
+            if (curForce >= maxForce)
                 isIncrease = false;
         }
     }
@@ -51,9 +44,19 @@ public class SelectOrderDart : MonoBehaviour
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
+    public DiceGameData DiceGameData { get; private set; }
+
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
+    }
+
+    private void Start()
+    {
+        minAim = SelectOrderManager.Instance.minAim;
+        maxAim = SelectOrderManager.Instance.maxAim;
+        minForce = SelectOrderManager.Instance.minForce;
+        maxForce = SelectOrderManager.Instance.maxForce;
     }
 
     private void FixedUpdate()
@@ -70,7 +73,7 @@ public class SelectOrderDart : MonoBehaviour
                 return;
         }
 
-        transform.rotation = Quaternion.Euler(ShootingAim, 0, 0);
+        transform.rotation = Quaternion.Euler(CurAim, 0, 0);
 
         //Debug.DrawRay(transform.position, transform.position + transform.forward);
     }
@@ -114,16 +117,13 @@ public class SelectOrderDart : MonoBehaviour
     /// </summary>
     private void SetAim()
     {
-        float speed = 3f;
-        if (isIncrease)
-            ShootingAim += Time.deltaTime * speed;
-        else
-            ShootingAim -= Time.deltaTime * speed;
+        float speed = 5f;
+
+        if (isIncrease) CurAim += Time.deltaTime * speed;
+        else CurAim -= Time.deltaTime * speed;
 
         //벡터 각도 조절
-        dartRot.z = Mathf.Sin(ShootingAim - 90f);
-
-        selectUI.GetAim(ShootingAim);
+        dartRot.z = Mathf.Sin(CurAim - 90f);
     }
 
     /// <summary>
@@ -132,12 +132,8 @@ public class SelectOrderDart : MonoBehaviour
     private void SetForce()
     {
         float speed = 1f;
-        if (isIncrease)
-            ShootingForce += Time.deltaTime * speed;
-        else
-            ShootingForce -= Time.deltaTime * speed;
-
-        selectUI.GetForce(ShootingForce);
+        if (isIncrease) CurForce += Time.deltaTime * speed;
+        else CurForce -= Time.deltaTime * speed;
     }
 
     /// <summary>
@@ -146,7 +142,7 @@ public class SelectOrderDart : MonoBehaviour
     private void NowShoot()
     {
         rgdby.useGravity = true;
-        rgdby.AddForce(-transform.forward * ShootingForce, ForceMode.Impulse);
+        rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
     }
 
     /// <summary>
@@ -159,9 +155,21 @@ public class SelectOrderDart : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
 
-        ShootingAim = 0f;
-        ShootingForce = 2.5f;
+        CurAim = 0f;
+        //CurForce = 2.5f;
 
         phase = ShootingPhase.Aim;
+    }
+
+
+    public void SetDartDistance(float dist)
+    {
+        float distance = dist;
+        //DiceGameData.Value = dist;    //float형 distance가 필요한데 일단 없어서 이렇게...
+    }
+
+    public void SetDartRank(int rank)
+    {
+        DiceGameData.Rank = rank;
     }
 }
