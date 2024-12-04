@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,5 +8,16 @@ public class ArrowBubble : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private RectTransform arrow;
 
-    // Rotation°ª 90ÀÌ¸é ¿ŞÂÊ, 270ÀÌ¸é ¿À¸¥ÂÊ
+    // Rotationê°’ 90ì´ë©´ ì™¼ìª½, 270ì´ë©´ ì˜¤ë¥¸ìª½    
+        
+    public void SetArrowBubble(Color backColor, float dir)
+    {
+        this.background.color = backColor;
+        this.arrow.rotation = Quaternion.Euler(0, 0, dir);
+    }
+
+    public void ColorChange(Color backColor)
+    {
+        background.color = backColor;
+    }
 }
