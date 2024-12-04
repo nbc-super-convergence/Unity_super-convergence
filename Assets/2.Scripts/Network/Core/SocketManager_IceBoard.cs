@@ -85,10 +85,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             rankings.Add(r.SessionId, r.Rank_);
         }
-        DateTime time = DateTimeOffset.FromUnixTimeMilliseconds(response.EndTime).UtcDateTime;
-
+        
         //UI Minigame Result 판넬 호출
-        MinigameManager.Instance.curMiniGame.GameEnd(rankings, time);
+        MinigameManager.Instance.curMiniGame.GameEnd(rankings, response.EndTime);
         
         //미니게임 맵 삭제
         MinigameManager.Instance.boardCamera.SetActive(true);

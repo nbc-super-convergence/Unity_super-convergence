@@ -22,6 +22,17 @@ public class MinigameManager : Singleton<MinigameManager>
     public MiniToken[] MiniTokens; //미니게임 캐릭터
     public string MySessonId => GameManager.Instance.myInfo.SessionId;
 
+    protected override void Awake()
+    {
+        base.Awake();
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
+    }
+
     #region Properties
     public T GetMiniGame<T>() where T : IGame
     {
@@ -48,7 +59,7 @@ public class MinigameManager : Singleton<MinigameManager>
     }
     #endregion
 
-    #region Minigame 초기화D
+    #region Minigame 초기화
     /// <summary>
     /// 서버에서 정한 미니게임 선택.
     /// </summary>
@@ -69,4 +80,9 @@ public class MinigameManager : Singleton<MinigameManager>
         CurMap = instantiatedMap.GetComponent<MapGameIceSlider>();
     }
     #endregion
+
+    private void PlayerLeftEvent(int color)
+    {
+        MiniTokens[color].gameObject.SetActive(false);
+    }
 }

@@ -78,7 +78,7 @@ public partial class ClientTest : Singleton<ClientTest>
             if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.P))
             {
-                DateTime dateTime = DateTime.UtcNow;
+                DateTime dateTime = DateTime.Now.AddSeconds(6);
                 long unixTimeSeconds = new DateTimeOffset(dateTime).ToUnixTimeSeconds();
 
                 GamePacket packet = new()
@@ -116,5 +116,6 @@ public partial class ClientTest : Singleton<ClientTest>
             }
             yield return null;
         }
+
     }
 }
