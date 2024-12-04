@@ -23,11 +23,6 @@ syntax = "proto3";
         float z = 3; 
     }
 
-    message Rank { 
-        int32 playerId = 1;
-        int32 rank = 2; 
-    }
-
     message BoardPlayerData {
         string sessionId = 1;
         int32 gold = 2;
@@ -147,7 +142,7 @@ syntax = "proto3";
     }
 
     message S2C_RollDiceNotification {
-        int32 playerId = 1;
+        string sessionId = 1;
         int32 diceResult = 2;
     }
 
@@ -163,25 +158,25 @@ syntax = "proto3";
     }
 
     message  S2C_MovePlayerBoardNotification {
-        int32 playerId = 1;
+        string sessionId = 1;
         Vector targetPoint = 2;
         float rotation = 3;
     }
 
     message  C2S_PurchaseTileRequest {
         string sessionId = 1;
-        Vector tile = 2;
+        int32 tile = 2;
     }
 
     message  S2C_PurchaseTileResponse {
         bool success = 1;
-        Vector tile = 2;
+        int32 tile = 2;
         GlobalFailCode failCode = 3;
     }
 
     message  S2C_PurchaseTileNotification {
-        int32 playerId = 1;
-        Vector tile = 2;
+        string sessionId = 1;
+        int32 tile = 2;
     }
 
     message S2C_GameEndNotification {

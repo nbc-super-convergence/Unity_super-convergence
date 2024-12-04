@@ -1,9 +1,8 @@
 using System.Collections.Generic;
-using UnityEngine.Playables;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    //201
+    /* 201 */
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IceMiniGameReadyNotification;
@@ -14,20 +13,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 #pragma warning restore CS4014
 
         //데이터 설정, 맵 설정, BGM 설정
-        MinigameManager.Instance.SetMiniGame<GameIceSlider>();
+        MinigameManager.Instance.SetMiniGame<GameIceSlider>(response);
         MinigameManager.Instance.boardCamera.SetActive(false);
-
-        foreach (var p in response.Players)
-        {//미니 토큰 위치 초기화
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
-            miniToken.EnableMiniToken();
-            miniToken.Controller.SetPos(ToVector3(p.Position));
-            miniToken.Controller.SetRotY(p.Rotation);
-        }
     }
 
-    //202 : IceGameReadyRequest
-    //Send 위치 : UIMinigameReady (완료)
+    /* 202 : IceGameReadyRequest
+     * Send 위치 : UIMinigameReady (완료) */
 
     //203
     public void IceGameReadyNotification(GamePacket gamePacket)
@@ -38,7 +29,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UIMinigameReady>().SetReady(response.SessionId);
     }
 
-    //204
+    /* 204 */
     public void IceMiniGameStartNotification(GamePacket gamePacket)
     {
         //ReadyUI 숨기기

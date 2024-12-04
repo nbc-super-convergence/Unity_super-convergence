@@ -5,7 +5,8 @@ public enum eGameType
 {//실존 클래스명과 일치해야 함. 서순 절대 바꾸지 말 것.
     Default,
     GameIceSlider,
-    GameBombDelivery
+    GameBombDelivery,
+    GameCourtshipDance
 }
 
 public class MinigameManager : Singleton<MinigameManager>
@@ -19,21 +20,7 @@ public class MinigameManager : Singleton<MinigameManager>
     private IGame curMiniGame; //미니게임 관련 메서드 호출용
 
     public MiniToken[] MiniTokens; //미니게임 캐릭터
-    public string MySessonId
-    {
-        get { return MySessonId; }
-        set
-        {
-            if (MySessonId == null)
-            {
-                MySessonId = value;
-            }
-            else
-            {
-                Debug.LogWarning("이미 mySessonId 설정한 적 있음");
-            }
-        }
-    }
+    public string MySessonId => GameManager.Instance.myInfo.SessionId;
 
     #region Properties
     public T GetMiniGame<T>() where T : IGame
@@ -66,11 +53,11 @@ public class MinigameManager : Singleton<MinigameManager>
     /// 서버에서 정한 미니게임 선택.
     /// </summary>
     /// <typeparam name="T">IGame의 자식 클래스</typeparam>
-    public T SetMiniGame<T>() where T : IGame, new()
+    public T SetMiniGame<T>(params object[] param) where T : IGame, new()
     {
         GameType = (eGameType)Enum.Parse(typeof(eGameType), typeof(T).Name);
         curMiniGame = new T();
-        curMiniGame.Init();
+        curMiniGame.Init(param);
         
         return (T)curMiniGame;
     }

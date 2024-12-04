@@ -55,4 +55,15 @@ public class BoardResult : UIBase
 
     //    //comment.Add("결과를 발표하겠습니다!");
     //}
+
+    public void OnClick()
+    {
+        //GamePacket packet = new();
+        //packet.BackToTheRoomRequest = new()
+        //{
+        //    //UserId = 
+        //};
+
+        //SocketManager.Instance.OnSend(packet);
+    }
 }
