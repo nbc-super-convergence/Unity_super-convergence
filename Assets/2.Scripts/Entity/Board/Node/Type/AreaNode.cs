@@ -1,9 +1,9 @@
+using System.Text;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AreaNode : BaseNode, IPurchase
 {
-    private int owner = -1;
+    private StringBuilder owner = new StringBuilder("");
     private int saleAmount = 10; //매수금은 판매액의 2배
 
 
@@ -36,10 +36,13 @@ public class AreaNode : BaseNode, IPurchase
         //    var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         //    return;
         //}
+        string o = owner.ToString();
+        string id = GameManager.Instance.myInfo.SessionId;
 
-        if (owner != index)
+        if (o != id)
         {
-            if (owner != -1) Penalty(player.data);
+            if (o != "") Penalty(player.data);
+
             var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         }
     }
@@ -58,23 +61,14 @@ public class AreaNode : BaseNode, IPurchase
 
     public void Purchase(int index)
     {
-        //세션id 숙지 필요
-        //playerIndex = index;
-        //plane.material = BoardManager.Instance.materials[index];
-        //int i = BoardManager.Instance.areaNodes.IndexOf(this);
-
         GamePacket packet = new();
         packet.PurchaseTileRequest = new()
         {
-            //추후 변경되면 수정
             SessionId = GameManager.Instance.myInfo.SessionId,
-            //Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
         };
 
         SocketManager.Instance.OnSend(packet);
-
-
-
 
         Cancle();
     }
@@ -88,9 +82,13 @@ public class AreaNode : BaseNode, IPurchase
         BoardManager.Instance.TurnEnd();
     }
 
-    public void SetArea(int owner,int color)
+    public void SetArea(string id)
     {
-        this.owner = owner;
-        plane.material = BoardManager.Instance.materials[color];
+        //this.owner = owner;
+        this.owner.Clear();
+        this.owner.Append(id);
+        int i = GameManager.Instance.SessionDic[id].Color;
+
+        plane.material = BoardManager.Instance.materials[i];
     }
 }

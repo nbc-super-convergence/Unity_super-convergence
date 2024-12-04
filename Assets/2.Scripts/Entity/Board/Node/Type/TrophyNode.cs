@@ -69,7 +69,6 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         SocketManager.Instance.OnSend(packet);
 
         Toggle();
-
         Cancle();
     }
 
