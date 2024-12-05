@@ -106,6 +106,5 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.IcePlayerExitNotification;
         GameManager.Instance.DeleteSessionId(response.SessionId);
-        BoardManager.Instance.NextTurn();
     }
 }

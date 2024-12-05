@@ -101,6 +101,7 @@ public class UIMinigameResult : UIBase
     {
         yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= returnTime);
         UIManager.Hide<UIMinigameResult>();
+        BoardManager.Instance.NextTurn();
     }
 
     private void PlayerLeftEvent(int color)
