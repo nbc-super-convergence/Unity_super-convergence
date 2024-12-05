@@ -195,6 +195,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
+    #region ео а╬╥А
+
+    public void TurnEndNotification(GamePacket packet)
+    {
+        BoardManager.Instance.NextTurn();
+        Debug.Log("TurnEndNotification");
+    }
+
+    #endregion
 
     #endregion
 

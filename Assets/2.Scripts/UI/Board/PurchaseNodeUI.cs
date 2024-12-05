@@ -28,7 +28,7 @@ public class PurchaseNodeUI : UIBase
             action.Purchase();
         //}
         //else Cancle();
-        Cancle();
+        //Cancle();
     }
 
     public void Cancle()
