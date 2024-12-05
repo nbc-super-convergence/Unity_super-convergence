@@ -76,6 +76,6 @@ public class MapGameIceSlider : MapBase
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        water.localScale = targetPos;
+        water.localPosition = targetPos;
     }
 }
