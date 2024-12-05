@@ -51,7 +51,6 @@ public class GameIceSlider : IGame
     }
     #endregion
 
-
     #region 인게임 이벤트
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {

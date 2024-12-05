@@ -1,19 +1,18 @@
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIMinigameIce : UIBase
+public class UIMinigameDropper : UIBase
 {
     [SerializeField] private TextMeshProUGUI timeTxt;
     [SerializeField] private Image[] hpBars;
 
-    private GameIceSliderData gameData;
+    private GameDropperData gameData;
 
     public override void Opened(object[] param)
     {
-        gameData = (GameIceSliderData)param[0];
-        StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeTxt));
+        gameData = (GameDropperData)param[0];
+        //StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeTxt));
     }
 
     public void ChangeHPUI()
