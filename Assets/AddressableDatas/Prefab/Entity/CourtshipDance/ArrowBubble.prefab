@@ -127,9 +127,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data:
     rCode: ArrowBubble
-    count: 42
+    count: 400
     velocity: 0
-    prefab: {fileID: 0}
+    prefab: {fileID: 8800452630777174160}
     parent: {fileID: 0}
   background: {fileID: 1619846545876929704}
   arrow: {fileID: 3636180747155375093}

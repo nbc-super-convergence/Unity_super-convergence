@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
+// 임시 클래스
 public class Player
 {
     public string SessionId;
@@ -9,6 +10,8 @@ public class Player
 // 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
+    public int boardCount = 13;
+
     public UICommandBoardHandler commandBoardHandler;
 
     private CommandGenerator commandGenerator;
@@ -20,7 +23,7 @@ public class GameCourtshipDance : IGame
     /// param (== response) 안에 서버로부터 받은 players 참가유저 정보가 들어있음.
     /// </summary>
     /// <param name="param"></param>
-    public async void Init(params object[] param)
+    public void Init(params object[] param)
     {
         // S2C_IceMiniGameReadyNotification은 미니게임 ReadyPanel때 나오는 정보
         // ReadyPanel을 띄움과 동시에 MinigameManager에서 데이터 설정, 맵 설정, BGM 설정을 한다.        
@@ -38,7 +41,7 @@ public class GameCourtshipDance : IGame
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
-            commandInfoPool = commandGenerator.GenerateBoardPool(10);
+            commandInfoPool = commandGenerator.GenerateBoardPool(boardCount);
 
             commandGenerator.SetBoardPoolColor(commandInfoPool, players);
         } // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷

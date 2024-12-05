@@ -14,7 +14,8 @@ public class CommandBoard : MonoBehaviour
     private Queue<Queue<BubbleInfo>> queuePool;
     private Queue<BubbleInfo> curQueueInfo;
 
-    public int curCount = -1;
+    public int numOfbubbles = -1;
+    public int round = 0;
 
     public void Init()
     {
@@ -26,6 +27,7 @@ public class CommandBoard : MonoBehaviour
     {
         curCommandQueue = MakeCommandQueue();
         AdjustBackground(curQueueInfo.Count);
+        round++;
     }
 
     private void AdjustBackground(int bubbleCount)
@@ -66,7 +68,7 @@ public class CommandBoard : MonoBehaviour
             bubble.transform.SetAsLastSibling();
             queue.Enqueue(bubble);
         }
-        curCount = queue.Count;
+        numOfbubbles = queue.Count;
         return queue;
     }
 
