@@ -133,8 +133,8 @@ public class BoardTokenHandler : MonoBehaviour
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
-                //if (node.TryGetComponent(out IAction n))
-                //    n.Action();
+                if (node.TryGetComponent(out IAction n))
+                    n.Action();
             }
 
             if (syncTime >= 0.1f)
@@ -188,12 +188,12 @@ public class BoardTokenHandler : MonoBehaviour
             {
                 SetNode(node);
 
-                if(i == (num - 1))
-                {
-                    Action action = curNode.transform.GetComponent<IAction>().Action;
+                //if(i == (num - 1))
+                //{
+                //    Action action = curNode.transform.GetComponent<IAction>().Action;
 
-                    StartCoroutine(ArrivePlayer(action, curNode.transform));
-                }
+                //    StartCoroutine(ArrivePlayer(action, curNode.transform));
+                //}
             }
             else
             {
