@@ -61,6 +61,7 @@ public class BoardManager : Singleton<BoardManager>
 
 #pragma warning disable
     public event Action OnEvent;
+#pragma warning restore
 
     private List<IGameResult> bonus;
 
@@ -174,14 +175,34 @@ public class BoardManager : Singleton<BoardManager>
     {
         if(Curplayer.IsTurnEnd())
         {
-            GamePacket packet = new();
-            packet.TurnEndRequest = new()
+
+            if(playerIndex + 1 == playerTokenHandlers.Count)
             {
-                SessionId = GameManager.Instance.myInfo.SessionId
-            };
+                int count = playerTokenHandlers.Count;
+
+                if (playerIndex == count)
+                {
+                    GamePacket packet = new();
+                    packet.StartMiniGameRequest = new()
+                    {
+                        SessionId = GameManager.Instance.myInfo.SessionId,
+                    };
+
+                    SocketManager.Instance.OnSend(packet);
+                }
+            }
+            else
+            {
+                GamePacket packet = new();
+                packet.TurnEndRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
                 
-            SocketManager.Instance.OnSend(packet);
-            NextTurn();
+                SocketManager.Instance.OnSend(packet);
+
+                NextTurn();
+            }
 
             #region Old
 
@@ -202,11 +223,6 @@ public class BoardManager : Singleton<BoardManager>
     {
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % (count);
-        string id = GameManager.Instance.myInfo.SessionId;
-        string id2 = playerTokenHandlers[playerIndex].data.userInfo.SessionId;
-
-        Debug.Log(id == id2);
-
         Curplayer.Ready();
     }
     public void SetTrophyNode()

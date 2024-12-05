@@ -18,6 +18,8 @@ public class BoardTokenHandler : MonoBehaviour
 
 #pragma warning disable
     public SkinnedMeshRenderer renderer;
+#pragma warning restore
+
     public Animator animator;
     private int runhash;
 
