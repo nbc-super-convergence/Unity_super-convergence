@@ -65,10 +65,15 @@ public class InsuDebugger : Singleton<InsuDebugger>
     }
     private void StartDance()
     {        
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(new List<Player>()
+        Player debugPlayer0 = new Player() { SessionId = GameManager.Instance.myInfo.SessionId };
+        List<Player> debugPlayers = new List<Player>
         {
-            new Player(){ SessionId = GameManager.Instance.myInfo.SessionId }
-        });
+            debugPlayer0
+        };
+
+        GameManager.Instance.AddNewPlayer(debugPlayer0.SessionId, "DebugInsu", 0, 0);
+
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(debugPlayers);
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
     }
 }
