@@ -1317,7 +1317,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickNameTMP: {fileID: 5546726203831230136}
   objReady: {fileID: 4521291664455061697}
   hostOrParticipant: {fileID: 925158894249284002}
   isReady: 0
@@ -2675,7 +2674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickNameTMP: {fileID: 8918136467787625560}
   objReady: {fileID: 1970649470346519190}
   hostOrParticipant: {fileID: 1289843606934954949}
   isReady: 0
@@ -4743,7 +4741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickNameTMP: {fileID: 5830717340414890308}
   objReady: {fileID: 8830587292701120887}
   hostOrParticipant: {fileID: 3045178122616268100}
   isReady: 0
@@ -4812,7 +4809,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04c3d8b931fd2184991241c9d9c4c5be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nickNameTMP: {fileID: 4061812077478949842}
   objReady: {fileID: 2646356795590240437}
   hostOrParticipant: {fileID: 2707183897826376819}
   isReady: 0
