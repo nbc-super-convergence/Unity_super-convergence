@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectOrderUI : MonoBehaviour
+public class SelectOrderDartUI : MonoBehaviour
 {
     [SerializeField] private Slider aimSlider;
     [SerializeField] private Slider forceSlider;
