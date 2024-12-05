@@ -97,7 +97,6 @@ public class MiniToken : MonoBehaviour
                     };
                 };
                 SocketManager.Instance.OnSend(packet);
-                Debug.Log(packet);
                 lastPos = curPos;
             }
             yield return new WaitForSeconds(0.1f);
