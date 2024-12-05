@@ -41,10 +41,21 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
+    public float MyDistance { get; set; } = 30f;
+    public int MyRank { get; set; } = 0;
+
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
-    public DiceGameData DiceGameData { get; private set; }
+    private DiceGameData _diceData;
+    public DiceGameData DiceGameData 
+    { 
+        get => _diceData;
+        private set
+        {
+
+        }
+    }
 
     private void Awake()
     {
@@ -159,17 +170,5 @@ public class SelectOrderDart : MonoBehaviour
         CurForce = 2f;
 
         phase = ShootingPhase.Aim;
-    }
-
-
-    public void SetDartDistance(float dist)
-    {
-        float distance = dist;
-        //DiceGameData.Value = dist;    //float형 distance가 필요한데 일단 없어서 이렇게...
-    }
-
-    public void SetDartRank(int rank)
-    {
-        DiceGameData.Rank = rank;
     }
 }
