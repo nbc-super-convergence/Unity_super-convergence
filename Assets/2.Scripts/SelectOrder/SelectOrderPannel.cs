@@ -29,8 +29,8 @@ public class SelectOrderPannel : MonoBehaviour
             //맞은 다트의 거리와 이름을 클래스에 전송
             dart.MyDistance = dist;
 
-            //맞추면 UI숨김
-            SelectOrderManager.Instance.HideDartUI();
+            //다음 차례
+            SelectOrderManager.Instance.NextDart();
         }
     }
 

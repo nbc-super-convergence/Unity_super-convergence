@@ -10,12 +10,14 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     //다트그룹
     public List<SelectOrderDart> DartOrder;
 
-    //조절 UI
+    //UI
     [SerializeField] private SelectOrderDartUI dartUI;
-    [SerializeField] private SelectOrderResultUI resultUI;
+    [SerializeField] private Transform resultGroup;
+    private List<SelectOrderResultUI> resultsUI = new();
 
-    private int yourPlayer = 1; //(임시) 현재 플레이어 (서버에서 받을거라)
+    private int nowPlayer = 0;  // 현재 플레이어 차례
 
+    #region 조절 속성
     //조절 속성
     public float minAim { get; private set; }
     public float maxAim { get; private set; }
@@ -23,10 +25,16 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     //힘 속성
     public float minForce { get; private set; }
     public float maxForce { get; private set; }
+    #endregion
 
     protected override void Awake()
     {
         base.Awake();
+
+        for (int i = 0; i < resultGroup.childCount; i++)
+        {
+            resultsUI.Add(resultGroup.GetChild(i).GetComponent<SelectOrderResultUI>());
+        }
 
         minAim = 0f;
         maxAim = 20f;
@@ -39,14 +47,15 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
 
     private void Start()
     {
-        HideResultUI();
+        DartOrder[nowPlayer].gameObject.SetActive(true);
+        resultsUI[nowPlayer].SetMyTurn();
     }
 
     private void Update()
     {
         //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-        dartUI.GetAim(DartOrder[yourPlayer - 1].CurAim);
-        dartUI.GetForce(DartOrder[yourPlayer - 1].CurForce);
+        dartUI.GetAim(DartOrder[nowPlayer].CurAim);
+        dartUI.GetForce(DartOrder[nowPlayer].CurForce);
     }
 
     /// <summary>
@@ -57,12 +66,13 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         dartUI.gameObject.SetActive(false);
     }
 
-    public void ShowResultUI()
+    public void NextDart()
     {
-        resultUI.gameObject.SetActive(true);
-    }
-    private void HideResultUI()
-    {
-        resultUI.gameObject.SetActive(false);
+        resultsUI[nowPlayer].SetFinish(DartOrder[nowPlayer].MyDistance);
+
+        nowPlayer++;
+
+        resultsUI[nowPlayer].SetMyTurn();
+        DartOrder[nowPlayer].gameObject.SetActive(true);
     }
 }
