@@ -51,7 +51,7 @@ public class RoomUserSlot : MonoBehaviour
     {
         if (ownerId != null)
         {
-            hostOrParticipant.text = (sessionId == ownerId) ? "ë°©ìž¥" : "ì¤€ë¹„ì™„ë£Œ";
+            hostOrParticipant.text = (sessionId == ownerId) ? "¹æÀå" : "ÁØºñ¿Ï·á";
         }
         this.isReady = isReady;
         objReady.SetActive(this.isReady ? true : false);

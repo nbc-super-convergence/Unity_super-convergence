@@ -29,7 +29,7 @@ public class UIMinigameResult : UIBase
             panel.gameObject.SetActive(false);
         }
 
-        //ranksì˜ string : sessionId, int : ë“±ìˆ˜
+        //ranksÀÇ string : sessionId, int : µî¼ö
         if (param.Length == 2)
         {
             if (param[0] is Dictionary<string, int> ranks)
@@ -37,28 +37,28 @@ public class UIMinigameResult : UIBase
                 foreach (var rank in ranks)
                 {
                     string sessionid = rank.Key; //id
-                    int rankNum = rank.Value; //ë“±ìˆ˜
-                    int color = GameManager.Instance.SessionDic[sessionid].Color; //ìƒ‰ê¹”
+                    int rankNum = rank.Value; //µî¼ö
+                    int color = GameManager.Instance.SessionDic[sessionid].Color; //»ö±ò
                     colorIdxs.Add(color, rankNum);
 
                     RankPanels[color].gameObject.SetActive(true);
 
-                    //ë“±ìˆ˜ì— ë§ëŠ” ìœ„ì¹˜ì— ìƒ‰ê¹” ì§€ì •
+                    //µî¼ö¿¡ ¸Â´Â À§Ä¡¿¡ »ö±ò ÁöÁ¤
                     RankPanels[rankNum - 1].sprite = RankPanelsSprites[color];
 
-                    //ë“±ìˆ˜ + ë‹‰ë„¤ì„ ì„¤ì •
-                    RankTxts[rankNum - 1].text = $"{rankNum}ë“±\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
+                    //µî¼ö + ´Ğ³×ÀÓ ¼³Á¤
+                    RankTxts[rankNum - 1].text = $"{rankNum}µî\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
 
-                    //ë³´ìƒ ì§€ê¸‰
+                    //º¸»ó Áö±Ş
                     BoardManager.Instance.playerTokenHandlers[color].data.keyAmount += coinDics[rankNum];
 
-                    //ë¯¸ë‹ˆê²Œì„ ìˆœì„œ ì¬ì •ì˜
+                    //¹Ì´Ï°ÔÀÓ ¼ø¼­ ÀçÁ¤ÀÇ
                     GameManager.Instance.SessionDic[sessionid].SetOrder(rankNum - 1);
                 }
             }
             else
             {
-                Debug.LogError("param ì˜¤ë¥˜ : idx0ì´ ranksê°€ ì•„ë‹˜");
+                Debug.LogError("param ¿À·ù : idx0ÀÌ ranks°¡ ¾Æ´Ô");
             }
 
             if (param[1] is long returnTime)
@@ -69,7 +69,7 @@ public class UIMinigameResult : UIBase
         }
         else
         {
-            Debug.LogError("param ì˜¤ë¥˜ : object[] lengthê°€ ë‹¤ë¦„");
+            Debug.LogError("param ¿À·ù : object[] length°¡ ´Ù¸§");
         }
 
         Sequence sequence = DOTween.Sequence();
@@ -91,7 +91,7 @@ public class UIMinigameResult : UIBase
         
         while (leftSeconds > 0)
         {
-            returnTxt.text = $"{leftSeconds}ì´ˆ í›„ ë³´ë“œë¡œ ëŒì•„ê°‘ë‹ˆë‹¤...";
+            returnTxt.text = $"{leftSeconds}ÃÊ ÈÄ º¸µå·Î µ¹¾Æ°©´Ï´Ù...";
             leftSeconds--;
             yield return new WaitForSeconds(1);
         }
@@ -107,7 +107,7 @@ public class UIMinigameResult : UIBase
     private void PlayerLeftEvent(int color)
     {
         RankPanels[colorIdxs[color]].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
-        RankTxts[colorIdxs[color]].text = "ì˜¤í”„ë¼ì¸";
+        RankTxts[colorIdxs[color]].text = "¿ÀÇÁ¶óÀÎ";
         RankTxts[colorIdxs[color]].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
     }
 }
