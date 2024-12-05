@@ -9,6 +9,8 @@ public class CommandBoard : MonoBehaviour
 {
     [SerializeField] private Image background;
     [SerializeField] private GameObject prefabBubble;
+    [SerializeField] private Image failImage;
+
 
     //[SerializeField] private Queue<Queue<ArrowBubble>> commandQueuePool;
     [SerializeField] private Queue<ArrowBubble> curCommandQueue;
@@ -38,6 +40,8 @@ public class CommandBoard : MonoBehaviour
     {
         var rt = background.GetComponent<RectTransform>();
         rt.sizeDelta = new(60f + bubbleCount * 100f, rt.sizeDelta.y);
+        var rtfailImage = failImage.GetComponent<RectTransform>();
+        rtfailImage.sizeDelta = new(60f + bubbleCount * 100f, rtfailImage.sizeDelta.y);
     }
 
 
@@ -160,8 +164,10 @@ public class CommandBoard : MonoBehaviour
         Debug.Log("입력이 틀렸습니다.");
         // 토큰 효과 재생
         isFail = true;
+        failImage.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         isFail = false;
+        failImage.gameObject.SetActive(false);
     }
     #endregion
 
