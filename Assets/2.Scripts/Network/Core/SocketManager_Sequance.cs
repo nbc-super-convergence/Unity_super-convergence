@@ -14,9 +14,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             var result = response.Result;
 
-            //여기서 필요한 데이터
-            //순위, 현재 플레이어, 인원수, 다트 거리
-            //
+            int i = 0;
+            var playerDart = SelectOrderManager.Instance.DartOrder;
+            foreach(var dart in playerDart)
+            {
+                dart.MyDistance = result[i].Distance;
+                dart.MyRank = result[i].Rank;
+                i++;
+            }
         }
         else
         {
@@ -26,6 +31,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     public void DiceGameNotification(GamePacket packet)
     {
-        var response = packet.DiceGameNotification;
+        var notification = packet.DiceGameNotification;
+        var result = notification.Result;
+
+        List<DiceGameData> send2Server = new();
+        
     }
 }
