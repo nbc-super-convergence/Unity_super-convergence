@@ -180,20 +180,20 @@ public class BoardManager : Singleton<BoardManager>
             {
                 int count = playerTokenHandlers.Count;
 
-                if (playerIndex == count)
+                GamePacket packet = new();
+                packet.StartMiniGameRequest = new()
                 {
-                    GamePacket packet = new();
-                    packet.StartMiniGameRequest = new()
-                    {
-                        SessionId = GameManager.Instance.myInfo.SessionId,
-                    };
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                };
 
-                    SocketManager.Instance.OnSend(packet);
-                }
+                SocketManager.Instance.OnSend(packet);
+
+                Debug.Log("StartMiniGameRequest");
             }
             else
             {
                 GamePacket packet = new();
+
                 packet.TurnEndRequest = new()
                 {
                     SessionId = GameManager.Instance.myInfo.SessionId
