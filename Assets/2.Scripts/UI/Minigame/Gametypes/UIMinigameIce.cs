@@ -14,17 +14,6 @@ public class UIMinigameIce : UIBase
     {
         gameData = (GameIceSliderData)param[0];
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeTxt));
-        StartCoroutine(GameSet());
-    }
-
-    //임시 함수 : 서버 게임종료 알림 대체용
-    private IEnumerator GameSet()
-    {
-        yield return new WaitForSeconds(120f);
-        Rank[] sampleRanks = new Rank[4];
-#pragma warning disable CS4014
-        UIManager.Show<UIMinigameResult>(sampleRanks);
-#pragma warning restore CS4014
     }
 
     public void ChangeHPUI()

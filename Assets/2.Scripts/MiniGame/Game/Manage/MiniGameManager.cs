@@ -6,7 +6,8 @@ public enum eGameType
     Default,
     GameIceSlider,
     GameBombDelivery,
-    GameCourtshipDance
+    GameCourtshipDance,
+    GameDropper
 }
 
 public class MinigameManager : Singleton<MinigameManager>
