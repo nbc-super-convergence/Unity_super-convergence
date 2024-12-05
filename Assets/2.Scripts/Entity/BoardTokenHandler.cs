@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-
 public class BoardTokenHandler : MonoBehaviour
 {
     private bool isReady = false;
@@ -134,8 +133,8 @@ public class BoardTokenHandler : MonoBehaviour
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
-                if (node.TryGetComponent(out IAction n))
-                    n.Action();
+                //if (node.TryGetComponent(out IAction n))
+                //    n.Action();
             }
 
             if (syncTime >= 0.1f)
@@ -186,7 +185,16 @@ public class BoardTokenHandler : MonoBehaviour
         for (int i = 0; i < num; i++,dice--)
         {
             if (curNode.TryGetNode(out Transform node))
+            {
                 SetNode(node);
+
+                if(i == (num - 1))
+                {
+                    Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                    StartCoroutine(ArrivePlayer(action, curNode.transform));
+                }
+            }
             else
             {
                 Action action = curNode.transform.GetComponent<IAction>().Action;
