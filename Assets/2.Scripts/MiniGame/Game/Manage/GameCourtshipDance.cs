@@ -18,6 +18,10 @@ public class GameCourtshipDance : IGame
     private Queue<Queue<BubbleInfo>> commandInfoPool;
     private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
 
+    public GameCourtshipDance()
+    {
+    }
+
     /// <summary>
     /// MinigameManager의 SetMiniGame에서 처음 실행함.
     /// param (== response) 안에 서버로부터 받은 players 참가유저 정보가 들어있음.
@@ -64,7 +68,7 @@ public class GameCourtshipDance : IGame
     /// <summary>
     /// S2C게임시작알림 서버의 알림에 따라 실행.
     /// </summary>
-    public async void GameStart()
+    public async void GameStart(params object[] param)
     {
         var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
         commandBoardHandler.Make(players.Count);
