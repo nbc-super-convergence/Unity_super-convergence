@@ -29,6 +29,8 @@ public class PurchaseNodeUI : UIBase
         //}
         //else Cancle();
         //Cancle();
+
+        SetActive(false);
     }
 
     public void Cancle()
