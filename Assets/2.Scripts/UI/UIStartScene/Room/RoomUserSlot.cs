@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class RoomUserSlot : MonoBehaviour
 {
-    private TMP_Text nickNameTMP;
+    [SerializeField]private TMP_Text nickNameTMP;
     private Image userImage;    
     [SerializeField] private GameObject objReady;
     [SerializeField] private TMP_Text hostOrParticipant;
@@ -15,7 +15,7 @@ public class RoomUserSlot : MonoBehaviour
 
     private void Awake()
     {
-        nickNameTMP = GetComponentInChildren<TMP_Text>();
+        //nickNameTMP = GetComponentInChildren<TMP_Text>();
         userImage = GetComponentInChildren<Image>();
     }
     
