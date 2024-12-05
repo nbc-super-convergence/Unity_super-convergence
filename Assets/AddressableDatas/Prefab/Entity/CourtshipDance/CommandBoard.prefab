@@ -154,3 +154,6 @@ MonoBehaviour:
   background: {fileID: 5877496646845529004}
   prefabBubble: {fileID: 1838461386428819803, guid: 2ef17a6fff67130498b4cfbd46744031,
     type: 3}
+  numOfbubbles: -1
+  round: 0
+  isFail: 0

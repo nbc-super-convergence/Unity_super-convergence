@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEditor.Search;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +21,8 @@ public class CommandBoard : MonoBehaviour
 
     public void Init()
     {
+        onInputDetected += HandleInput;
+
         queuePool = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GetCommandInfoPool();
         MakeNextBoard();
     }
@@ -43,11 +47,11 @@ public class CommandBoard : MonoBehaviour
         if(curQueueInfo != null)
         {
             curQueueInfo.Clear();
-            foreach(var b in curCommandQueue)
+            foreach(var b in successQueue)   // curCommandQueue 에 들어있는게 없어서 진입 못함.
             {
                 PoolManager.Instance.Release(b);
             }
-            curCommandQueue.Clear();
+            successQueue.Clear();
         }
 
         if(queuePool.Count != 0)
@@ -62,7 +66,7 @@ public class CommandBoard : MonoBehaviour
         Queue<ArrowBubble> queue = new();
         foreach ( var info in curQueueInfo)
         {
-            var bubble = PoolManager.Instance.SpawnFromPool<ArrowBubble>("ArrowBubble");
+            var bubble = PoolManager.Instance.Spawn<ArrowBubble>("ArrowBubble");
             bubble.SetArrowBubble(info);
             bubble.transform.SetParent(background.transform);
             bubble.transform.SetAsLastSibling();
@@ -80,9 +84,84 @@ public class CommandBoard : MonoBehaviour
 
 
     #region 플레이
+
+    private float inputData;
+    public bool isFail = false;
+    public event Action<float> onInputDetected;
+
+    private Queue<ArrowBubble> successQueue = new();
+
+    private void Update()
+    {
+        
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            onInputDetected?.Invoke(0f);
+            Debug.Log("input : W");
+        }
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            onInputDetected?.Invoke(90f);
+            Debug.Log("input : A");
+
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            onInputDetected?.Invoke(180f);
+            Debug.Log("input : S");
+
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            onInputDetected?.Invoke(270f);
+            Debug.Log("input : D");
+
+        }
+    }
+
+    public void HandleInput(float inputData)
+    {
+        if(!isFail)
+        {
+            CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
+        }
+    }
+
+    private void CheckInput(float rot, string sessionId)
+    {
+        var target = curQueueInfo.Peek();
+        if(target.sessionId == sessionId && target.Rotation == rot)
+        {
+            // 성공
+            PopBubble();
+        }
+        else
+        {
+            // 실패
+            StartCoroutine(FailInput());
+        }
+
+        if(curQueueInfo.Count == 0)
+        {
+            UIManager.Get<UICommandBoardHandler>().Next();
+        }
+    }
+
     public void PopBubble()
     {
-        //curCommandQueue
+        var b = curCommandQueue.Dequeue();
+        successQueue.Enqueue(b);
+        curQueueInfo.Dequeue();
+        b.PlayEffect();
+    }
+
+    public IEnumerator FailInput()
+    {
+        Debug.Log("입력이 틀렸습니다.");
+        // 토큰 효과 재생
+        isFail = true;
+        yield return new WaitForSeconds(1.5f);
+        isFail = false;
     }
     #endregion
 
