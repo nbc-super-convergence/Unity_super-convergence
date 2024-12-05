@@ -58,6 +58,8 @@ public class BoardManager : Singleton<BoardManager>
 
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
+
+#pragma warning disable
     public event Action OnEvent;
 
     private List<IGameResult> bonus;
