@@ -25,20 +25,20 @@ public class UIMinigameReady : UIBase
     {
         GameManager.OnPlayerLeft += PlayerLeftEvent;
 
-        gameType = (eGameType)param[0]; // °ÔÀÓ Å¸ÀÔ
+        gameType = (eGameType)param[0]; // ê²Œì„ íƒ€ì…
 
-        //°ÔÀÓ Á¦¸ñ
+        //ê²Œì„ ì œëª©
         gameTitle.text = gameType switch
         {
-            eGameType.GameIceSlider => "¹Ì²ø¹Ì²ø ¾óÀ½ÆÇ",
-            eGameType.GameBombDelivery => "ÆøÅº ¹è´Ş¿Ô¾î¿ä",
+            eGameType.GameIceSlider => "ë¯¸ëŒë¯¸ëŒ ì–¼ìŒíŒ",
+            eGameType.GameBombDelivery => "í­íƒ„ ë°°ë‹¬ì™”ì–´ìš”",
             _ => "ERROR!!!",
         };
 
-        //°ÔÀÓ ¼³¸í
+        //ê²Œì„ ì„¤ëª…
         gameDescription[(int)gameType - 1].SetActive(true);
 
-        //ready »óÅÂ ÃÊ±âÈ­
+        //ready ìƒíƒœ ì´ˆê¸°í™”
         HashSet<int> usedColors = new HashSet<int>();
         foreach (var dic in GameManager.Instance.SessionDic)
         {
@@ -46,19 +46,19 @@ public class UIMinigameReady : UIBase
             usedColors.Add(color);
 
             readyPanels[color].outline.enabled = false;
-            readyPanels[color].txt.text = "ÁØºñÁß...";
+            readyPanels[color].txt.text = "ì¤€ë¹„ì¤‘...";
         }
         for (int i = 0; i < readyPanels.Length; i++)
         {
             if (!usedColors.Contains(i))
             {
                 readyPanels[i].outline.enabled = false;
-                readyPanels[i].txt.text = "¿ÀÇÁ¶óÀÎ";
+                readyPanels[i].txt.text = "ì˜¤í”„ë¼ì¸";
                 readyPanels[i].mask.SetActive(true);
             }
         }
 
-        //RÅ°(·¹µğ ÀÔ·Â) ´ë±â
+        //Rí‚¤(ë ˆë”” ì…ë ¥) ëŒ€ê¸°
         StartCoroutine(WaitForReady());
     }
 
@@ -73,9 +73,9 @@ public class UIMinigameReady : UIBase
         if (isMe) sessionId = GameManager.Instance.myInfo.SessionId;
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
 
-        //ÁØºñ»óÅÂ ÀüÈ¯
+        //ì¤€ë¹„ìƒíƒœ ì „í™˜
         readyPanels[idx].outline.enabled = true;
-        readyPanels[idx].txt.text = "ÁØºñ ¿Ï·á!";
+        readyPanels[idx].txt.text = "ì¤€ë¹„ ì™„ë£Œ!";
     }
 
     private IEnumerator WaitForReady()
@@ -86,7 +86,7 @@ public class UIMinigameReady : UIBase
             {
                 SetReady(null, true);
 
-                //Ready¸¦ ¾Ë¸®´Â ÆĞÅ¶ º¸³»±â
+                //Readyë¥¼ ì•Œë¦¬ëŠ” íŒ¨í‚· ë³´ë‚´ê¸°
                 GamePacket packet = new()
                 {
                     IceGameReadyRequest = new()
@@ -104,7 +104,7 @@ public class UIMinigameReady : UIBase
     private void PlayerLeftEvent(int color)
     {
         readyPanels[color].outline.enabled = false;
-        readyPanels[color].txt.text = "¿ÀÇÁ¶óÀÎ";
+        readyPanels[color].txt.text = "ì˜¤í”„ë¼ì¸";
         readyPanels[color].mask.SetActive(true);
     }
 }
