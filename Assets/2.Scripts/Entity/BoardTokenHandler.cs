@@ -133,8 +133,8 @@ public class BoardTokenHandler : MonoBehaviour
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
-                if (node.TryGetComponent(out IAction n))
-                    n.Action();
+                //if (node.TryGetComponent(out IAction n))
+                //    n.Action();
             }
 
             if (syncTime >= 0.1f)
@@ -182,25 +182,34 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Enqueue(int num)
     {
-        for (int i = 0; i < num; i++,dice--)
+        if(num == 0)
         {
-            if (curNode.TryGetNode(out Transform node))
+            Action action = curNode.transform.GetComponent<IAction>().Action;
+
+            StartCoroutine(ArrivePlayer(action, curNode.transform));
+        }
+        else
+        {
+            for (int i = 0; i < num; i++,dice--)
             {
-                SetNode(node);
+                if (curNode.TryGetNode(out Transform node))
+                {
+                    SetNode(node);
 
-                //if(i == (num - 1))
-                //{
-                //    Action action = curNode.transform.GetComponent<IAction>().Action;
+                    if (i == (num - 1))
+                    {
+                        Action action = curNode.transform.GetComponent<IAction>().Action;
 
-                //    StartCoroutine(ArrivePlayer(action, curNode.transform));
-                //}
-            }
-            else
-            {
-                Action action = curNode.transform.GetComponent<IAction>().Action;
+                        StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    }
+                }
+                else
+                {
+                    Action action = curNode.transform.GetComponent<IAction>().Action;
 
-                StartCoroutine(ArrivePlayer(action, curNode.transform));
-                break;
+                    StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    break;
+                }
             }
         }
 

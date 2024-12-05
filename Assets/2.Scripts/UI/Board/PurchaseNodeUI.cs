@@ -25,17 +25,17 @@ public class PurchaseNodeUI : UIBase
         //if (p.data.keyAmount > requireAmount)
         //{
         //    p.data.keyAmount -= requireAmount;
-            action.Purchase();
+            action?.Purchase();
         //}
         //else Cancle();
         //Cancle();
 
-        SetActive(false);
+        UIManager.Hide<PurchaseNodeUI>();
     }
 
     public void Cancle()
     {
         action.Cancle();
-        SetActive(false);
+        UIManager.Hide<PurchaseNodeUI>();
     }
 }

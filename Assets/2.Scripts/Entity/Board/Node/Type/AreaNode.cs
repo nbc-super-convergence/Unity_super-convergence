@@ -45,6 +45,8 @@ public class AreaNode : BaseNode, IPurchase
 
             var ui = await UIManager.Show<PurchaseNodeUI>(purchase);
         }
+        else
+            Cancle();
     }
     private void Penalty(BoardTokenData p)
     {
