@@ -29,8 +29,19 @@ public class SelectOrderPannel : MonoBehaviour
             //맞은 다트의 거리와 이름을 클래스에 전송
             dart.MyDistance = dist;
 
+            curDartCnt++;
+
             //다음 차례
             SelectOrderManager.Instance.NextDart();
+        }
+    }
+
+    private void Update()
+    {
+        if (curDartCnt >= maxDartCnt)    //모두 던졌으면 그만
+        {
+            isMove = false;
+            DistanceRank();
         }
     }
 
