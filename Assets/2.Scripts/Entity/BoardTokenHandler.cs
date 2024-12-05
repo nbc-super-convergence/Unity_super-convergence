@@ -182,9 +182,9 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Enqueue(int num)
     {
-        if(num == 0)
+        if(num == 0 && queue.Count > 0)
         {
-            Action action = curNode.transform.GetComponent<IAction>().Action;
+            Action action = queue.Peek().GetComponent<IAction>().Action;
 
             StartCoroutine(ArrivePlayer(action, curNode.transform));
         }
@@ -212,6 +212,7 @@ public class BoardTokenHandler : MonoBehaviour
                 }
             }
         }
+
 
         if(queue.Count > 0)
         {
