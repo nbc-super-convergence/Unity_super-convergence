@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ArrowBubble : ObjectPoolBase
 {
+    [SerializeField] private GameObject main;
+    [SerializeField] private GameObject effect;
+
     [SerializeField] private Image background;
     [SerializeField] private RectTransform arrow;
 
@@ -43,8 +46,18 @@ public class ArrowBubble : ObjectPoolBase
         background.color = backColor;
     }
 
+    public void PlayEffect()
+    {
+        effect.SetActive(true);
+        main.SetActive(false);
+    }
+
     public override void Init(params object[] param)
     {
-        throw new System.NotImplementedException();
+        if(!main.activeSelf)
+        {
+            main.SetActive(true);
+            effect.SetActive(false);
+        }
     }
 }

@@ -15,7 +15,11 @@ public class BoardTokenHandler : MonoBehaviour
     public Dice diceObject;
     private Vector3 nextPositon;
     //public MeshRenderer renderer;
+
+#pragma warning disable
     public SkinnedMeshRenderer renderer;
+#pragma warning restore
+
     public Animator animator;
     private int runhash;
 

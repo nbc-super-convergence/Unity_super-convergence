@@ -25,7 +25,7 @@ public class GameIceSlider : IGame
             Debug.LogError("startPlayers 자료형 전달 과정에서 문제 발생");
         }
     }
-    public async void GameStart()
+    public async void GameStart(params object[] param)
     {
         ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
@@ -50,7 +50,6 @@ public class GameIceSlider : IGame
         }
     }
     #endregion
-
 
     #region 인게임 이벤트
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)

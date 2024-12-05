@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 public class CommandGenerator
 {
+    public int minBubbleCount = 3;
+    public int maxBubbleCount = 13;
+
     private int[] rotations = { 0, 90, 180, 270 };
     private Random random = new();
 
@@ -13,7 +16,7 @@ public class CommandGenerator
         Queue<Queue<BubbleInfo>> pool = new();
         for (int i = 0; i < poolCount; ++i)
         {
-            int bubbleCount = Math.Clamp(i, 0, 13);
+            int bubbleCount = Math.Clamp(i, minBubbleCount, maxBubbleCount);
             pool.Enqueue(GenerateBoard(bubbleCount));
         }
         return pool;

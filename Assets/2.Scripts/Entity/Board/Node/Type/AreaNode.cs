@@ -1,11 +1,10 @@
-using System.Globalization;
 using System.Text;
 using UnityEngine;
 
 public class AreaNode : BaseNode, IPurchase
 {
     private StringBuilder owner = new StringBuilder("");
-    private int saleAmount = 10; //매수금은 판매액의 2배
+    //private int saleAmount = 10; //매수금은 판매액의 2배
 
 
     [SerializeField] MeshRenderer plane;
