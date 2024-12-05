@@ -10,6 +10,7 @@ public class SelectOrderResultUI : MonoBehaviour
     private TextMeshProUGUI stateText;
     public string Nickname { get; private set; }
     private string state;
+    private Color myColor;
 
     // 닉네임 : 상태 (준비중 / 내차례 / 거리)
 
@@ -25,12 +26,14 @@ public class SelectOrderResultUI : MonoBehaviour
         
         switch(player)  //플레이어 색상
         {
-            case 1: stateText.color = Color.red; break;
-            case 2: stateText.color = Color.yellow; break;
-            case 3: stateText.color = Color.green; break;
-            case 4: stateText.color = Color.blue; break;
-            default: stateText.color = Color.gray; break;
+            case 1: myColor = Color.red; break;
+            case 2: myColor = Color.yellow; break;
+            case 3: myColor = Color.green; break;
+            case 4: myColor = Color.blue; break;
+            default: myColor = Color.gray; break;
         }
+
+        stateText.color = myColor;
 
         SetReady();
     }
@@ -46,6 +49,11 @@ public class SelectOrderResultUI : MonoBehaviour
     }
 
     public void SetReady() => state = "준비";
-    public void SetMyTurn() => state = "내 차례";
+    public void SetMyTurn()
+    {
+        state = "내 차례";
+        bgImage.color = myColor;
+        stateText.color = Color.white;
+    }
     public void SetFinish(float dist) => state = dist.ToString("N4");
 }
