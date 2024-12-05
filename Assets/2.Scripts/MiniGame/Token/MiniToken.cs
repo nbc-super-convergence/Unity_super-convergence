@@ -92,11 +92,12 @@ public class MiniToken : MonoBehaviour
                     {
                         SessionId = MinigameManager.Instance.mySessonId,
                         Position = SocketManager.ToVector(transform.localPosition),
-                        Rotation = transform.rotation.y,
+                        Rotation = transform.eulerAngles.y,
                         State = MiniData.CurState
                     };
                 };
                 SocketManager.Instance.OnSend(packet);
+                Debug.Log(packet);
                 lastPos = curPos;
             }
             yield return new WaitForSeconds(0.1f);
