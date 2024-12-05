@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 // 임시 클래스
 public class Player
@@ -17,6 +16,8 @@ public class GameCourtshipDance : IGame
     private CommandGenerator commandGenerator;
     private Queue<Queue<BubbleInfo>> commandInfoPool;
     private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
+
+
 
     public GameCourtshipDance()
     {
@@ -42,6 +43,8 @@ public class GameCourtshipDance : IGame
             this.players = players;
         }
 
+        ResetPlayers(players);
+
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
@@ -66,7 +69,7 @@ public class GameCourtshipDance : IGame
     }
 
     /// <summary>
-    /// S2C게임시작알림 서버의 알림에 따라 실행.
+    /// S2C게임시작알림 서버의 알림에 따라 실행. 진짜 게임 시작.
     /// </summary>
     public async void GameStart(params object[] param)
     {
@@ -80,10 +83,37 @@ public class GameCourtshipDance : IGame
         return commandInfoPool;
     }
 
+
+
+    #region 초기화
     // 팀 가르기
+    
 
+    private void ResetPlayers(List<Player> players) // 매개변수 바뀔 수 있음.
+    {
+        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        int num = 0;
+        foreach (var p in players)
+        {//미니 토큰 위치 초기화
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.EnableMiniToken();
+            //miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
+            if (players.Count != 4)
+            {
+                //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
+                miniToken.transform.localPosition = map.spawnPosition[num].position;
+                miniToken.MiniData.nextPos = map.spawnPosition[num].position;
+                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
+            }
+            else
+            {
+                // 4명이면 2:2 팀전 세팅
 
-
+            }
+            num++;
+        }
+    }
+    #endregion
 
     #region 소켓
     // S2C GameStartNoti
