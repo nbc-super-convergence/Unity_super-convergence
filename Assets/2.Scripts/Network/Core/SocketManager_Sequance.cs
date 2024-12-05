@@ -34,7 +34,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var notification = packet.DiceGameNotification;
         var result = notification.Result;
 
-        List<DiceGameData> send2Server = new();
+        int i = 0;
+        List<SelectOrderDart> send2Server = SelectOrderManager.Instance.DartOrder;
         
+        foreach(var dart in result)
+        {
+            dart.Distance = send2Server[i].MyDistance;
+            dart.Rank = send2Server[i].MyRank;
+            i++;
+        }
     }
 }
