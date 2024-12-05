@@ -53,9 +53,12 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
 
     private void Update()
     {
-        //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-        dartUI.GetAim(DartOrder[nowPlayer].CurAim);
-        dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+        if (nowPlayer < DartOrder.Count)
+        {
+            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
+            dartUI.GetAim(DartOrder[nowPlayer].CurAim);
+            dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+        }
     }
 
     /// <summary>
@@ -71,8 +74,10 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         resultsUI[nowPlayer].SetFinish(DartOrder[nowPlayer].MyDistance);
 
         nowPlayer++;
-
-        resultsUI[nowPlayer].SetMyTurn();
-        DartOrder[nowPlayer].gameObject.SetActive(true);
+        if (nowPlayer < DartOrder.Count)    //최대 인원보다 초과되지 않게
+        {
+            resultsUI[nowPlayer].SetMyTurn();
+            DartOrder[nowPlayer].gameObject.SetActive(true);
+        }
     }
 }
