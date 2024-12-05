@@ -58,16 +58,24 @@ public class MapGameIceSlider : MapBase
 
     private IEnumerator DecreaseSize(int phase)
     {
-        Vector3 startScale = water.localScale;
-        Vector3 targetSize = new Vector3(phase, 1, phase);
-        float elapsedTime = 0f;
+        Vector3 startPos = water.localPosition;
 
+        float targetHeight = phase switch
+        {
+            1 => -0.6f,
+            2 => -0.4f,
+            3 => -0.2f,
+            _ => 0f
+        };
+        Vector3 targetPos = new Vector3(7.7247f, targetHeight, -4.7213f);
+        
+        float elapsedTime = 0f;
         while (elapsedTime < phaseTime)
         {
-            water.localScale = Vector3.Lerp(startScale, targetSize, elapsedTime / phaseTime);
+            water.localPosition = Vector3.Lerp(startPos, targetPos, elapsedTime / phaseTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-        water.localScale = targetSize;
+        water.localScale = targetPos;
     }
 }
