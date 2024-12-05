@@ -172,16 +172,14 @@ public class BoardManager : Singleton<BoardManager>
     {
         if(Curplayer.IsTurnEnd())
         {
-            //GamePacket packet = new();
-
-            ////packet. = new()
-            ////{
-
-            ////};
-
-            //SocketManager.Instance.OnSend(packet);    
-
-
+            GamePacket packet = new();
+            packet.TurnEndRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId
+            };
+                
+            SocketManager.Instance.OnSend(packet);
+            NextTurn();
 
             #region Old
 
@@ -202,6 +200,11 @@ public class BoardManager : Singleton<BoardManager>
     {
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % (count);
+        string id = GameManager.Instance.myInfo.SessionId;
+        string id2 = playerTokenHandlers[playerIndex].data.userInfo.SessionId;
+
+        Debug.Log(id == id2);
+
         Curplayer.Ready();
     }
     public void SetTrophyNode()
