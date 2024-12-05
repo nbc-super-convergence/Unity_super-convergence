@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -7,6 +8,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IceMiniGameReadyNotification;
+        Debug.Log(response);
 
         //ReadyPanel 띄우기.
 #pragma warning disable CS4014 
@@ -99,12 +101,5 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         //맵 작아지는 이벤트
         MinigameManager.Instance.GetMiniGame<GameIceSlider>().MapChangeEvent();
-    }
-
-    //212 -> 공통 패킷으로 변경 예정
-    public void IcePlayerExitNotification(GamePacket gamePacket)
-    {
-        var response = gamePacket.IcePlayerExitNotification;
-        GameManager.Instance.DeleteSessionId(response.SessionId);
     }
 }
