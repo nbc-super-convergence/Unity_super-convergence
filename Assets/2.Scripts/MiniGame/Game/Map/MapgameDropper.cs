@@ -1,17 +1,16 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGameDropper : MapBase
 {
-    [SerializeField] private Transform iceBoard;
+    [SerializeField] private Camera gameCamera;
+    [SerializeField] private List<GameObject> levels;
 
-    [SerializeField] private float phaseTime = 1f;
-    [SerializeField] private float bounceForce = 10f;
-    [SerializeField] private float inputDelay = 1f;
+    [SerializeField] private float cameraFollowDelay = 0.2f;
 
-    public void MapDecreaseEvent(int phase)
+    public void NextLevelEvent(int phase, int[] holes)
     {
         
     }
-
 }

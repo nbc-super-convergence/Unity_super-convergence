@@ -12,14 +12,5 @@ public class UIMinigameDropper : UIBase
     public override void Opened(object[] param)
     {
         gameData = (GameDropperData)param[0];
-        //StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeTxt));
-    }
-
-    public void ChangeHPUI()
-    {
-        for (int i = 0; i < hpBars.Length; i++)
-        {
-            hpBars[i].fillAmount = gameData.playerHps[i] / gameData.maxHP;
-        }
     }
 }

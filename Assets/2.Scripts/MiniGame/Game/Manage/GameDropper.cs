@@ -16,6 +16,7 @@ public class GameDropper : IGame
         MinigameManager.Instance.MakeMap();
         SetBGM();
 
+        /*Reset Players - Socket 필요*/
         //if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
         //{
         //    ResetPlayers(response.Players);
@@ -26,9 +27,9 @@ public class GameDropper : IGame
         //}
     }
 
-    public async void GameStart()
+    public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDropper>(gameData);
+        //ingameUI = await UIManager.Show<UIMinigameDropper>(gameData, startTime);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     #endregion
@@ -42,12 +43,12 @@ public class GameDropper : IGame
     private void ResetPlayers(RepeatedField<startPlayers> players)
     {
         foreach (var p in players)
-        {//미니 토큰 위치 초기화
+        {
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
-            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
-            miniToken.MiniData.rotY = p.Rotation;
+            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);//현재 위치
+            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position); //다음 위치
+            miniToken.MiniData.rotY = p.Rotation; //현재 회전값
         }
     }
     #endregion
