@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SelectOrderPannel : MonoBehaviour
 {
-    private List<DartData> distanceList;    //다트 거리 집합
     private List<float> distanceRank;    //다트 거리의 매겨줄 랭킹
 
     //다트판 속성
@@ -17,7 +16,6 @@ public class SelectOrderPannel : MonoBehaviour
 
     private void Awake()
     {
-        distanceList = new List<DartData>();
         distanceRank = new List<float>();
     }
 
@@ -29,7 +27,7 @@ public class SelectOrderPannel : MonoBehaviour
             string name = collision.gameObject.name;
 
             //맞은 다트의 거리와 이름을 클래스에 전송
-            dart.SetDartDistance(dist);
+            dart.MyDistance = dist;
 
             //맞추면 UI숨김
             SelectOrderManager.Instance.HideDartUI();
@@ -56,40 +54,20 @@ public class SelectOrderPannel : MonoBehaviour
     {
         int rank = 1;
         
-        foreach (DartData dart in distanceList)
-            distanceRank.Add(dart.Distance);
+        foreach (var dart in SelectOrderManager.Instance.DartOrder)
+            distanceRank.Add(dart.MyDistance);
 
         distanceRank.Sort();
 
-        foreach (float distance in distanceRank)
+        //정렬후 랭킹
+        for (int i = 0; i < distanceRank.Count; i++)
         {
-            for (int i = 0; i < 4; i++)
-            {
-                if (distance.Equals(distanceList[i].Distance))
+            foreach (var dart in SelectOrderManager.Instance.DartOrder)
+                if(dart.Equals(distanceRank[i]))
                 {
-                    distanceList[i].Rank = rank;
+                    dart.MyRank = rank;
                     rank++;
                 }
-            }
         }
-
-        foreach (DartData dart in distanceList)
-        {
-            Debug.Log($"{dart.Name} {dart.Rank}");
-        }    
-    }
-}
-
-//다트의 순위 정보들
-class DartData
-{
-    public float Distance { get; private set; }
-    public string Name { get; private set; }
-    public int Rank { get; set; }
-
-    public DartData(float d, string n)
-    {
-        Distance = d;
-        Name = n;
     }
 }
