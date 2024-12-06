@@ -78,11 +78,12 @@ public class UIMinigameResult : UIBase
         sequence.Join(titleText.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20, 90, false, true));
     }
 
-    public override void Closed(object[] param)
+    public override async void Closed(object[] param)
     {
         base.Closed(param);
         colorIdxs.Clear();
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
+        await UIManager.Show<BoardUI>();
     }
 
     private IEnumerator ReturnTxt()

@@ -103,7 +103,7 @@ public class BoardManager : Singleton<BoardManager>
         SetBonus();
     }
 
-    private void Init()
+    private async void Init()
     {
         var ids = GameManager.Instance.SessionDic.Keys;
 
@@ -122,6 +122,7 @@ public class BoardManager : Singleton<BoardManager>
             playerTokenHandlers.Add(handle);
         }
 
+        await UIManager.Show<BoardUI>();
 
         #region Old
         //for (int i = 0; i < count; i++)
@@ -187,6 +188,7 @@ public class BoardManager : Singleton<BoardManager>
                 };
 
                 SocketManager.Instance.OnSend(packet);
+                UIManager.Hide<BoardUI>();
 
                 Debug.Log("StartMiniGameRequest");
             }

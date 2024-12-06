@@ -1,25 +1,54 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class BoardUI : UIBase
 {
-    public Transform parent;
-    private List<Transform> players;
+    [SerializeField] private List<BoardTokenUI> tokens;
+    public event Action OnRefresh;
 
-    public override async void Opened(object[] param)
+    private void Start()
+    {
+        var list = BoardManager.Instance.playerTokenHandlers;
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            var data = list[i].data;
+            tokens[i].SetPlayer(data);
+            tokens[i].SetActive(true);
+        }
+    }
+
+    public override void Opened(object[] param)
     {
         base.Opened(param);
 
-        //GameObject prefab = await ResourceManager.Instance.LoadAsset<GameObject>("boardtokenui", eAddressableType.Prefab);
+        Refresh();
+    }
 
-        //var list = BoardManager.Instance.playerTokenHandlers;
+    public override void Closed(object[] param)
+    {
+        base.Closed(param);
 
-        //for (int i = 0; i < list.Count; i++)
-        //{
-        //    BoardTokenUI ui = Instantiate(prefab,parent).GetComponent<BoardTokenUI>();
+        ExitPlayer();
+    }
 
-        //    var data = list[i].data;
-        //    ui.SetPlayer(data);
-        //}
+    public void Refresh()
+    {
+        OnRefresh?.Invoke();
+    }
+
+    private void ExitPlayer()
+    {
+        var list = BoardManager.Instance.playerTokenHandlers;
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (list[i].data.userInfo.Order == -1)
+            {
+                tokens[i].SetActive(false);
+                tokens[i].ExitPlayer();
+            }
+        }
     }
 }
