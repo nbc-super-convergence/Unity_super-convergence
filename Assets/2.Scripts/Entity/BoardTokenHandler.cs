@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-
 public class BoardTokenHandler : MonoBehaviour
 {
     private bool isReady = false;
@@ -14,7 +13,14 @@ public class BoardTokenHandler : MonoBehaviour
     private float syncTime = 0f;
     public Dice diceObject;
     private Vector3 nextPositon;
-    public MeshRenderer renderer;
+    //public MeshRenderer renderer;
+
+#pragma warning disable
+    public SkinnedMeshRenderer renderer;
+#pragma warning restore
+
+    public Animator animator;
+    private int runhash;
 
     public int dice { get; private set; } //ÁÖ»çÀ§ ´«
 
@@ -30,6 +36,8 @@ public class BoardTokenHandler : MonoBehaviour
         queue = new();
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
+
+        runhash = Animator.StringToHash("Run");
     }
 
     private void Update()
@@ -61,8 +69,15 @@ public class BoardTokenHandler : MonoBehaviour
 
         if (!isMine)
         {
-            float d = Vector3.Distance(transform.position, nextPositon);
-            transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+            if(transform.position != nextPositon)
+            {
+                float d = Vector3.Distance(transform.position, nextPositon);
+                transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+                SetAnimation(true);
+            }
+            else
+                SetAnimation(false);
+
             return;
         }
 
@@ -83,8 +98,6 @@ public class BoardTokenHandler : MonoBehaviour
                     SessionId = GameManager.Instance.myInfo.SessionId
                 };
                 SocketManager.Instance.OnSend(packet);
-
-                Debug.Log("RollDiceRequest");
 
 
                 diceObject.gameObject.SetActive(false);
@@ -120,8 +133,8 @@ public class BoardTokenHandler : MonoBehaviour
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
-                if (node.TryGetComponent(out IAction n))
-                    n.Action();
+                //if (node.TryGetComponent(out IAction n))
+                //    n.Action();
             }
 
             if (syncTime >= 0.1f)
@@ -141,7 +154,11 @@ public class BoardTokenHandler : MonoBehaviour
                 syncTime = 0.0f;
             }
 
-            if (queue.Count == 0) isTurn = false;
+            if (queue.Count == 0)
+            {
+                isTurn = false;
+                SetAnimation(isTurn);
+            }
         }
 
         #endregion
@@ -157,7 +174,7 @@ public class BoardTokenHandler : MonoBehaviour
     public void SetNode(Transform node,bool minus = false)
     {
         if(minus) dice -= 1;
-        if (dice < 0) return;        
+        if (dice < 0) return;
 
         queue.Enqueue(node);
         node.TryGetComponent(out curNode);
@@ -165,20 +182,43 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Enqueue(int num)
     {
-        for (int i = 0; i < num; i++,dice--)
+        if(num == 0 && queue.Count > 0)
         {
-            if (curNode.TryGetNode(out Transform node))
-                SetNode(node);
-            else
-            {
-                Action action = curNode.transform.GetComponent<IAction>().Action;
+            Action action = queue.Peek().GetComponent<IAction>().Action;
 
-                StartCoroutine(ArrivePlayer(action, curNode.transform));
-                break;
+            StartCoroutine(ArrivePlayer(action, curNode.transform));
+        }
+        else
+        {
+            for (int i = 0; i < num; i++,dice--)
+            {
+                if (curNode.TryGetNode(out Transform node))
+                {
+                    SetNode(node);
+
+                    if (i == (num - 1))
+                    {
+                        Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                        StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    }
+                }
+                else
+                {
+                    Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                    StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    break;
+                }
             }
         }
 
-        if(queue.Count > 0) isTurn = true;
+
+        if(queue.Count > 0)
+        {
+            isTurn = true;
+            SetAnimation(isTurn);
+        }
     }
 
     public bool IsTurnEnd()
@@ -188,6 +228,7 @@ public class BoardTokenHandler : MonoBehaviour
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
+
         while (true)
         {
             if (transform.position.Equals(t.position))
@@ -216,5 +257,10 @@ public class BoardTokenHandler : MonoBehaviour
     public void SetColor(int index)
     {
         renderer.material = BoardManager.Instance.materials[index];
+    }
+
+    public void SetAnimation(bool isRun)
+    {
+        animator.SetBool(runhash,isRun);
     }
 }

@@ -10,7 +10,7 @@ public class BoardResult : UIBase
     [SerializeField] BoardResultUI prefab;
     [SerializeField] Transform layout;
 
-    public override async void Opened(object[] param)
+    public override void Opened(object[] param)
     {
         //base.Opened(param);
         //result = (List<IGameResult>)param[0];

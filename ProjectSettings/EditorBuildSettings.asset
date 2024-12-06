@@ -14,9 +14,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/1.Scenes/BoardScene.unity
     guid: cf77787c818867d48bb6aa5c54061b16
-  - enabled: 1
+  - enabled: 0
     path: Assets/1.Scenes/THJ_Scenes/IceBoard.unity
     guid: 444166cf94da03d479742975f0013535
+  - enabled: 1
+    path: Assets/1.Scenes/Minigame/Command.unity
+    guid: 5033ec28421e6ba41bff15f2b71192d6
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 443b3fda9cce32342926054e5da78b38,
       type: 2}

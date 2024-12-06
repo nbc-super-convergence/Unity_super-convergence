@@ -629,7 +629,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11af1d251a4a602489cd1913ea64f668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  button: []
+  isDontDestroyOnLoad: 1
+  isSingle: 0
 --- !u!4 &1410931760
 Transform:
   m_ObjectHideFlags: 0

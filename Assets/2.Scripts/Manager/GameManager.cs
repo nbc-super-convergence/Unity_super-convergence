@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -43,6 +44,10 @@ public class GameManager : Singleton<GameManager>
         FadeScreen.Instance.Init();
         yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
 
+        PoolManager.Instance.Init();
+        yield return new WaitUntil(() => PoolManager.Instance.isInitialized);
+
+
         //Initialize SocketManager
         SocketManager.Instance.Init();
 
@@ -60,6 +65,12 @@ public class GameManager : Singleton<GameManager>
     {
         OnPlayerLeft?.Invoke(SessionDic[sessionId].Color);
         SessionDic.Remove(sessionId);
+    }
+
+    public string FindSessionIdByColor(int color)
+    {
+        var pair = SessionDic.FirstOrDefault(x => x.Value.Color == color);
+        return pair.Key != null ? pair.Key : null;
     }
     #endregion
 }

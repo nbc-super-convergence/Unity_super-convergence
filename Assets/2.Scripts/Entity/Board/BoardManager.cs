@@ -58,8 +58,10 @@ public class BoardManager : Singleton<BoardManager>
 
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
-    private int prevTrophyIndex = -1;
+
+#pragma warning disable
     public event Action OnEvent;
+#pragma warning restore
 
     private List<IGameResult> bonus;
 
@@ -173,23 +175,41 @@ public class BoardManager : Singleton<BoardManager>
     {
         if(Curplayer.IsTurnEnd())
         {
-            //GamePacket packet = new();
 
-            ////packet. = new()
-            ////{
+            if(playerIndex + 1 == playerTokenHandlers.Count)
+            {
+                int count = playerTokenHandlers.Count;
 
-            ////};
+                GamePacket packet = new();
+                packet.StartMiniGameRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                };
 
-            //SocketManager.Instance.OnSend(packet);    
+                SocketManager.Instance.OnSend(packet);
 
+                Debug.Log("StartMiniGameRequest");
+            }
+            else
+            {
+                GamePacket packet = new();
 
+                packet.TurnEndRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
+                
+                SocketManager.Instance.OnSend(packet);
+
+                NextTurn();
+            }
 
             #region Old
 
             //(현재인원 + 1) % (현재인원 + 1)
-            int count = playerTokenHandlers.Count;
-            playerIndex = (playerIndex + 1) % (count);
-            Curplayer.Ready();
+            //int count = playerTokenHandlers.Count;
+            //playerIndex = (playerIndex + 1) % (count);
+            //Curplayer.Ready();
 
             //미니게임 시작
             //OnEvent?.Invoke();
@@ -199,7 +219,12 @@ public class BoardManager : Singleton<BoardManager>
             #endregion
         }
     }
-
+    public void NextTurn()
+    {
+        int count = playerTokenHandlers.Count;
+        playerIndex = (playerIndex + 1) % (count);
+        Curplayer.Ready();
+    }
     public void SetTrophyNode()
     {
         //GamePacket packet = new();
