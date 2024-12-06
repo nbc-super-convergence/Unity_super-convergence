@@ -12,17 +12,22 @@ public class SelectOrderDart : MonoBehaviour
     private bool isIncrease = true; //증감 여부
 
     private float curAim = 0f;
+    private float curAimX = 0f;
     private float minAim, maxAim;
-    public float CurAim
+    private Vector3 aimVector;
+    public Vector3 CurAim
     {
-        get => curAim;
+        get => aimVector;
         set
         {
-            curAim = Mathf.Clamp(value, minAim, maxAim);
-            if (curAim <= minAim)
-                isIncrease = true;
-            if (curAim >= maxAim)
-                isIncrease = false;
+            aimVector.x = Mathf.Clamp(value.x, minAim, maxAim);
+            aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
+            
+            //curAim = Mathf.Clamp(value, minAim, maxAim);
+            //if (curAim <= minAim)
+            //    isIncrease = true;
+            //if (curAim >= maxAim)
+            //    isIncrease = false;
         }
     }
 
@@ -70,6 +75,14 @@ public class SelectOrderDart : MonoBehaviour
         maxForce = SelectOrderManager.Instance.maxForce;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Interaction();
+        }
+    }
+
     private void FixedUpdate()
     {
         switch(phase)
@@ -84,7 +97,8 @@ public class SelectOrderDart : MonoBehaviour
                 return;
         }
 
-        transform.rotation = Quaternion.Euler(CurAim, 0, 0);
+        //각도를 조절
+        transform.rotation = Quaternion.Euler(CurAim);
 
         //Debug.DrawRay(transform.position, transform.position + transform.forward);
     }
@@ -109,17 +123,21 @@ public class SelectOrderDart : MonoBehaviour
     {
         if (InputActionPhase.Started == context.phase)
         {
-            isIncrease = true;
-            switch(phase)
-            {
-                case ShootingPhase.Aim:
-                    phase = ShootingPhase.Force;
-                    break;
-                case ShootingPhase.Force:
-                    phase = ShootingPhase.Ready;
-                    NowShoot();
-                    break;
-            }
+        }
+    }
+
+    private void Interaction()
+    {
+        isIncrease = true;
+        switch (phase)
+        {
+            case ShootingPhase.Aim:
+                phase = ShootingPhase.Force;
+                break;
+            case ShootingPhase.Force:
+                phase = ShootingPhase.Ready;
+                NowShoot();
+                break;
         }
     }
 
@@ -128,13 +146,17 @@ public class SelectOrderDart : MonoBehaviour
     /// </summary>
     private void SetAim()
     {
-        float speed = 5f;
+        //입력을 WASD로 받아 상하좌우 조준
+        float horizon = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+        Vector3 aim = new Vector3(vertical, horizon, 0);
+        CurAim += aim;
 
-        if (isIncrease) CurAim += Time.deltaTime * speed;
-        else CurAim -= Time.deltaTime * speed;
+        //if (isIncrease) CurAim += Time.deltaTime * speed;
+        //else CurAim -= Time.deltaTime * speed;
 
         //벡터 각도 조절
-        dartRot.z = Mathf.Sin(CurAim - 90f);
+        //dartRot.z = Mathf.Sin(CurAim - 90f);
     }
 
     /// <summary>
@@ -166,7 +188,7 @@ public class SelectOrderDart : MonoBehaviour
 
         transform.localPosition = Vector3.zero;
 
-        CurAim = 0f;
+        CurAim = Vector3.zero;
         CurForce = 2f;
 
         phase = ShootingPhase.Aim;
