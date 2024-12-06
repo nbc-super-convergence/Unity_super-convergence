@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -39,6 +39,9 @@ public class MiniToken : MonoBehaviour
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
                     Controller.RotateToken(MiniData.rotY);
+                    break;
+                case eGameType.GameCourtshipDance:
+                    // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
                     break;
             }
         }
@@ -111,6 +114,17 @@ public class MiniToken : MonoBehaviour
         MiniData.nextPos = pos;
         MiniData.rotY = rotY;
         MiniData.CurState = state;
+    }
+    #endregion
+
+    #region CourtshipDance
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+    public void SetAnimator(Animator animator)
+    {
+        this.animator = animator;
     }
     #endregion
 

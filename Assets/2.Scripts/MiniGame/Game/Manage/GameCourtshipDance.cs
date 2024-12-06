@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 
 // 임시 클래스
 public class Player
@@ -16,9 +16,7 @@ public class GameCourtshipDance : IGame
     private CommandGenerator commandGenerator;
     private Queue<Queue<BubbleInfo>> commandInfoPool;
     private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
-
-
-
+        
     public GameCourtshipDance()
     {
     }
@@ -43,7 +41,10 @@ public class GameCourtshipDance : IGame
             this.players = players;
         }
 
+
+        // 토큰 배치 및 세팅하기
         ResetPlayers(players);
+
 
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
@@ -74,8 +75,18 @@ public class GameCourtshipDance : IGame
     public async void GameStart(params object[] param)
     {
         var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
-        commandBoardHandler.Make(players.Count);
+        commandBoardHandler.Make(players.Count);    // 팀전의 경우 두개만 생성하면 됨.
         //MinigameManager.Instance.GetMyToken().EnableInputSystem();
+    }
+
+    public void BeforeGameEnd(List<Player> players)
+    {
+        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        foreach (var p in players)
+        {
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            map.TokenReset(miniToken);
+        }
     }
 
     public Queue<Queue<BubbleInfo>> GetCommandInfoPool()
@@ -88,7 +99,11 @@ public class GameCourtshipDance : IGame
     #region 초기화
     // 팀 가르기
     
-
+    /// <summary>
+    /// 토큰의 위치 지정과 애니메이터 교체를 수행.
+    /// 입력 교체
+    /// </summary>
+    /// <param name="players"></param>
     private void ResetPlayers(List<Player> players) // 매개변수 바뀔 수 있음.
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
@@ -104,6 +119,7 @@ public class GameCourtshipDance : IGame
                 miniToken.transform.localPosition = map.spawnPosition[num].position;
                 miniToken.MiniData.nextPos = map.spawnPosition[num].position;
                 miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
+                map.TokenInit(miniToken);
             }
             else
             {
@@ -124,7 +140,4 @@ public class GameCourtshipDance : IGame
     }
     #endregion
 
-#if UNITY_EDITOR
-
-#endif
 }

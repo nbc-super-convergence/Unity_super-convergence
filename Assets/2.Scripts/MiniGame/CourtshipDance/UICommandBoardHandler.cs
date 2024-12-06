@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class UICommandBoardHandler : UIBase
@@ -18,8 +18,8 @@ public class UICommandBoardHandler : UIBase
         }
     }
 
-    public void Next()
+    public void Next(int index)
     {
-        CommandBoards[0].MakeNextBoard();
+        CommandBoards[index].MakeNextBoard();
     }
 }

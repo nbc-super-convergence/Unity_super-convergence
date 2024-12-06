@@ -21,7 +21,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
         if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { StartDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { UIManager.Get<UICommandBoardHandler>().Next(); }
+        { UIManager.Get<UICommandBoardHandler>().Next(0); }
     }
 
     private void JumpBoardScene()

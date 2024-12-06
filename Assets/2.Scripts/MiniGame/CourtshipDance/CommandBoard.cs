@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -88,7 +88,6 @@ public class CommandBoard : MonoBehaviour
 
     #region 플레이
 
-    private float inputData;
     public bool isFail = false;
     public event Action<float> onInputDetected;
 
@@ -146,7 +145,8 @@ public class CommandBoard : MonoBehaviour
 
         if(curQueueInfo.Count == 0)
         {
-            UIManager.Get<UICommandBoardHandler>().Next();
+            //UIManager.Get<UICommandBoardHandler>().Next();
+            MakeNextBoard();
         }
     }
 
