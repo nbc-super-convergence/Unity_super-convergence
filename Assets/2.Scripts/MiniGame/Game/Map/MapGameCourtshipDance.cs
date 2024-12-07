@@ -25,9 +25,5 @@ public class MapGameCourtshipDance : MapBase
         if (prevAnimator == null) { return; }
         token.SetAnimator(prevAnimator);
         token.GetComponent<Rigidbody>().isKinematic = false;
-
     }
-
-    
-
 }

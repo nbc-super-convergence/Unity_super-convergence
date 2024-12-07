@@ -10,13 +10,15 @@ public class CommandBoard : MonoBehaviour
     [SerializeField] private GameObject prefabBubble;
     [SerializeField] private Image failImage;
 
-
     //[SerializeField] private Queue<Queue<ArrowBubble>> commandQueuePool;
     [SerializeField] private Queue<ArrowBubble> curCommandQueue;
 
     private Queue<Queue<BubbleInfo>> queuePool;
     private Queue<BubbleInfo> curQueueInfo;
 
+    private bool isClient = false;
+    public string SessionId { get; private set; }
+    public int TeamId { get; private set; }
     public int numOfbubbles = -1;
     public int round = 0;
 
@@ -24,8 +26,17 @@ public class CommandBoard : MonoBehaviour
     {
         onInputDetected += HandleInput;
 
-        queuePool = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GetCommandInfoPool();
-        MakeNextBoard();
+        //queuePool = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GetCommandInfoPool();
+        //MakeNextBoard();
+    }
+    public void SetSessionId(string sessionId)
+    { SessionId = sessionId; }
+    public void SetTeamId(int teamId)
+    {  TeamId = teamId; }
+
+    public void SetPool(Queue<Queue<BubbleInfo>> pool)
+    {
+        queuePool = new(pool);
     }
 
     public void MakeNextBoard()
@@ -79,11 +90,7 @@ public class CommandBoard : MonoBehaviour
         return queue;
     }
 
-    // S2C세팅에서 호출하기
-    public void SetQueuePool(Queue<Queue<BubbleInfo>> pool)
-    {
-        queuePool = new(pool);
-    }
+    
 
 
     #region 플레이
