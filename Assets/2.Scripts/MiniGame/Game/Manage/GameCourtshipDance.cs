@@ -28,7 +28,10 @@ public class GameCourtshipDance : IGame
     /// </summary>
     /// <param name="param"></param>
     public async void Init(params object[] param)
-    {    
+    {
+        var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMapDance();
         S2C_IceMiniGameReadyNotification response;
         if (param[0] is S2C_IceMiniGameReadyNotification item)
         {
@@ -39,9 +42,9 @@ public class GameCourtshipDance : IGame
             this.players = players;
         }
 
+
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
-
 
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
@@ -49,8 +52,7 @@ public class GameCourtshipDance : IGame
             commandGenerator.InitFFA(players);
             playerPoolDic = commandGenerator.GetPlayerPoolDic();
         } // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
-
-        var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
+                
         commandBoardHandler.MakeCommandBoard(players);
 
     }
@@ -58,10 +60,10 @@ public class GameCourtshipDance : IGame
     /// <summary>
     /// S2C게임시작알림 서버의 알림에 따라 실행. 진짜 게임 시작.
     /// </summary>
-    public async void GameStart(params object[] param)
+    public void GameStart(params object[] param)
     {
         
-        //MinigameManager.Instance.GetMyToken().EnableInputSystem();
+        MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
 
     public void BeforeGameEnd(List<Player> players)
@@ -72,14 +74,8 @@ public class GameCourtshipDance : IGame
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             map.TokenReset(miniToken);
         }
+        UIManager.Hide<UICommandBoardHandler>();
     }
-
-    //public Queue<Queue<BubbleInfo>> GetCommandInfoPool()
-    //{
-    //    return commandInfoPool;
-    //}
-
-
 
     #region 초기화
     // 팀 가르기
@@ -98,10 +94,10 @@ public class GameCourtshipDance : IGame
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
             //miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
-            if (players.Count != 4)
+            if (true)
             {
                 //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
-                miniToken.transform.localPosition = map.spawnPosition[num].position;
+                miniToken.transform.position = map.spawnPosition[num].position;
                 miniToken.MiniData.nextPos = map.spawnPosition[num].position;
                 miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
                 map.TokenInit(miniToken);

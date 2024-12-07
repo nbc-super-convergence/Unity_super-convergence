@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 public enum eGameType
-{//½ÇÁ¸ Å¬·¡½º¸í°ú ÀÏÄ¡ÇØ¾ß ÇÔ. ¼­¼ø Àı´ë ¹Ù²ÙÁö ¸» °Í.
+{//ì‹¤ì¡´ í´ë˜ìŠ¤ëª…ê³¼ ì¼ì¹˜í•´ì•¼ í•¨. ì„œìˆœ ì ˆëŒ€ ë°”ê¾¸ì§€ ë§ ê²ƒ.
     Default,
     GameIceSlider,
     GameBombDelivery,
@@ -13,14 +13,14 @@ public enum eGameType
 public class MinigameManager : Singleton<MinigameManager>
 {
     #region Field
-    public GameObject boardCamera; //º¸µå°ÔÀÓ Ä«¸Ş¶ó
-    [SerializeField] private Transform miniParent; //hiearchy ºÎ¸ğ
+    public GameObject boardCamera; //ë³´ë“œê²Œì„ ì¹´ë©”ë¼
+    [SerializeField] private Transform miniParent; //hiearchy ë¶€ëª¨
     
-    public static eGameType gameType { get; private set; } //°ÔÀÓ Á¾·ù enum
-    public IGame curMiniGame; //Æ¯Á¤ ¹Ì´Ï°ÔÀÓ ÇÑÁ¤ ±â´É±¸Çö
-    public MapBase curMap; //¹Ì´Ï°ÔÀÓ ¸Ê ¿ÀºêÁ§Æ® °ü·Ã ±â´É±¸Çö
+    public static eGameType gameType { get; private set; } //ê²Œì„ ì¢…ë¥˜ enum
+    public IGame curMiniGame; //íŠ¹ì • ë¯¸ë‹ˆê²Œì„ í•œì • ê¸°ëŠ¥êµ¬í˜„
+    public MapBase curMap; //ë¯¸ë‹ˆê²Œì„ ë§µ ì˜¤ë¸Œì íŠ¸ ê´€ë ¨ ê¸°ëŠ¥êµ¬í˜„
 
-    public MiniToken[] miniTokens; //¹Ì´Ï°ÔÀÓ Ä³¸¯ÅÍ
+    public MiniToken[] miniTokens; //ë¯¸ë‹ˆê²Œì„ ìºë¦­í„°
     public string mySessonId => GameManager.Instance.myInfo.SessionId;
     #endregion
 
@@ -37,7 +37,7 @@ public class MinigameManager : Singleton<MinigameManager>
 
     #region Properties
     /// <summary>
-    /// curMiniGame T·Î º¯È¯
+    /// curMiniGame Të¡œ ë³€í™˜
     /// </summary>
     public T GetMiniGame<T>() where T : IGame
     {
@@ -45,7 +45,7 @@ public class MinigameManager : Singleton<MinigameManager>
     }
 
     /// <summary>
-    /// sessionId¿¡ ¸Â´Â ¹Ì´ÏÅäÅ«
+    /// sessionIdì— ë§ëŠ” ë¯¸ë‹ˆí† í°
     /// </summary>
     public MiniToken GetMiniToken(string sessionId)
     {
@@ -56,7 +56,7 @@ public class MinigameManager : Singleton<MinigameManager>
     }
 
     /// <summary>
-    /// Å¬¶ó ¹Ì´ÏÅäÅ«
+    /// í´ë¼ ë¯¸ë‹ˆí† í°
     /// </summary>
     public MiniToken GetMyToken()
     {
@@ -65,7 +65,7 @@ public class MinigameManager : Singleton<MinigameManager>
     }
 
     /// <summary>
-    /// curMap T·Î º¯È¯
+    /// curMap Të¡œ ë³€í™˜
     /// </summary>
     public T GetMap<T>() where T : MapBase
     {
@@ -73,11 +73,11 @@ public class MinigameManager : Singleton<MinigameManager>
     }
     #endregion
 
-    #region Minigame ÃÊ±âÈ­
+    #region Minigame ì´ˆê¸°í™”
     /// <summary>
-    /// ¼­¹ö¿¡¼­ Á¤ÇÑ ¹Ì´Ï°ÔÀÓ ¼±ÅÃ ¹× ÃÊ±âÈ­
+    /// ì„œë²„ì—ì„œ ì •í•œ ë¯¸ë‹ˆê²Œì„ ì„ íƒ ë° ì´ˆê¸°í™”
     /// </summary>
-    /// <typeparam name="T">IGameÀÇ ÀÚ½Ä Å¬·¡½º</typeparam>
+    /// <typeparam name="T">IGameì˜ ìì‹ í´ë˜ìŠ¤</typeparam>
     public T SetMiniGame<T>(params object[] param) where T : IGame, new()
     {
         gameType = (eGameType)Enum.Parse(typeof(eGameType), typeof(T).Name);
@@ -87,11 +87,17 @@ public class MinigameManager : Singleton<MinigameManager>
         return (T)curMiniGame;
     }
 
-    //¹Ì´Ï°ÔÀÓ ¸Ê »ı¼º
+    //ë¯¸ë‹ˆê²Œì„ ë§µ ìƒì„±
     public void MakeMap()
     {
          GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
         curMap = instantiatedMap.GetComponent<MapGameIceSlider>();
+    }
+
+    public void MakeMapDance()
+    {
+        GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
+        curMap = instantiatedMap.GetComponent<MapGameCourtshipDance>();
     }
     #endregion
 

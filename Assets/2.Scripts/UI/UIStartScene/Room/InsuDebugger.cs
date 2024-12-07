@@ -7,11 +7,25 @@ using UnityEngine.SceneManagement;
 public class InsuDebugger : Singleton<InsuDebugger>
 {
     public bool isSingle;
-   
+
     private void FixedUpdate()
     {
         if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { OpenDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            Setminigame(); 
+            MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
+            
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            UIManager.Get<UICommandBoardHandler>().Next("Session1");
+            UIManager.Get<UICommandBoardHandler>().Next("Session2");
+
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { JumpExecuteCourtshipDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
@@ -23,8 +37,23 @@ public class InsuDebugger : Singleton<InsuDebugger>
     private void OpenDance()
     {
         // 보드에서 미니게임 입장.
-        SceneManager.LoadScene(3);
+        SceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
+
+    private void Setminigame()
+    {
+        var a = GameManager.Instance.SessionDic;
+        List<Player> list = new List<Player>();
+
+        foreach (var p in a)
+        {
+            var player = new Player { SessionId = p.Value.SessionId , TeamId = 0 };
+            list.Add(player);
+        }
+
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(list);
+    }
+    
 
     private void JumpExecuteCourtshipDance()
     {
