@@ -22,7 +22,8 @@ public class InsuDebugger : Singleton<InsuDebugger>
         {
             UIManager.Get<UICommandBoardHandler>().Next("Session1");
             UIManager.Get<UICommandBoardHandler>().Next("Session2");
-
+            UIManager.Get<UICommandBoardHandler>().Next("Session3");
+            UIManager.Get<UICommandBoardHandler>().Next("Session4");
         }
 
 

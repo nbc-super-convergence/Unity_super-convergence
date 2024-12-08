@@ -1,8 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using Unity.VisualScripting;
 
 public class CommandGenerator
 {
+    public int boardAmount = 15;
     public int minBubbleCount = 3;
     public int maxBubbleCount = 13;
 
@@ -15,15 +19,25 @@ public class CommandGenerator
 
     public void InitFFA(List<Player> players)
     {
-        var originPool = GenerateBoardInfoPool(players.Count);
+        var originPool = GenerateBoardInfoPool(boardAmount);
 
         for ( int i = 0; i < players.Count; i++ )
         {
-            Queue<Queue<BubbleInfo>> playerPool = new(originPool);
+            Queue<Queue<BubbleInfo>> playerPool = DeepCopyPool(originPool);   // 깊은 복사
             SetBoardPoolColor(playerPool, players[i]);
             playerPoolDic.Add(players[i].SessionId, playerPool);
         }
     }
+
+    private Queue<Queue<BubbleInfo>> DeepCopyPool(Queue<Queue<BubbleInfo>> original)
+    {
+        return new Queue<Queue<BubbleInfo>>(
+              original.Select(innerQueue => new Queue<BubbleInfo>(
+                      innerQueue.Select(bubble => bubble.Clone())
+                   ))
+              );
+    }
+
     public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
     {
         return new(playerPoolDic);
@@ -60,11 +74,11 @@ public class CommandGenerator
         }
     }
 
-    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, Player players)
+    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, Player player)
     {
         foreach (var queue in pool)
         {
-            SetBoardColor(queue, players);
+            SetBoardColor(queue, player);
         }
     }
 
@@ -91,22 +105,21 @@ public class CommandGenerator
 
     private void SetBoardColor(Queue<BubbleInfo> queue, Player player)
     {
-        List<int> colors = new();
+        int color = -1;
         
         if (SessionDic.TryGetValue(player.SessionId, out UserInfo userInfo))
         {
-            colors.Add(userInfo.Color);
+            color = userInfo.Color;
+        }
+        else
+        {
+            // 게임매니저 세션딕에 찾는 세션Id가 없음.
         }
         
-        if (colors.Count == 0) return;
-
-        int colorIndex = 0;
-
         foreach (BubbleInfo b in queue)
         {
-            b.SetColor(colors[colorIndex]);
+            b.SetColor(color);
             b.SetSessionId(player.SessionId);
-            colorIndex = (colorIndex + 1) % colors.Count;
         }
     }
 
