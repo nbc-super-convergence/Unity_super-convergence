@@ -79,9 +79,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""down"",
-                    ""id"": ""510c24ea-0a59-4cdc-a112-4711f6344009"",
-                    ""path"": ""<Keyboard>/s"",
+                    ""name"": ""left"",
+                    ""id"": ""ff9fa9a9-b622-482a-990a-7153c576064a"",
+                    ""path"": ""<Keyboard>/a"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard_Mouse"",
@@ -90,9 +90,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""left"",
-                    ""id"": ""ff9fa9a9-b622-482a-990a-7153c576064a"",
-                    ""path"": ""<Keyboard>/a"",
+                    ""name"": ""down"",
+                    ""id"": ""510c24ea-0a59-4cdc-a112-4711f6344009"",
+                    ""path"": ""<Keyboard>/s"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard_Mouse"",
@@ -134,6 +134,138 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""SimpleInput"",
+            ""id"": ""62f4bb13-470e-47df-acb2-d5f2d47bb615"",
+            ""actions"": [
+                {
+                    ""name"": ""Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""4937c768-98e1-4785-894b-05ed7fe7b876"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""c98098b7-d773-4de7-bfb7-f122701b82c4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""0566f25a-9630-45dd-94a2-f617e430f729"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""bda9cfcc-cbdf-4267-b92c-29dde385305d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""606aa43d-365d-4166-b3fb-db6ac5d50b93"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""81e8b3ae-7255-4250-9c19-e2be51c5480d"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5195f0de-6bb3-4d8e-b285-56076941b266"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4323ab9d-48a8-4b6b-8d13-2c90bd593e00"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b91876a4-fbc4-423f-9e73-6d641017c430"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c56eaa4c-abe1-4e72-9734-5e8b526158a9"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f9766b4c-a446-48ad-8a0f-cc3870c8c90c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9c759b25-f206-402c-8db4-ce3ccbb369a0"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -160,6 +292,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_MiniPlayerToken_Move = m_MiniPlayerToken.FindAction("Move", throwIfNotFound: true);
         m_MiniPlayerToken_Jump = m_MiniPlayerToken.FindAction("Jump", throwIfNotFound: true);
         m_MiniPlayerToken_Interaction = m_MiniPlayerToken.FindAction("Interaction", throwIfNotFound: true);
+        // SimpleInput
+        m_SimpleInput = asset.FindActionMap("SimpleInput", throwIfNotFound: true);
+        m_SimpleInput_Up = m_SimpleInput.FindAction("Up", throwIfNotFound: true);
+        m_SimpleInput_Down = m_SimpleInput.FindAction("Down", throwIfNotFound: true);
+        m_SimpleInput_Left = m_SimpleInput.FindAction("Left", throwIfNotFound: true);
+        m_SimpleInput_Right = m_SimpleInput.FindAction("Right", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -279,6 +417,76 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public MiniPlayerTokenActions @MiniPlayerToken => new MiniPlayerTokenActions(this);
+
+    // SimpleInput
+    private readonly InputActionMap m_SimpleInput;
+    private List<ISimpleInputActions> m_SimpleInputActionsCallbackInterfaces = new List<ISimpleInputActions>();
+    private readonly InputAction m_SimpleInput_Up;
+    private readonly InputAction m_SimpleInput_Down;
+    private readonly InputAction m_SimpleInput_Left;
+    private readonly InputAction m_SimpleInput_Right;
+    public struct SimpleInputActions
+    {
+        private @PlayerInput m_Wrapper;
+        public SimpleInputActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Up => m_Wrapper.m_SimpleInput_Up;
+        public InputAction @Down => m_Wrapper.m_SimpleInput_Down;
+        public InputAction @Left => m_Wrapper.m_SimpleInput_Left;
+        public InputAction @Right => m_Wrapper.m_SimpleInput_Right;
+        public InputActionMap Get() { return m_Wrapper.m_SimpleInput; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(SimpleInputActions set) { return set.Get(); }
+        public void AddCallbacks(ISimpleInputActions instance)
+        {
+            if (instance == null || m_Wrapper.m_SimpleInputActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_SimpleInputActionsCallbackInterfaces.Add(instance);
+            @Up.started += instance.OnUp;
+            @Up.performed += instance.OnUp;
+            @Up.canceled += instance.OnUp;
+            @Down.started += instance.OnDown;
+            @Down.performed += instance.OnDown;
+            @Down.canceled += instance.OnDown;
+            @Left.started += instance.OnLeft;
+            @Left.performed += instance.OnLeft;
+            @Left.canceled += instance.OnLeft;
+            @Right.started += instance.OnRight;
+            @Right.performed += instance.OnRight;
+            @Right.canceled += instance.OnRight;
+        }
+
+        private void UnregisterCallbacks(ISimpleInputActions instance)
+        {
+            @Up.started -= instance.OnUp;
+            @Up.performed -= instance.OnUp;
+            @Up.canceled -= instance.OnUp;
+            @Down.started -= instance.OnDown;
+            @Down.performed -= instance.OnDown;
+            @Down.canceled -= instance.OnDown;
+            @Left.started -= instance.OnLeft;
+            @Left.performed -= instance.OnLeft;
+            @Left.canceled -= instance.OnLeft;
+            @Right.started -= instance.OnRight;
+            @Right.performed -= instance.OnRight;
+            @Right.canceled -= instance.OnRight;
+        }
+
+        public void RemoveCallbacks(ISimpleInputActions instance)
+        {
+            if (m_Wrapper.m_SimpleInputActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ISimpleInputActions instance)
+        {
+            foreach (var item in m_Wrapper.m_SimpleInputActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_SimpleInputActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public SimpleInputActions @SimpleInput => new SimpleInputActions(this);
     private int m_Keyboard_MouseSchemeIndex = -1;
     public InputControlScheme Keyboard_MouseScheme
     {
@@ -293,5 +501,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnInteraction(InputAction.CallbackContext context);
+    }
+    public interface ISimpleInputActions
+    {
+        void OnUp(InputAction.CallbackContext context);
+        void OnDown(InputAction.CallbackContext context);
+        void OnLeft(InputAction.CallbackContext context);
+        void OnRight(InputAction.CallbackContext context);
     }
 }
