@@ -29,22 +29,22 @@ public static class AnimState
                 player.SetTrigger(DieHash);
                 break;
 
-            // 서버처리가 먼저필요?
-            //case State.DanceUp:   
-            //    player.SetTrigger(DanceUpHash);
-            //    break;
-            //    case State.DanceDown:   
-            //        player.SetTrigger(DanceDownHash);
-            //        break;
-            //case State.DanceLeft:
-            //    player.SetTrigger(DanceLeftHash);
-            //    break;
-            //case State.DanceRight:
-            //    player.SetTrigger(DanceRightHash);
-            //    break;
-            //case State.DanceSlip:
-            //    player.SetTrigger(DanceSlipHash);
-            //    break;
+            // 서버처리가 먼저필요?  // Protocol.cs에 임시로 직접 입력함.
+            case State.DanceUp:
+                player.SetTrigger(DanceUpHash);
+                break;
+            case State.DanceDown:
+                player.SetTrigger(DanceDownHash);
+                break;
+            case State.DanceLeft:
+                player.SetTrigger(DanceLeftHash);
+                break;
+            case State.DanceRight:
+                player.SetTrigger(DanceRightHash);
+                break;
+            case State.DanceSlip:
+                player.SetTrigger(DanceSlipHash);
+                break;
         }
     }
 }
