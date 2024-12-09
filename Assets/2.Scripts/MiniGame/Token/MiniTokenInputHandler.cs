@@ -62,10 +62,10 @@ public class MiniTokenInputHandler
     // 현재 활성화된 액션맵을 Disable하고 매개변수의 액션맵을 Enable하는 기능.
     public void ChangeActionMap(string newActionMapName)
     {
-        // playerInput.SwitchCurrentActionMap("SimpleInput"); 는 Unity PlayerInput을 GetComponent해야 사용할 수있는 메서드......
-        prevEnableMap.Clear();
+        prevEnableMap.Clear();           
+
         // 액션맵 교체 전 활성화 되어있던 액션맵을 기억해두기.
-        if(playerInput.MiniPlayerToken.enabled)
+        if (playerInput.MiniPlayerToken.enabled)
         {
             prevEnableMap.Add(playerInput.MiniPlayerToken);
         }
@@ -75,12 +75,12 @@ public class MiniTokenInputHandler
         }
 
         // 모든 액션맵 비활성화
-        foreach ( InputActionMap actionMap in prevEnableMap)
+        foreach (InputActionMap actionMap in prevEnableMap)
         {
             actionMap.Disable();
         }
 
-        var newActionMap = playerInput.FindAction(newActionMapName, true);
+        var newActionMap = playerInput.asset.FindActionMap(newActionMapName);
         if (newActionMap != null)
         {
             newActionMap.Enable();
@@ -112,24 +112,25 @@ public class MiniTokenInputHandler
     #region SimpleInput   
     private void OnUp(InputAction.CallbackContext context)
     {
-        miniData.arrowInput = 0;        
+        miniData.arrowInput = 0;
         // 서버에 입력함 패킷 보내기, 응답받기
+        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
     }
 
     private void OnLeft(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 90;
-        //miniData.CurState = State.DanceLeft;
+        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
     }
     private void OnDown(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 180;
-        //miniData.CurState = State.DanceDown;
+        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
     }
     private void OnRight(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 270;
-        //miniData.CurState = State.DanceRight;
+        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
     }
     #endregion
 
