@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
 #region 서버연결
 ///// <summary>
@@ -54,12 +55,13 @@ public class BoardManager : Singleton<BoardManager>
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
-    [SerializeField] private int playerIndex = 0;
+    [SerializeField] private int playerIndex = -1;
 
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
 #pragma warning disable
+    public CinemachineVirtualCamera camera;
     public event Action OnEvent;
 #pragma warning restore
 
@@ -229,6 +231,8 @@ public class BoardManager : Singleton<BoardManager>
 
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
+        camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
+
         Curplayer.Ready();
     }
 
