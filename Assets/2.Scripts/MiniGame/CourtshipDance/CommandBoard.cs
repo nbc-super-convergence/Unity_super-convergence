@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public class CommandBoard : MonoBehaviour
@@ -10,22 +11,38 @@ public class CommandBoard : MonoBehaviour
     [SerializeField] private GameObject prefabBubble;
     [SerializeField] private Image failImage;
 
-
     //[SerializeField] private Queue<Queue<ArrowBubble>> commandQueuePool;
     [SerializeField] private Queue<ArrowBubble> curCommandQueue;
 
     private Queue<Queue<BubbleInfo>> queuePool;
     private Queue<BubbleInfo> curQueueInfo;
 
+    private bool isClient = false;
+    private MiniToken token;
+    private MiniTokenData tokenData;
+    public string SessionId { get; private set; }
+    public int TeamId { get; private set; }
     public int numOfbubbles = -1;
     public int round = 0;
 
     public void Init()
     {
         onInputDetected += HandleInput;
+        if(SessionId == GameManager.Instance.myInfo.SessionId)
+        {
+            isClient = true;
+        }
+        token = MinigameManager.Instance.GetMiniToken(SessionId);
+        tokenData = token.MiniData;
+    }
+    public void SetSessionId(string sessionId)
+    { SessionId = sessionId; }
+    public void SetTeamId(int teamId)
+    {  TeamId = teamId; }
 
-        queuePool = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GetCommandInfoPool();
-        MakeNextBoard();
+    public void SetPool(Queue<Queue<BubbleInfo>> pool)
+    {
+        queuePool = new(pool);
     }
 
     public void MakeNextBoard()
@@ -79,46 +96,22 @@ public class CommandBoard : MonoBehaviour
         return queue;
     }
 
-    // S2C세팅에서 호출하기
-    public void SetQueuePool(Queue<Queue<BubbleInfo>> pool)
-    {
-        queuePool = new(pool);
-    }
+    
 
 
     #region 플레이
 
-    private float inputData;
     public bool isFail = false;
     public event Action<float> onInputDetected;
 
     private Queue<ArrowBubble> successQueue = new();
 
-    private void Update()
+    
+    public void OnActionInput(int dir)
     {
-        
-        if (Input.GetKeyDown(KeyCode.W))
+        if (isClient)
         {
-            onInputDetected?.Invoke(0f);
-            Debug.Log("input : W");
-        }
-        if (Input.GetKeyDown(KeyCode.A))
-        {
-            onInputDetected?.Invoke(90f);
-            Debug.Log("input : A");
-
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            onInputDetected?.Invoke(180f);
-            Debug.Log("input : S");
-
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            onInputDetected?.Invoke(270f);
-            Debug.Log("input : D");
-
+            onInputDetected?.Invoke(dir);
         }
     }
 
@@ -136,7 +129,25 @@ public class CommandBoard : MonoBehaviour
         if(target.sessionId == sessionId && target.Rotation == rot)
         {
             // 성공
+            // 애니메이션 재생
+            State newState = State.DanceIdle;
+            switch (target.Rotation)
+            {
+                case 0:
+                    newState = State.DanceUp; break;
+                case 90:
+                    newState = State.DanceLeft; break;
+                case 180:
+                    newState = State.DanceDown; break;
+                case 270:
+                    newState = State.DanceRight; break;
+            }
+            tokenData.CurState = newState;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), newState);
+
+            // 보드 상호작용
             PopBubble();
+            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(tokenData.arrowInput);
         }
         else
         {
@@ -146,7 +157,8 @@ public class CommandBoard : MonoBehaviour
 
         if(curQueueInfo.Count == 0)
         {
-            UIManager.Get<UICommandBoardHandler>().Next();
+            //UIManager.Get<UICommandBoardHandler>().Next();
+            MakeNextBoard();
         }
     }
 
@@ -163,6 +175,8 @@ public class CommandBoard : MonoBehaviour
         Debug.Log("입력이 틀렸습니다.");
         // 토큰 효과 재생
         isFail = true;
+        tokenData.CurState = State.DanceSlip;
+        AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceSlip);
         failImage.gameObject.SetActive(true);
         yield return new WaitForSeconds(1.5f);
         isFail = false;

@@ -6,7 +6,7 @@ using System;
 public class BoardTokenHandler : MonoBehaviour
 {
     private bool isReady = false;
-    private bool isTurn = false; //³» ÅÏÀÎÁö?
+    private bool isTurn = false; //ë‚´ í„´ì¸ì§€?
     public bool isMine = false;
 
     private float speed = 5f;
@@ -22,9 +22,9 @@ public class BoardTokenHandler : MonoBehaviour
     public Animator animator;
     private int runhash;
 
-    public int dice { get; private set; } //ÁÖ»çÀ§ ´«
+    public int dice { get; private set; } //ì£¼ì‚¬ìœ„ ëˆˆ
 
-    private IBoardNode curNode; //ÇöÀç À§Ä¡ÇÑ ³ëµå
+    private IBoardNode curNode; //í˜„ìž¬ ìœ„ì¹˜í•œ ë…¸ë“œ
     public BoardTokenData data;
     [SerializeField] Transform character;
 
@@ -33,11 +33,15 @@ public class BoardTokenHandler : MonoBehaviour
     private void Awake()
     {
         nextPositon = transform.position;
-        queue = new();
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
 
         runhash = Animator.StringToHash("Run");
+    }
+
+    public void Init(UserInfo userInfo)
+    {
+        data = new(userInfo);
     }
 
     private void Update()
@@ -65,7 +69,7 @@ public class BoardTokenHandler : MonoBehaviour
         //}
         #endregion
 
-        //ÀÌµ¿ µ¿±âÈ­, Á¶°ÇÇÊ¿ä
+        //ì´ë™ ë™ê¸°í™”, ì¡°ê±´í•„ìš”
 
         if (!isMine)
         {
@@ -81,7 +85,7 @@ public class BoardTokenHandler : MonoBehaviour
             return;
         }
 
-        #region ÁÖ»çÀ§ ±¼¸²
+        #region ì£¼ì‚¬ìœ„ êµ´ë¦¼
 
         if (isReady)
         {
@@ -106,7 +110,7 @@ public class BoardTokenHandler : MonoBehaviour
 
         #endregion
 
-        #region ¿òÁ÷ÀÌ´Â µ¿¾È ÀÛµ¿
+        #region ì›€ì§ì´ëŠ” ë™ì•ˆ ìž‘ë™
         if (isTurn)
         {
             syncTime += Time.deltaTime;
@@ -164,7 +168,7 @@ public class BoardTokenHandler : MonoBehaviour
         #endregion
     }
 
-    //ÁÖ»çÀ§ ´« ÀÔ·Â
+    //ì£¼ì‚¬ìœ„ ëˆˆ ìž…ë ¥
     public void GetDice(int num)
     {
         dice = dice > num ? dice : num;
