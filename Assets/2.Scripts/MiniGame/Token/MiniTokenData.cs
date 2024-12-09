@@ -6,7 +6,7 @@ public class MiniTokenData
 {
     private readonly Animator animator;
 
-    #region common : ¸ğµç °ÔÀÓ¿¡¼­ »ç¿ë
+    #region common : ëª¨ë“  ê²Œì„ì—ì„œ ì‚¬ìš©
     public int tokenColor;
     private State curState;
     public State CurState
@@ -28,6 +28,8 @@ public class MiniTokenData
     public Vector3 nextPos;
     public float rotY = 0f;
     public float PlayerSpeed = 15f;
+
+    public int arrowInput;
     #endregion
 
     public MiniTokenData(Animator _anim, int color)
