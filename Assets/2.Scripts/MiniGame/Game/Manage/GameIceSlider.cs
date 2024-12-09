@@ -1,6 +1,5 @@
 using Google.Protobuf.Collections;
 using UnityEngine;
-using static S2C_IceMiniGameReadyNotification.Types;
 
 public class GameIceSlider : IGame
 {
@@ -22,7 +21,7 @@ public class GameIceSlider : IGame
         }
         else
         {
-            Debug.LogError("startPlayers ÀÚ·áÇü Àü´Ş °úÁ¤¿¡¼­ ¹®Á¦ ¹ß»ı");
+            Debug.LogError("startPlayers ìë£Œí˜• ì „ë‹¬ ê³¼ì •ì—ì„œ ë¬¸ì œ ë°œìƒ");
         }
     }
     public async void GameStart(params object[] param)
@@ -32,16 +31,16 @@ public class GameIceSlider : IGame
     }
     #endregion
 
-    #region ÃÊ±âÈ­
+    #region ì´ˆê¸°í™”
     private void SetBGM()
     {
 
     }
 
-    private void ResetPlayers(RepeatedField<startPlayers> players)
+    private void ResetPlayers(RepeatedField<S2C_IceMiniGameReadyNotification.Types.startPlayers> players)
     {
         foreach (var p in players)
-        {//¹Ì´Ï ÅäÅ« À§Ä¡ ÃÊ±âÈ­
+        {//ë¯¸ë‹ˆ í† í° ìœ„ì¹˜ ì´ˆê¸°í™”
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
             miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
@@ -51,19 +50,12 @@ public class GameIceSlider : IGame
     }
     #endregion
 
-    #region ÀÎ°ÔÀÓ ÀÌº¥Æ®
+    #region ì¸ê²Œì„ ì´ë²¤íŠ¸
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
         gameData.playerHps[idx] -= dmg;
         ingameUI.ChangeHPUI();
-
-        /*¼­¹ö ¾øÀ» ¶§ ÀÓ½Ã ·ÎÁ÷*/
-        //if (gameData.playerHps[idx] == 0)
-        //{
-        //    MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-        //    .PlayerDeath(sessionId);
-        //}
     }
 
     public void PlayerDeath(string sessionId)
@@ -78,7 +70,7 @@ public class GameIceSlider : IGame
 
     public void MapChangeEvent()
     {
-        gameData.phase++; //¸Ê º¯°æ ´Ü°è
+        gameData.phase++; //ë§µ ë³€ê²½ ë‹¨ê³„
         MinigameManager.Instance.GetMap<MapGameIceSlider>()
             .MapDecreaseEvent(gameData.phase);
     }
