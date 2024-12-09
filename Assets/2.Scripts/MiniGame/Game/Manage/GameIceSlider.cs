@@ -59,11 +59,11 @@ public class GameIceSlider : IGame
         ingameUI.ChangeHPUI();
 
         /*서버 없을 때 임시 로직*/
-        if (gameData.playerHps[idx] == 0)
-        {
-            MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .PlayerDeath(sessionId);
-        }
+        //if (gameData.playerHps[idx] == 0)
+        //{
+        //    MinigameManager.Instance.GetMiniGame<GameIceSlider>()
+        //    .PlayerDeath(sessionId);
+        //}
     }
 
     public void PlayerDeath(string sessionId)

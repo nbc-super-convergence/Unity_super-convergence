@@ -92,7 +92,7 @@ public class MiniToken : MonoBehaviour
                     {
                         SessionId = MinigameManager.Instance.mySessonId,
                         Position = SocketManager.ToVector(transform.localPosition),
-                        Rotation = transform.rotation.y,
+                        Rotation = transform.eulerAngles.y,
                         State = MiniData.CurState
                     };
                 };
