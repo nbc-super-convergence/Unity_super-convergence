@@ -119,6 +119,14 @@ public class MiniToken : MonoBehaviour
     #endregion
 
     #region CourtshipDance
+    public void EnableInputSystem(eGameType eGameType)
+    {
+        if (IsClient)
+        {//방어코드
+            InputHandler.EnablePlayerInput();
+            //StartCoroutine(SendClientMove());
+        }
+    }
     public Animator GetAnimator()
     {
         return animator;

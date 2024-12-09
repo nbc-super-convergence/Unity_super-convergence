@@ -384,7 +384,8 @@ public enum State {
   [pbr::OriginalName("MOVE")] Move = 1,
   [pbr::OriginalName("DIE")] Die = 2,
 
-    [pbr::OriginalName("DANCEUP")] DanceUp = 10,
+    [pbr::OriginalName("DANCEIDLE")] DanceIdle = 10,
+    [pbr::OriginalName("DANCEUP")] DanceUp,
     [pbr::OriginalName("DANCEDOWN")] DanceDown,
     [pbr::OriginalName("DANCELEFT")] DanceLeft,
     [pbr::OriginalName("DANCERIGHT")] DanceRight,

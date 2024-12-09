@@ -6,25 +6,30 @@ public class MapGameCourtshipDance : MapBase
 {
     public List<Transform> spawnPosition;
 
-    [SerializeField] private AnimatorController danceAnimator;
-    private AnimatorController prevAnimator;
+    private int danceLayerIndex = -1;
+    private int baseLayerIndex = 0;
 
-
-
+    
     public void TokenInit(MiniToken token)
     {
-        if (prevAnimator == null)
+        if(danceLayerIndex == -1)
         {
-            prevAnimator = (AnimatorController)token.GetAnimator().runtimeAnimatorController;
+            danceLayerIndex = token.GetAnimator().GetLayerIndex("Dance Layer");
         }
-        token.SetAnimator(danceAnimator);
+
         token.GetComponent<Rigidbody>().isKinematic = true;
+        token.GetAnimator().SetLayerWeight(baseLayerIndex, 0);
+        token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);
+
+        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceIdle);
     }
-    
+
     public void TokenReset(MiniToken token)
     {
-        if (prevAnimator == null) { return; }
-        token.SetAnimator(prevAnimator);
         token.GetComponent<Rigidbody>().isKinematic = false;
+        token.GetAnimator().SetLayerWeight(baseLayerIndex, 1);
+        token.GetAnimator().SetLayerWeight(danceLayerIndex, 0);
+
+        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.Idle);
     }
 }

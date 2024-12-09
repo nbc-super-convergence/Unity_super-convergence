@@ -21,6 +21,7 @@ public class UICommandBoardHandler : UIBase
                 board.SetSessionId(players[i].SessionId);
                 board.SetTeamId(players[i].TeamId);
                 board.SetPool(pool);
+                board.Init();
             }
             boardDic.Add(players[i].SessionId, board);
         }
