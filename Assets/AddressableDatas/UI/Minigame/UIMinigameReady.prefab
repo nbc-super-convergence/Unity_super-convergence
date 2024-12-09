@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<\uC870\uC791\uD0A4><size=40>\n\uC774\uB3D9 : W, A, S, D\n</size>"
+  m_text: "<\uC870\uC791\uD0A4><size=40>\n...\n</size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb37e2afeb582ff459f9b1974a4e7584, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: cb37e2afeb582ff459f9b1974a4e7584,
@@ -336,11 +336,15 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "9\uAC1C\uC758 \uCE78 \uC911 \uB79C\uB364\uC73C\uB85C \uC77C\uBD80 \uCE78\uC5D0
-    \uAD6C\uBA4D\uC774 \uB6AB\uB9BD\uB2C8\uB2E4!\n\n\uAD6C\uBA4D\uC774 \uB6AB\uB9B4
-    \uAC83 \uAC19\uC740 \uCE78\uC744 \uACE8\uB77C \uC11C \uACC4\uC138\uC694.\n\n\uAC19\uC740
-    \uCE78\uC5D0\uB294 2\uBA85 \uC774\uC0C1 \uB4E4\uC5B4\uAC08 \uC218 \uC5C6\uC73C\uB2C8,
-    \uC88B\uC740 \uC790\uB9AC\uB97C \uBA3C\uC800 \uC120\uC810\uD558\uC138\uC694."
+  m_text: "9\uAC1C\uC758 \uCE78\uC73C\uB85C \uC774\uB8E8\uC5B4\uC9C4 \uB304\uC2A4\uD50C\uB85C\uC5B4\uAC00
+    \uC788\uC2B5\uB2C8\uB2E4. \uC7A0\uC2DC \uD6C4, \uB79C\uB364\uC73C\uB85C \uBA87\uBA87
+    \uCE78\uC5D0 \uAD6C\uBA4D\uC774 \uB6AB\uB9AC\uAC8C \uB429\uB2C8\uB2E4.\n\n\uAD6C\uBA4D\uC774
+    \uB6AB\uB9B0 \uCE78\uC5D0 \uC11C \uC788\uB2E4\uBA74, \uB2E4\uC74C \uB2E8\uACC4\uB85C
+    \uC9C4\uCD9C\uD569\uB2C8\uB2E4! \uAD6C\uBA4D\uC774 \uB6AB\uB9AC\uC9C0 \uC54A\uC740
+    \uCE78 \uC704\uC5D0 \uC788\uB2E4\uBA74... \uD30C\uD2F0\uC5D0\uC11C \uCAD3\uACA8\uB098\uC8E0.\n\n\uAC19\uC740
+    \uCE78\uC5D0 2\uBA85 \uC774\uC0C1 \uC124 \uC218 \uC5C6\uC73C\uB2C8, \uBE60\uB974\uAC8C
+    \uC790\uB9AC\uB97C \uC120\uC810\uD558\uC138\uC694! \uAD6C\uBA4D\uC758 \uAC1C\uC218\uB294
+    \uB2E8\uACC4\uAC00 \uC9C4\uD589\uB420\uC218\uB85D \uC810\uC810 \uC904\uC5B4\uB4ED\uB2C8\uB2E4. "
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aaaa22c111a9ec045a15dda04cc98ac3, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: aaaa22c111a9ec045a15dda04cc98ac3,
