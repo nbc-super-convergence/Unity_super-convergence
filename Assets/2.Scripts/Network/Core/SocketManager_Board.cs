@@ -1,5 +1,6 @@
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -217,26 +218,25 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         BoardManager.Instance.GameOver();
     }
 
-    //public void BackToTheRoomResponse(GamePacket packet)
-    //{
-    //    var response = packet.BackToTheRoomResponse;
+    public async void BackToTheRoomResponse(GamePacket packet)
+    {
+        var response = packet.BackToTheRoomResponse;
 
-    //    if (response.Success)
-    //    {
+        if (response.Success)
+        {
+            SceneManager.LoadScene(0);
+            await UIManager.Show<UIRoom>(response.Room);
+        }
+        else
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
 
-    //    }
-    //    else
-    //    {
-    //        Debug.LogError($"FailCode : {response.FailCode.ToString()}");
-    //    }
-    //}
-
-    //public void BackToTheRoomNotification(GamePacket packet)
-    //{
-    //    var response = packet.BackToTheRoomNotification;
-
-
-    //}
+    public void BackToTheRoomNotification(GamePacket packet)
+    {
+        var response = packet.BackToTheRoomNotification;
+    }
 
     #endregion
 }
