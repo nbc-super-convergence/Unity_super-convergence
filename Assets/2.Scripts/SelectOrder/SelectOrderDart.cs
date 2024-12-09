@@ -106,6 +106,12 @@ public class SelectOrderDart : MonoBehaviour
         orderEvent.OnAimEvent -= SetAim;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        //빗나가면 다시
+        ResetDart();
+    }
+
     //입력 받을 때
     public void OnShooting(InputAction.CallbackContext context)
     {
