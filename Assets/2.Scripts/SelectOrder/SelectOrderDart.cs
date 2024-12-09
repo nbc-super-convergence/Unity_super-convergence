@@ -6,8 +6,8 @@ public class SelectOrderDart : MonoBehaviour
     private Rigidbody rgdby;
 
     //발사 준비상태
-    private enum ShootingPhase { Aim, Force, Ready };  
-    private ShootingPhase phase = ShootingPhase.Aim;
+    private enum ShootingPhase { Ready };  
+    private ShootingPhase phase = ShootingPhase.Ready;
 
     private bool isIncrease = true; //증감 여부
 
@@ -22,12 +22,6 @@ public class SelectOrderDart : MonoBehaviour
         {
             aimVector.x = Mathf.Clamp(value.x, minAim, maxAim);
             aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
-            
-            //curAim = Mathf.Clamp(value, minAim, maxAim);
-            //if (curAim <= minAim)
-            //    isIncrease = true;
-            //if (curAim >= maxAim)
-            //    isIncrease = false;
         }
     }
 
@@ -87,20 +81,16 @@ public class SelectOrderDart : MonoBehaviour
     {
         switch(phase)
         {
-            case ShootingPhase.Aim:
+            case ShootingPhase.Ready:
                 SetAim();
-                break;
-            case ShootingPhase.Force:
                 SetForce();
                 break;
-            default:
-                return;
         }
 
         //각도를 조절
         transform.rotation = Quaternion.Euler(CurAim);
 
-        //Debug.DrawRay(transform.position, transform.position + transform.forward);
+        Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -131,11 +121,7 @@ public class SelectOrderDart : MonoBehaviour
         isIncrease = true;
         switch (phase)
         {
-            case ShootingPhase.Aim:
-                phase = ShootingPhase.Force;
-                break;
-            case ShootingPhase.Force:
-                phase = ShootingPhase.Ready;
+            case ShootingPhase.Ready:
                 NowShoot();
                 break;
         }
@@ -191,6 +177,15 @@ public class SelectOrderDart : MonoBehaviour
         CurAim = Vector3.zero;
         CurForce = 2f;
 
-        phase = ShootingPhase.Aim;
+        phase = ShootingPhase.Ready;
+    }
+
+    /// <summary>
+    /// 다트 표적 벡터
+    /// </summary>
+    /// <returns>WorldToScreenPoint</returns>
+    public Vector3 TargetPosition()
+    {
+        return Camera.main.WorldToScreenPoint(-transform.forward);
     }
 }

@@ -11,13 +11,16 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     public List<SelectOrderDart> DartOrder;
 
     //UI
+    [SerializeField] private RectTransform targetUI;    //타겟 지점
     [SerializeField] private SelectOrderDartUI dartUI;
-    [SerializeField] private Transform resultGroup;
+    [SerializeField] private Transform resultGroup; //다트 결과
     private List<SelectOrderResultUI> resultsUI = new();
 
     [SerializeField] private Transform Title;   //타이틀 및 설명
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
+
+    private bool nowStart = false;  //지금부터 시작
 
     #region 조절 속성
     //조절 속성
@@ -52,15 +55,22 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         //스페이스바 누르면 시작 (임시로)
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Title.gameObject.SetActive(false);
-            BeginSelectOrder();
+            if (!nowStart)
+            {
+                nowStart = true;
+                Title.gameObject.SetActive(false);
+                BeginSelectOrder();
+            }
         }
 
-        if (nowPlayer < DartOrder.Count)
+        if (nowStart)
         {
-            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-            //dartUI.GetAim(DartOrder[nowPlayer].CurAim);
-            dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+            if (nowPlayer < DartOrder.Count)
+            {
+                //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
+                dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+                SetTargetDart();
+            }
         }
     }
 
@@ -106,5 +116,14 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
             resultsUI[i].SetRank(DartOrder[i].MyRank);
             resultsUI[i].SetScore(DartOrder[i].MyDistance);
         }
+    }
+
+    /// <summary>
+    /// 표적을 UI표시
+    /// </summary>
+    private void SetTargetDart()
+    {
+        Vector3 set = DartOrder[nowPlayer].TargetPosition();
+        targetUI.localPosition = Camera.main.ScreenToWorldPoint(set);
     }
 }
