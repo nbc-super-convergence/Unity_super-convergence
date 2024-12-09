@@ -7,56 +7,54 @@ using UnityEngine.SceneManagement;
 public class InsuDebugger : Singleton<InsuDebugger>
 {
     public bool isSingle;
-   
+
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
-        { JumpBoardScene(); }
-        if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt)) 
-        { JumpRoomUI(); }
+        if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        { OpenDance(); }
+        if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            Setminigame(); 
+            MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
+            
+        }
         if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { UIManager.Get<UIRoom>().GameStart(); }
+        {
+            UIManager.Get<UICommandBoardHandler>().Next("Session1");
+            UIManager.Get<UICommandBoardHandler>().Next("Session2");
+            UIManager.Get<UICommandBoardHandler>().Next("Session3");
+            UIManager.Get<UICommandBoardHandler>().Next("Session4");
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { JumpExecuteCourtshipDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { StartDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { UIManager.Get<UICommandBoardHandler>().Next(); }
+        { UIManager.Get<UICommandBoardHandler>().Next(GameManager.Instance.myInfo.SessionId); }
     }
 
-    private void JumpBoardScene()
+    private void OpenDance()
     {
-        UserInfo debugInfo = new();
-        debugInfo.SetSessionId("debugSessionId");
-        debugInfo.SetSessionId("debugNickName");
-        debugInfo.SetSessionId("debugSessionId");
-
-        GameManager.Instance.myInfo = debugInfo;
-
-        UIManager.Get<UIRoom>().GameStart();
+        // 보드에서 미니게임 입장.
+        SceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
 
-    private async void JumpRoomUI()
+    private void Setminigame()
     {
-        UserInfo debugInfo = new();
-        debugInfo.SetSessionId("debugSessionId");
-        debugInfo.SetSessionId("debugNickName");
-        debugInfo.SetSessionId("debugSessionId");
+        var a = GameManager.Instance.SessionDic;
+        List<Player> list = new List<Player>();
 
-        GameManager.Instance.myInfo = debugInfo;
-
-        RoomData roomData = new RoomData()
+        foreach (var p in a)
         {
-            RoomId = "debugId",
-            OwnerId = GameManager.Instance.myInfo.SessionId,
-            RoomName = "DebugRoom",
-            LobbyId = "debugLobbyId",
-            State = RoomStateType.Prepare,
-            MaxUser = 4,
-            
-        };
-        await UIManager.Show<UIRoom>(roomData);
+            var player = new Player { SessionId = p.Value.SessionId , TeamId = 0 };
+            list.Add(player);
+        }
+
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(list);
     }
+    
 
     private void JumpExecuteCourtshipDance()
     {
