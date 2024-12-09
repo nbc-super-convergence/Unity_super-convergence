@@ -6,12 +6,12 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public static bool isGameStart; //BoardSceneÀ¸·Î ³Ñ¾î°¥ ¶§???
-    public static Action<int> OnPlayerLeft; //»ö±ò Àü´Ş
+    public static bool isGameStart; //BoardSceneìœ¼ë¡œ ë„˜ì–´ê°ˆ ë•Œ???
+    public static Action<int> OnPlayerLeft; //ìƒ‰ê¹” ì „ë‹¬
 
     public UserInfo myInfo = new();
 
-    //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
+    //0:ë¹¨ê°•, 1:ë…¸ë‘, 2:ì´ˆë¡, 3:íŒŒë‘
     public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
     public Dictionary<int, string> failCodeDic;
 
@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
         //Initialize SocketManager
         SocketManager.Instance.Init();
 
-        //Initialize GameManager : È®½ÇÇÑ ÃÊ±âÈ­ º¸Àå.
+        //Initialize GameManager : í™•ì‹¤í•œ ì´ˆê¸°í™” ë³´ì¥.
         isInitialized = true;
     }
 
