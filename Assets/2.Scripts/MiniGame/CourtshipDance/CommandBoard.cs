@@ -130,7 +130,7 @@ public class CommandBoard : MonoBehaviour
             // 성공
             // 애니메이션 재생
             //tokenData.CurState = State.DanceIdle;
-            State newState = State.DanceIdle;
+            State newState = State.DanceWait;
             switch (target.Rotation)
             {
                 case 0:
@@ -159,8 +159,8 @@ public class CommandBoard : MonoBehaviour
         else
         {
             // 실패
-            tokenData.CurState = State.DanceSlip;
-            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceSlip);
+            tokenData.CurState = State.DanceFail;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
         }
 
