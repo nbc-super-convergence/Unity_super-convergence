@@ -116,7 +116,6 @@ public class MiniTokenInputHandler
         // 서버에 입력함 패킷 보내기, 응답받기
         UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
     }
-
     private void OnLeft(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 90;

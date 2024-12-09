@@ -29,6 +29,7 @@ public class MiniToken : MonoBehaviour
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
         IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color;
+        InputHandler.ChangeActionMap("MiniPlayerToken");
     }
 
     private void Update()
