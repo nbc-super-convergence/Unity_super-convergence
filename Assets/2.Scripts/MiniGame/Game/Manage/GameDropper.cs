@@ -16,25 +16,43 @@ public class GameDropper : IGame
         MinigameManager.Instance.MakeMap();
         SetBGM();
 
-        /*Reset Players - Socket ÇÊ¿ä*/
+        /*Reset Players - Socket í•„ìš”*/
         //if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
         //{
         //    ResetPlayers(response.Players);
         //}
         //else
         //{
-        //    Debug.LogError("startPlayers ÀÚ·áÇü Àü´Ş °úÁ¤¿¡¼­ ¹®Á¦ ¹ß»ı");
+        //    Debug.LogError("param parsing error : startPlayers");
         //}
     }
 
     public async void GameStart(params object[] param)
     {
-        //ingameUI = await UIManager.Show<UIMinigameDropper>(gameData, startTime);
+        if (param.Length == 1)
+        {
+            if (param[0] is long startTime)
+            {
+                ingameUI = await UIManager.Show<UIMinigameDropper>(gameData, startTime);
+            }
+            else
+            {
+                Debug.LogError("param parsing error : startTime");
+                return;
+            }
+        }
+        else
+        {
+            Debug.LogError("param length error");
+            return;
+        }
+        
+        //TODO : ë‚˜ì— ë§ëŠ” inputsystem ì •ì˜
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     #endregion
 
-    #region ÃÊ±âÈ­
+    #region ì´ˆê¸°í™”
     private void SetBGM()
     {
 
@@ -46,43 +64,18 @@ public class GameDropper : IGame
         {
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);//ÇöÀç À§Ä¡
-            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position); //´ÙÀ½ À§Ä¡
-            miniToken.MiniData.rotY = p.Rotation; //ÇöÀç È¸Àü°ª
+            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);//í˜„ì¬ ìœ„ì¹˜
+            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position); //ë‹¤ìŒ ìœ„ì¹˜
+            miniToken.MiniData.rotY = p.Rotation; //í˜„ì¬ íšŒì „ê°’
         }
     }
     #endregion
 
-    #region ÀÎ°ÔÀÓ ÀÌº¥Æ®
-    //public void GiveDamage(string sessionId, int dmg, bool isMe = false)
-    //{
-    //    int idx = GameManager.Instance.SessionDic[sessionId].Color;
-    //    gameData.playerHps[idx] -= dmg;
-    //    ingameUI.ChangeHPUI();
+    #region ì¸ê²Œì„ ì´ë²¤íŠ¸
+    private void SetSlotPosition(int slot)
+    {
 
-    //    /*¼­¹ö ¾øÀ» ¶§ ÀÓ½Ã ·ÎÁ÷*/
-    //    if (gameData.playerHps[idx] == 0)
-    //    {
-    //        MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-    //        .PlayerDeath(sessionId);
-    //    }
-    //}
+    }
 
-    //public void PlayerDeath(string sessionId)
-    //{
-    //    MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
-    //    if (sessionId == MinigameManager.Instance.mySessonId)
-    //    {
-    //        token.DisableMyToken();
-    //    }
-    //    token.DisableMiniToken();
-    //}
-
-    //public void MapChangeEvent()
-    //{
-    //    gameData.phase++; //¸Ê º¯°æ ´Ü°è
-    //    MinigameManager.Instance.GetMap<MapGameIceSlider>()
-    //        .MapDecreaseEvent(gameData.phase);
-    //}
     #endregion
 }
