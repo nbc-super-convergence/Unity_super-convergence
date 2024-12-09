@@ -12,7 +12,7 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
 
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
-    [SerializeField] private SelectOrderDartUI dartUI;
+    [SerializeField] private SelectOrderDartUI dartPowerUI;
     [SerializeField] private Transform resultGroup; //다트 결과
     private List<SelectOrderResultUI> resultsUI = new();
 
@@ -47,7 +47,18 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         maxForce = 3f;
 
         //dartUI.SetAimLimit(minAim, maxAim);
-        dartUI.SetForceLimit(minForce, maxForce);
+        dartPowerUI.SetForceLimit(minForce, maxForce);
+    }
+
+    private void Start()
+    {
+        //시작 초기
+
+        //타이틀 UI 활성
+        Title.gameObject.SetActive(true);
+        //속성 UI 비활성
+        resultGroup.gameObject.SetActive(false);
+        dartPowerUI.gameObject.SetActive(false);
     }
 
     private void Update()
@@ -56,14 +67,18 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         if(Input.GetKeyDown(KeyCode.Space))
         {
             nowStart = true;
+            //타이틀 UI 비활성
             Title.gameObject.SetActive(false);
+            //속성 UI 활성
+            resultGroup.gameObject.SetActive(true);
+            dartPowerUI.gameObject.SetActive(true);
             BeginSelectOrder();
         }
 
         if (nowPlayer < DartOrder.Count)
         {
             //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-            dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+            dartPowerUI.GetForce(DartOrder[nowPlayer].CurForce);
             SetTargetDart();
         }
     }
@@ -82,7 +97,7 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     /// </summary>
     public void HideDartUI()
     {
-        dartUI.gameObject.SetActive(false);
+        dartPowerUI.gameObject.SetActive(false);
     }
 
     /// <summary>
