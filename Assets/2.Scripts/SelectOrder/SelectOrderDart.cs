@@ -3,6 +3,8 @@ using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
+    private SelectOrderEvent orderEvent;
+    private SelectOrderInput orderInput;
     private Rigidbody rgdby;
 
     //발사 준비상태
@@ -59,10 +61,14 @@ public class SelectOrderDart : MonoBehaviour
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
+        orderEvent = GetComponent<SelectOrderEvent>();
+        orderInput = GetComponent<SelectOrderInput>();
     }
 
     private void Start()
     {
+        orderEvent.OnAimEvent += SetAim;
+
         minAim = SelectOrderManager.Instance.minAim;
         maxAim = SelectOrderManager.Instance.maxAim;
         minForce = SelectOrderManager.Instance.minForce;
@@ -82,7 +88,6 @@ public class SelectOrderDart : MonoBehaviour
         switch(phase)
         {
             case ShootingPhase.Ready:
-                SetAim();
                 SetForce();
                 break;
         }
@@ -100,12 +105,8 @@ public class SelectOrderDart : MonoBehaviour
 
         //다트가 판을 따라가게
         transform.SetParent(collision.transform);
-    }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        //다트가 빗나가면
-        ResetDart();
+        orderEvent.OnAimEvent -= SetAim;
     }
 
     //입력 받을 때
@@ -130,19 +131,11 @@ public class SelectOrderDart : MonoBehaviour
     /// <summary>
     /// 각도 조절
     /// </summary>
-    private void SetAim()
+    private void SetAim(Vector2 direction)
     {
         //입력을 WASD로 받아 상하좌우 조준
-        float horizon = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-        Vector3 aim = new Vector3(vertical, horizon, 0);
+        Vector3 aim = new Vector3(direction.y, direction.x, 0);
         CurAim += aim;
-
-        //if (isIncrease) CurAim += Time.deltaTime * speed;
-        //else CurAim -= Time.deltaTime * speed;
-
-        //벡터 각도 조절
-        //dartRot.z = Mathf.Sin(CurAim - 90f);
     }
 
     /// <summary>

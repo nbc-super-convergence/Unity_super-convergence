@@ -55,22 +55,16 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         //스페이스바 누르면 시작 (임시로)
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            if (!nowStart)
-            {
-                nowStart = true;
-                Title.gameObject.SetActive(false);
-                BeginSelectOrder();
-            }
+            nowStart = true;
+            Title.gameObject.SetActive(false);
+            BeginSelectOrder();
         }
 
-        if (nowStart)
+        if (nowPlayer < DartOrder.Count)
         {
-            if (nowPlayer < DartOrder.Count)
-            {
-                //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-                dartUI.GetForce(DartOrder[nowPlayer].CurForce);
-                SetTargetDart();
-            }
+            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
+            dartUI.GetForce(DartOrder[nowPlayer].CurForce);
+            SetTargetDart();
         }
     }
 
