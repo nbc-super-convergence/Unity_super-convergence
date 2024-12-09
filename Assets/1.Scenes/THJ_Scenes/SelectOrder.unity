@@ -2645,7 +2645,7 @@ MonoBehaviour:
     m_ActionId: 37cad893-84fb-4fda-9834-c56014c3c519
     m_ActionName: Player/Aim[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: DefaultInput
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -3263,7 +3263,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: DefaultInput
+  m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
