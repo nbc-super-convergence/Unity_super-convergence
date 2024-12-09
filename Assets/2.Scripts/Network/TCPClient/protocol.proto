@@ -40,6 +40,9 @@ syntax = "proto3";
         int32 value = 2;
         int32 rank = 3; 
         float distance = 4;
+        Vector angle = 5;
+        Vector location = 6;
+        float power = 7;
     }
 //ENUM
     enum RoomStateType  {
@@ -128,6 +131,7 @@ syntax = "proto3";
 //BOARD
     message C2S_GameStartRequest {
         string sessionId = 1;
+        int32 turn = 2;
     }
 
     message S2C_GameStartNotification {
@@ -256,6 +260,9 @@ syntax = "proto3";
     message C2S_DiceGameRequest{
         string sessionId = 1;
         float distance = 2;
+        Vector angle = 3;
+        Vector location = 4;
+        float power = 5;
     }
     
     message S2C_DiceGameResponse{
@@ -445,6 +452,58 @@ syntax = "proto3";
     message S2C_IcePlayerExitNotification {
         string sessionId = 1;
     }
+//DROPPER
+    message S2C_DropMiniGameReadyNotification {
+        repeated startPlayers players = 1;
+
+        message startPlayers { 
+            string sessionId = 1; 
+            int32 slot = 2; //0, 2, 6, 8
+            float rotation = 3;
+        } 
+    }
+
+    message C2S_DropGameReadyRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_DropGameReadyNotification {
+        string sessionId = 1;
+    }
+
+    message S2C_DropMiniGameStartNotification {
+        int64 startTime = 1; //NOW + 4
+    }
+
+    message C2S_DropPlayerSyncRequest {
+        string sessionId = 1;
+        int32 slot = 2; //0~8 사이.
+        float rotation = 3;
+        State state = 4;
+    }
+
+    message S2C_DropPlayerSyncNotification { 
+        string sessionId = 1;
+        int32 slot = 2; //무효 == -1
+        float rotation = 3;
+        State state = 4;
+    }
+
+    message S2C_DropPlayerDeathNotification {
+        string sessionId = 1;
+    }
+
+    message S2C_DropLevelStartNotification {
+    }
+
+    message S2C_DropLevelEndNotification {
+        repeated int32 holes = 1; //0~8사이 N개의 수
+    }
+
+    message S2C_DropGameOverNotification {
+        repeated Rank ranks = 1; 
+        int64 endTime = 2; 
+    }
 
 // 게임패킷
     message GamePacket {
@@ -531,5 +590,17 @@ syntax = "proto3";
              S2C_IceGameOverNotification iceGameOverNotification = 210;
              S2C_IceMapSyncNotification iceMapSyncNotification = 211;
              S2C_IcePlayerExitNotification icePlayerExitNotification = 212;
+
+             //dropper (301)
+             S2C_DropMiniGameReadyNotification dropMiniGameReadyNotification = 301;
+             C2S_DropGameReadyRequest dropGameReadyRequest = 302;
+             S2C_DropGameReadyNotification dropGameReadyNotification = 303;
+             S2C_DropMiniGameStartNotification dropMiniGameStartNotification = 304;
+             C2S_DropPlayerSyncRequest dropPlayerSyncRequest = 305;
+             S2C_DropPlayerSyncNotification dropPlayerSyncNotification = 306;
+             S2C_DropPlayerDeathNotification dropPlayerDeathNotification = 307;
+             S2C_DropLevelStartNotification dropLevelStartNotification = 308;
+             S2C_DropLevelEndNotification dropLevelEndNotification = 309;
+             S2C_DropGameOverNotification dropGameOverNotification = 310;
         }
     }

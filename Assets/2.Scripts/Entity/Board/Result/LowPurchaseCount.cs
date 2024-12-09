@@ -1,28 +1,28 @@
-using System.Collections.Generic;
+//using System.Collections.Generic;
 
-//¶¥À» Á¦ÀÏ ¸¹ÀÌ »çÁö ¾ÊÀº »ç¶÷
-public class LowPurchaseCount : IGameResult
-{
-    public List<int> Result()
-    {
-        List<int> result = new List<int>();
-        List<KeyValuePair<int, int>> list = new();
-        List<BoardTokenHandler> players = BoardManager.Instance.playerTokenHandlers;
+////ë•…ì„ ì œì¼ ë§ì´ ì‚¬ì§€ ì•Šì€ ì‚¬ëŒ
+//public class LowPurchaseCount : IGameResult
+//{
+//    public List<int> Result()
+//    {
+//        List<int> result = new List<int>();
+//        List<KeyValuePair<int, int>> list = new();
+//        List<BoardTokenHandler> players = BoardManager.Instance.playerTokenHandlers;
 
-        for (int i = 0; i < players.Count; i++)
-        {
-            int value = players[i].data.gameData.purchaseArea; //±¸¸Å¼ö
+//        for (int i = 0; i < players.Count; i++)
+//        {
+//            int value = players[i].data.gameData.purchaseArea; //êµ¬ë§¤ìˆ˜
 
-            list.Add(new KeyValuePair<int, int>(value, i));
-        }
+//            list.Add(new KeyValuePair<int, int>(value, i));
+//        }
 
-        list.Sort((a, b) => { return a.Key.CompareTo(b.Key); }); //¿À¸§Â÷¼ø Á¤·Ä
+//        list.Sort((a, b) => { return a.Key.CompareTo(b.Key); }); //ì˜¤ë¦„ì°¨ìˆœ ì •ë ¬
 
-        int key = list[0].Key;
+//        int key = list[0].Key;
 
-        for (int i = 0; i < list.Count; i++)
-            if (key == list[i].Key) result.Add(list[i].Value);
+//        for (int i = 0; i < list.Count; i++)
+//            if (key == list[i].Key) result.Add(list[i].Value);
 
-        return result;
-    }
-}
+//        return result;
+//    }
+//}

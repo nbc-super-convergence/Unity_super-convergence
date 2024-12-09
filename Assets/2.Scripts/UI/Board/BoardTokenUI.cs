@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using Unity.VisualScripting;
 
 public class BoardTokenUI : UIBase
 {
@@ -12,11 +13,17 @@ public class BoardTokenUI : UIBase
     public void SetPlayer(BoardTokenData data)
     {
         this.data = data;
+        UIManager.Get<BoardUI>().OnRefresh += Refresh;
     }
 
     public void Refresh()
     {
         trophy.text = data.trophyAmount.ToString();
         coin.text = data.keyAmount.ToString();
+    }
+
+    public void ExitPlayer()
+    {
+        UIManager.Get<BoardUI>().OnRefresh -= Refresh;
     }
 }

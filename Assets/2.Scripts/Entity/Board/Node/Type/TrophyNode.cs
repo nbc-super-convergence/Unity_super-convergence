@@ -6,7 +6,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
     private bool isTrophy;
     private int price;
 
-    public string message => $"{price}юг ©╜╪Х╦╕ аЖ╨рго©╘ ф╝╥нгг╦╕ ╠╦╦е гр ╪Ж юж╫ю╢о╢ы.";
+    public string message => $"{price}Л²≤ Л≈╢Л┤═К╔╪ Л╖─К╤┬М∙≤Л≈╛ М┼╦К║°М■╪К╔╪ Й╣╛К╖╓ М∙═ Л┬≤ Л·┬Л┼╣К▀┬К▀╓.";
 
 
     private void Start()

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
@@ -26,7 +26,7 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Dropdown ddMaxTurn;
     private int[] turnOptions = { 10, 15, 20, 25, 30 };
     [Range(0, 4)] public int maxTurnValue = 0;
-    private int maxTurn;
+    private int maxTurn = 10;
 
     [Header("Start Countdown")]
     [SerializeField] private TMP_Text count;
@@ -328,7 +328,8 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GameStartRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Turn = maxTurn,
         };
         SocketManager.Instance.OnSend(packet);
     }
@@ -420,7 +421,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = GameManager.Instance.myInfo.SessionId            
         };
         SocketManager.Instance.OnSend(packet);
 
