@@ -3,9 +3,9 @@ using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    #region º¸µå
+    #region ë³´ë“œ
 
-    #region ÁÖ»çÀ§
+    #region ì£¼ì‚¬ìœ„
     public void RollDiceResponse(GamePacket packet)
     {
         var response = packet.RollDiceResponse;
@@ -36,7 +36,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region º¸µå ÇÃ·¹ÀÌ¾î ÀÌµ¿
+    #region ë³´ë“œ í”Œë ˆì´ì–´ ì´ë™
     public void MovePlayerBoardResponse(GamePacket packet)
     {
         var response = packet.MovePlayerBoardResponse;
@@ -66,7 +66,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region Å¸ÀÏ ±¸¸Å
+    #region íƒ€ì¼ êµ¬ë§¤
     public void PurchaseTileResponse(GamePacket packet)
     {
         var response = packet.PurchaseTileResponse;
@@ -103,7 +103,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
-    #region Æ®·ÎÇÇ ±¸¸Å
+    #region íŠ¸ë¡œí”¼ êµ¬ë§¤
     public void PurchaseTrophyResponse(GamePacket packet)
     {
         var response = packet.PurchaseTrophyResponse;
@@ -152,7 +152,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region Å¸ÀÏ ÆĞ³ÎÆ¼
+    #region íƒ€ì¼ íŒ¨ë„í‹°
 
     public void TilePenaltyResponse(GamePacket packet)
     {
@@ -195,7 +195,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region ÅÏ Á¾·á
+    #region í„´ ì¢…ë£Œ
 
     public void TurnEndNotification(GamePacket packet)
     {
@@ -207,13 +207,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region °ÔÀÓÁ¾·á
+    #region ê²Œì„ì¢…ë£Œ
 
     public void GameEndNotification(GamePacket packet)
     {
         var response = packet.GameEndNotification;
 
-        //°ÔÀÓÁ¾·á ÇÊ¿ä
+        //ê²Œì„ì¢…ë£Œ í•„ìš”
         //BoardManager.Instance
     }
 

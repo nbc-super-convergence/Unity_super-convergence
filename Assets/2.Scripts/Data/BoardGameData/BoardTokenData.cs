@@ -15,10 +15,18 @@ public class BoardTokenData
     //public Vector3 position;
     //public float rotY;
 
-    public string id;
-    public int keyAmount; //ÀçÈ­, ÀÌ¸§ ¾ğÁ¦µçÁö ¼öÁ¤°¡´É
+    //public string id;
+    public int keyAmount; //ì¬í™”, ì´ë¦„ ì–¸ì œë“ ì§€ ìˆ˜ì •ê°€ëŠ¥
     public int trophyAmount;
 
-    public PlayerTokenState state;
+    //public PlayerTokenState state;
     public BoardGameData gameData;
+
+    public BoardTokenData(UserInfo userInfo)
+    {
+        this.userInfo = userInfo;
+        keyAmount = 10;
+        trophyAmount = 0;
+        gameData = new();
+    }
 }

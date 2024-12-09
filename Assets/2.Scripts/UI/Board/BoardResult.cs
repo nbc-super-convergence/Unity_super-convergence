@@ -25,7 +25,7 @@ public class BoardResult : UIBase
         {
             var g = Instantiate(prefab,layout);
 
-            g.id.text = list[i].data.id;
+            g.id.text = list[i].data.userInfo.SessionId;
             g.trophy.text = list[i].data.trophyAmount.ToString();
             g.coin.text = list[i].data.keyAmount.ToString();
         }
@@ -45,15 +45,15 @@ public class BoardResult : UIBase
     //{
     //    var list = BoardManager.Instance.playerTokenHandlers;
 
-    //    comment.Add("������ ����Ǿ����ϴ�.");
+    //    comment.Add("게임이 종료되었습니다.");
 
     //    //if(result.Count > 0)
     //    //{
-    //    //    comment.Add("����� ��ǥ�ϱ����� ���� �����ߴ� ��� �ӹ��� �ֽ��ϴ�.");
-    //    //    comment.Add("�ش� �ӹ��� �������ֽźв� Ʈ���Ǹ� �����ϰڽ��ϴ�.");
+    //    //    comment.Add("결과를 발표하기전에 저희가 설정했던 비밀 임무가 있습니다.");
+    //    //    comment.Add("해당 임무를 수행해주신분께 트로피를 수여하겠습니다.");
     //    //}
 
-    //    //comment.Add("����� ��ǥ�ϰڽ��ϴ�!");
+    //    //comment.Add("결과를 발표하겠습니다!");
     //}
 
     public void OnClick()
