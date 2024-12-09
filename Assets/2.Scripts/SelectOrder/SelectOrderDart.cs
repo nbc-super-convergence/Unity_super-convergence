@@ -1,10 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
     private SelectOrderEvent orderEvent;
-    private SelectOrderInput orderInput;
     private Rigidbody rgdby;
 
     //발사 준비상태
@@ -26,6 +25,7 @@ public class SelectOrderDart : MonoBehaviour
             aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
         }
     }
+    public Vector2 GetAim = Vector2.zero;   //입력 Aim
 
     private float curForce = 2f;
     private float minForce, maxForce;
@@ -62,25 +62,17 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<SelectOrderEvent>();
-        orderInput = GetComponent<SelectOrderInput>();
     }
 
     private void Start()
     {
         orderEvent.OnAimEvent += SetAim;
+        orderEvent.OnShootEvent += NowShoot;
 
         minAim = SelectOrderManager.Instance.minAim;
         maxAim = SelectOrderManager.Instance.maxAim;
         minForce = SelectOrderManager.Instance.minForce;
         maxForce = SelectOrderManager.Instance.maxForce;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Interaction();
-        }
     }
 
     private void FixedUpdate()
@@ -93,6 +85,11 @@ public class SelectOrderDart : MonoBehaviour
         }
 
         //각도를 조절
+        if(GetAim != Vector2.zero)
+        {
+            CurAim += new Vector3(GetAim.y, GetAim.x);
+        }
+           
         transform.rotation = Quaternion.Euler(CurAim);
 
         Debug.DrawRay(transform.position, -transform.forward * 2);
@@ -117,25 +114,12 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
-    private void Interaction()
-    {
-        isIncrease = true;
-        switch (phase)
-        {
-            case ShootingPhase.Ready:
-                NowShoot();
-                break;
-        }
-    }
-
     /// <summary>
     /// 각도 조절
     /// </summary>
     private void SetAim(Vector2 direction)
     {
-        //입력을 WASD로 받아 상하좌우 조준
-        Vector3 aim = new Vector3(direction.y, direction.x, 0);
-        CurAim += aim;
+        GetAim = direction;
     }
 
     /// <summary>
