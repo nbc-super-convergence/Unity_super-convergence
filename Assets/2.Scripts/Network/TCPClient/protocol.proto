@@ -505,6 +505,84 @@ syntax = "proto3";
         int64 endTime = 2; 
     }
 
+//Bomb
+    //폭탄 미니게임 시작 알림
+    message S2C_BombMiniGameReadyNotification{
+        repeated startPlayers players = 1;
+
+        message startPlayers {
+            string sessionId= 1; 
+            Vector position = 2; 
+            float rotation = 3;
+            string bombSessionId = 4;  //최초 폭탄 소지자
+        }
+    }
+
+    // 설명서, 준비창
+
+    //폭탄 미니게임 준비 완료
+    message C2S_BombGameReadyRequest {
+        string sessionId= 1; // 준비 완료한 플레이어 아이디
+    }
+
+    //폭탄 미니게임 준비 완료 알림
+    message S2C_BombGameReadyNotification {
+        string sessionId= 1; // 준비 완료한 인원 공유
+    }
+
+    //폭탄 게임 시작 알림
+    message S2C_BombMiniGameStartNotification{
+    }
+
+
+    // 인 게임
+
+    //플레이어 이동
+    // 빙판과 같은 형태
+    message C2S_BombPlayerSyncRequest{
+        string sessionId= 1;
+        Vector position = 2;
+        float rotation = 3;
+        State state = 4;
+    }
+
+    //상태 동기화
+    // 빙판과 같은 형태
+    message S2C_BombPlayerSyncNotification {
+        string sessionId= 1;
+        Vector position = 2;
+        float rotation = 3;
+        State state = 4;
+    }
+
+    //폭탄 터짐
+    message S2C_BombPlayerDeathNotification{
+        string sessionId= 1; // 터질 때 들고있던 유저
+        string BombSessionId = 2; // 새로운 폭탄 유저
+    }
+
+    //폭탄 건넴 
+    message C2S_BombMoveRequest {
+        string SessionId = 1; // 폭탄 받는 유저 
+    }
+
+    message S2C_BombMoveNotification {
+        string SessionId = 1; // 폭탄 받는 유저 
+    }
+
+
+    //END. 게임 종료 알림
+    message S2C_BombGameOverNotification {
+        repeated Rank ranks = 1;
+        int64 endTime = 2; // 일단 ice랑 똑같이 +6초 해서?
+
+        message Rank { 
+            int32 sessionId = 1;
+            int32 rank = 2; 
+        }
+    }
+
+
 // 게임패킷
     message GamePacket {
         oneof payload {
@@ -602,5 +680,17 @@ syntax = "proto3";
              S2C_DropLevelStartNotification dropLevelStartNotification = 308;
              S2C_DropLevelEndNotification dropLevelEndNotification = 309;
              S2C_DropGameOverNotification dropGameOverNotification = 310;
+
+             //Bomb (501)
+             S2C_BombMiniGameReadyNotification bombMiniGameReadyNotification = 501;
+             C2S_BombGameReadyRequest bombGameReadyRequest = 502;
+             S2C_BombGameReadyNotification bombGameReadyNotification = 503;
+             S2C_BombMiniGameStartNotification bombMiniGameStartNotification = 504;
+             C2S_BombPlayerSyncRequest bombPlayerSyncRequest = 505;
+             S2C_BombPlayerSyncNotification bombPlayerSyncNotification = 506;
+             S2C_BombPlayerDeathNotification bombPlayerDeathNotification = 507;
+             C2S_BombMoveRequest bombMoveRequest = 508;
+             S2C_BombMoveNotification bombMoveNotification = 509;
+             S2C_BombGameOverNotification bombGameOverNotification = 510; 
         }
     }

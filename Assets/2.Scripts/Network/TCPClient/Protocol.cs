@@ -165,124 +165,159 @@ public static partial class ProtocolReflection {
           "aW9uSWQYASABKAkiIAoeUzJDX0Ryb3BMZXZlbFN0YXJ0Tm90aWZpY2F0aW9u",
           "Ii0KHFMyQ19Ecm9wTGV2ZWxFbmROb3RpZmljYXRpb24SDQoFaG9sZXMYASAD",
           "KAUiRQocUzJDX0Ryb3BHYW1lT3Zlck5vdGlmaWNhdGlvbhIUCgVyYW5rcxgB",
-          "IAMoCzIFLlJhbmsSDwoHZW5kVGltZRgCIAEoAyL+IwoKR2FtZVBhY2tldBIv",
-          "Cg9yZWdpc3RlclJlcXVlc3QYASABKAsyFC5DMlNfUmVnaXN0ZXJSZXF1ZXN0",
-          "SAASMQoQcmVnaXN0ZXJSZXNwb25zZRgCIAEoCzIVLlMyQ19SZWdpc3RlclJl",
-          "c3BvbnNlSAASKQoMbG9naW5SZXF1ZXN0GAMgASgLMhEuQzJTX0xvZ2luUmVx",
-          "dWVzdEgAEisKDWxvZ2luUmVzcG9uc2UYBCABKAsyEi5TMkNfTG9naW5SZXNw",
-          "b25zZUgAEiwKDWxvZ291dFJlcXVlc3QYBSABKAsyEy5DMlNfTG9nZ291dFJl",
-          "cXVlc3RIABI/ChdjbG9zZVNvY2tldE5vdGlmaWNhdGlvbhgIIAEoCzIcLlMy",
-          "Q19DbG9zZVNvY2tldE5vdGlmaWNhdGlvbkgAEjEKEGxvYmJ5Sm9pblJlcXVl",
-          "c3QYCyABKAsyFS5DMlNfTG9iYnlKb2luUmVxdWVzdEgAEjMKEWxvYmJ5Sm9p",
-          "blJlc3BvbnNlGAwgASgLMhYuUzJDX0xvYmJ5Sm9pblJlc3BvbnNlSAASMwoR",
-          "bG9iYnlMZWF2ZVJlcXVlc3QYDSABKAsyFi5DMlNfTG9iYnlMZWF2ZVJlcXVl",
-          "c3RIABI1ChJsb2JieUxlYXZlUmVzcG9uc2UYDiABKAsyFy5TMkNfTG9iYnlM",
-          "ZWF2ZVJlc3BvbnNlSAASOQoUbG9iYnlVc2VyTGlzdFJlcXVlc3QYDyABKAsy",
-          "GS5DMlNfTG9iYnlVc2VyTGlzdFJlcXVlc3RIABI7ChVsb2JieVVzZXJMaXN0",
-          "UmVzcG9uc2UYECABKAsyGi5TMkNfTG9iYnlVc2VyTGlzdFJlc3BvbnNlSAAS",
-          "PQoWbG9iYnlVc2VyRGV0YWlsUmVxdWVzdBgRIAEoCzIbLkMyU19Mb2JieVVz",
-          "ZXJEZXRhaWxSZXF1ZXN0SAASPwoXbG9iYnlVc2VyRGV0YWlsUmVzcG9uc2UY",
-          "EiABKAsyHC5TMkNfTG9iYnlVc2VyRGV0YWlsUmVzcG9uc2VIABIvCg9yb29t",
-          "TGlzdFJlcXVlc3QYHyABKAsyFC5DMlNfUm9vbUxpc3RSZXF1ZXN0SAASMQoQ",
-          "cm9vbUxpc3RSZXNwb25zZRggIAEoCzIVLlMyQ19Sb29tTGlzdFJlc3BvbnNl",
-          "SAASMwoRY3JlYXRlUm9vbVJlcXVlc3QYISABKAsyFi5DMlNfQ3JlYXRlUm9v",
-          "bVJlcXVlc3RIABI1ChJjcmVhdGVSb29tUmVzcG9uc2UYIiABKAsyFy5TMkNf",
-          "Q3JlYXRlUm9vbVJlc3BvbnNlSAASLwoPam9pblJvb21SZXF1ZXN0GCMgASgL",
-          "MhQuQzJTX0pvaW5Sb29tUmVxdWVzdEgAEjEKEGpvaW5Sb29tUmVzcG9uc2UY",
-          "JCABKAsyFS5TMkNfSm9pblJvb21SZXNwb25zZUgAEjkKFGpvaW5Sb29tTm90",
-          "aWZpY2F0aW9uGCUgASgLMhkuUzJDX0pvaW5Sb29tTm90aWZpY2F0aW9uSAAS",
-          "MQoQbGVhdmVSb29tUmVxdWVzdBgmIAEoCzIVLkMyU19MZWF2ZVJvb21SZXF1",
-          "ZXN0SAASMwoRbGVhdmVSb29tUmVzcG9uc2UYJyABKAsyFi5TMkNfTGVhdmVS",
-          "b29tUmVzcG9uc2VIABI7ChVsZWF2ZVJvb21Ob3RpZmljYXRpb24YKCABKAsy",
-          "Gi5TMkNfTGVhdmVSb29tTm90aWZpY2F0aW9uSAASNQoSZ2FtZVByZXBhcmVS",
-          "ZXF1ZXN0GCkgASgLMhcuQzJTX0dhbWVQcmVwYXJlUmVxdWVzdEgAEjcKE2dh",
-          "bWVQcmVwYXJlUmVzcG9uc2UYKiABKAsyGC5TMkNfR2FtZVByZXBhcmVSZXNw",
-          "b25zZUgAEj8KF2dhbWVQcmVwYXJlTm90aWZpY2F0aW9uGCsgASgLMhwuUzJD",
-          "X0dhbWVQcmVwYXJlTm90aWZpY2F0aW9uSAASMQoQZ2FtZVN0YXJ0UmVxdWVz",
-          "dBgzIAEoCzIVLkMyU19HYW1lU3RhcnRSZXF1ZXN0SAASOwoVZ2FtZVN0YXJ0",
-          "Tm90aWZpY2F0aW9uGDQgASgLMhouUzJDX0dhbWVTdGFydE5vdGlmaWNhdGlv",
-          "bkgAEi8KD3JvbGxEaWNlUmVxdWVzdBg9IAEoCzIULkMyU19Sb2xsRGljZVJl",
-          "cXVlc3RIABIxChByb2xsRGljZVJlc3BvbnNlGD4gASgLMhUuUzJDX1JvbGxE",
-          "aWNlUmVzcG9uc2VIABI5ChRyb2xsRGljZU5vdGlmaWNhdGlvbhg/IAEoCzIZ",
-          "LlMyQ19Sb2xsRGljZU5vdGlmaWNhdGlvbkgAEj0KFm1vdmVQbGF5ZXJCb2Fy",
-          "ZFJlcXVlc3QYQCABKAsyGy5DMlNfTW92ZVBsYXllckJvYXJkUmVxdWVzdEgA",
-          "Ej8KF21vdmVQbGF5ZXJCb2FyZFJlc3BvbnNlGEEgASgLMhwuUzJDX01vdmVQ",
-          "bGF5ZXJCb2FyZFJlc3BvbnNlSAASRwobbW92ZVBsYXllckJvYXJkTm90aWZp",
-          "Y2F0aW9uGEIgASgLMiAuUzJDX01vdmVQbGF5ZXJCb2FyZE5vdGlmaWNhdGlv",
-          "bkgAEjcKE3B1cmNoYXNlVGlsZVJlcXVlc3QYQyABKAsyGC5DMlNfUHVyY2hh",
-          "c2VUaWxlUmVxdWVzdEgAEjkKFHB1cmNoYXNlVGlsZVJlc3BvbnNlGEQgASgL",
-          "MhkuUzJDX1B1cmNoYXNlVGlsZVJlc3BvbnNlSAASQQoYcHVyY2hhc2VUaWxl",
-          "Tm90aWZpY2F0aW9uGEUgASgLMh0uUzJDX1B1cmNoYXNlVGlsZU5vdGlmaWNh",
-          "dGlvbkgAEjcKE2dhbWVFbmROb3RpZmljYXRpb24YRiABKAsyGC5TMkNfR2Ft",
-          "ZUVuZE5vdGlmaWNhdGlvbkgAEjsKFXB1cmNoYXNlVHJvcGh5UmVxdWVzdBhH",
-          "IAEoCzIaLkMyU19QdXJjaGFzZVRyb3BoeVJlcXVlc3RIABI9ChZwdXJjaGFz",
-          "ZVRyb3BoeVJlc3BvbnNlGEggASgLMhsuUzJDX1B1cmNoYXNlVHJvcGh5UmVz",
-          "cG9uc2VIABJFChpwdXJjaGFzZVRyb3BoeU5vdGlmaWNhdGlvbhhJIAEoCzIf",
-          "LlMyQ19QdXJjaGFzZVRyb3BoeU5vdGlmaWNhdGlvbkgAEjUKEnRpbGVQZW5h",
-          "bHR5UmVxdWVzdBhKIAEoCzIXLkMyU19UaWxlUGVuYWx0eVJlcXVlc3RIABI3",
-          "ChN0aWxlUGVuYWx0eVJlc3BvbnNlGEsgASgLMhguUzJDX1RpbGVQZW5hbHR5",
-          "UmVzcG9uc2VIABI/Chd0aWxlUGVuYWx0eU5vdGlmaWNhdGlvbhhMIAEoCzIc",
-          "LlMyQ19UaWxlUGVuYWx0eU5vdGlmaWNhdGlvbkgAEi8KD2RpY2VHYW1lUmVx",
-          "dWVzdBhNIAEoCzIULkMyU19EaWNlR2FtZVJlcXVlc3RIABIxChBkaWNlR2Ft",
-          "ZVJlc3BvbnNlGE4gASgLMhUuUzJDX0RpY2VHYW1lUmVzcG9uc2VIABI5ChRk",
-          "aWNlR2FtZU5vdGlmaWNhdGlvbhhPIAEoCzIZLlMyQ19EaWNlR2FtZU5vdGlm",
-          "aWNhdGlvbkgAEi0KDnR1cm5FbmRSZXF1ZXN0GFAgASgLMhMuQzJTX1R1cm5F",
-          "bmRSZXF1ZXN0SAASNwoTdHVybkVuZE5vdGlmaWNhdGlvbhhRIAEoCzIYLlMy",
-          "Q19UdXJuRW5kTm90aWZpY2F0aW9uSAASOQoUYmFja1RvVGhlUm9vbVJlcXVl",
-          "c3QYWyABKAsyGS5DMlNfQmFja1RvVGhlUm9vbVJlcXVlc3RIABI7ChViYWNr",
-          "VG9UaGVSb29tUmVzcG9uc2UYXCABKAsyGi5TMkNfQmFja1RvVGhlUm9vbVJl",
-          "c3BvbnNlSAASQwoZYmFja1RvVGhlUm9vbU5vdGlmaWNhdGlvbhhdIAEoCzIe",
-          "LlMyQ19CYWNrVG9UaGVSb29tTm90aWZpY2F0aW9uSAASOQoUc3RhcnRNaW5p",
-          "R2FtZVJlcXVlc3QYZSABKAsyGS5DMlNfU3RhcnRNaW5pR2FtZVJlcXVlc3RI",
-          "ABJKChxpY2VNaW5pR2FtZVJlYWR5Tm90aWZpY2F0aW9uGMkBIAEoCzIhLlMy",
-          "Q19JY2VNaW5pR2FtZVJlYWR5Tm90aWZpY2F0aW9uSAASOAoTaWNlR2FtZVJl",
-          "YWR5UmVxdWVzdBjKASABKAsyGC5DMlNfSWNlR2FtZVJlYWR5UmVxdWVzdEgA",
-          "EkIKGGljZUdhbWVSZWFkeU5vdGlmaWNhdGlvbhjLASABKAsyHS5TMkNfSWNl",
-          "R2FtZVJlYWR5Tm90aWZpY2F0aW9uSAASSgocaWNlTWluaUdhbWVTdGFydE5v",
-          "dGlmaWNhdGlvbhjMASABKAsyIS5TMkNfSWNlTWluaUdhbWVTdGFydE5vdGlm",
-          "aWNhdGlvbkgAEjoKFGljZVBsYXllclN5bmNSZXF1ZXN0GM0BIAEoCzIZLkMy",
-          "U19JY2VQbGF5ZXJTeW5jUmVxdWVzdEgAEkQKGWljZVBsYXllclN5bmNOb3Rp",
-          "ZmljYXRpb24YzgEgASgLMh4uUzJDX0ljZVBsYXllclN5bmNOb3RpZmljYXRp",
-          "b25IABI+ChZpY2VQbGF5ZXJEYW1hZ2VSZXF1ZXN0GM8BIAEoCzIbLkMyU19J",
-          "Y2VQbGF5ZXJEYW1hZ2VSZXF1ZXN0SAASSAobaWNlUGxheWVyRGFtYWdlTm90",
-          "aWZpY2F0aW9uGNABIAEoCzIgLlMyQ19JY2VQbGF5ZXJEYW1hZ2VOb3RpZmlj",
-          "YXRpb25IABJGChppY2VQbGF5ZXJEZWF0aE5vdGlmaWNhdGlvbhjRASABKAsy",
-          "Hy5TMkNfSWNlUGxheWVyRGVhdGhOb3RpZmljYXRpb25IABJAChdpY2VHYW1l",
-          "T3Zlck5vdGlmaWNhdGlvbhjSASABKAsyHC5TMkNfSWNlR2FtZU92ZXJOb3Rp",
-          "ZmljYXRpb25IABI+ChZpY2VNYXBTeW5jTm90aWZpY2F0aW9uGNMBIAEoCzIb",
-          "LlMyQ19JY2VNYXBTeW5jTm90aWZpY2F0aW9uSAASRAoZaWNlUGxheWVyRXhp",
-          "dE5vdGlmaWNhdGlvbhjUASABKAsyHi5TMkNfSWNlUGxheWVyRXhpdE5vdGlm",
-          "aWNhdGlvbkgAEkwKHWRyb3BNaW5pR2FtZVJlYWR5Tm90aWZpY2F0aW9uGK0C",
-          "IAEoCzIiLlMyQ19Ecm9wTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlvbkgAEjoK",
-          "FGRyb3BHYW1lUmVhZHlSZXF1ZXN0GK4CIAEoCzIZLkMyU19Ecm9wR2FtZVJl",
-          "YWR5UmVxdWVzdEgAEkQKGWRyb3BHYW1lUmVhZHlOb3RpZmljYXRpb24YrwIg",
-          "ASgLMh4uUzJDX0Ryb3BHYW1lUmVhZHlOb3RpZmljYXRpb25IABJMCh1kcm9w",
-          "TWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbhiwAiABKAsyIi5TMkNfRHJvcE1p",
-          "bmlHYW1lU3RhcnROb3RpZmljYXRpb25IABI8ChVkcm9wUGxheWVyU3luY1Jl",
-          "cXVlc3QYsQIgASgLMhouQzJTX0Ryb3BQbGF5ZXJTeW5jUmVxdWVzdEgAEkYK",
-          "GmRyb3BQbGF5ZXJTeW5jTm90aWZpY2F0aW9uGLICIAEoCzIfLlMyQ19Ecm9w",
-          "UGxheWVyU3luY05vdGlmaWNhdGlvbkgAEkgKG2Ryb3BQbGF5ZXJEZWF0aE5v",
-          "dGlmaWNhdGlvbhizAiABKAsyIC5TMkNfRHJvcFBsYXllckRlYXRoTm90aWZp",
-          "Y2F0aW9uSAASRgoaZHJvcExldmVsU3RhcnROb3RpZmljYXRpb24YtAIgASgL",
-          "Mh8uUzJDX0Ryb3BMZXZlbFN0YXJ0Tm90aWZpY2F0aW9uSAASQgoYZHJvcExl",
-          "dmVsRW5kTm90aWZpY2F0aW9uGLUCIAEoCzIdLlMyQ19Ecm9wTGV2ZWxFbmRO",
-          "b3RpZmljYXRpb25IABJCChhkcm9wR2FtZU92ZXJOb3RpZmljYXRpb24YtgIg",
-          "ASgLMh0uUzJDX0Ryb3BHYW1lT3Zlck5vdGlmaWNhdGlvbkgAQgkKB3BheWxv",
-          "YWQqOwoNUm9vbVN0YXRlVHlwZRIICgRXQUlUEAASCwoHUFJFUEFSRRABEgkK",
-          "BUJPQVJEEAISCAoETUlOSRADKrAECg5HbG9iYWxGYWlsQ29kZRIRCg1OT05F",
-          "X0ZBSUxDT0RFEAASEQoNVU5LTk9XTl9FUlJPUhABEhMKD0lOVkFMSURfUkVR",
-          "VUVTVBACEhkKFUFVVEhFTlRJQ0FUSU9OX0ZBSUxFRBADEhcKE0lEX09SX1BB",
-          "U1NXT1JEX01JU1MQZBIeChpOT1RfTUFUQ0hfUEFTU1dPUkRfQ09ORklSTRBl",
-          "EhQKEEFMUkVBRFlfRVhJU1RfSUQQZhIYChRBTFJFQURZX0xPR0dFRF9JTl9J",
-          "RBBnEhMKD1ZBTElEQUlPTl9FUlJPUhBoEhoKFkFMUkVBRFlfRVhJU1RfTklD",
-          "S05BTUUQaRITCg5VU0VSX05PVF9GT1VORBDIARIVChBBTFJFQURZX0lOX0xP",
-          "QkJZEMkBEhYKEVVTRVJfTk9UX0lOX0xPQkJZEMoBEhoKFUxPQkJZX1VTRVJf",
-          "TElTVF9FUlJPUhDLARIQCgtXUk9OR19MT0JCWRDMARITCg5ST09NX05PVF9G",
-          "T1VORBCsAhIZChRVU0VSX0FMUkVBRFlfSU5fUk9PTRCtAhIVChBVU0VSX05P",
-          "VF9JTl9ST09NEK4CEhcKEklOVkFMSURfUk9PTV9TVEFURRCvAhIXChJPV05F",
-          "Ul9DQU5OT1RfUkVBRFkQsAISEQoMUk9PTV9JU19GVUxMELECEhMKDkdBTUVf",
-          "Tk9UX0ZPVU5EEPQDEhsKFlVTRVJfSU5fR0FNRV9OT1RfRk9VTkQQ9QMqJAoF",
-          "U3RhdGUSCAoESURMRRAAEggKBE1PVkUQARIHCgNESUUQAmIGcHJvdG8z"));
+          "IAMoCzIFLlJhbmsSDwoHZW5kVGltZRgCIAEoAyLMAQohUzJDX0JvbWJNaW5p",
+          "R2FtZVJlYWR5Tm90aWZpY2F0aW9uEkAKB3BsYXllcnMYASADKAsyLy5TMkNf",
+          "Qm9tYk1pbmlHYW1lUmVhZHlOb3RpZmljYXRpb24uc3RhcnRQbGF5ZXJzGmUK",
+          "DHN0YXJ0UGxheWVycxIRCglzZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24Y",
+          "AiABKAsyBy5WZWN0b3ISEAoIcm90YXRpb24YAyABKAISFQoNYm9tYlNlc3Np",
+          "b25JZBgEIAEoCSItChhDMlNfQm9tYkdhbWVSZWFkeVJlcXVlc3QSEQoJc2Vz",
+          "c2lvbklkGAEgASgJIjIKHVMyQ19Cb21iR2FtZVJlYWR5Tm90aWZpY2F0aW9u",
+          "EhEKCXNlc3Npb25JZBgBIAEoCSIjCiFTMkNfQm9tYk1pbmlHYW1lU3RhcnRO",
+          "b3RpZmljYXRpb24icgoZQzJTX0JvbWJQbGF5ZXJTeW5jUmVxdWVzdBIRCglz",
+          "ZXNzaW9uSWQYASABKAkSGQoIcG9zaXRpb24YAiABKAsyBy5WZWN0b3ISEAoI",
+          "cm90YXRpb24YAyABKAISFQoFc3RhdGUYBCABKA4yBi5TdGF0ZSJ3Ch5TMkNf",
+          "Qm9tYlBsYXllclN5bmNOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJ",
+          "EhkKCHBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEhAKCHJvdGF0aW9uGAMgASgC",
+          "EhUKBXN0YXRlGAQgASgOMgYuU3RhdGUiSwofUzJDX0JvbWJQbGF5ZXJEZWF0",
+          "aE5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkSFQoNQm9tYlNlc3Np",
+          "b25JZBgCIAEoCSIoChNDMlNfQm9tYk1vdmVSZXF1ZXN0EhEKCVNlc3Npb25J",
+          "ZBgBIAEoCSItChhTMkNfQm9tYk1vdmVOb3RpZmljYXRpb24SEQoJU2Vzc2lv",
+          "bklkGAEgASgJIosBChxTMkNfQm9tYkdhbWVPdmVyTm90aWZpY2F0aW9uEjEK",
+          "BXJhbmtzGAEgAygLMiIuUzJDX0JvbWJHYW1lT3Zlck5vdGlmaWNhdGlvbi5S",
+          "YW5rEg8KB2VuZFRpbWUYAiABKAMaJwoEUmFuaxIRCglzZXNzaW9uSWQYASAB",
+          "KAUSDAoEcmFuaxgCIAEoBSKeKQoKR2FtZVBhY2tldBIvCg9yZWdpc3RlclJl",
+          "cXVlc3QYASABKAsyFC5DMlNfUmVnaXN0ZXJSZXF1ZXN0SAASMQoQcmVnaXN0",
+          "ZXJSZXNwb25zZRgCIAEoCzIVLlMyQ19SZWdpc3RlclJlc3BvbnNlSAASKQoM",
+          "bG9naW5SZXF1ZXN0GAMgASgLMhEuQzJTX0xvZ2luUmVxdWVzdEgAEisKDWxv",
+          "Z2luUmVzcG9uc2UYBCABKAsyEi5TMkNfTG9naW5SZXNwb25zZUgAEiwKDWxv",
+          "Z291dFJlcXVlc3QYBSABKAsyEy5DMlNfTG9nZ291dFJlcXVlc3RIABI/Chdj",
+          "bG9zZVNvY2tldE5vdGlmaWNhdGlvbhgIIAEoCzIcLlMyQ19DbG9zZVNvY2tl",
+          "dE5vdGlmaWNhdGlvbkgAEjEKEGxvYmJ5Sm9pblJlcXVlc3QYCyABKAsyFS5D",
+          "MlNfTG9iYnlKb2luUmVxdWVzdEgAEjMKEWxvYmJ5Sm9pblJlc3BvbnNlGAwg",
+          "ASgLMhYuUzJDX0xvYmJ5Sm9pblJlc3BvbnNlSAASMwoRbG9iYnlMZWF2ZVJl",
+          "cXVlc3QYDSABKAsyFi5DMlNfTG9iYnlMZWF2ZVJlcXVlc3RIABI1ChJsb2Ji",
+          "eUxlYXZlUmVzcG9uc2UYDiABKAsyFy5TMkNfTG9iYnlMZWF2ZVJlc3BvbnNl",
+          "SAASOQoUbG9iYnlVc2VyTGlzdFJlcXVlc3QYDyABKAsyGS5DMlNfTG9iYnlV",
+          "c2VyTGlzdFJlcXVlc3RIABI7ChVsb2JieVVzZXJMaXN0UmVzcG9uc2UYECAB",
+          "KAsyGi5TMkNfTG9iYnlVc2VyTGlzdFJlc3BvbnNlSAASPQoWbG9iYnlVc2Vy",
+          "RGV0YWlsUmVxdWVzdBgRIAEoCzIbLkMyU19Mb2JieVVzZXJEZXRhaWxSZXF1",
+          "ZXN0SAASPwoXbG9iYnlVc2VyRGV0YWlsUmVzcG9uc2UYEiABKAsyHC5TMkNf",
+          "TG9iYnlVc2VyRGV0YWlsUmVzcG9uc2VIABIvCg9yb29tTGlzdFJlcXVlc3QY",
+          "HyABKAsyFC5DMlNfUm9vbUxpc3RSZXF1ZXN0SAASMQoQcm9vbUxpc3RSZXNw",
+          "b25zZRggIAEoCzIVLlMyQ19Sb29tTGlzdFJlc3BvbnNlSAASMwoRY3JlYXRl",
+          "Um9vbVJlcXVlc3QYISABKAsyFi5DMlNfQ3JlYXRlUm9vbVJlcXVlc3RIABI1",
+          "ChJjcmVhdGVSb29tUmVzcG9uc2UYIiABKAsyFy5TMkNfQ3JlYXRlUm9vbVJl",
+          "c3BvbnNlSAASLwoPam9pblJvb21SZXF1ZXN0GCMgASgLMhQuQzJTX0pvaW5S",
+          "b29tUmVxdWVzdEgAEjEKEGpvaW5Sb29tUmVzcG9uc2UYJCABKAsyFS5TMkNf",
+          "Sm9pblJvb21SZXNwb25zZUgAEjkKFGpvaW5Sb29tTm90aWZpY2F0aW9uGCUg",
+          "ASgLMhkuUzJDX0pvaW5Sb29tTm90aWZpY2F0aW9uSAASMQoQbGVhdmVSb29t",
+          "UmVxdWVzdBgmIAEoCzIVLkMyU19MZWF2ZVJvb21SZXF1ZXN0SAASMwoRbGVh",
+          "dmVSb29tUmVzcG9uc2UYJyABKAsyFi5TMkNfTGVhdmVSb29tUmVzcG9uc2VI",
+          "ABI7ChVsZWF2ZVJvb21Ob3RpZmljYXRpb24YKCABKAsyGi5TMkNfTGVhdmVS",
+          "b29tTm90aWZpY2F0aW9uSAASNQoSZ2FtZVByZXBhcmVSZXF1ZXN0GCkgASgL",
+          "MhcuQzJTX0dhbWVQcmVwYXJlUmVxdWVzdEgAEjcKE2dhbWVQcmVwYXJlUmVz",
+          "cG9uc2UYKiABKAsyGC5TMkNfR2FtZVByZXBhcmVSZXNwb25zZUgAEj8KF2dh",
+          "bWVQcmVwYXJlTm90aWZpY2F0aW9uGCsgASgLMhwuUzJDX0dhbWVQcmVwYXJl",
+          "Tm90aWZpY2F0aW9uSAASMQoQZ2FtZVN0YXJ0UmVxdWVzdBgzIAEoCzIVLkMy",
+          "U19HYW1lU3RhcnRSZXF1ZXN0SAASOwoVZ2FtZVN0YXJ0Tm90aWZpY2F0aW9u",
+          "GDQgASgLMhouUzJDX0dhbWVTdGFydE5vdGlmaWNhdGlvbkgAEi8KD3JvbGxE",
+          "aWNlUmVxdWVzdBg9IAEoCzIULkMyU19Sb2xsRGljZVJlcXVlc3RIABIxChBy",
+          "b2xsRGljZVJlc3BvbnNlGD4gASgLMhUuUzJDX1JvbGxEaWNlUmVzcG9uc2VI",
+          "ABI5ChRyb2xsRGljZU5vdGlmaWNhdGlvbhg/IAEoCzIZLlMyQ19Sb2xsRGlj",
+          "ZU5vdGlmaWNhdGlvbkgAEj0KFm1vdmVQbGF5ZXJCb2FyZFJlcXVlc3QYQCAB",
+          "KAsyGy5DMlNfTW92ZVBsYXllckJvYXJkUmVxdWVzdEgAEj8KF21vdmVQbGF5",
+          "ZXJCb2FyZFJlc3BvbnNlGEEgASgLMhwuUzJDX01vdmVQbGF5ZXJCb2FyZFJl",
+          "c3BvbnNlSAASRwobbW92ZVBsYXllckJvYXJkTm90aWZpY2F0aW9uGEIgASgL",
+          "MiAuUzJDX01vdmVQbGF5ZXJCb2FyZE5vdGlmaWNhdGlvbkgAEjcKE3B1cmNo",
+          "YXNlVGlsZVJlcXVlc3QYQyABKAsyGC5DMlNfUHVyY2hhc2VUaWxlUmVxdWVz",
+          "dEgAEjkKFHB1cmNoYXNlVGlsZVJlc3BvbnNlGEQgASgLMhkuUzJDX1B1cmNo",
+          "YXNlVGlsZVJlc3BvbnNlSAASQQoYcHVyY2hhc2VUaWxlTm90aWZpY2F0aW9u",
+          "GEUgASgLMh0uUzJDX1B1cmNoYXNlVGlsZU5vdGlmaWNhdGlvbkgAEjcKE2dh",
+          "bWVFbmROb3RpZmljYXRpb24YRiABKAsyGC5TMkNfR2FtZUVuZE5vdGlmaWNh",
+          "dGlvbkgAEjsKFXB1cmNoYXNlVHJvcGh5UmVxdWVzdBhHIAEoCzIaLkMyU19Q",
+          "dXJjaGFzZVRyb3BoeVJlcXVlc3RIABI9ChZwdXJjaGFzZVRyb3BoeVJlc3Bv",
+          "bnNlGEggASgLMhsuUzJDX1B1cmNoYXNlVHJvcGh5UmVzcG9uc2VIABJFChpw",
+          "dXJjaGFzZVRyb3BoeU5vdGlmaWNhdGlvbhhJIAEoCzIfLlMyQ19QdXJjaGFz",
+          "ZVRyb3BoeU5vdGlmaWNhdGlvbkgAEjUKEnRpbGVQZW5hbHR5UmVxdWVzdBhK",
+          "IAEoCzIXLkMyU19UaWxlUGVuYWx0eVJlcXVlc3RIABI3ChN0aWxlUGVuYWx0",
+          "eVJlc3BvbnNlGEsgASgLMhguUzJDX1RpbGVQZW5hbHR5UmVzcG9uc2VIABI/",
+          "Chd0aWxlUGVuYWx0eU5vdGlmaWNhdGlvbhhMIAEoCzIcLlMyQ19UaWxlUGVu",
+          "YWx0eU5vdGlmaWNhdGlvbkgAEi8KD2RpY2VHYW1lUmVxdWVzdBhNIAEoCzIU",
+          "LkMyU19EaWNlR2FtZVJlcXVlc3RIABIxChBkaWNlR2FtZVJlc3BvbnNlGE4g",
+          "ASgLMhUuUzJDX0RpY2VHYW1lUmVzcG9uc2VIABI5ChRkaWNlR2FtZU5vdGlm",
+          "aWNhdGlvbhhPIAEoCzIZLlMyQ19EaWNlR2FtZU5vdGlmaWNhdGlvbkgAEi0K",
+          "DnR1cm5FbmRSZXF1ZXN0GFAgASgLMhMuQzJTX1R1cm5FbmRSZXF1ZXN0SAAS",
+          "NwoTdHVybkVuZE5vdGlmaWNhdGlvbhhRIAEoCzIYLlMyQ19UdXJuRW5kTm90",
+          "aWZpY2F0aW9uSAASOQoUYmFja1RvVGhlUm9vbVJlcXVlc3QYWyABKAsyGS5D",
+          "MlNfQmFja1RvVGhlUm9vbVJlcXVlc3RIABI7ChViYWNrVG9UaGVSb29tUmVz",
+          "cG9uc2UYXCABKAsyGi5TMkNfQmFja1RvVGhlUm9vbVJlc3BvbnNlSAASQwoZ",
+          "YmFja1RvVGhlUm9vbU5vdGlmaWNhdGlvbhhdIAEoCzIeLlMyQ19CYWNrVG9U",
+          "aGVSb29tTm90aWZpY2F0aW9uSAASOQoUc3RhcnRNaW5pR2FtZVJlcXVlc3QY",
+          "ZSABKAsyGS5DMlNfU3RhcnRNaW5pR2FtZVJlcXVlc3RIABJKChxpY2VNaW5p",
+          "R2FtZVJlYWR5Tm90aWZpY2F0aW9uGMkBIAEoCzIhLlMyQ19JY2VNaW5pR2Ft",
+          "ZVJlYWR5Tm90aWZpY2F0aW9uSAASOAoTaWNlR2FtZVJlYWR5UmVxdWVzdBjK",
+          "ASABKAsyGC5DMlNfSWNlR2FtZVJlYWR5UmVxdWVzdEgAEkIKGGljZUdhbWVS",
+          "ZWFkeU5vdGlmaWNhdGlvbhjLASABKAsyHS5TMkNfSWNlR2FtZVJlYWR5Tm90",
+          "aWZpY2F0aW9uSAASSgocaWNlTWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbhjM",
+          "ASABKAsyIS5TMkNfSWNlTWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbkgAEjoK",
+          "FGljZVBsYXllclN5bmNSZXF1ZXN0GM0BIAEoCzIZLkMyU19JY2VQbGF5ZXJT",
+          "eW5jUmVxdWVzdEgAEkQKGWljZVBsYXllclN5bmNOb3RpZmljYXRpb24YzgEg",
+          "ASgLMh4uUzJDX0ljZVBsYXllclN5bmNOb3RpZmljYXRpb25IABI+ChZpY2VQ",
+          "bGF5ZXJEYW1hZ2VSZXF1ZXN0GM8BIAEoCzIbLkMyU19JY2VQbGF5ZXJEYW1h",
+          "Z2VSZXF1ZXN0SAASSAobaWNlUGxheWVyRGFtYWdlTm90aWZpY2F0aW9uGNAB",
+          "IAEoCzIgLlMyQ19JY2VQbGF5ZXJEYW1hZ2VOb3RpZmljYXRpb25IABJGChpp",
+          "Y2VQbGF5ZXJEZWF0aE5vdGlmaWNhdGlvbhjRASABKAsyHy5TMkNfSWNlUGxh",
+          "eWVyRGVhdGhOb3RpZmljYXRpb25IABJAChdpY2VHYW1lT3Zlck5vdGlmaWNh",
+          "dGlvbhjSASABKAsyHC5TMkNfSWNlR2FtZU92ZXJOb3RpZmljYXRpb25IABI+",
+          "ChZpY2VNYXBTeW5jTm90aWZpY2F0aW9uGNMBIAEoCzIbLlMyQ19JY2VNYXBT",
+          "eW5jTm90aWZpY2F0aW9uSAASRAoZaWNlUGxheWVyRXhpdE5vdGlmaWNhdGlv",
+          "bhjUASABKAsyHi5TMkNfSWNlUGxheWVyRXhpdE5vdGlmaWNhdGlvbkgAEkwK",
+          "HWRyb3BNaW5pR2FtZVJlYWR5Tm90aWZpY2F0aW9uGK0CIAEoCzIiLlMyQ19E",
+          "cm9wTWluaUdhbWVSZWFkeU5vdGlmaWNhdGlvbkgAEjoKFGRyb3BHYW1lUmVh",
+          "ZHlSZXF1ZXN0GK4CIAEoCzIZLkMyU19Ecm9wR2FtZVJlYWR5UmVxdWVzdEgA",
+          "EkQKGWRyb3BHYW1lUmVhZHlOb3RpZmljYXRpb24YrwIgASgLMh4uUzJDX0Ry",
+          "b3BHYW1lUmVhZHlOb3RpZmljYXRpb25IABJMCh1kcm9wTWluaUdhbWVTdGFy",
+          "dE5vdGlmaWNhdGlvbhiwAiABKAsyIi5TMkNfRHJvcE1pbmlHYW1lU3RhcnRO",
+          "b3RpZmljYXRpb25IABI8ChVkcm9wUGxheWVyU3luY1JlcXVlc3QYsQIgASgL",
+          "MhouQzJTX0Ryb3BQbGF5ZXJTeW5jUmVxdWVzdEgAEkYKGmRyb3BQbGF5ZXJT",
+          "eW5jTm90aWZpY2F0aW9uGLICIAEoCzIfLlMyQ19Ecm9wUGxheWVyU3luY05v",
+          "dGlmaWNhdGlvbkgAEkgKG2Ryb3BQbGF5ZXJEZWF0aE5vdGlmaWNhdGlvbhiz",
+          "AiABKAsyIC5TMkNfRHJvcFBsYXllckRlYXRoTm90aWZpY2F0aW9uSAASRgoa",
+          "ZHJvcExldmVsU3RhcnROb3RpZmljYXRpb24YtAIgASgLMh8uUzJDX0Ryb3BM",
+          "ZXZlbFN0YXJ0Tm90aWZpY2F0aW9uSAASQgoYZHJvcExldmVsRW5kTm90aWZp",
+          "Y2F0aW9uGLUCIAEoCzIdLlMyQ19Ecm9wTGV2ZWxFbmROb3RpZmljYXRpb25I",
+          "ABJCChhkcm9wR2FtZU92ZXJOb3RpZmljYXRpb24YtgIgASgLMh0uUzJDX0Ry",
+          "b3BHYW1lT3Zlck5vdGlmaWNhdGlvbkgAEkwKHWJvbWJNaW5pR2FtZVJlYWR5",
+          "Tm90aWZpY2F0aW9uGPUDIAEoCzIiLlMyQ19Cb21iTWluaUdhbWVSZWFkeU5v",
+          "dGlmaWNhdGlvbkgAEjoKFGJvbWJHYW1lUmVhZHlSZXF1ZXN0GPYDIAEoCzIZ",
+          "LkMyU19Cb21iR2FtZVJlYWR5UmVxdWVzdEgAEkQKGWJvbWJHYW1lUmVhZHlO",
+          "b3RpZmljYXRpb24Y9wMgASgLMh4uUzJDX0JvbWJHYW1lUmVhZHlOb3RpZmlj",
+          "YXRpb25IABJMCh1ib21iTWluaUdhbWVTdGFydE5vdGlmaWNhdGlvbhj4AyAB",
+          "KAsyIi5TMkNfQm9tYk1pbmlHYW1lU3RhcnROb3RpZmljYXRpb25IABI8ChVi",
+          "b21iUGxheWVyU3luY1JlcXVlc3QY+QMgASgLMhouQzJTX0JvbWJQbGF5ZXJT",
+          "eW5jUmVxdWVzdEgAEkYKGmJvbWJQbGF5ZXJTeW5jTm90aWZpY2F0aW9uGPoD",
+          "IAEoCzIfLlMyQ19Cb21iUGxheWVyU3luY05vdGlmaWNhdGlvbkgAEkgKG2Jv",
+          "bWJQbGF5ZXJEZWF0aE5vdGlmaWNhdGlvbhj7AyABKAsyIC5TMkNfQm9tYlBs",
+          "YXllckRlYXRoTm90aWZpY2F0aW9uSAASMAoPYm9tYk1vdmVSZXF1ZXN0GPwD",
+          "IAEoCzIULkMyU19Cb21iTW92ZVJlcXVlc3RIABI6ChRib21iTW92ZU5vdGlm",
+          "aWNhdGlvbhj9AyABKAsyGS5TMkNfQm9tYk1vdmVOb3RpZmljYXRpb25IABJC",
+          "Chhib21iR2FtZU92ZXJOb3RpZmljYXRpb24Y/gMgASgLMh0uUzJDX0JvbWJH",
+          "YW1lT3Zlck5vdGlmaWNhdGlvbkgAQgkKB3BheWxvYWQqOwoNUm9vbVN0YXRl",
+          "VHlwZRIICgRXQUlUEAASCwoHUFJFUEFSRRABEgkKBUJPQVJEEAISCAoETUlO",
+          "SRADKrAECg5HbG9iYWxGYWlsQ29kZRIRCg1OT05FX0ZBSUxDT0RFEAASEQoN",
+          "VU5LTk9XTl9FUlJPUhABEhMKD0lOVkFMSURfUkVRVUVTVBACEhkKFUFVVEhF",
+          "TlRJQ0FUSU9OX0ZBSUxFRBADEhcKE0lEX09SX1BBU1NXT1JEX01JU1MQZBIe",
+          "ChpOT1RfTUFUQ0hfUEFTU1dPUkRfQ09ORklSTRBlEhQKEEFMUkVBRFlfRVhJ",
+          "U1RfSUQQZhIYChRBTFJFQURZX0xPR0dFRF9JTl9JRBBnEhMKD1ZBTElEQUlP",
+          "Tl9FUlJPUhBoEhoKFkFMUkVBRFlfRVhJU1RfTklDS05BTUUQaRITCg5VU0VS",
+          "X05PVF9GT1VORBDIARIVChBBTFJFQURZX0lOX0xPQkJZEMkBEhYKEVVTRVJf",
+          "Tk9UX0lOX0xPQkJZEMoBEhoKFUxPQkJZX1VTRVJfTElTVF9FUlJPUhDLARIQ",
+          "CgtXUk9OR19MT0JCWRDMARITCg5ST09NX05PVF9GT1VORBCsAhIZChRVU0VS",
+          "X0FMUkVBRFlfSU5fUk9PTRCtAhIVChBVU0VSX05PVF9JTl9ST09NEK4CEhcK",
+          "EklOVkFMSURfUk9PTV9TVEFURRCvAhIXChJPV05FUl9DQU5OT1RfUkVBRFkQ",
+          "sAISEQoMUk9PTV9JU19GVUxMELECEhMKDkdBTUVfTk9UX0ZPVU5EEPQDEhsK",
+          "FlVTRVJfSU5fR0FNRV9OT1RfRk9VTkQQ9QMqJAoFU3RhdGUSCAoESURMRRAA",
+          "EggKBE1PVkUQARIHCgNESUUQAmIGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::RoomStateType), typeof(global::GlobalFailCode), typeof(global::State), }, null, new pbr::GeneratedClrTypeInfo[] {
@@ -369,7 +404,17 @@ public static partial class ProtocolReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_DropLevelStartNotification), global::S2C_DropLevelStartNotification.Parser, null, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_DropLevelEndNotification), global::S2C_DropLevelEndNotification.Parser, new[]{ "Holes" }, null, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::S2C_DropGameOverNotification), global::S2C_DropGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::GamePacket), global::GamePacket.Parser, new[]{ "RegisterRequest", "RegisterResponse", "LoginRequest", "LoginResponse", "LogoutRequest", "CloseSocketNotification", "LobbyJoinRequest", "LobbyJoinResponse", "LobbyLeaveRequest", "LobbyLeaveResponse", "LobbyUserListRequest", "LobbyUserListResponse", "LobbyUserDetailRequest", "LobbyUserDetailResponse", "RoomListRequest", "RoomListResponse", "CreateRoomRequest", "CreateRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "JoinRoomNotification", "LeaveRoomRequest", "LeaveRoomResponse", "LeaveRoomNotification", "GamePrepareRequest", "GamePrepareResponse", "GamePrepareNotification", "GameStartRequest", "GameStartNotification", "RollDiceRequest", "RollDiceResponse", "RollDiceNotification", "MovePlayerBoardRequest", "MovePlayerBoardResponse", "MovePlayerBoardNotification", "PurchaseTileRequest", "PurchaseTileResponse", "PurchaseTileNotification", "GameEndNotification", "PurchaseTrophyRequest", "PurchaseTrophyResponse", "PurchaseTrophyNotification", "TilePenaltyRequest", "TilePenaltyResponse", "TilePenaltyNotification", "DiceGameRequest", "DiceGameResponse", "DiceGameNotification", "TurnEndRequest", "TurnEndNotification", "BackToTheRoomRequest", "BackToTheRoomResponse", "BackToTheRoomNotification", "StartMiniGameRequest", "IceMiniGameReadyNotification", "IceGameReadyRequest", "IceGameReadyNotification", "IceMiniGameStartNotification", "IcePlayerSyncRequest", "IcePlayerSyncNotification", "IcePlayerDamageRequest", "IcePlayerDamageNotification", "IcePlayerDeathNotification", "IceGameOverNotification", "IceMapSyncNotification", "IcePlayerExitNotification", "DropMiniGameReadyNotification", "DropGameReadyRequest", "DropGameReadyNotification", "DropMiniGameStartNotification", "DropPlayerSyncRequest", "DropPlayerSyncNotification", "DropPlayerDeathNotification", "DropLevelStartNotification", "DropLevelEndNotification", "DropGameOverNotification" }, new[]{ "Payload" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombMiniGameReadyNotification), global::S2C_BombMiniGameReadyNotification.Parser, new[]{ "Players" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombMiniGameReadyNotification.Types.startPlayers), global::S2C_BombMiniGameReadyNotification.Types.startPlayers.Parser, new[]{ "SessionId", "Position", "Rotation", "BombSessionId" }, null, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BombGameReadyRequest), global::C2S_BombGameReadyRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombGameReadyNotification), global::S2C_BombGameReadyNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombMiniGameStartNotification), global::S2C_BombMiniGameStartNotification.Parser, null, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BombPlayerSyncRequest), global::C2S_BombPlayerSyncRequest.Parser, new[]{ "SessionId", "Position", "Rotation", "State" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombPlayerSyncNotification), global::S2C_BombPlayerSyncNotification.Parser, new[]{ "SessionId", "Position", "Rotation", "State" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombPlayerDeathNotification), global::S2C_BombPlayerDeathNotification.Parser, new[]{ "SessionId", "BombSessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::C2S_BombMoveRequest), global::C2S_BombMoveRequest.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombMoveNotification), global::S2C_BombMoveNotification.Parser, new[]{ "SessionId" }, null, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombGameOverNotification), global::S2C_BombGameOverNotification.Parser, new[]{ "Ranks", "EndTime" }, null, null, null, new pbr::GeneratedClrTypeInfo[] { new pbr::GeneratedClrTypeInfo(typeof(global::S2C_BombGameOverNotification.Types.Rank), global::S2C_BombGameOverNotification.Types.Rank.Parser, new[]{ "SessionId", "Rank_" }, null, null, null, null)}),
+          new pbr::GeneratedClrTypeInfo(typeof(global::GamePacket), global::GamePacket.Parser, new[]{ "RegisterRequest", "RegisterResponse", "LoginRequest", "LoginResponse", "LogoutRequest", "CloseSocketNotification", "LobbyJoinRequest", "LobbyJoinResponse", "LobbyLeaveRequest", "LobbyLeaveResponse", "LobbyUserListRequest", "LobbyUserListResponse", "LobbyUserDetailRequest", "LobbyUserDetailResponse", "RoomListRequest", "RoomListResponse", "CreateRoomRequest", "CreateRoomResponse", "JoinRoomRequest", "JoinRoomResponse", "JoinRoomNotification", "LeaveRoomRequest", "LeaveRoomResponse", "LeaveRoomNotification", "GamePrepareRequest", "GamePrepareResponse", "GamePrepareNotification", "GameStartRequest", "GameStartNotification", "RollDiceRequest", "RollDiceResponse", "RollDiceNotification", "MovePlayerBoardRequest", "MovePlayerBoardResponse", "MovePlayerBoardNotification", "PurchaseTileRequest", "PurchaseTileResponse", "PurchaseTileNotification", "GameEndNotification", "PurchaseTrophyRequest", "PurchaseTrophyResponse", "PurchaseTrophyNotification", "TilePenaltyRequest", "TilePenaltyResponse", "TilePenaltyNotification", "DiceGameRequest", "DiceGameResponse", "DiceGameNotification", "TurnEndRequest", "TurnEndNotification", "BackToTheRoomRequest", "BackToTheRoomResponse", "BackToTheRoomNotification", "StartMiniGameRequest", "IceMiniGameReadyNotification", "IceGameReadyRequest", "IceGameReadyNotification", "IceMiniGameStartNotification", "IcePlayerSyncRequest", "IcePlayerSyncNotification", "IcePlayerDamageRequest", "IcePlayerDamageNotification", "IcePlayerDeathNotification", "IceGameOverNotification", "IceMapSyncNotification", "IcePlayerExitNotification", "DropMiniGameReadyNotification", "DropGameReadyRequest", "DropGameReadyNotification", "DropMiniGameStartNotification", "DropPlayerSyncRequest", "DropPlayerSyncNotification", "DropPlayerDeathNotification", "DropLevelStartNotification", "DropLevelEndNotification", "DropGameOverNotification", "BombMiniGameReadyNotification", "BombGameReadyRequest", "BombGameReadyNotification", "BombMiniGameStartNotification", "BombPlayerSyncRequest", "BombPlayerSyncNotification", "BombPlayerDeathNotification", "BombMoveRequest", "BombMoveNotification", "BombGameOverNotification" }, new[]{ "Payload" }, null, null, null)
         }));
   }
   #endregion
@@ -429,15 +474,13 @@ public enum State {
   [pbr::OriginalName("MOVE")] Move = 1,
   [pbr::OriginalName("DIE")] Die = 2,
 
-  // 임시추가
+    // 임시추가
     [pbr::OriginalName("DANCEIDLE")] DanceIdle = 10,
     [pbr::OriginalName("DANCEUP")] DanceUp,
     [pbr::OriginalName("DANCEDOWN")] DanceDown,
     [pbr::OriginalName("DANCELEFT")] DanceLeft,
     [pbr::OriginalName("DANCERIGHT")] DanceRight,
     [pbr::OriginalName("DANCESLIP")] DanceSlip,
-
-
 }
 
 #endregion
@@ -14413,6 +14456,1932 @@ public sealed partial class S2C_DropGameOverNotification : pb::IMessage<S2C_Drop
 }
 
 /// <summary>
+///Bomb
+///폭탄 미니게임 시작 알림
+/// </summary>
+public sealed partial class S2C_BombMiniGameReadyNotification : pb::IMessage<S2C_BombMiniGameReadyNotification> {
+  private static readonly pb::MessageParser<S2C_BombMiniGameReadyNotification> _parser = new pb::MessageParser<S2C_BombMiniGameReadyNotification>(() => new S2C_BombMiniGameReadyNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombMiniGameReadyNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[83]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameReadyNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameReadyNotification(S2C_BombMiniGameReadyNotification other) : this() {
+    players_ = other.players_.Clone();
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameReadyNotification Clone() {
+    return new S2C_BombMiniGameReadyNotification(this);
+  }
+
+  /// <summary>Field number for the "players" field.</summary>
+  public const int PlayersFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::S2C_BombMiniGameReadyNotification.Types.startPlayers> _repeated_players_codec
+      = pb::FieldCodec.ForMessage(10, global::S2C_BombMiniGameReadyNotification.Types.startPlayers.Parser);
+  private readonly pbc::RepeatedField<global::S2C_BombMiniGameReadyNotification.Types.startPlayers> players_ = new pbc::RepeatedField<global::S2C_BombMiniGameReadyNotification.Types.startPlayers>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::S2C_BombMiniGameReadyNotification.Types.startPlayers> Players {
+    get { return players_; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombMiniGameReadyNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombMiniGameReadyNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!players_.Equals(other.players_)) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= players_.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    players_.WriteTo(output, _repeated_players_codec);
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += players_.CalculateSize(_repeated_players_codec);
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombMiniGameReadyNotification other) {
+    if (other == null) {
+      return;
+    }
+    players_.Add(other.players_);
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          players_.AddEntriesFrom(input, _repeated_players_codec);
+          break;
+        }
+      }
+    }
+  }
+
+  #region Nested types
+  /// <summary>Container for nested types declared in the S2C_BombMiniGameReadyNotification message type.</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static partial class Types {
+    public sealed partial class startPlayers : pb::IMessage<startPlayers> {
+      private static readonly pb::MessageParser<startPlayers> _parser = new pb::MessageParser<startPlayers>(() => new startPlayers());
+      private pb::UnknownFieldSet _unknownFields;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pb::MessageParser<startPlayers> Parser { get { return _parser; } }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pbr::MessageDescriptor Descriptor {
+        get { return global::S2C_BombMiniGameReadyNotification.Descriptor.NestedTypes[0]; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      pbr::MessageDescriptor pb::IMessage.Descriptor {
+        get { return Descriptor; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public startPlayers() {
+        OnConstruction();
+      }
+
+      partial void OnConstruction();
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public startPlayers(startPlayers other) : this() {
+        sessionId_ = other.sessionId_;
+        position_ = other.position_ != null ? other.position_.Clone() : null;
+        rotation_ = other.rotation_;
+        bombSessionId_ = other.bombSessionId_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public startPlayers Clone() {
+        return new startPlayers(this);
+      }
+
+      /// <summary>Field number for the "sessionId" field.</summary>
+      public const int SessionIdFieldNumber = 1;
+      private string sessionId_ = "";
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public string SessionId {
+        get { return sessionId_; }
+        set {
+          sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+      }
+
+      /// <summary>Field number for the "position" field.</summary>
+      public const int PositionFieldNumber = 2;
+      private global::Vector position_;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public global::Vector Position {
+        get { return position_; }
+        set {
+          position_ = value;
+        }
+      }
+
+      /// <summary>Field number for the "rotation" field.</summary>
+      public const int RotationFieldNumber = 3;
+      private float rotation_;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public float Rotation {
+        get { return rotation_; }
+        set {
+          rotation_ = value;
+        }
+      }
+
+      /// <summary>Field number for the "bombSessionId" field.</summary>
+      public const int BombSessionIdFieldNumber = 4;
+      private string bombSessionId_ = "";
+      /// <summary>
+      ///최초 폭탄 소지자
+      /// </summary>
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public string BombSessionId {
+        get { return bombSessionId_; }
+        set {
+          bombSessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override bool Equals(object other) {
+        return Equals(other as startPlayers);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public bool Equals(startPlayers other) {
+        if (ReferenceEquals(other, null)) {
+          return false;
+        }
+        if (ReferenceEquals(other, this)) {
+          return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (!object.Equals(Position, other.Position)) return false;
+        if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
+        if (BombSessionId != other.BombSessionId) return false;
+        return Equals(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override int GetHashCode() {
+        int hash = 1;
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+        if (position_ != null) hash ^= Position.GetHashCode();
+        if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
+        if (BombSessionId.Length != 0) hash ^= BombSessionId.GetHashCode();
+        if (_unknownFields != null) {
+          hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override string ToString() {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void WriteTo(pb::CodedOutputStream output) {
+        if (SessionId.Length != 0) {
+          output.WriteRawTag(10);
+          output.WriteString(SessionId);
+        }
+        if (position_ != null) {
+          output.WriteRawTag(18);
+          output.WriteMessage(Position);
+        }
+        if (Rotation != 0F) {
+          output.WriteRawTag(29);
+          output.WriteFloat(Rotation);
+        }
+        if (BombSessionId.Length != 0) {
+          output.WriteRawTag(34);
+          output.WriteString(BombSessionId);
+        }
+        if (_unknownFields != null) {
+          _unknownFields.WriteTo(output);
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int CalculateSize() {
+        int size = 0;
+        if (SessionId.Length != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+        }
+        if (position_ != null) {
+          size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
+        }
+        if (Rotation != 0F) {
+          size += 1 + 4;
+        }
+        if (BombSessionId.Length != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeStringSize(BombSessionId);
+        }
+        if (_unknownFields != null) {
+          size += _unknownFields.CalculateSize();
+        }
+        return size;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(startPlayers other) {
+        if (other == null) {
+          return;
+        }
+        if (other.SessionId.Length != 0) {
+          SessionId = other.SessionId;
+        }
+        if (other.position_ != null) {
+          if (position_ == null) {
+            Position = new global::Vector();
+          }
+          Position.MergeFrom(other.Position);
+        }
+        if (other.Rotation != 0F) {
+          Rotation = other.Rotation;
+        }
+        if (other.BombSessionId.Length != 0) {
+          BombSessionId = other.BombSessionId;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(pb::CodedInputStream input) {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0) {
+          switch(tag) {
+            default:
+              _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+              break;
+            case 10: {
+              SessionId = input.ReadString();
+              break;
+            }
+            case 18: {
+              if (position_ == null) {
+                Position = new global::Vector();
+              }
+              input.ReadMessage(Position);
+              break;
+            }
+            case 29: {
+              Rotation = input.ReadFloat();
+              break;
+            }
+            case 34: {
+              BombSessionId = input.ReadString();
+              break;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+  #endregion
+
+}
+
+/// <summary>
+///폭탄 미니게임 준비 완료
+/// </summary>
+public sealed partial class C2S_BombGameReadyRequest : pb::IMessage<C2S_BombGameReadyRequest> {
+  private static readonly pb::MessageParser<C2S_BombGameReadyRequest> _parser = new pb::MessageParser<C2S_BombGameReadyRequest>(() => new C2S_BombGameReadyRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<C2S_BombGameReadyRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[84]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombGameReadyRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombGameReadyRequest(C2S_BombGameReadyRequest other) : this() {
+    sessionId_ = other.sessionId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombGameReadyRequest Clone() {
+    return new C2S_BombGameReadyRequest(this);
+  }
+
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  /// <summary>
+  /// 준비 완료한 플레이어 아이디
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as C2S_BombGameReadyRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(C2S_BombGameReadyRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(C2S_BombGameReadyRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///폭탄 미니게임 준비 완료 알림
+/// </summary>
+public sealed partial class S2C_BombGameReadyNotification : pb::IMessage<S2C_BombGameReadyNotification> {
+  private static readonly pb::MessageParser<S2C_BombGameReadyNotification> _parser = new pb::MessageParser<S2C_BombGameReadyNotification>(() => new S2C_BombGameReadyNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombGameReadyNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[85]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameReadyNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameReadyNotification(S2C_BombGameReadyNotification other) : this() {
+    sessionId_ = other.sessionId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameReadyNotification Clone() {
+    return new S2C_BombGameReadyNotification(this);
+  }
+
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  /// <summary>
+  /// 준비 완료한 인원 공유
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombGameReadyNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombGameReadyNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombGameReadyNotification other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///폭탄 게임 시작 알림
+/// </summary>
+public sealed partial class S2C_BombMiniGameStartNotification : pb::IMessage<S2C_BombMiniGameStartNotification> {
+  private static readonly pb::MessageParser<S2C_BombMiniGameStartNotification> _parser = new pb::MessageParser<S2C_BombMiniGameStartNotification>(() => new S2C_BombMiniGameStartNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombMiniGameStartNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[86]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameStartNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameStartNotification(S2C_BombMiniGameStartNotification other) : this() {
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMiniGameStartNotification Clone() {
+    return new S2C_BombMiniGameStartNotification(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombMiniGameStartNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombMiniGameStartNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombMiniGameStartNotification other) {
+    if (other == null) {
+      return;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///플레이어 이동
+/// 빙판과 같은 형태
+/// </summary>
+public sealed partial class C2S_BombPlayerSyncRequest : pb::IMessage<C2S_BombPlayerSyncRequest> {
+  private static readonly pb::MessageParser<C2S_BombPlayerSyncRequest> _parser = new pb::MessageParser<C2S_BombPlayerSyncRequest>(() => new C2S_BombPlayerSyncRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<C2S_BombPlayerSyncRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[87]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombPlayerSyncRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombPlayerSyncRequest(C2S_BombPlayerSyncRequest other) : this() {
+    sessionId_ = other.sessionId_;
+    position_ = other.position_ != null ? other.position_.Clone() : null;
+    rotation_ = other.rotation_;
+    state_ = other.state_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombPlayerSyncRequest Clone() {
+    return new C2S_BombPlayerSyncRequest(this);
+  }
+
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "position" field.</summary>
+  public const int PositionFieldNumber = 2;
+  private global::Vector position_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::Vector Position {
+    get { return position_; }
+    set {
+      position_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rotation" field.</summary>
+  public const int RotationFieldNumber = 3;
+  private float rotation_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float Rotation {
+    get { return rotation_; }
+    set {
+      rotation_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "state" field.</summary>
+  public const int StateFieldNumber = 4;
+  private global::State state_ = global::State.Idle;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::State State {
+    get { return state_; }
+    set {
+      state_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as C2S_BombPlayerSyncRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(C2S_BombPlayerSyncRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    if (!object.Equals(Position, other.Position)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
+    if (State != other.State) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (position_ != null) hash ^= Position.GetHashCode();
+    if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
+    if (State != global::State.Idle) hash ^= State.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (position_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Position);
+    }
+    if (Rotation != 0F) {
+      output.WriteRawTag(29);
+      output.WriteFloat(Rotation);
+    }
+    if (State != global::State.Idle) {
+      output.WriteRawTag(32);
+      output.WriteEnum((int) State);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (position_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
+    }
+    if (Rotation != 0F) {
+      size += 1 + 4;
+    }
+    if (State != global::State.Idle) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) State);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(C2S_BombPlayerSyncRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    if (other.position_ != null) {
+      if (position_ == null) {
+        Position = new global::Vector();
+      }
+      Position.MergeFrom(other.Position);
+    }
+    if (other.Rotation != 0F) {
+      Rotation = other.Rotation;
+    }
+    if (other.State != global::State.Idle) {
+      State = other.State;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+        case 18: {
+          if (position_ == null) {
+            Position = new global::Vector();
+          }
+          input.ReadMessage(Position);
+          break;
+        }
+        case 29: {
+          Rotation = input.ReadFloat();
+          break;
+        }
+        case 32: {
+          State = (global::State) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///상태 동기화
+/// 빙판과 같은 형태
+/// </summary>
+public sealed partial class S2C_BombPlayerSyncNotification : pb::IMessage<S2C_BombPlayerSyncNotification> {
+  private static readonly pb::MessageParser<S2C_BombPlayerSyncNotification> _parser = new pb::MessageParser<S2C_BombPlayerSyncNotification>(() => new S2C_BombPlayerSyncNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombPlayerSyncNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[88]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerSyncNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerSyncNotification(S2C_BombPlayerSyncNotification other) : this() {
+    sessionId_ = other.sessionId_;
+    position_ = other.position_ != null ? other.position_.Clone() : null;
+    rotation_ = other.rotation_;
+    state_ = other.state_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerSyncNotification Clone() {
+    return new S2C_BombPlayerSyncNotification(this);
+  }
+
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "position" field.</summary>
+  public const int PositionFieldNumber = 2;
+  private global::Vector position_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::Vector Position {
+    get { return position_; }
+    set {
+      position_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rotation" field.</summary>
+  public const int RotationFieldNumber = 3;
+  private float rotation_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float Rotation {
+    get { return rotation_; }
+    set {
+      rotation_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "state" field.</summary>
+  public const int StateFieldNumber = 4;
+  private global::State state_ = global::State.Idle;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::State State {
+    get { return state_; }
+    set {
+      state_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombPlayerSyncNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombPlayerSyncNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    if (!object.Equals(Position, other.Position)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Rotation, other.Rotation)) return false;
+    if (State != other.State) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (position_ != null) hash ^= Position.GetHashCode();
+    if (Rotation != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Rotation);
+    if (State != global::State.Idle) hash ^= State.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (position_ != null) {
+      output.WriteRawTag(18);
+      output.WriteMessage(Position);
+    }
+    if (Rotation != 0F) {
+      output.WriteRawTag(29);
+      output.WriteFloat(Rotation);
+    }
+    if (State != global::State.Idle) {
+      output.WriteRawTag(32);
+      output.WriteEnum((int) State);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (position_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Position);
+    }
+    if (Rotation != 0F) {
+      size += 1 + 4;
+    }
+    if (State != global::State.Idle) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) State);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombPlayerSyncNotification other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    if (other.position_ != null) {
+      if (position_ == null) {
+        Position = new global::Vector();
+      }
+      Position.MergeFrom(other.Position);
+    }
+    if (other.Rotation != 0F) {
+      Rotation = other.Rotation;
+    }
+    if (other.State != global::State.Idle) {
+      State = other.State;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+        case 18: {
+          if (position_ == null) {
+            Position = new global::Vector();
+          }
+          input.ReadMessage(Position);
+          break;
+        }
+        case 29: {
+          Rotation = input.ReadFloat();
+          break;
+        }
+        case 32: {
+          State = (global::State) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///폭탄 터짐
+/// </summary>
+public sealed partial class S2C_BombPlayerDeathNotification : pb::IMessage<S2C_BombPlayerDeathNotification> {
+  private static readonly pb::MessageParser<S2C_BombPlayerDeathNotification> _parser = new pb::MessageParser<S2C_BombPlayerDeathNotification>(() => new S2C_BombPlayerDeathNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombPlayerDeathNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[89]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerDeathNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerDeathNotification(S2C_BombPlayerDeathNotification other) : this() {
+    sessionId_ = other.sessionId_;
+    bombSessionId_ = other.bombSessionId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombPlayerDeathNotification Clone() {
+    return new S2C_BombPlayerDeathNotification(this);
+  }
+
+  /// <summary>Field number for the "sessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  /// <summary>
+  /// 터질 때 들고있던 유저
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "BombSessionId" field.</summary>
+  public const int BombSessionIdFieldNumber = 2;
+  private string bombSessionId_ = "";
+  /// <summary>
+  /// 새로운 폭탄 유저
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string BombSessionId {
+    get { return bombSessionId_; }
+    set {
+      bombSessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombPlayerDeathNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombPlayerDeathNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    if (BombSessionId != other.BombSessionId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (BombSessionId.Length != 0) hash ^= BombSessionId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (BombSessionId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(BombSessionId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (BombSessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(BombSessionId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombPlayerDeathNotification other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    if (other.BombSessionId.Length != 0) {
+      BombSessionId = other.BombSessionId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+        case 18: {
+          BombSessionId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///폭탄 건넴 
+/// </summary>
+public sealed partial class C2S_BombMoveRequest : pb::IMessage<C2S_BombMoveRequest> {
+  private static readonly pb::MessageParser<C2S_BombMoveRequest> _parser = new pb::MessageParser<C2S_BombMoveRequest>(() => new C2S_BombMoveRequest());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<C2S_BombMoveRequest> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[90]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombMoveRequest() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombMoveRequest(C2S_BombMoveRequest other) : this() {
+    sessionId_ = other.sessionId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public C2S_BombMoveRequest Clone() {
+    return new C2S_BombMoveRequest(this);
+  }
+
+  /// <summary>Field number for the "SessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  /// <summary>
+  /// 폭탄 받는 유저 
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as C2S_BombMoveRequest);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(C2S_BombMoveRequest other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(C2S_BombMoveRequest other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+public sealed partial class S2C_BombMoveNotification : pb::IMessage<S2C_BombMoveNotification> {
+  private static readonly pb::MessageParser<S2C_BombMoveNotification> _parser = new pb::MessageParser<S2C_BombMoveNotification>(() => new S2C_BombMoveNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombMoveNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[91]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMoveNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMoveNotification(S2C_BombMoveNotification other) : this() {
+    sessionId_ = other.sessionId_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombMoveNotification Clone() {
+    return new S2C_BombMoveNotification(this);
+  }
+
+  /// <summary>Field number for the "SessionId" field.</summary>
+  public const int SessionIdFieldNumber = 1;
+  private string sessionId_ = "";
+  /// <summary>
+  /// 폭탄 받는 유저 
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string SessionId {
+    get { return sessionId_; }
+    set {
+      sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombMoveNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombMoveNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (SessionId != other.SessionId) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (SessionId.Length != 0) {
+      output.WriteRawTag(10);
+      output.WriteString(SessionId);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (SessionId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombMoveNotification other) {
+    if (other == null) {
+      return;
+    }
+    if (other.SessionId.Length != 0) {
+      SessionId = other.SessionId;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          SessionId = input.ReadString();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
+/// <summary>
+///END. 게임 종료 알림
+/// </summary>
+public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_BombGameOverNotification> {
+  private static readonly pb::MessageParser<S2C_BombGameOverNotification> _parser = new pb::MessageParser<S2C_BombGameOverNotification>(() => new S2C_BombGameOverNotification());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<S2C_BombGameOverNotification> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[92]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameOverNotification() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameOverNotification(S2C_BombGameOverNotification other) : this() {
+    ranks_ = other.ranks_.Clone();
+    endTime_ = other.endTime_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public S2C_BombGameOverNotification Clone() {
+    return new S2C_BombGameOverNotification(this);
+  }
+
+  /// <summary>Field number for the "ranks" field.</summary>
+  public const int RanksFieldNumber = 1;
+  private static readonly pb::FieldCodec<global::S2C_BombGameOverNotification.Types.Rank> _repeated_ranks_codec
+      = pb::FieldCodec.ForMessage(10, global::S2C_BombGameOverNotification.Types.Rank.Parser);
+  private readonly pbc::RepeatedField<global::S2C_BombGameOverNotification.Types.Rank> ranks_ = new pbc::RepeatedField<global::S2C_BombGameOverNotification.Types.Rank>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::S2C_BombGameOverNotification.Types.Rank> Ranks {
+    get { return ranks_; }
+  }
+
+  /// <summary>Field number for the "endTime" field.</summary>
+  public const int EndTimeFieldNumber = 2;
+  private long endTime_;
+  /// <summary>
+  /// 일단 ice랑 똑같이 +6초 해서?
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public long EndTime {
+    get { return endTime_; }
+    set {
+      endTime_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as S2C_BombGameOverNotification);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(S2C_BombGameOverNotification other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if(!ranks_.Equals(other.ranks_)) return false;
+    if (EndTime != other.EndTime) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    hash ^= ranks_.GetHashCode();
+    if (EndTime != 0L) hash ^= EndTime.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    ranks_.WriteTo(output, _repeated_ranks_codec);
+    if (EndTime != 0L) {
+      output.WriteRawTag(16);
+      output.WriteInt64(EndTime);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    size += ranks_.CalculateSize(_repeated_ranks_codec);
+    if (EndTime != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(EndTime);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(S2C_BombGameOverNotification other) {
+    if (other == null) {
+      return;
+    }
+    ranks_.Add(other.ranks_);
+    if (other.EndTime != 0L) {
+      EndTime = other.EndTime;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 10: {
+          ranks_.AddEntriesFrom(input, _repeated_ranks_codec);
+          break;
+        }
+        case 16: {
+          EndTime = input.ReadInt64();
+          break;
+        }
+      }
+    }
+  }
+
+  #region Nested types
+  /// <summary>Container for nested types declared in the S2C_BombGameOverNotification message type.</summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static partial class Types {
+    public sealed partial class Rank : pb::IMessage<Rank> {
+      private static readonly pb::MessageParser<Rank> _parser = new pb::MessageParser<Rank>(() => new Rank());
+      private pb::UnknownFieldSet _unknownFields;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pb::MessageParser<Rank> Parser { get { return _parser; } }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public static pbr::MessageDescriptor Descriptor {
+        get { return global::S2C_BombGameOverNotification.Descriptor.NestedTypes[0]; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      pbr::MessageDescriptor pb::IMessage.Descriptor {
+        get { return Descriptor; }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank() {
+        OnConstruction();
+      }
+
+      partial void OnConstruction();
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank(Rank other) : this() {
+        sessionId_ = other.sessionId_;
+        rank_ = other.rank_;
+        _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public Rank Clone() {
+        return new Rank(this);
+      }
+
+      /// <summary>Field number for the "sessionId" field.</summary>
+      public const int SessionIdFieldNumber = 1;
+      private int sessionId_;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int SessionId {
+        get { return sessionId_; }
+        set {
+          sessionId_ = value;
+        }
+      }
+
+      /// <summary>Field number for the "rank" field.</summary>
+      public const int Rank_FieldNumber = 2;
+      private int rank_;
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int Rank_ {
+        get { return rank_; }
+        set {
+          rank_ = value;
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override bool Equals(object other) {
+        return Equals(other as Rank);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public bool Equals(Rank other) {
+        if (ReferenceEquals(other, null)) {
+          return false;
+        }
+        if (ReferenceEquals(other, this)) {
+          return true;
+        }
+        if (SessionId != other.SessionId) return false;
+        if (Rank_ != other.Rank_) return false;
+        return Equals(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override int GetHashCode() {
+        int hash = 1;
+        if (SessionId != 0) hash ^= SessionId.GetHashCode();
+        if (Rank_ != 0) hash ^= Rank_.GetHashCode();
+        if (_unknownFields != null) {
+          hash ^= _unknownFields.GetHashCode();
+        }
+        return hash;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public override string ToString() {
+        return pb::JsonFormatter.ToDiagnosticString(this);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void WriteTo(pb::CodedOutputStream output) {
+        if (SessionId != 0) {
+          output.WriteRawTag(8);
+          output.WriteInt32(SessionId);
+        }
+        if (Rank_ != 0) {
+          output.WriteRawTag(16);
+          output.WriteInt32(Rank_);
+        }
+        if (_unknownFields != null) {
+          _unknownFields.WriteTo(output);
+        }
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public int CalculateSize() {
+        int size = 0;
+        if (SessionId != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeInt32Size(SessionId);
+        }
+        if (Rank_ != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank_);
+        }
+        if (_unknownFields != null) {
+          size += _unknownFields.CalculateSize();
+        }
+        return size;
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(Rank other) {
+        if (other == null) {
+          return;
+        }
+        if (other.SessionId != 0) {
+          SessionId = other.SessionId;
+        }
+        if (other.Rank_ != 0) {
+          Rank_ = other.Rank_;
+        }
+        _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+      }
+
+      [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+      public void MergeFrom(pb::CodedInputStream input) {
+        uint tag;
+        while ((tag = input.ReadTag()) != 0) {
+          switch(tag) {
+            default:
+              _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+              break;
+            case 8: {
+              SessionId = input.ReadInt32();
+              break;
+            }
+            case 16: {
+              Rank_ = input.ReadInt32();
+              break;
+            }
+          }
+        }
+      }
+
+    }
+
+  }
+  #endregion
+
+}
+
+/// <summary>
 /// 게임패킷
 /// </summary>
 public sealed partial class GamePacket : pb::IMessage<GamePacket> {
@@ -14423,7 +16392,7 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ProtocolReflection.Descriptor.MessageTypes[83]; }
+    get { return global::ProtocolReflection.Descriptor.MessageTypes[93]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -14668,6 +16637,36 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
         break;
       case PayloadOneofCase.DropGameOverNotification:
         DropGameOverNotification = other.DropGameOverNotification.Clone();
+        break;
+      case PayloadOneofCase.BombMiniGameReadyNotification:
+        BombMiniGameReadyNotification = other.BombMiniGameReadyNotification.Clone();
+        break;
+      case PayloadOneofCase.BombGameReadyRequest:
+        BombGameReadyRequest = other.BombGameReadyRequest.Clone();
+        break;
+      case PayloadOneofCase.BombGameReadyNotification:
+        BombGameReadyNotification = other.BombGameReadyNotification.Clone();
+        break;
+      case PayloadOneofCase.BombMiniGameStartNotification:
+        BombMiniGameStartNotification = other.BombMiniGameStartNotification.Clone();
+        break;
+      case PayloadOneofCase.BombPlayerSyncRequest:
+        BombPlayerSyncRequest = other.BombPlayerSyncRequest.Clone();
+        break;
+      case PayloadOneofCase.BombPlayerSyncNotification:
+        BombPlayerSyncNotification = other.BombPlayerSyncNotification.Clone();
+        break;
+      case PayloadOneofCase.BombPlayerDeathNotification:
+        BombPlayerDeathNotification = other.BombPlayerDeathNotification.Clone();
+        break;
+      case PayloadOneofCase.BombMoveRequest:
+        BombMoveRequest = other.BombMoveRequest.Clone();
+        break;
+      case PayloadOneofCase.BombMoveNotification:
+        BombMoveNotification = other.BombMoveNotification.Clone();
+        break;
+      case PayloadOneofCase.BombGameOverNotification:
+        BombGameOverNotification = other.BombGameOverNotification.Clone();
         break;
     }
 
@@ -15542,6 +17541,119 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
     }
   }
 
+  /// <summary>Field number for the "bombMiniGameReadyNotification" field.</summary>
+  public const int BombMiniGameReadyNotificationFieldNumber = 501;
+  /// <summary>
+  ///Bomb (501)
+  /// </summary>
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombMiniGameReadyNotification BombMiniGameReadyNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombMiniGameReadyNotification ? (global::S2C_BombMiniGameReadyNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombMiniGameReadyNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombGameReadyRequest" field.</summary>
+  public const int BombGameReadyRequestFieldNumber = 502;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::C2S_BombGameReadyRequest BombGameReadyRequest {
+    get { return payloadCase_ == PayloadOneofCase.BombGameReadyRequest ? (global::C2S_BombGameReadyRequest) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombGameReadyRequest;
+    }
+  }
+
+  /// <summary>Field number for the "bombGameReadyNotification" field.</summary>
+  public const int BombGameReadyNotificationFieldNumber = 503;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombGameReadyNotification BombGameReadyNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombGameReadyNotification ? (global::S2C_BombGameReadyNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombGameReadyNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombMiniGameStartNotification" field.</summary>
+  public const int BombMiniGameStartNotificationFieldNumber = 504;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombMiniGameStartNotification BombMiniGameStartNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombMiniGameStartNotification ? (global::S2C_BombMiniGameStartNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombMiniGameStartNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombPlayerSyncRequest" field.</summary>
+  public const int BombPlayerSyncRequestFieldNumber = 505;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::C2S_BombPlayerSyncRequest BombPlayerSyncRequest {
+    get { return payloadCase_ == PayloadOneofCase.BombPlayerSyncRequest ? (global::C2S_BombPlayerSyncRequest) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombPlayerSyncRequest;
+    }
+  }
+
+  /// <summary>Field number for the "bombPlayerSyncNotification" field.</summary>
+  public const int BombPlayerSyncNotificationFieldNumber = 506;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombPlayerSyncNotification BombPlayerSyncNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombPlayerSyncNotification ? (global::S2C_BombPlayerSyncNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombPlayerSyncNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombPlayerDeathNotification" field.</summary>
+  public const int BombPlayerDeathNotificationFieldNumber = 507;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombPlayerDeathNotification BombPlayerDeathNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombPlayerDeathNotification ? (global::S2C_BombPlayerDeathNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombPlayerDeathNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombMoveRequest" field.</summary>
+  public const int BombMoveRequestFieldNumber = 508;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::C2S_BombMoveRequest BombMoveRequest {
+    get { return payloadCase_ == PayloadOneofCase.BombMoveRequest ? (global::C2S_BombMoveRequest) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombMoveRequest;
+    }
+  }
+
+  /// <summary>Field number for the "bombMoveNotification" field.</summary>
+  public const int BombMoveNotificationFieldNumber = 509;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombMoveNotification BombMoveNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombMoveNotification ? (global::S2C_BombMoveNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombMoveNotification;
+    }
+  }
+
+  /// <summary>Field number for the "bombGameOverNotification" field.</summary>
+  public const int BombGameOverNotificationFieldNumber = 510;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::S2C_BombGameOverNotification BombGameOverNotification {
+    get { return payloadCase_ == PayloadOneofCase.BombGameOverNotification ? (global::S2C_BombGameOverNotification) payload_ : null; }
+    set {
+      payload_ = value;
+      payloadCase_ = value == null ? PayloadOneofCase.None : PayloadOneofCase.BombGameOverNotification;
+    }
+  }
+
   private object payload_;
   /// <summary>Enum of possible cases for the "payload" oneof.</summary>
   public enum PayloadOneofCase {
@@ -15622,6 +17734,16 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
     DropLevelStartNotification = 308,
     DropLevelEndNotification = 309,
     DropGameOverNotification = 310,
+    BombMiniGameReadyNotification = 501,
+    BombGameReadyRequest = 502,
+    BombGameReadyNotification = 503,
+    BombMiniGameStartNotification = 504,
+    BombPlayerSyncRequest = 505,
+    BombPlayerSyncNotification = 506,
+    BombPlayerDeathNotification = 507,
+    BombMoveRequest = 508,
+    BombMoveNotification = 509,
+    BombGameOverNotification = 510,
   }
   private PayloadOneofCase payloadCase_ = PayloadOneofCase.None;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -15724,6 +17846,16 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
     if (!object.Equals(DropLevelStartNotification, other.DropLevelStartNotification)) return false;
     if (!object.Equals(DropLevelEndNotification, other.DropLevelEndNotification)) return false;
     if (!object.Equals(DropGameOverNotification, other.DropGameOverNotification)) return false;
+    if (!object.Equals(BombMiniGameReadyNotification, other.BombMiniGameReadyNotification)) return false;
+    if (!object.Equals(BombGameReadyRequest, other.BombGameReadyRequest)) return false;
+    if (!object.Equals(BombGameReadyNotification, other.BombGameReadyNotification)) return false;
+    if (!object.Equals(BombMiniGameStartNotification, other.BombMiniGameStartNotification)) return false;
+    if (!object.Equals(BombPlayerSyncRequest, other.BombPlayerSyncRequest)) return false;
+    if (!object.Equals(BombPlayerSyncNotification, other.BombPlayerSyncNotification)) return false;
+    if (!object.Equals(BombPlayerDeathNotification, other.BombPlayerDeathNotification)) return false;
+    if (!object.Equals(BombMoveRequest, other.BombMoveRequest)) return false;
+    if (!object.Equals(BombMoveNotification, other.BombMoveNotification)) return false;
+    if (!object.Equals(BombGameOverNotification, other.BombGameOverNotification)) return false;
     if (PayloadCase != other.PayloadCase) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -15807,6 +17939,16 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
     if (payloadCase_ == PayloadOneofCase.DropLevelStartNotification) hash ^= DropLevelStartNotification.GetHashCode();
     if (payloadCase_ == PayloadOneofCase.DropLevelEndNotification) hash ^= DropLevelEndNotification.GetHashCode();
     if (payloadCase_ == PayloadOneofCase.DropGameOverNotification) hash ^= DropGameOverNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameReadyNotification) hash ^= BombMiniGameReadyNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyRequest) hash ^= BombGameReadyRequest.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyNotification) hash ^= BombGameReadyNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameStartNotification) hash ^= BombMiniGameStartNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncRequest) hash ^= BombPlayerSyncRequest.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncNotification) hash ^= BombPlayerSyncNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombPlayerDeathNotification) hash ^= BombPlayerDeathNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombMoveRequest) hash ^= BombMoveRequest.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombMoveNotification) hash ^= BombMoveNotification.GetHashCode();
+    if (payloadCase_ == PayloadOneofCase.BombGameOverNotification) hash ^= BombGameOverNotification.GetHashCode();
     hash ^= (int) payloadCase_;
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -16125,6 +18267,46 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
       output.WriteRawTag(178, 19);
       output.WriteMessage(DropGameOverNotification);
     }
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameReadyNotification) {
+      output.WriteRawTag(170, 31);
+      output.WriteMessage(BombMiniGameReadyNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyRequest) {
+      output.WriteRawTag(178, 31);
+      output.WriteMessage(BombGameReadyRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyNotification) {
+      output.WriteRawTag(186, 31);
+      output.WriteMessage(BombGameReadyNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameStartNotification) {
+      output.WriteRawTag(194, 31);
+      output.WriteMessage(BombMiniGameStartNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncRequest) {
+      output.WriteRawTag(202, 31);
+      output.WriteMessage(BombPlayerSyncRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncNotification) {
+      output.WriteRawTag(210, 31);
+      output.WriteMessage(BombPlayerSyncNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerDeathNotification) {
+      output.WriteRawTag(218, 31);
+      output.WriteMessage(BombPlayerDeathNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMoveRequest) {
+      output.WriteRawTag(226, 31);
+      output.WriteMessage(BombMoveRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMoveNotification) {
+      output.WriteRawTag(234, 31);
+      output.WriteMessage(BombMoveNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameOverNotification) {
+      output.WriteRawTag(242, 31);
+      output.WriteMessage(BombGameOverNotification);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -16360,6 +18542,36 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
     }
     if (payloadCase_ == PayloadOneofCase.DropGameOverNotification) {
       size += 2 + pb::CodedOutputStream.ComputeMessageSize(DropGameOverNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameReadyNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombMiniGameReadyNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyRequest) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombGameReadyRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameReadyNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombGameReadyNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMiniGameStartNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombMiniGameStartNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncRequest) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombPlayerSyncRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerSyncNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombPlayerSyncNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombPlayerDeathNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombPlayerDeathNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMoveRequest) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombMoveRequest);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombMoveNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombMoveNotification);
+    }
+    if (payloadCase_ == PayloadOneofCase.BombGameOverNotification) {
+      size += 2 + pb::CodedOutputStream.ComputeMessageSize(BombGameOverNotification);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -16828,6 +19040,66 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
           DropGameOverNotification = new global::S2C_DropGameOverNotification();
         }
         DropGameOverNotification.MergeFrom(other.DropGameOverNotification);
+        break;
+      case PayloadOneofCase.BombMiniGameReadyNotification:
+        if (BombMiniGameReadyNotification == null) {
+          BombMiniGameReadyNotification = new global::S2C_BombMiniGameReadyNotification();
+        }
+        BombMiniGameReadyNotification.MergeFrom(other.BombMiniGameReadyNotification);
+        break;
+      case PayloadOneofCase.BombGameReadyRequest:
+        if (BombGameReadyRequest == null) {
+          BombGameReadyRequest = new global::C2S_BombGameReadyRequest();
+        }
+        BombGameReadyRequest.MergeFrom(other.BombGameReadyRequest);
+        break;
+      case PayloadOneofCase.BombGameReadyNotification:
+        if (BombGameReadyNotification == null) {
+          BombGameReadyNotification = new global::S2C_BombGameReadyNotification();
+        }
+        BombGameReadyNotification.MergeFrom(other.BombGameReadyNotification);
+        break;
+      case PayloadOneofCase.BombMiniGameStartNotification:
+        if (BombMiniGameStartNotification == null) {
+          BombMiniGameStartNotification = new global::S2C_BombMiniGameStartNotification();
+        }
+        BombMiniGameStartNotification.MergeFrom(other.BombMiniGameStartNotification);
+        break;
+      case PayloadOneofCase.BombPlayerSyncRequest:
+        if (BombPlayerSyncRequest == null) {
+          BombPlayerSyncRequest = new global::C2S_BombPlayerSyncRequest();
+        }
+        BombPlayerSyncRequest.MergeFrom(other.BombPlayerSyncRequest);
+        break;
+      case PayloadOneofCase.BombPlayerSyncNotification:
+        if (BombPlayerSyncNotification == null) {
+          BombPlayerSyncNotification = new global::S2C_BombPlayerSyncNotification();
+        }
+        BombPlayerSyncNotification.MergeFrom(other.BombPlayerSyncNotification);
+        break;
+      case PayloadOneofCase.BombPlayerDeathNotification:
+        if (BombPlayerDeathNotification == null) {
+          BombPlayerDeathNotification = new global::S2C_BombPlayerDeathNotification();
+        }
+        BombPlayerDeathNotification.MergeFrom(other.BombPlayerDeathNotification);
+        break;
+      case PayloadOneofCase.BombMoveRequest:
+        if (BombMoveRequest == null) {
+          BombMoveRequest = new global::C2S_BombMoveRequest();
+        }
+        BombMoveRequest.MergeFrom(other.BombMoveRequest);
+        break;
+      case PayloadOneofCase.BombMoveNotification:
+        if (BombMoveNotification == null) {
+          BombMoveNotification = new global::S2C_BombMoveNotification();
+        }
+        BombMoveNotification.MergeFrom(other.BombMoveNotification);
+        break;
+      case PayloadOneofCase.BombGameOverNotification:
+        if (BombGameOverNotification == null) {
+          BombGameOverNotification = new global::S2C_BombGameOverNotification();
+        }
+        BombGameOverNotification.MergeFrom(other.BombGameOverNotification);
         break;
     }
 
@@ -17524,6 +19796,96 @@ public sealed partial class GamePacket : pb::IMessage<GamePacket> {
           }
           input.ReadMessage(subBuilder);
           DropGameOverNotification = subBuilder;
+          break;
+        }
+        case 4010: {
+          global::S2C_BombMiniGameReadyNotification subBuilder = new global::S2C_BombMiniGameReadyNotification();
+          if (payloadCase_ == PayloadOneofCase.BombMiniGameReadyNotification) {
+            subBuilder.MergeFrom(BombMiniGameReadyNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombMiniGameReadyNotification = subBuilder;
+          break;
+        }
+        case 4018: {
+          global::C2S_BombGameReadyRequest subBuilder = new global::C2S_BombGameReadyRequest();
+          if (payloadCase_ == PayloadOneofCase.BombGameReadyRequest) {
+            subBuilder.MergeFrom(BombGameReadyRequest);
+          }
+          input.ReadMessage(subBuilder);
+          BombGameReadyRequest = subBuilder;
+          break;
+        }
+        case 4026: {
+          global::S2C_BombGameReadyNotification subBuilder = new global::S2C_BombGameReadyNotification();
+          if (payloadCase_ == PayloadOneofCase.BombGameReadyNotification) {
+            subBuilder.MergeFrom(BombGameReadyNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombGameReadyNotification = subBuilder;
+          break;
+        }
+        case 4034: {
+          global::S2C_BombMiniGameStartNotification subBuilder = new global::S2C_BombMiniGameStartNotification();
+          if (payloadCase_ == PayloadOneofCase.BombMiniGameStartNotification) {
+            subBuilder.MergeFrom(BombMiniGameStartNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombMiniGameStartNotification = subBuilder;
+          break;
+        }
+        case 4042: {
+          global::C2S_BombPlayerSyncRequest subBuilder = new global::C2S_BombPlayerSyncRequest();
+          if (payloadCase_ == PayloadOneofCase.BombPlayerSyncRequest) {
+            subBuilder.MergeFrom(BombPlayerSyncRequest);
+          }
+          input.ReadMessage(subBuilder);
+          BombPlayerSyncRequest = subBuilder;
+          break;
+        }
+        case 4050: {
+          global::S2C_BombPlayerSyncNotification subBuilder = new global::S2C_BombPlayerSyncNotification();
+          if (payloadCase_ == PayloadOneofCase.BombPlayerSyncNotification) {
+            subBuilder.MergeFrom(BombPlayerSyncNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombPlayerSyncNotification = subBuilder;
+          break;
+        }
+        case 4058: {
+          global::S2C_BombPlayerDeathNotification subBuilder = new global::S2C_BombPlayerDeathNotification();
+          if (payloadCase_ == PayloadOneofCase.BombPlayerDeathNotification) {
+            subBuilder.MergeFrom(BombPlayerDeathNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombPlayerDeathNotification = subBuilder;
+          break;
+        }
+        case 4066: {
+          global::C2S_BombMoveRequest subBuilder = new global::C2S_BombMoveRequest();
+          if (payloadCase_ == PayloadOneofCase.BombMoveRequest) {
+            subBuilder.MergeFrom(BombMoveRequest);
+          }
+          input.ReadMessage(subBuilder);
+          BombMoveRequest = subBuilder;
+          break;
+        }
+        case 4074: {
+          global::S2C_BombMoveNotification subBuilder = new global::S2C_BombMoveNotification();
+          if (payloadCase_ == PayloadOneofCase.BombMoveNotification) {
+            subBuilder.MergeFrom(BombMoveNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombMoveNotification = subBuilder;
+          break;
+        }
+        case 4082: {
+          global::S2C_BombGameOverNotification subBuilder = new global::S2C_BombGameOverNotification();
+          if (payloadCase_ == PayloadOneofCase.BombGameOverNotification) {
+            subBuilder.MergeFrom(BombGameOverNotification);
+          }
+          input.ReadMessage(subBuilder);
+          BombGameOverNotification = subBuilder;
           break;
         }
       }

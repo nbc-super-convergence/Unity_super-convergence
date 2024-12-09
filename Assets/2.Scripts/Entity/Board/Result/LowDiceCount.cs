@@ -1,28 +1,28 @@
-using System.Collections.Generic;
+//using System.Collections.Generic;
 
-//ÁÖ»çÀ§ ¼ö°¡ Á¦ÀÏ ³·Àº»ç¶÷
-public class LowDiceCount : IGameResult
-{
-    public List<int> Result()
-    {
-        List<int> result = new List<int>();
-        List<KeyValuePair<int, int>> list = new();
-        List<BoardTokenHandler> players = BoardManager.Instance.playerTokenHandlers;
+////ì£¼ì‚¬ìœ„ ìˆ˜ê°€ ì œì¼ ë‚®ì€ì‚¬ëŒ
+//public class LowDiceCount : IGameResult
+//{
+//    public List<int> Result()
+//    {
+//        List<int> result = new List<int>();
+//        List<KeyValuePair<int, int>> list = new();
+//        List<BoardTokenHandler> players = BoardManager.Instance.playerTokenHandlers;
 
-        for (int i = 0; i < players.Count; i++)
-        {
-            int value = players[i].data.gameData.diceCount; //ÁÖ»çÀ§ ¼ö
+//        for (int i = 0; i < players.Count; i++)
+//        {
+//            int value = players[i].data.gameData.diceCount; //ì£¼ì‚¬ìœ„ ìˆ˜
 
-            list.Add(new KeyValuePair<int, int>(value, i));
-        }
+//            list.Add(new KeyValuePair<int, int>(value, i));
+//        }
 
-        list.Sort((a, b) => { return a.Key.CompareTo(b.Key); }); //¿À¸§Â÷¼ø
+//        list.Sort((a, b) => { return a.Key.CompareTo(b.Key); }); //ì˜¤ë¦„ì°¨ìˆœ
 
-        int key = list[0].Key;
+//        int key = list[0].Key;
 
-        for (int i = 0; i < list.Count; i++)
-            if (key == list[i].Key) result.Add(list[i].Value);
+//        for (int i = 0; i < list.Count; i++)
+//            if (key == list[i].Key) result.Add(list[i].Value);
 
-        return result;
-    }
-}
+//        return result;
+//    }
+//}
