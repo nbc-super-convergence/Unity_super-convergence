@@ -63,7 +63,7 @@ public class BoardManager : Singleton<BoardManager>
     public event Action OnEvent;
 #pragma warning restore
 
-    private List<IGameResult> bonus;
+    //private List<IGameResult> bonus;
     public bool isMIniPlay { get; private set; }
 
 
