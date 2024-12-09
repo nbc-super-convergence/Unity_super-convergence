@@ -9,7 +9,7 @@ public enum PlayerTokenState
 }
 
 [Serializable]
-public class BoardTokenData
+public struct BoardTokenData
 {
     public UserInfo userInfo;
     //public Vector3 position;
