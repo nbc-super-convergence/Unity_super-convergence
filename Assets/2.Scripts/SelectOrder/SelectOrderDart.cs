@@ -10,6 +10,17 @@ public class SelectOrderDart : MonoBehaviour
     private enum ShootingPhase { Ready };  
     private ShootingPhase phase = ShootingPhase.Ready;
 
+    //서버 전송 데이터
+    private DiceGameData _diceData;
+    public DiceGameData DiceGameData
+    {
+        get => _diceData;
+        private set
+        {
+            _diceData = value;
+        }
+    }
+
     private bool isIncrease = true; //증감 여부
 
     private float curAim = 0f;
@@ -42,21 +53,27 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
-    public float MyDistance { get; set; } = 30f;
-    public int MyRank { get; set; } = 0;
+    public float MyDistance
+    {
+        get => MyDistance;
+        set
+        {
+            MyDistance = value;
+            DiceGameData.Distance = MyDistance;
+        }
+    }
+    public int MyRank 
+    {
+        get => MyRank;
+        set
+        {
+            MyRank = value;
+            DiceGameData.Rank = MyRank;
+        }
+    }
 
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
-
-    private DiceGameData _diceData;
-    public DiceGameData DiceGameData 
-    { 
-        get => _diceData;
-        private set
-        {
-
-        }
-    }
 
     private void Awake()
     {
@@ -170,5 +187,18 @@ public class SelectOrderDart : MonoBehaviour
     public Vector3 TargetPosition()
     {
         return Camera.main.WorldToScreenPoint(-transform.forward);
+    }
+
+    /// <summary>
+    /// 해당 데이터를 서버에 전송
+    /// </summary>
+    public void SendServer()
+    {
+        GamePacket packet = new GamePacket();
+        var data = packet.DiceGameRequest = new()
+        {
+            Distance = MyDistance
+        };
+        SocketManager.Instance.OnSend(packet);
     }
 }

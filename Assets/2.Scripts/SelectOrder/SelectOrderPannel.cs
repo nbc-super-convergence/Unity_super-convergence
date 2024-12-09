@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectOrderPannel : MonoBehaviour
 {
     private List<float> distanceRank;    //다트 거리의 매겨줄 랭킹
+    private List<DiceGameData> sendServerData;  //서버에 전송할 데이터
 
     //다트판 속성
     private float xPositionLimit = 0.5f;  //옆으로 이동하기까지 제한
@@ -17,6 +18,7 @@ public class SelectOrderPannel : MonoBehaviour
     private void Awake()
     {
         distanceRank = new List<float>();
+        sendServerData = new List<DiceGameData>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,8 +28,9 @@ public class SelectOrderPannel : MonoBehaviour
             float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
             string name = collision.gameObject.name;
 
-            //맞은 다트의 거리와 이름을 클래스에 전송
+            //맞은 다트의 거리와 이름을 클래스 및 서버에 전송
             dart.MyDistance = dist;
+            dart.SendServer();
 
             //다음 차례
             SelectOrderManager.Instance.NextDart();
@@ -83,5 +86,9 @@ public class SelectOrderPannel : MonoBehaviour
         //{
         //    Debug.Log(dart.MyRank);
         //}
+    }
+
+    private void SendServer()
+    {
     }
 }
