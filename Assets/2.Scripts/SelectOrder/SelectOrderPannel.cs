@@ -28,7 +28,7 @@ public class SelectOrderPannel : MonoBehaviour
             float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
             string name = collision.gameObject.name;
 
-            //맞은 다트의 거리와 이름을 클래스 및 서버에 전송
+            //맞은 다트의 거리를 클래스 및 서버에 전송
             dart.MyDistance = dist;
             dart.SendServer();
 
@@ -80,6 +80,10 @@ public class SelectOrderPannel : MonoBehaviour
                 }
         }
 
+        GamePacket packet = new();
+        var response = packet.DiceGameResponse;
+
+
         SelectOrderManager.Instance.FinishSelectOrder();
         //디버깅
         //foreach(var dart in SelectOrderManager.Instance.DartOrder)
@@ -90,5 +94,6 @@ public class SelectOrderPannel : MonoBehaviour
 
     private void SendServer()
     {
+        GamePacket packet = new();
     }
 }

@@ -11,13 +11,13 @@ public class SelectOrderDart : MonoBehaviour
     private ShootingPhase phase = ShootingPhase.Ready;
 
     //서버 전송 데이터
-    private DiceGameData _diceData;
+    private DiceGameData diceData;
     public DiceGameData DiceGameData
     {
-        get => _diceData;
+        get => diceData;
         private set
         {
-            _diceData = value;
+            diceData = value;
         }
     }
 
@@ -53,22 +53,25 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
+    private float myDistance = 0f;
     public float MyDistance
     {
-        get => MyDistance;
+        get => myDistance;
         set
         {
-            MyDistance = value;
-            DiceGameData.Distance = MyDistance;
+            myDistance = value;
+            DiceGameData.Distance = myDistance;
         }
     }
+
+    private int myRank = 0;
     public int MyRank 
     {
-        get => MyRank;
+        get => myRank;
         set
         {
-            MyRank = value;
-            DiceGameData.Rank = MyRank;
+            myRank = value;
+            DiceGameData.Rank = myRank;
         }
     }
 
@@ -79,6 +82,8 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<SelectOrderEvent>();
+
+        DiceGameData = new();
     }
 
     private void Start()
@@ -197,7 +202,9 @@ public class SelectOrderDart : MonoBehaviour
         GamePacket packet = new GamePacket();
         var data = packet.DiceGameRequest = new()
         {
-            Distance = MyDistance
+            Distance = MyDistance,
+            SessionId = gameObject.name
+            //SessionId = GameManager.Instance.myInfo.SessionId
         };
         SocketManager.Instance.OnSend(packet);
     }
