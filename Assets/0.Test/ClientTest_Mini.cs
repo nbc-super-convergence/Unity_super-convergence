@@ -2,7 +2,6 @@ using static S2C_IceMiniGameReadyNotification.Types;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
-using System;
 
 public partial class ClientTest : Singleton<ClientTest>
 {
@@ -68,54 +67,5 @@ public partial class ClientTest : Singleton<ClientTest>
             }
             yield return null;
         }
-
-        //IceMapSyncNotification
-        //IcePlayerExitNotification
-
-        //IceGameOverNotification
-        while (true)
-        {
-            if (Input.GetKey(KeyCode.CapsLock) &&
-            Input.GetKeyDown(KeyCode.P))
-            {
-                DateTime dateTime = DateTime.Now.AddSeconds(6);
-                long unixTimeSeconds = new DateTimeOffset(dateTime).ToUnixTimeSeconds();
-
-                GamePacket packet = new()
-                {
-                    IceGameOverNotification = new()
-                    {
-                        Ranks =
-                        {
-                             new Rank
-                             {
-                                 SessionId = "Session1",
-                                 Rank_ = 4,
-                             },
-                             new Rank
-                             {
-                                 SessionId = "Session2",
-                                 Rank_ = 2,
-                             },
-                             new Rank
-                             {
-                                 SessionId = "Session3",
-                                 Rank_ = 3,
-                             },
-                             new Rank
-                             {
-                                 SessionId = "Session4",
-                                 Rank_ = 1,
-                             },
-                        },
-                        EndTime = unixTimeSeconds
-                    }
-                };
-                SocketManager.Instance.IceGameOverNotification(packet);
-                break;
-            }
-            yield return null;
-        }
-
     }
 }
