@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-//Æ®·ÎÇÇ°¡ ¾ø´Â»ç¶÷
+//íŠ¸ë¡œí”¼ê°€ ì—†ëŠ”ì‚¬ëžŒ
 public class NoneTrophy : IGameResult
 {
     public List<int> Result()

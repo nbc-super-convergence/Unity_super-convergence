@@ -12,6 +12,7 @@ public enum PlayerTokenState
 public struct BoardTokenData
 {
     public UserInfo userInfo;
+    //public BoardGameData gameData;
     //public Vector3 position;
     //public float rotY;
 
@@ -20,13 +21,12 @@ public struct BoardTokenData
     public int trophyAmount;
 
     //public PlayerTokenState state;
-    public BoardGameData gameData;
 
     public BoardTokenData(UserInfo userInfo)
     {
         this.userInfo = userInfo;
         keyAmount = 10;
         trophyAmount = 0;
-        gameData = new();
+        //gameData = new();
     }
 }

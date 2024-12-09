@@ -214,8 +214,29 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.GameEndNotification;
 
         //게임종료 필요
-        //BoardManager.Instance
+        BoardManager.Instance.GameOver();
     }
+
+    //public void BackToTheRoomResponse(GamePacket packet)
+    //{
+    //    var response = packet.BackToTheRoomResponse;
+
+    //    if (response.Success)
+    //    {
+
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+    //    }
+    //}
+
+    //public void BackToTheRoomNotification(GamePacket packet)
+    //{
+    //    var response = packet.BackToTheRoomNotification;
+
+
+    //}
 
     #endregion
 }

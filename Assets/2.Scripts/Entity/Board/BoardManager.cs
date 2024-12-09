@@ -64,7 +64,6 @@ public class BoardManager : Singleton<BoardManager>
 #pragma warning restore
 
     private List<IGameResult> bonus;
-
     public bool isMIniPlay { get; private set; }
 
 
@@ -102,8 +101,8 @@ public class BoardManager : Singleton<BoardManager>
         Init();
 
         //트로피칸 설정
-        SetTrophyNode();
-        SetBonus();
+        //SetTrophyNode();
+        //SetBonus();
     }
 
     private async void Init()
@@ -127,7 +126,6 @@ public class BoardManager : Singleton<BoardManager>
         }
 
         await UIManager.Show<BoardUI>();
-
         #region Old
         //for (int i = 0; i < count; i++)
         //{
@@ -145,7 +143,7 @@ public class BoardManager : Singleton<BoardManager>
         //}
         #endregion
 
-        Curplayer.Ready();
+        //Curplayer.Ready();
     }
 
     //테스트용
@@ -227,35 +225,38 @@ public class BoardManager : Singleton<BoardManager>
     }
     public void NextTurn()
     {
+        isMIniPlay = false;
+
         int count = playerTokenHandlers.Count;
-        playerIndex = playerIndex % count;
+        playerIndex = (playerIndex + 1) % count;
         Curplayer.Ready();
     }
-    public void SetTrophyNode()
-    {
-        //GamePacket packet = new();
 
-        ////packet.() = new()
-        ////{
+    //public void SetTrophyNode()
+    //{
+    //    //GamePacket packet = new();
 
-        ////};
+    //    ////packet.() = new()
+    //    ////{
 
-        //SocketManager.Instance.OnSend(packet);
+    //    ////};
 
-        #region Old
-        //int rand = Random.Range(0, trophyNode.Count);
+    //    //SocketManager.Instance.OnSend(packet);
 
-        //while(rand == prevTrophyIndex)
-        //    rand = Random.Range(0, trophyNode.Count);
+    //    #region Old
+    //    //int rand = Random.Range(0, trophyNode.Count);
 
-        //if(prevTrophyIndex != -1)
-        //    trophyNode[prevTrophyIndex].Toggle();
+    //    //while(rand == prevTrophyIndex)
+    //    //    rand = Random.Range(0, trophyNode.Count);
 
-        //trophyNode[rand].Toggle();
+    //    //if(prevTrophyIndex != -1)
+    //    //    trophyNode[prevTrophyIndex].Toggle();
 
-        //prevTrophyIndex = rand;
-        #endregion
-    }
+    //    //trophyNode[rand].Toggle();
+
+    //    //prevTrophyIndex = rand;
+    //    #endregion
+    //}
 
     public void StartMinigame()
     {
@@ -276,86 +277,86 @@ public class BoardManager : Singleton<BoardManager>
     //    areaNodes[node].SetArea(playerIndex);
     //}
 
-    private void SetBonus()
-    {
-        bonus = new();
-        List<int> num = new();
+    //private void SetBonus()
+    //{
+    //    bonus = new();
+    //    List<int> num = new();
         
-        for(int i = 0; i < 3;)
-        {
-            int rand = UnityEngine.Random.Range(0, 13);
+    //    for(int i = 0; i < 3;)
+    //    {
+    //        int rand = UnityEngine.Random.Range(0, 13);
 
-            if (num.Contains(rand)) continue;
-            num.Add(rand);
-            //***주의 열지마시오, 진짜 경고했음
-            switch(rand)
-            {
-                case 0:
-                    bonus.Add(new FastCoinZero());
-                    break;
-                case 1:
-                    bonus.Add(new HighComebackCount());
-                    break;
-                case 2:
-                    bonus.Add(new HighDiceCount());
-                    break;
-                case 3:
-                    bonus.Add(new HighPaymentCount());
-                    break;
-                case 4:
-                    bonus.Add(new HighPurchaseCount());
-                    break;
-                case 5:
-                    bonus.Add(new HighSaveCoin());
-                    break;
-                case 6:
-                    bonus.Add(new HighSellCount());
-                    break;
-                case 7:
-                    bonus.Add(new HighTaxCount());
-                    break;
-                case 8:
-                    bonus.Add(new LoseCount());
-                    break;
-                case 9:
-                    bonus.Add(new LowDiceCount());
-                    break;
-                case 10:
-                    bonus.Add(new LowPurchaseCount());
-                    break;
-                case 11:
-                    bonus.Add(new NoneTrophy());
-                    break;
-                case 12:
-                    bonus.Add(new WinCount());
-                    break;
-            }
+    //        if (num.Contains(rand)) continue;
+    //        num.Add(rand);
+    //        //***주의 열지마시오, 진짜 경고했음
+    //        switch(rand)
+    //        {
+    //            case 0:
+    //                bonus.Add(new FastCoinZero());
+    //                break;
+    //            case 1:
+    //                bonus.Add(new HighComebackCount());
+    //                break;
+    //            case 2:
+    //                bonus.Add(new HighDiceCount());
+    //                break;
+    //            case 3:
+    //                bonus.Add(new HighPaymentCount());
+    //                break;
+    //            case 4:
+    //                bonus.Add(new HighPurchaseCount());
+    //                break;
+    //            case 5:
+    //                bonus.Add(new HighSaveCoin());
+    //                break;
+    //            case 6:
+    //                bonus.Add(new HighSellCount());
+    //                break;
+    //            case 7:
+    //                bonus.Add(new HighTaxCount());
+    //                break;
+    //            case 8:
+    //                bonus.Add(new LoseCount());
+    //                break;
+    //            case 9:
+    //                bonus.Add(new LowDiceCount());
+    //                break;
+    //            case 10:
+    //                bonus.Add(new LowPurchaseCount());
+    //                break;
+    //            case 11:
+    //                bonus.Add(new NoneTrophy());
+    //                break;
+    //            case 12:
+    //                bonus.Add(new WinCount());
+    //                break;
+    //        }
 
-            i++;
-        }
-    }
+    //        i++;
+    //    }
+    //}
 
     public async void GameOver()
     {
         //게임종료시 레크리에이션, 추가 트로피 증정
-        foreach (var result in bonus)
-        {
-            List<int> list = result.Result();
+        //foreach (var result in bonus)
+        //{
+        //    List<int> list = result.Result();
 
-            foreach (int i in list)
-                playerTokenHandlers[i].data.trophyAmount += 1;
-        }
-
+        //    foreach (int i in list)
+        //        playerTokenHandlers[i].data.trophyAmount += 1;
+        //}
+        
         //순위별로 인덱스 변경
         playerTokenHandlers.Sort((a,b) => 
         {
-            if(a.data.trophyAmount == b.data.trophyAmount)
-                return b.data.keyAmount.CompareTo(a.data.keyAmount);
+            //if(a.data.trophyAmount == b.data.trophyAmount)
+            return b.data.keyAmount.CompareTo(a.data.keyAmount);
 
-            return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+            //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
 
-        await UIManager.Show<BoardResult>();
+        await UIManager.Show<BoardResultUI>();
     }
 
     //순서 변경 없음으로 인한 주석처리
