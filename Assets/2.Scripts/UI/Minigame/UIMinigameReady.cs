@@ -32,7 +32,7 @@ public class UIMinigameReady : UIBase
         {
             eGameType.GameIceSlider => "미끌미끌 얼음판",
             eGameType.GameBombDelivery => "폭탄 배달왔어요",
-            eGameType.GameCourtshipDance => "",
+            eGameType.GameCourtshipDance => "구애의 춤",
             eGameType.GameDropper => "내려가며 디스코파티",
             _ => "ERROR!!!",
         };
@@ -101,6 +101,10 @@ public class UIMinigameReady : UIBase
                     case eGameType.GameBombDelivery:
                         break;
                     case eGameType.GameCourtshipDance:
+                        packet.DanceReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
                         break;
                     case eGameType.GameDropper:
                         packet.DropGameReadyRequest = new()
