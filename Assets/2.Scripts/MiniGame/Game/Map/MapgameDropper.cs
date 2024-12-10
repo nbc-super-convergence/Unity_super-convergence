@@ -31,6 +31,9 @@ public class MapGameDropper : MapBase
 
     public void NextLevelEvent(int[] holes)
     {
+        //테스트 코드
+        if (gameData.phase == 0) gameData.phase = 1;
+
         //바닥 없애기.
         foreach (int hole in holes)
         {
