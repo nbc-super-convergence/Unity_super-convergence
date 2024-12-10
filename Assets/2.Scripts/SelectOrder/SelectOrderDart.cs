@@ -1,30 +1,39 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
+    private SelectOrderEvent orderEvent;
     private Rigidbody rgdby;
 
-    //발사 준비상태
-    private enum ShootingPhase { Aim, Force, Ready };  
-    private ShootingPhase phase = ShootingPhase.Aim;
-
-    private bool isIncrease = true; //증감 여부
-
-    private float curAim = 0f;
-    private float minAim, maxAim;
-    public float CurAim
+    //서버 전송 데이터
+    private DiceGameData diceData = new();
+    public DiceGameData DiceGameData
     {
-        get => curAim;
-        set
+        get => diceData;
+        private set
         {
-            curAim = Mathf.Clamp(value, minAim, maxAim);
-            if (curAim <= minAim)
-                isIncrease = true;
-            if (curAim >= maxAim)
-                isIncrease = false;
+            diceData = value;
         }
     }
+
+    private bool isIncrease = true; //증감 여부
+    private int actionPhase = 0;
+
+    private float minAim, maxAim;
+    private Vector3 aimVector;
+    public Vector3 CurAim
+    {
+        get => aimVector;
+        set
+        {
+            aimVector.x = Mathf.Clamp(value.x, minAim, maxAim);
+            aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
+
+            DiceGameData.Angle = SocketManager.ToVector(CurAim);
+        }
+    }
+    public Vector2 GetAim = Vector2.zero;   //입력 Aim
 
     private float curForce = 2f;
     private float minForce, maxForce;
@@ -34,6 +43,8 @@ public class SelectOrderDart : MonoBehaviour
         set
         {
             curForce = Mathf.Clamp(value, minForce, maxForce);
+            DiceGameData.Power = curForce;
+
             if(curForce <= minForce)
                 isIncrease = true;
             if (curForce >= maxForce)
@@ -41,29 +52,42 @@ public class SelectOrderDart : MonoBehaviour
         }
     }
 
-    public float MyDistance { get; set; } = 30f;
-    public int MyRank { get; set; } = 0;
+    private float myDistance = 0f;
+    public float MyDistance
+    {
+        get => myDistance;
+        set
+        {
+            myDistance = value;
+            DiceGameData.Distance = myDistance;
+        }
+    }
+
+    private int myRank = 0;
+    public int MyRank 
+    {
+        get => myRank;
+        set
+        {
+            myRank = value;
+            DiceGameData.Rank = myRank;
+        }
+    }
 
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
-    private DiceGameData _diceData;
-    public DiceGameData DiceGameData 
-    { 
-        get => _diceData;
-        private set
-        {
-
-        }
-    }
-
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
+        orderEvent = GetComponent<SelectOrderEvent>();
     }
 
     private void Start()
     {
+        orderEvent.OnAimEvent += SetAim;
+        orderEvent.OnShootEvent += PressKey;
+
         minAim = SelectOrderManager.Instance.minAim;
         maxAim = SelectOrderManager.Instance.maxAim;
         minForce = SelectOrderManager.Instance.minForce;
@@ -72,21 +96,21 @@ public class SelectOrderDart : MonoBehaviour
 
     private void FixedUpdate()
     {
-        switch(phase)
+        //키를 누르는 동안
+        if(actionPhase == 1)
         {
-            case ShootingPhase.Aim:
-                SetAim();
-                break;
-            case ShootingPhase.Force:
-                SetForce();
-                break;
-            default:
-                return;
+            SetForce();
         }
 
-        transform.rotation = Quaternion.Euler(CurAim, 0, 0);
+        //각도를 조절
+        if(GetAim != Vector2.zero)
+        {
+            CurAim += new Vector3(GetAim.y, GetAim.x);
+        }
+           
+        transform.rotation = Quaternion.Euler(CurAim);
 
-        //Debug.DrawRay(transform.position, transform.position + transform.forward);
+        Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -96,45 +120,25 @@ public class SelectOrderDart : MonoBehaviour
 
         //다트가 판을 따라가게
         transform.SetParent(collision.transform);
+
+        orderEvent.OnAimEvent -= SetAim;
+        orderEvent.OnShootEvent -= PressKey;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        //다트가 빗나가면
-        ResetDart();
-    }
+        //무효처리
+        MissDart();
 
-    //입력 받을 때
-    public void OnShooting(InputAction.CallbackContext context)
-    {
-        if (InputActionPhase.Started == context.phase)
-        {
-            isIncrease = true;
-            switch(phase)
-            {
-                case ShootingPhase.Aim:
-                    phase = ShootingPhase.Force;
-                    break;
-                case ShootingPhase.Force:
-                    phase = ShootingPhase.Ready;
-                    NowShoot();
-                    break;
-            }
-        }
+        SelectOrderManager.Instance.NextDart();
     }
 
     /// <summary>
     /// 각도 조절
     /// </summary>
-    private void SetAim()
+    private void SetAim(Vector2 direction)
     {
-        float speed = 5f;
-
-        if (isIncrease) CurAim += Time.deltaTime * speed;
-        else CurAim -= Time.deltaTime * speed;
-
-        //벡터 각도 조절
-        dartRot.z = Mathf.Sin(CurAim - 90f);
+        GetAim = direction;
     }
 
     /// <summary>
@@ -145,6 +149,23 @@ public class SelectOrderDart : MonoBehaviour
         float speed = 1f;
         if (isIncrease) CurForce += Time.deltaTime * speed;
         else CurForce -= Time.deltaTime * speed;
+    }
+
+    /// <summary>
+    /// 키를 누르고 있으면
+    /// </summary>
+    /// <param name="press">InputValue</param>
+    private void PressKey(bool press)
+    {
+        if(press)
+        {
+            actionPhase = 1;
+        }
+        if(actionPhase == 1)
+        {
+            if (!press)
+                NowShoot();
+        }
     }
 
     /// <summary>
@@ -159,16 +180,45 @@ public class SelectOrderDart : MonoBehaviour
     /// <summary>
     /// 다트 초기화
     /// </summary>
-    private void ResetDart()
+    private void MissDart()
     {
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
 
         transform.localPosition = Vector3.zero;
 
-        CurAim = 0f;
+        CurAim = Vector3.zero;
         CurForce = 2f;
 
-        phase = ShootingPhase.Aim;
+        gameObject.SetActive(false);
+        MyDistance = 10;    //랭크에서 빠지는 걸로
+        MyRank = SelectOrderManager.Instance.MissRank;
+    }
+
+    /// <summary>
+    /// 다트 표적 벡터
+    /// </summary>
+    /// <returns>WorldToScreenPoint</returns>
+    public Vector3 TargetPosition()
+    {
+        return Camera.main.WorldToScreenPoint(-transform.forward);
+    }
+
+    /// <summary>
+    /// 해당 데이터를 서버에 전송
+    /// </summary>
+    public void SendServer()
+    {
+        GamePacket packet = new();
+        var data = packet.DiceGameRequest = new()
+        {
+            //SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = gameObject.name,
+            Distance = MyDistance,
+            Angle = SocketManager.ToVector(CurAim),
+            Location = SocketManager.ToVector(transform.localPosition),
+            Power = CurForce
+        };
+        SocketManager.Instance.OnSend(packet);
     }
 }

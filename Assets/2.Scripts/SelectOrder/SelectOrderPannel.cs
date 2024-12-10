@@ -1,22 +1,21 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectOrderPannel : MonoBehaviour
 {
     private List<float> distanceRank;    //다트 거리의 매겨줄 랭킹
+    private List<DiceGameData> sendServerData;  //서버에 전송할 데이터
 
     //다트판 속성
     private float xPositionLimit = 0.5f;  //옆으로 이동하기까지 제한
     private float pannelSpeed = 0.3f;   //다트판 이동 속도
     private bool swapDirection = false;
-    private bool isMove = true;
-
-    private int curDartCnt = 0;
-    public int maxDartCnt = 4;
+    public bool isMove = true;  //움직이고 있는지
 
     private void Awake()
     {
         distanceRank = new List<float>();
+        sendServerData = new List<DiceGameData>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -26,11 +25,12 @@ public class SelectOrderPannel : MonoBehaviour
             float dist = Vector3.Distance(collision.transform.position, gameObject.transform.position);
             string name = collision.gameObject.name;
 
-            //맞은 다트의 거리와 이름을 클래스에 전송
+            //맞은 다트의 거리를 클래스 및 서버에 전송
             dart.MyDistance = dist;
+            dart.SendServer();
 
-            //맞추면 UI숨김
-            SelectOrderManager.Instance.HideDartUI();
+            //다음 차례
+            SelectOrderManager.Instance.NextDart();
         }
     }
 
@@ -50,7 +50,7 @@ public class SelectOrderPannel : MonoBehaviour
     }
 
     //중심과 가까운 다트가 우선순위
-    private void DistanceRank()
+    public void DistanceRank()
     {
         int rank = 1;
         
@@ -63,11 +63,30 @@ public class SelectOrderPannel : MonoBehaviour
         for (int i = 0; i < distanceRank.Count; i++)
         {
             foreach (var dart in SelectOrderManager.Instance.DartOrder)
-                if(dart.Equals(distanceRank[i]))
+            {
+                if (dart.MyDistance.Equals(distanceRank[i]))
                 {
-                    dart.MyRank = rank;
-                    rank++;
+                    if (dart.MyDistance >= 10f)
+                        continue;
+                    else
+                    {
+                        dart.MyRank = rank;
+                        rank++;
+                    }
                 }
+            }
         }
+
+        SelectOrderManager.Instance.FinishSelectOrder();
+        //디버깅
+        //foreach(var dart in SelectOrderManager.Instance.DartOrder)
+        //{
+        //    Debug.Log(dart.MyRank);
+        //}
+    }
+
+    private void SendServer()
+    {
+        GamePacket packet = new();
     }
 }

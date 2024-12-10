@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,12 +14,18 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             var result = response.Result;
 
+            Debug.Log(result);
+
             int i = 0;
             var playerDart = SelectOrderManager.Instance.DartOrder;
+
             foreach(var dart in playerDart)
             {
                 dart.MyDistance = result[i].Distance;
                 dart.MyRank = result[i].Rank;
+                dart.CurAim = ToVector3(result[i].Angle);
+                dart.transform.localPosition = ToVector3(result[i].Location);
+                dart.CurForce = result[i].Power;
                 i++;
             }
         }
@@ -34,14 +40,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var notification = packet.DiceGameNotification;
         var result = notification.Result;
 
-        int i = 0;
-        List<SelectOrderDart> send2Server = SelectOrderManager.Instance.DartOrder;
-        
-        foreach(var dart in result)
-        {
-            dart.Distance = send2Server[i].MyDistance;
-            dart.Rank = send2Server[i].MyRank;
-            i++;
-        }
+        Debug.Log(result);
+    }
+
+    public void DiceGameRequest(GamePacket packet)
+    {
+        var request = packet.DiceGameRequest;
     }
 }

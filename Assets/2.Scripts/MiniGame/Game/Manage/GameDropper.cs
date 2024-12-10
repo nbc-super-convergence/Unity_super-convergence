@@ -1,10 +1,9 @@
 using Google.Protobuf.Collections;
 using UnityEngine;
-using static S2C_IceMiniGameReadyNotification.Types;
 
 public class GameDropper : IGame
 {
-    private GameDropperData gameData;
+    public GameDropperData gameData { get; private set; }
     private UIMinigameDropper ingameUI;
 
     #region IGame
@@ -13,18 +12,18 @@ public class GameDropper : IGame
         gameData = new GameDropperData();
         gameData.Init();
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDropper>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap();
+        MinigameManager.Instance.MakeMap<MapGameDropper>();
         SetBGM();
 
-        /*Reset Players - Socket 필요*/
-        //if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
-        //{
-        //    ResetPlayers(response.Players);
-        //}
-        //else
-        //{
-        //    Debug.LogError("param parsing error : startPlayers");
-        //}
+        /*Reset Players*/
+        if (param.Length > 0 && param[0] is S2C_DropMiniGameReadyNotification response)
+        {
+            ResetPlayers(response.Players);
+        }
+        else
+        {
+            Debug.LogError("param parsing error : startPlayers");
+        }
     }
 
     public async void GameStart(params object[] param)
@@ -46,9 +45,6 @@ public class GameDropper : IGame
             Debug.LogError("param length error");
             return;
         }
-        
-        //TODO : 나에 맞는 inputsystem 정의
-        MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     #endregion
 
@@ -58,24 +54,89 @@ public class GameDropper : IGame
 
     }
 
-    private void ResetPlayers(RepeatedField<startPlayers> players)
+    private void ResetPlayers(RepeatedField<S2C_DropMiniGameReadyNotification.Types.startPlayers> players)
     {
         foreach (var p in players)
         {
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);//현재 위치
-            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position); //다음 위치
-            miniToken.MiniData.rotY = p.Rotation; //현재 회전값
+
+            Vector3 initPos = GetSlotPosition(p.Slot);
+            miniToken.transform.localPosition = initPos;
+            miniToken.MiniData.nextPos = initPos;
+            
+            miniToken.MiniData.rotY = p.Rotation;
         }
     }
     #endregion
 
-    #region 인게임 이벤트
-    private void SetSlotPosition(int slot)
+    #region 메인함수
+    public void ReceiveMove(string sessionId, int slot, float rotation, State state)
     {
+        MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
+        miniToken.MiniData.nextPos = GetSlotPosition(slot);
+        miniToken.MiniData.rotY = rotation;
 
+        if (sessionId == MinigameManager.Instance.mySessonId)
+        {
+            gameData.curSlot = slot;
+        }
     }
 
+    public void PlayerDeath(string sessionId)
+    {
+        MinigameManager.Instance.GetMiniToken(sessionId).DisableMiniToken();
+    }
+    #endregion
+
+    #region 보조함수
+    private Vector3 GetSlotPosition(int slot, float yPos = 60.00398f)
+    {
+        Vector3 pos;
+        float xPos = 0, zPos = 0;
+
+        //xPos 
+        switch (slot)
+        {
+            case 0:
+            case 1:
+            case 2:
+                xPos = 2.2f;
+                break;
+            case 3:
+            case 4:
+            case 5:
+                xPos = 0f;
+                break;
+            case 6:
+            case 7:
+            case 8:
+                xPos = -2.2f;
+                break;
+        }
+
+        //zPos
+        switch (slot)
+        {
+            case 0:
+            case 3:
+            case 6:
+                zPos = -2.2f;
+                break;
+            case 1:
+            case 4:
+            case 7:
+                zPos = 0f;
+                break;
+            case 2:
+            case 5:
+            case 8:
+                zPos = 2.2f;
+                break;
+        }
+
+        pos = new Vector3(xPos, yPos, zPos);
+        return pos;
+    }
     #endregion
 }
