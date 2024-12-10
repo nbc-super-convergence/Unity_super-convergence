@@ -12,9 +12,6 @@ public class SelectOrderPannel : MonoBehaviour
     private bool swapDirection = false;
     public bool isMove = true;  //움직이고 있는지
 
-    private int curDartCnt = 0;
-    public int maxDartCnt = 4;
-
     private void Awake()
     {
         distanceRank = new List<float>();
