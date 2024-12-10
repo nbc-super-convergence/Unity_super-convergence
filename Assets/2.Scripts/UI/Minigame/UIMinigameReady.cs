@@ -99,6 +99,11 @@ public class UIMinigameReady : UIBase
                         };
                         break;
                     case eGameType.GameBombDelivery:
+                        packet.BombGameReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+
                         break;
                     case eGameType.GameCourtshipDance:
                         packet.DanceReadyRequest = new()

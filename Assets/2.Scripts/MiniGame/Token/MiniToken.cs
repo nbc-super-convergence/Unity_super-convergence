@@ -101,13 +101,29 @@ public class MiniToken : MonoBehaviour
             {
                 GamePacket packet = new();
                 {
-                    packet.IcePlayerSyncRequest = new()
+                    switch(MinigameManager.gameType)
                     {
-                        SessionId = MinigameManager.Instance.mySessonId,
-                        Position = SocketManager.ToVector(transform.localPosition),
-                        Rotation = transform.eulerAngles.y,
-                        State = MiniData.CurState
-                    };
+                        case eGameType.GameIceSlider:
+                            packet.IcePlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+
+                        case eGameType.GameBombDelivery:
+                            packet.BombPlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+                    }
+
                 };
                 SocketManager.Instance.OnSend(packet);
                 lastPos = curPos;
