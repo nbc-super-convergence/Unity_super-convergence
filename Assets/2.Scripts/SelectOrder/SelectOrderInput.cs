@@ -11,6 +11,6 @@ public class SelectOrderInput : SelectOrderEvent
 
     public void OnShoot(InputValue value)
     {
-        CallShootEvent();
+        CallShootEvent(value.isPressed);
     }
 }

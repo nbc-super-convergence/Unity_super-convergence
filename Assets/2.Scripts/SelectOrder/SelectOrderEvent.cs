@@ -5,15 +5,15 @@ using UnityEngine.InputSystem;
 public class SelectOrderEvent : MonoBehaviour
 {
     public event Action<Vector2> OnAimEvent;
-    public event Action OnShootEvent;
+    public event Action<bool> OnShootEvent;
 
     public void CallAimEvent(Vector2 direction)
     {
         OnAimEvent?.Invoke(direction);
     }
 
-    public void CallShootEvent()
+    public void CallShootEvent(bool press)
     {
-        OnShootEvent?.Invoke();
+        OnShootEvent?.Invoke(press);
     }
 }

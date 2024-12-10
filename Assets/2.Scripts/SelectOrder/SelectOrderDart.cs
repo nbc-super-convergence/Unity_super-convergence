@@ -22,6 +22,7 @@ public class SelectOrderDart : MonoBehaviour
     }
 
     private bool isIncrease = true; //증감 여부
+    private int actionPhase = 0;
 
     private float curAim = 0f;
     private float curAimX = 0f;
@@ -91,7 +92,7 @@ public class SelectOrderDart : MonoBehaviour
     private void Start()
     {
         orderEvent.OnAimEvent += SetAim;
-        orderEvent.OnShootEvent += NowShoot;
+        orderEvent.OnShootEvent += PressKey;
 
         minAim = SelectOrderManager.Instance.minAim;
         maxAim = SelectOrderManager.Instance.maxAim;
@@ -101,11 +102,10 @@ public class SelectOrderDart : MonoBehaviour
 
     private void FixedUpdate()
     {
-        switch(phase)
+        //키를 누르는 동안
+        if(actionPhase == 1)
         {
-            case ShootingPhase.Ready:
-                SetForce();
-                break;
+            SetForce();
         }
 
         //각도를 조절
@@ -128,6 +128,7 @@ public class SelectOrderDart : MonoBehaviour
         transform.SetParent(collision.transform);
 
         orderEvent.OnAimEvent -= SetAim;
+        orderEvent.OnShootEvent -= PressKey;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -154,6 +155,23 @@ public class SelectOrderDart : MonoBehaviour
         float speed = 1f;
         if (isIncrease) CurForce += Time.deltaTime * speed;
         else CurForce -= Time.deltaTime * speed;
+    }
+
+    /// <summary>
+    /// 키를 누르고 있으면
+    /// </summary>
+    /// <param name="press">InputValue</param>
+    private void PressKey(bool press)
+    {
+        if(press)
+        {
+            actionPhase = 1;
+        }
+        if(actionPhase == 1)
+        {
+            if (!press)
+                NowShoot();
+        }
     }
 
     /// <summary>
