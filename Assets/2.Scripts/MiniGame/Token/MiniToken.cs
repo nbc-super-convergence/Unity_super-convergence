@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector.Editor;
 using System.Collections;
 using UnityEngine;
 
@@ -40,6 +41,9 @@ public class MiniToken : MonoBehaviour
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
                     break;
+                case eGameType.GameBombDelivery:
+                    Controller.MoveToken(eMoveType.Server);
+                    break;
                 case eGameType.GameCourtshipDance:
                     // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
                     break;
@@ -60,6 +64,9 @@ public class MiniToken : MonoBehaviour
                 {
                     case eGameType.GameIceSlider:
                         Controller.MoveToken(eMoveType.AddForce);
+                        break;
+                    case eGameType.GameBombDelivery:
+                        Controller.MoveToken(eMoveType.Server);
                         break;
                     case eGameType.GameDropper:
                         Controller.MoveToken(eMoveType.Dropper);
@@ -101,13 +108,29 @@ public class MiniToken : MonoBehaviour
             {
                 GamePacket packet = new();
                 {
-                    packet.IcePlayerSyncRequest = new()
+                    switch(MinigameManager.gameType)
                     {
-                        SessionId = MinigameManager.Instance.mySessonId,
-                        Position = SocketManager.ToVector(transform.localPosition),
-                        Rotation = transform.eulerAngles.y,
-                        State = MiniData.CurState
-                    };
+                        case eGameType.GameIceSlider:
+                            packet.IcePlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+
+                        case eGameType.GameBombDelivery:
+                            packet.BombPlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+                    }
+
                 };
                 SocketManager.Instance.OnSend(packet);
                 lastPos = curPos;
@@ -165,5 +188,19 @@ public class MiniToken : MonoBehaviour
     {
         yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
+    }
+
+    public void Stun()
+    {
+        StartCoroutine(StunDelay());
+    }
+
+    private IEnumerator StunDelay()
+    {
+        InputHandler.DisablePlayerInput();
+
+        yield return new WaitForSeconds(1.5f);
+
+        InputHandler.EnablePlayerInput();
     }
 }

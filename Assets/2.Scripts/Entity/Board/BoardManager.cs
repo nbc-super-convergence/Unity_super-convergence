@@ -55,7 +55,7 @@ public class BoardManager : Singleton<BoardManager>
     public Material[] materials;
 
     //현재 턴의 플레이어 인덱스
-    [SerializeField] private int playerIndex = -1;
+    [SerializeField] private int playerIndex = 0;
 
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
@@ -126,6 +126,7 @@ public class BoardManager : Singleton<BoardManager>
 
             playerTokenHandlers.Add(handle);
         }
+        camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
 
         await UIManager.Show<BoardUI>();
         #region Old

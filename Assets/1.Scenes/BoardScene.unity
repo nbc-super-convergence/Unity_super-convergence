@@ -9462,7 +9462,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 6968e89851431104b8f931c37d69356b, type: 2}
   playerIndex: 0
   areaNodes:
-  - {fileID: 0}
   - {fileID: 1065904454288321467}
   - {fileID: 2493208268031020155}
   - {fileID: 3220432570009022792}
@@ -9471,7 +9470,6 @@ MonoBehaviour:
   - {fileID: 3059546849757934977}
   - {fileID: 7767325197938950209}
   - {fileID: 5793005876060927425}
-  - {fileID: 0}
   - {fileID: 2980879333019594940}
   - {fileID: 237742954474086104}
   - {fileID: 6651436250498557961}
@@ -9482,7 +9480,7 @@ MonoBehaviour:
   - {fileID: 4638028812060218944}
   - {fileID: 8908810150390375117}
   - {fileID: 812537297460477340}
-  camera: {fileID: 0}
+  camera: {fileID: 1161463106}
 --- !u!1001 &746089426
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -31208,8 +31206,8 @@ SceneRoots:
   - {fileID: 934034561}
   - {fileID: 678734153}
   - {fileID: 259411976}
-  - {fileID: 728006423}
   - {fileID: 1178859445}
   - {fileID: 1316574483}
+  - {fileID: 728006423}
   - {fileID: 3568672705742579909}
   - {fileID: 876840074}

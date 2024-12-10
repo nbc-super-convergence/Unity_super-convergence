@@ -32,6 +32,7 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Awake()
     {
+        queue = new();
         nextPositon = transform.position;
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
