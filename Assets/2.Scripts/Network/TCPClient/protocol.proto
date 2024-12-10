@@ -654,16 +654,16 @@ syntax = "proto3";
     //폭탄 터짐
     message S2C_BombPlayerDeathNotification{
         string sessionId= 1; // 터질 때 들고있던 유저
-        string BombSessionId = 2; // 새로운 폭탄 유저
+        string bombSessionId = 2; // 새로운 폭탄 유저
     }
 
     //폭탄 건넴 
     message C2S_BombMoveRequest {
-        string SessionId = 1; // 폭탄 받는 유저 
+        string sessionId  = 1; // 폭탄 받는 유저 
     }
 
     message S2C_BombMoveNotification {
-        string SessionId = 1; // 폭탄 받는 유저 
+        string sessionId = 1; // 폭탄 받는 유저 
     }
 
 
