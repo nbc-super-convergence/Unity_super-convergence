@@ -21,7 +21,7 @@ public class MapGameCourtshipDance : MapBase
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 0);
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);
 
-        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceIdle);
+        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceWait);
     }
 
     public void TokenReset(MiniToken token)
