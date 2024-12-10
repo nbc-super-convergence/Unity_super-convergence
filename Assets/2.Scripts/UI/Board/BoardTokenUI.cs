@@ -13,6 +13,7 @@ public class BoardTokenUI : UIBase
     public void SetPlayer(BoardTokenData data)
     {
         this.data = data;
+        nickname.text = data.userInfo.Nickname;
         UIManager.Get<BoardUI>().OnRefresh += Refresh;
     }
 
