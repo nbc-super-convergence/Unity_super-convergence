@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 public enum PlayerTokenState
 {
@@ -9,7 +8,7 @@ public enum PlayerTokenState
 }
 
 [Serializable]
-public struct BoardTokenData
+public class BoardTokenData
 {
     public UserInfo userInfo;
     //public BoardGameData gameData;
