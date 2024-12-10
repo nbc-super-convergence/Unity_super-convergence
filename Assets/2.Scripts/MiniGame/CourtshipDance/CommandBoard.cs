@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
@@ -11,6 +12,7 @@ public class CommandBoard : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private GameObject prefabBubble;
     [SerializeField] private Image failImage;
+    [SerializeField] private TMP_Text completeText;
 
     [SerializeField] private Queue<ArrowBubble> curCommandQueue;
 
@@ -26,7 +28,6 @@ public class CommandBoard : MonoBehaviour
     public int round = 0;
 
     private TaskCompletionSource<bool> sourceTcs;
-
 
     public void TrySetTask(bool isSuccess)
     {
@@ -90,15 +91,27 @@ public class CommandBoard : MonoBehaviour
             packet.DanceTableCompleteRequest = new()
             {
                 SessionId = SessionId,
-                //EndTime = 
+                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
             };
-
+            SocketManager.Instance.OnSend(packet);
         }
         else
         {
-            // 완료 버블 띄우기? C O M P L E T E
-            // return;
+            // 완료 로직
+            // 완료 효과
+            GamePacket packet = new();
+            packet.DanceTableCompleteRequest = new()
+            {
+                SessionId = SessionId,
+                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+            };
+            SocketManager.Instance.OnSend(packet);
+
+            completeText.gameObject.SetActive(true);
+            background.gameObject.SetActive(false);
+            token.InputHandler.DisablePlayerInput();
         }
+
         Queue<ArrowBubble> queue = new();
         foreach ( var info in curQueueInfo)
         {
@@ -169,8 +182,6 @@ public class CommandBoard : MonoBehaviour
         CheckInput(curQueueInfo.Peek().Rotation, sessionId);
     }
 
-
-
     private void CheckInput(float rot, string sessionId)
     {
         var target = curQueueInfo.Peek();
@@ -215,7 +226,6 @@ public class CommandBoard : MonoBehaviour
 
         if(curQueueInfo.Count == 0)
         {
-            //UIManager.Get<UICommandBoardHandler>().Next();
             MakeNextBoard();
         }
     }
@@ -243,5 +253,4 @@ public class CommandBoard : MonoBehaviour
         failImage.gameObject.SetActive(false);
     }
     #endregion
-
 }

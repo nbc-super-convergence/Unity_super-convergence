@@ -1,6 +1,9 @@
+using Google.Protobuf.Collections;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -29,10 +32,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     /* 404 */
     public void DanceStartNotification(GamePacket packet)
     {
+        var response = packet.DanceStartNotification;
+
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart(response);
     }
 
     /* 405 : DanceTableCreateRequest
@@ -56,7 +61,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceKeyPressResponse;
         if(response.Success)
         {
-            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnEventInput(response.Correct);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnEventInput(response.Correct);
         }
     }
 
@@ -64,7 +69,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceKeyPressNotification(GamePacket packet)
     {
         var response = packet.DanceKeyPressNotification;
-        UIManager.Get<UICommandBoardHandler>().boardDic[response.SessionId].OtherHandleInput(response.Correct, response.SessionId);
+        UIManager.Get<UICourtshipDance>().boardDic[response.SessionId].OtherHandleInput(response.Correct, response.SessionId);
+    }
+
+    /* 410 */
+    public void DanceGameOverNotification(GamePacket packet)
+    {
+        var response = packet.DanceGameOverNotification;      
+
+        UIManager.Get<UICourtshipDance>().GameOver(response);
+    }
+
+    /* 411 */
+    public void DanceTableCompleteRequest(GamePacket packet)
+    {
+        var response = packet.DanceTableCompleteRequest;
     }
 
     /* 412 : DanceTableCompleteRequest

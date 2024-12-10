@@ -5,9 +5,7 @@ using System.Linq;
 
 public class CommandGenerator
 {
-    public int boardAmount = 15;
-    public int minBubbleCount = 3;
-    public int maxBubbleCount = 13;
+    private CourtshipDanceData gameData;
 
     private int[] rotations = { 0, 90, 180, 270 };
     private Random random = new();
@@ -16,9 +14,14 @@ public class CommandGenerator
 
     private Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new();
 
-    public void InitFFA(List<Player> players)
+    public CommandGenerator()
     {
-        var originPool = GenerateBoardInfoPool(boardAmount);
+        gameData = new CourtshipDanceData();
+    }
+
+    public void InitFFA(List<PlayerInfo> players)
+    {
+        var originPool = GenerateBoardInfoPool(gameData.individualBoardAmount);
 
         for (int i = 0; i < players.Count; i++)
         {
@@ -47,7 +50,7 @@ public class CommandGenerator
         Queue<Queue<BubbleInfo>> pool = new();
         for (int i = 0; i < poolCount; ++i)
         {
-            int bubbleCount = Math.Clamp(i, minBubbleCount, maxBubbleCount);
+            int bubbleCount = Math.Clamp(i, gameData.minBubbleCount, gameData.maxBubbleCount);
             pool.Enqueue(GenerateBoardInfo(bubbleCount));
         }
         return pool;
@@ -63,7 +66,7 @@ public class CommandGenerator
         return queue;
     }
 
-    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, List<Player> players)
+    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, List<PlayerInfo> players)
     {
         foreach (var queue in pool)
         {
@@ -71,7 +74,7 @@ public class CommandGenerator
         }
     }
 
-    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, Player player)
+    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, PlayerInfo player)
     {
         foreach (var queue in pool)
         {
@@ -79,7 +82,7 @@ public class CommandGenerator
         }
     }
 
-    private void SetBoardColor(Queue<BubbleInfo> queue, List<Player> teamPlayers)
+    private void SetBoardColor(Queue<BubbleInfo> queue, List<PlayerInfo> teamPlayers)
     {
         List<int> colors = new();
         foreach (var player in teamPlayers)
@@ -100,7 +103,7 @@ public class CommandGenerator
         }
     }
 
-    private void SetBoardColor(Queue<BubbleInfo> queue, Player player)
+    private void SetBoardColor(Queue<BubbleInfo> queue, PlayerInfo player)
     {
         int color = -1;
 

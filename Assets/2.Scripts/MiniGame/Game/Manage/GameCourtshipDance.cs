@@ -1,24 +1,25 @@
 using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using UnityEngine.Playables;
 
-// 임시 클래스
-public class Player
-{
-    public string SessionId;
-    public int TeamId;
-}
+//// 임시 클래스
+//public class PlayerInfo
+//{
+//    public string SessionId;
+//    public int TeamId;
+//}
 
 // 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
-    public int boardCount = 13;
-
-    public UICommandBoardHandler commandBoardHandler;
+    private UICourtshipDance ingameUI;
+    public UICourtshipDance commandBoardHandler;
+    public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
     public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
-    private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
+    private List<PlayerInfo> players;    
     private TaskCompletionSource<bool> sourceTcs;
 
     public GameCourtshipDance()
@@ -32,7 +33,9 @@ public class GameCourtshipDance : IGame
     /// <param name="param"></param>
     public async void Init(params object[] param)
     {
-        var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
+        gameData = new CourtshipDanceData();
+        gameData.Init();
+        var commandBoardHandler = await UIManager.Show<UICourtshipDance>();
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMapDance();
         S2C_DanceMiniGameReadyNotification response;
@@ -40,7 +43,7 @@ public class GameCourtshipDance : IGame
         {
             response = item;
         }
-        else if (param[0] is List<Player> players)
+        else if (param[0] is List<PlayerInfo> players)
         {
             this.players = players;
         }
@@ -96,12 +99,16 @@ public class GameCourtshipDance : IGame
     /// <summary>
     /// S2C게임시작알림 서버의 알림에 따라 실행. 진짜 게임 시작.
     /// </summary>
-    public void GameStart(params object[] param)
-    {        
+    public async void GameStart(params object[] param)
+    {
+        if (param[0] is long startTime)
+        {
+            ingameUI = await UIManager.Show<UICourtshipDance>(gameData, startTime);
+        }
         MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
     }
 
-    public void BeforeGameEnd(List<Player> players)
+    public void BeforeGameEnd()
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         foreach (var p in players)
@@ -109,18 +116,18 @@ public class GameCourtshipDance : IGame
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             map.TokenReset(miniToken);
         }
-        UIManager.Hide<UICommandBoardHandler>();
+        UIManager.Hide<UICourtshipDance>();
     }
-
+    
     #region 초기화
     // 팀 가르기
-    
+
     /// <summary>
     /// 토큰의 위치 지정과 애니메이터 교체를 수행.
     /// 입력 교체
     /// </summary>
     /// <param name="players"></param>
-    private void ResetPlayers(List<Player> players) // 매개변수 바뀔 수 있음.
+    private void ResetPlayers(List<PlayerInfo> players) // 매개변수 바뀔 수 있음.
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
@@ -130,7 +137,6 @@ public class GameCourtshipDance : IGame
             miniToken.EnableMiniToken();
             if (true)
             {
-
                 //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
                 miniToken.transform.position = map.spawnPosition[num].position;
                 miniToken.transform.rotation = map.spawnPosition[num].rotation;
@@ -149,14 +155,27 @@ public class GameCourtshipDance : IGame
     }
     #endregion
 
-    #region 소켓
-    // S2C GameStartNoti
-    public void GameStartNoti(GamePacket packet)
+
+    public int GetPlayerTeam(string sessionId)
     {
-        var response = packet.GameStartNotification;
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
+        foreach (var p in players)
+        {
+            if(p.SessionId == sessionId)
+            {
+                return p.TeamNumber;                
+            }            
+        }
+        return -1;
     }
-    #endregion
-
-
+    public string GetPlayerSessionId(int teamNumber)
+    {
+        foreach (var p in players)
+        {
+            if (p.TeamNumber == teamNumber)
+            {
+                return p.SessionId;
+            }
+        }
+        return null;
+    }
 }

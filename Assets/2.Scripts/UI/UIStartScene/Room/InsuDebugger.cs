@@ -20,10 +20,10 @@ public class InsuDebugger : Singleton<InsuDebugger>
         }
         if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
-            UIManager.Get<UICommandBoardHandler>().Next("Session1");
-            UIManager.Get<UICommandBoardHandler>().Next("Session2");
-            UIManager.Get<UICommandBoardHandler>().Next("Session3");
-            UIManager.Get<UICommandBoardHandler>().Next("Session4");
+            UIManager.Get<UICourtshipDance>().Next("Session1");
+            UIManager.Get<UICourtshipDance>().Next("Session2");
+            UIManager.Get<UICourtshipDance>().Next("Session3");
+            UIManager.Get<UICourtshipDance>().Next("Session4");
         }
 
 
@@ -32,7 +32,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
         if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         { StartDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { UIManager.Get<UICommandBoardHandler>().Next(GameManager.Instance.myInfo.SessionId); }
+        { UIManager.Get<UICourtshipDance>().Next(GameManager.Instance.myInfo.SessionId); }
     }
 
     private void OpenDance()
@@ -44,11 +44,11 @@ public class InsuDebugger : Singleton<InsuDebugger>
     private void Setminigame()
     {
         var a = GameManager.Instance.SessionDic;
-        List<Player> list = new List<Player>();
+        List<PlayerInfo> list = new List<PlayerInfo>();
 
         foreach (var p in a)
         {
-            var player = new Player { SessionId = p.Value.SessionId , TeamId = 0 };
+            var player = new PlayerInfo { SessionId = p.Value.SessionId , TeamNumber = 0 };
             list.Add(player);
         }
 
@@ -63,8 +63,8 @@ public class InsuDebugger : Singleton<InsuDebugger>
     }
     private void StartDance()
     {        
-        Player debugPlayer0 = new Player() { SessionId = GameManager.Instance.myInfo.SessionId };
-        List<Player> debugPlayers = new List<Player>
+        PlayerInfo debugPlayer0 = new PlayerInfo() { SessionId = GameManager.Instance.myInfo.SessionId };
+        List<PlayerInfo> debugPlayers = new List<PlayerInfo>
         {
             debugPlayer0
         };
