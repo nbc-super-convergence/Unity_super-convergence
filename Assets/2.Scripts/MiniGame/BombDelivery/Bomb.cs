@@ -7,6 +7,7 @@ public class Bomb : MonoBehaviour
     //private float timer;
     int length, targetIndex;
     private Transform target;
+    private MiniToken token;
 
     private void OnEnable()
     {
@@ -30,15 +31,19 @@ public class Bomb : MonoBehaviour
         //}
         //else
         //{
-        for (int i = 0; i < length; i++)
+
+        if(targetIndex == GameManager.Instance.myInfo.Color)
         {
-            if (i == targetIndex) continue;
+            for (int i = 0; i < length; i++)
+            {
+                if (i == targetIndex) continue;
 
-            Transform t = MinigameManager.Instance.miniTokens[i].transform;
+                Transform t = MinigameManager.Instance.miniTokens[i].transform;
 
-            float d = Vector3.Distance(target.position, t.position);
+                float d = Vector3.Distance(target.position, t.position);
 
-            if (1.5f > d) ChangeTarget(i);
+                if (1.5f > d) ChangeTarget(i);
+            }
         }
         //}
 
@@ -56,12 +61,35 @@ public class Bomb : MonoBehaviour
 
     public void ChangeTarget(int i)
     {
+        var c = MinigameManager.Instance.miniTokens[i].MyColor;
 
+        string id = BoardManager.Instance.playerTokenHandlers.
+            Find((p) => p.data.userInfo.Color == c).data.userInfo.SessionId;
+
+        GamePacket packet = new();
+
+        packet.BombMoveRequest = new()
+        {
+            SessionId = id,
+        };
+
+        SocketManager.Instance.OnSend(packet);
+
+        if (MinigameManager.Instance.miniTokens[c] is MiniToken token && token.IsClient)
+            token.Stun();
     }
 
     public void SetTarget(string id)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(id);
+
+        if (this.token != null)
+        {
+            this.token.MiniData.PlayerSpeed = 15;
+            token.MiniData.PlayerSpeed = 15 * 1.2f;
+        }
+
+        this.token = token;
         targetIndex = token.MyColor;
         target = token.transform;
     }
