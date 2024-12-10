@@ -88,10 +88,10 @@ public class MinigameManager : Singleton<MinigameManager>
     }
 
     //미니게임 맵 생성
-    public void MakeMap()
+    public void MakeMap<T>() where T : MapBase
     {
          GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
-        curMap = instantiatedMap.GetComponent<MapGameIceSlider>();
+        curMap = instantiatedMap.GetComponent<T>();
     }
 
     public void MakeMapDance()

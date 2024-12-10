@@ -1,7 +1,7 @@
-using static S2C_IceMiniGameReadyNotification.Types;
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using System;
 
 public partial class ClientTest : Singleton<ClientTest>
 {
@@ -9,7 +9,7 @@ public partial class ClientTest : Singleton<ClientTest>
     {
         yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "BoardScene");
 
-        //IceMiniGameReadyNotification
+        //DropMiniGameReadyNotification
         while (true)
         {
             if (Input.GetKey(KeyCode.CapsLock) &&
@@ -17,52 +17,109 @@ public partial class ClientTest : Singleton<ClientTest>
             {
                 GamePacket packet = new()
                 {
-                    IceMiniGameReadyNotification = new()
+                    DropMiniGameReadyNotification = new()
                     {
                         Players =
                         {
-                            new startPlayers
+                            new S2C_DropMiniGameReadyNotification.Types.startPlayers
                             {
                                 SessionId = "Session1",
-                                Position = new Vector { X = -4, Y = 0.2f, Z = 4 },
-                                Rotation = 135
+                                Slot = 0,
+                                Rotation = 0
                             },
-                            new startPlayers
+                            new S2C_DropMiniGameReadyNotification.Types.startPlayers
                             {
                                 SessionId = "Session2",
-                                Position = new Vector { X = 4, Y = 0.2f, Z = 4 },
-                                Rotation = -135
+                                Slot = 2,
+                                Rotation = 0
                             },
-                            new startPlayers
+                            new S2C_DropMiniGameReadyNotification.Types.startPlayers
                             {
                                 SessionId = "Session3",
-                                Position = new Vector { X = 4, Y = 0.2f, Z = -4 },
-                                Rotation = -45
+                                Slot = 6,
+                                Rotation = 0
                             },
-                            new startPlayers
+                            new S2C_DropMiniGameReadyNotification.Types.startPlayers
                             {
                                 SessionId = "Session4",
-                                Position = new Vector { X = -4, Y = 0.2f, Z = -4 },
-                                Rotation = 45
+                                Slot = 8,
+                                Rotation = 0
                             }
                         }
                     }
                 };
 
-                SocketManager.Instance.IceMiniGameReadyNotification(packet);
+                SocketManager.Instance.DropMiniGameReadyNotification(packet);
                 break;
             }
             yield return null;
         }
 
-        //IceMiniGameStartNotification
+        //DropMiniGameStartNotification
         while (true)
         {
             if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.O))
             {
-                GamePacket packet = new GamePacket();
-                SocketManager.Instance.IceMiniGameStartNotification(packet);
+                GamePacket packet = new ()
+                {
+                    DropMiniGameStartNotification = new()
+                    {
+                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                    }
+                };
+                SocketManager.Instance.DropMiniGameStartNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+
+        //DropLevelEndNotification
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) &&
+            Input.GetKeyDown(KeyCode.I))
+            {
+                GamePacket packet = new()
+                {
+                    DropLevelEndNotification = new()
+                    {
+                        Holes = {0, 1, 3, 5, 7}
+                    }
+                };
+                SocketManager.Instance.DropLevelEndNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+
+        //DropLevelStartNotification
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) &&
+            Input.GetKeyDown(KeyCode.O))
+            {
+                GamePacket packet = new();
+                SocketManager.Instance.DropLevelStartNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+
+        //DropLevelEndNotification
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) &&
+            Input.GetKeyDown(KeyCode.I))
+            {
+                GamePacket packet = new()
+                {
+                    DropLevelEndNotification = new()
+                    {
+                        Holes = { 0, 1, 3, 5, 7 }
+                    }
+                };
+                SocketManager.Instance.DropLevelEndNotification(packet);
                 break;
             }
             yield return null;

@@ -4,7 +4,8 @@ public enum eMoveType
 {
     Server,
     AddForce,
-    Velocity
+    Velocity,
+    Dropper
 }
 
 public class MiniTokenController
@@ -41,7 +42,27 @@ public class MiniTokenController
                 Vector3 force = new(miniData.wasdVector.x, 0, miniData.wasdVector.y);
                 rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
-            case eMoveType.Velocity:
+            case eMoveType.Dropper:
+                distance = Vector2.Distance(
+                    new (transform.localPosition.x, transform.localPosition.z),
+                    new (miniData.nextPos.x, miniData.nextPos.z)
+                );
+                threshold = 0.5f;
+
+                if (distance > threshold)
+                {
+                    if (miniData.CurState != State.Move)
+                        miniData.CurState = State.Move;
+                    Vector3 direction = (miniData.nextPos - transform.localPosition).normalized;
+                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, rb.velocity.y, direction.z * miniData.PlayerSpeed);
+                }
+                else
+                {
+                    if (miniData.CurState != State.Idle)
+                        miniData.CurState = State.Idle;
+                    rb.velocity = new(0, rb.velocity.y, 0);
+                    miniData.rotY = 0;
+                }
                 break;
         }
     }

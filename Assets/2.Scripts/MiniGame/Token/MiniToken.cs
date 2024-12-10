@@ -40,10 +40,12 @@ public class MiniToken : MonoBehaviour
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.RotateToken(MiniData.rotY);
                     break;
                 case eGameType.GameCourtshipDance:
                     // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
+                    break;
+                case eGameType.GameDropper:
+                    Controller.MoveToken(eMoveType.Dropper);
                     break;
             }
         }
@@ -51,15 +53,22 @@ public class MiniToken : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsClient && isEnabled)
+        if (isEnabled)
         {
-            switch (MinigameManager.gameType)
+            if (IsClient)
             {
-                case eGameType.GameIceSlider:
-                    Controller.MoveToken(eMoveType.AddForce);
-                    Controller.RotateToken(MiniData.rotY);
-                    break;
+                switch (MinigameManager.gameType)
+                {
+                    case eGameType.GameIceSlider:
+                        Controller.MoveToken(eMoveType.AddForce);
+                        break;
+                    case eGameType.GameDropper:
+                        Controller.MoveToken(eMoveType.Dropper);
+                        break;
+                }
             }
+
+            Controller.RotateToken(MiniData.rotY);
         }
     }
     #endregion
@@ -154,12 +163,12 @@ public class MiniToken : MonoBehaviour
         isEnabled = false;
         rb.velocity = Vector3.zero; //움직임 멈춤
         MiniData.CurState = State.Die; //사망 애니메이션 재생
-        StartCoroutine(disableDelay());
+        StartCoroutine(DisableDelay());
     }
 
-    private IEnumerator disableDelay()
+    private IEnumerator DisableDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
     }
 }
