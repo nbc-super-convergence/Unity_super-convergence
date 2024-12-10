@@ -12,7 +12,7 @@ public class GameIceSlider : IGame
         gameData = new GameIceSliderData();
         gameData.Init();
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap();
+        MinigameManager.Instance.MakeMap<MapGameIceSlider>();
         SetBGM();
 
         if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)

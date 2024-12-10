@@ -12,7 +12,7 @@ public class GameDropper : IGame
         gameData = new GameDropperData();
         gameData.Init();
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDropper>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap();
+        MinigameManager.Instance.MakeMap<MapGameDropper>();
         SetBGM();
 
         /*Reset Players*/

@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class MapGameDropper : MapBase
 {
-    [SerializeField] private Camera gameCamera;
     [SerializeField] private List<GameObject> levels;
 
-    [SerializeField] private float cameraFollowDelay = 0.2f;
+    [Header("Camera")]
+    [SerializeField] private Camera gameCamera;
+    [SerializeField] private float cameraFollowDelay = 0.5f;
+    [SerializeField] private float cameraMoveTime = 2f;
 
     private GameDropperData gameData;
     private int prevPhase;
@@ -44,13 +46,15 @@ public class MapGameDropper : MapBase
         
         Vector3 curPos = gameCamera.transform.position;
         Vector3 nextPos = new Vector3(curPos.x, curPos.y - 10, curPos.z);
+        float elapsedTime = 0f;
 
-        while (curPos == nextPos)
+        while (elapsedTime < cameraMoveTime)
         {
-            curPos = Vector3.Lerp(curPos, nextPos, 0.2f);
-            gameCamera.transform.position = curPos;
+            float t = elapsedTime / cameraMoveTime;
+            gameCamera.transform.position = Vector3.Lerp(curPos, nextPos, t);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        
+        gameCamera.transform.position = nextPos;
     }
 }
