@@ -179,9 +179,9 @@ public static partial class ProtocolReflection {
           "Qm9tYlBsYXllclN5bmNOb3RpZmljYXRpb24SEQoJc2Vzc2lvbklkGAEgASgJ",
           "EhkKCHBvc2l0aW9uGAIgASgLMgcuVmVjdG9yEhAKCHJvdGF0aW9uGAMgASgC",
           "EhUKBXN0YXRlGAQgASgOMgYuU3RhdGUiSwofUzJDX0JvbWJQbGF5ZXJEZWF0",
-          "aE5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkSFQoNQm9tYlNlc3Np",
-          "b25JZBgCIAEoCSIoChNDMlNfQm9tYk1vdmVSZXF1ZXN0EhEKCVNlc3Npb25J",
-          "ZBgBIAEoCSItChhTMkNfQm9tYk1vdmVOb3RpZmljYXRpb24SEQoJU2Vzc2lv",
+          "aE5vdGlmaWNhdGlvbhIRCglzZXNzaW9uSWQYASABKAkSFQoNYm9tYlNlc3Np",
+          "b25JZBgCIAEoCSIoChNDMlNfQm9tYk1vdmVSZXF1ZXN0EhEKCXNlc3Npb25J",
+          "ZBgBIAEoCSItChhTMkNfQm9tYk1vdmVOb3RpZmljYXRpb24SEQoJc2Vzc2lv",
           "bklkGAEgASgJIosBChxTMkNfQm9tYkdhbWVPdmVyTm90aWZpY2F0aW9uEjEK",
           "BXJhbmtzGAEgAygLMiIuUzJDX0JvbWJHYW1lT3Zlck5vdGlmaWNhdGlvbi5S",
           "YW5rEg8KB2VuZFRpbWUYAiABKAMaJwoEUmFuaxIRCglzZXNzaW9uSWQYASAB",
@@ -15681,7 +15681,7 @@ public sealed partial class S2C_BombPlayerDeathNotification : pb::IMessage<S2C_B
     }
   }
 
-  /// <summary>Field number for the "BombSessionId" field.</summary>
+  /// <summary>Field number for the "bombSessionId" field.</summary>
   public const int BombSessionIdFieldNumber = 2;
   private string bombSessionId_ = "";
   /// <summary>
@@ -15832,7 +15832,7 @@ public sealed partial class C2S_BombMoveRequest : pb::IMessage<C2S_BombMoveReque
     return new C2S_BombMoveRequest(this);
   }
 
-  /// <summary>Field number for the "SessionId" field.</summary>
+  /// <summary>Field number for the "sessionId" field.</summary>
   public const int SessionIdFieldNumber = 1;
   private string sessionId_ = "";
   /// <summary>
@@ -15964,7 +15964,7 @@ public sealed partial class S2C_BombMoveNotification : pb::IMessage<S2C_BombMove
     return new S2C_BombMoveNotification(this);
   }
 
-  /// <summary>Field number for the "SessionId" field.</summary>
+  /// <summary>Field number for the "sessionId" field.</summary>
   public const int SessionIdFieldNumber = 1;
   private string sessionId_ = "";
   /// <summary>
