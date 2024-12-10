@@ -75,7 +75,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         //미니게임 맵 삭제
         MinigameManager.Instance.boardCamera.SetActive(true);
-        Destroy(MinigameManager.Instance.curMap.gameObject);
 
+        MinigameManager.Instance.GetMiniGame<GameBombDelivery>().GameOver();
     }
 }

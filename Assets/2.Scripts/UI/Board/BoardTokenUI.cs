@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 public class BoardTokenUI : UIBase
 {
     public TMP_Text nickname;
-    public TMP_Text trophy;
+    //public TMP_Text trophy;
     public TMP_Text coin;
 
     private BoardTokenData data;
@@ -18,7 +18,7 @@ public class BoardTokenUI : UIBase
 
     public void Refresh()
     {
-        trophy.text = data.trophyAmount.ToString();
+        //trophy.text = data.trophyAmount.ToString();
         coin.text = data.keyAmount.ToString();
     }
 

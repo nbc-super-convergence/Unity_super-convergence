@@ -199,16 +199,18 @@ public class BoardManager : Singleton<BoardManager>
             //}
             //else
             //{
-                GamePacket packet = new();
+            UIManager.Get<BoardUI>().Refresh();
 
-                packet.TurnEndRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId
-                };
+            GamePacket packet = new();
+
+            packet.TurnEndRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId
+            };
                 
-                SocketManager.Instance.OnSend(packet);
+            SocketManager.Instance.OnSend(packet);
 
-                NextTurn();
+            NextTurn();
             //}
 
             #region Old

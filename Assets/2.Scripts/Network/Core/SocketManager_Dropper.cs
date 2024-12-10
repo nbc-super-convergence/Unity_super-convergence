@@ -64,7 +64,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //308
     public void DropLevelStartNotification(GamePacket gamePacket)
     {
-        StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
+        
     }
 
     //309
@@ -74,6 +74,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         int[] holes = response.Holes.ToArray();
         MinigameManager.Instance.GetMap<MapGameDropper>()
             .NextLevelEvent(holes);
+        StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
     }
 
     //310

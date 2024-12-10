@@ -42,6 +42,9 @@ public class MiniTokenController
                 Vector3 force = new(miniData.wasdVector.x, 0, miniData.wasdVector.y);
                 rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
+            case eMoveType.Velocity:
+                rb.velocity = new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y) * miniData.PlayerSpeed;
+                break;
             case eMoveType.Dropper:
                 distance = Vector2.Distance(
                     new (transform.localPosition.x, transform.localPosition.z),
