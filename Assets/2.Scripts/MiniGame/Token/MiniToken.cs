@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -140,10 +139,6 @@ public class MiniToken : MonoBehaviour
     public Animator GetAnimator()
     {
         return animator;
-    }
-    public void SetAnimator(AnimatorController animator)
-    {
-        this.animator.runtimeAnimatorController = animator;
     }
     #endregion
 
