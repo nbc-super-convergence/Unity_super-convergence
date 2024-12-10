@@ -33,7 +33,7 @@ public class UIMinigameReady : UIBase
             eGameType.GameIceSlider => "미끌미끌 얼음판",
             eGameType.GameBombDelivery => "폭탄 배달왔어요",
             eGameType.GameCourtshipDance => "구애의 춤",
-            eGameType.GameDropper => "내려가며 디스코파티",
+            eGameType.GameDropper => "지하에서 디스코파티",
             _ => "ERROR!!!",
         };
 
