@@ -12128,7 +12128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fea76fac8b7754419a7b900d1dd128f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCamera: {fileID: 8152994199314368078}
   levels:
   - {fileID: 5306227170902518560}
   - {fileID: 2282034094992627769}
@@ -12140,7 +12139,9 @@ MonoBehaviour:
   - {fileID: 5690943660605177633}
   - {fileID: 6745076059152020507}
   - {fileID: 1243085216445911637}
+  gameCamera: {fileID: 8152994199314368078}
   cameraFollowDelay: 0.5
+  cameraMoveTime: 2
 --- !u!1 &4848525088284766847
 GameObject:
   m_ObjectHideFlags: 0
