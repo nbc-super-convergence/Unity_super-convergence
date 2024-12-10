@@ -35,12 +35,12 @@ public class SelectOrderPannel : MonoBehaviour
             //다음 차례
             SelectOrderManager.Instance.NextDart();
 
-            curDartCnt++;
-            if (curDartCnt >= maxDartCnt)    //모두 던졌으면 그만
-            {
-                isMove = false;
-                DistanceRank();
-            }
+            //curDartCnt++;
+            //if (curDartCnt >= maxDartCnt)    //모두 던졌으면 그만
+            //{
+            //    isMove = false;
+            //    DistanceRank();
+            //}
         }
     }
 
@@ -60,9 +60,10 @@ public class SelectOrderPannel : MonoBehaviour
     }
 
     //중심과 가까운 다트가 우선순위
-    private void DistanceRank()
+    public void DistanceRank()
     {
         int rank = 1;
+        int miss = 4;
         
         foreach (var dart in SelectOrderManager.Instance.DartOrder)
             distanceRank.Add(dart.MyDistance);
@@ -73,16 +74,19 @@ public class SelectOrderPannel : MonoBehaviour
         for (int i = 0; i < distanceRank.Count; i++)
         {
             foreach (var dart in SelectOrderManager.Instance.DartOrder)
-                if(dart.MyDistance.Equals(distanceRank[i]))
+            {
+                if (dart.MyDistance.Equals(distanceRank[i]))
                 {
-                    dart.MyRank = rank;
-                    rank++;
+                    if (dart.MyDistance >= 10f)
+                        continue;
+                    else
+                    {
+                        dart.MyRank = rank;
+                        rank++;
+                    }
                 }
+            }
         }
-
-        GamePacket packet = new();
-        var response = packet.DiceGameResponse;
-
 
         SelectOrderManager.Instance.FinishSelectOrder();
         //디버깅

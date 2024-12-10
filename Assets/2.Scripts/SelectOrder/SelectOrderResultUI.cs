@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -97,6 +97,9 @@ public class SelectOrderResultUI : MonoBehaviour
     public void SetScore(float dist)
     {
         scoreText.gameObject.SetActive(true);
-        scoreText.text = dist.ToString("N4");
+        if (dist >= 10f)
+            scoreText.text = "Miss";
+        else
+            scoreText.text = dist.ToString("N4");
     }
 }

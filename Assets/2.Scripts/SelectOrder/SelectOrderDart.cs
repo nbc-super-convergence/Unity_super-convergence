@@ -11,7 +11,7 @@ public class SelectOrderDart : MonoBehaviour
     private ShootingPhase phase = ShootingPhase.Ready;
 
     //서버 전송 데이터
-    private DiceGameData diceData;
+    private DiceGameData diceData = new();
     public DiceGameData DiceGameData
     {
         get => diceData;
@@ -34,6 +34,8 @@ public class SelectOrderDart : MonoBehaviour
         {
             aimVector.x = Mathf.Clamp(value.x, minAim, maxAim);
             aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
+
+            DiceGameData.Angle = SocketManager.ToVector(CurAim);
         }
     }
     public Vector2 GetAim = Vector2.zero;   //입력 Aim
@@ -46,6 +48,8 @@ public class SelectOrderDart : MonoBehaviour
         set
         {
             curForce = Mathf.Clamp(value, minForce, maxForce);
+            DiceGameData.Power = curForce;
+
             if(curForce <= minForce)
                 isIncrease = true;
             if (curForce >= maxForce)
@@ -82,8 +86,6 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<SelectOrderEvent>();
-
-        DiceGameData = new();
     }
 
     private void Start()
@@ -130,16 +132,10 @@ public class SelectOrderDart : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //빗나가면 다시
-        ResetDart();
-    }
+        //무효처리
+        MissDart();
 
-    //입력 받을 때
-    public void OnShooting(InputAction.CallbackContext context)
-    {
-        if (InputActionPhase.Started == context.phase)
-        {
-        }
+        SelectOrderManager.Instance.NextDart();
     }
 
     /// <summary>
@@ -172,7 +168,7 @@ public class SelectOrderDart : MonoBehaviour
     /// <summary>
     /// 다트 초기화
     /// </summary>
-    private void ResetDart()
+    private void MissDart()
     {
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
@@ -182,7 +178,9 @@ public class SelectOrderDart : MonoBehaviour
         CurAim = Vector3.zero;
         CurForce = 2f;
 
-        phase = ShootingPhase.Ready;
+        gameObject.SetActive(false);
+        MyDistance = 10;    //랭크에서 빠지는 걸로
+        MyRank = SelectOrderManager.Instance.MissRank;
     }
 
     /// <summary>
@@ -199,12 +197,15 @@ public class SelectOrderDart : MonoBehaviour
     /// </summary>
     public void SendServer()
     {
-        GamePacket packet = new GamePacket();
+        GamePacket packet = new();
         var data = packet.DiceGameRequest = new()
         {
-            Distance = MyDistance,
-            SessionId = gameObject.name
             //SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = gameObject.name,
+            Distance = MyDistance,
+            Angle = SocketManager.ToVector(CurAim),
+            Location = SocketManager.ToVector(transform.localPosition),
+            Power = CurForce
         };
         SocketManager.Instance.OnSend(packet);
     }

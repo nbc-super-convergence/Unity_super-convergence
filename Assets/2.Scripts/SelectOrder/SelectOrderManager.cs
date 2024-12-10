@@ -1,11 +1,11 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SelectOrderManager : Singleton<SelectOrderManager>
 {
     //다트판
-    public GameObject DartPannel;
+    public SelectOrderPannel DartPannel;
 
     //다트그룹
     public List<SelectOrderDart> DartOrder;
@@ -19,8 +19,14 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     [SerializeField] private Transform Title;   //타이틀 및 설명
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
-
-    private bool nowStart = false;  //지금부터 시작
+    private int missRank = 4;
+    public int MissRank
+    {
+        get
+        {
+            return missRank--;
+        }
+    }   //빗나간 랭크
 
     #region 조절 속성
     //조절 속성
@@ -52,29 +58,11 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
 
     private void Start()
     {
-        //시작 초기
-
-        //타이틀 UI 활성
-        Title.gameObject.SetActive(true);
-        //속성 UI 비활성
-        resultGroup.gameObject.SetActive(false);
-        dartPowerUI.gameObject.SetActive(false);
+        BeginSelectOrder();
     }
 
     private void Update()
     {
-        //스페이스바 누르면 시작 (임시로)
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            nowStart = true;
-            //타이틀 UI 비활성
-            Title.gameObject.SetActive(false);
-            //속성 UI 활성
-            resultGroup.gameObject.SetActive(true);
-            dartPowerUI.gameObject.SetActive(true);
-            BeginSelectOrder();
-        }
-
         if (nowPlayer < DartOrder.Count)
         {
             //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
@@ -112,6 +100,10 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         {
             resultsUI[nowPlayer].SetMyTurn();
             DartOrder[nowPlayer].gameObject.SetActive(true);
+        }
+        else
+        {
+            DartPannel.DistanceRank();
         }
     }
 
