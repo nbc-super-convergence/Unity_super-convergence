@@ -113,23 +113,34 @@ public class MiniTokenInputHandler
     private void OnUp(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 0;
-        // 서버에 입력함 패킷 보내기, 응답받기
-        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        if (UIManager.IsOpened<UICommandBoardHandler>())
+        {
+            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        }
     }
     private void OnLeft(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 90;
-        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        if (UIManager.IsOpened<UICommandBoardHandler>())
+        {
+            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        }
     }
     private void OnDown(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 180;
-        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        if (UIManager.IsOpened<UICommandBoardHandler>())
+        {
+            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        }
     }
     private void OnRight(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 270;
-        UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        if (UIManager.IsOpened<UICommandBoardHandler>())
+        {
+            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+        }
     }
     #endregion
 
