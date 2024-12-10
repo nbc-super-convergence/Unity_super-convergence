@@ -10,6 +10,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.IceMiniGameReadyNotification;
         Debug.Log(response);
 
+        UIManager.Hide<BoardUI>();
         //ReadyPanel 띄우기.
 #pragma warning disable CS4014 
         UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider);

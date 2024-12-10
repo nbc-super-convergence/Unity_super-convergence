@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -8,7 +9,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DropMiniGameReadyNotification;
 
         //ReadyPanel 띄우기.
-#pragma warning disable CS4014 
+        UIManager.Hide<BoardUI>();
+#pragma warning disable CS4014
         UIManager.Show<UIMinigameReady>(eGameType.GameDropper);
 #pragma warning restore CS4014
 
@@ -31,10 +33,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //304
     public void DropMiniGameStartNotification(GamePacket gamePacket)
     {
+        var response = gamePacket.DropMiniGameStartNotification;
+
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
-        MinigameManager.Instance.GetMiniGame<GameDropper>().GameStart();
+        MinigameManager.Instance.GetMiniGame<GameDropper>().GameStart(response.StartTime);
     }
 
     //305 DropPlayerSyncRequest
@@ -60,13 +64,16 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //308
     public void DropLevelStartNotification(GamePacket gamePacket)
     {
-
+        StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
     }
 
     //309
     public void DropLevelEndNotification(GamePacket gamePacket)
     {
-        
+        var response = gamePacket.DropLevelEndNotification;
+        int[] holes = response.Holes.ToArray();
+        MinigameManager.Instance.GetMap<MapGameDropper>()
+            .NextLevelEvent(holes);
     }
 
     //310
