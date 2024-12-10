@@ -47,6 +47,7 @@ public class GameBombDelivery : IGame
 
     public void Explosion(string id)
     {
+        bomb.gameObject.SetActive(false);
         //bomb.Explosion();
         bomb.Explosion(id);
 
@@ -54,6 +55,7 @@ public class GameBombDelivery : IGame
 
     public void SetTarget(string id)
     {
+        bomb.gameObject.SetActive(true);
         bomb.SetTarget(id);
         //MiniToken token = MinigameManager.Instance.GetMiniToken(id);
         //bomb.SetTarget(token.transform);
@@ -61,7 +63,7 @@ public class GameBombDelivery : IGame
 
     public void GameOver()
     {
-        Object.Destroy(bomb);
+        Object.Destroy(bomb.gameObject);
         Object.Destroy(MinigameManager.Instance.curMap.gameObject);
     }
 }

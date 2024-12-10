@@ -128,6 +128,7 @@ public class MiniToken : MonoBehaviour
                                 Rotation = transform.eulerAngles.y,
                                 State = MiniData.CurState
                             };
+                            Debug.Log("GameBombDelivery");
                             break;
                     }
 
