@@ -6,10 +6,6 @@ public class SelectOrderDart : MonoBehaviour
     private SelectOrderEvent orderEvent;
     private Rigidbody rgdby;
 
-    //발사 준비상태
-    private enum ShootingPhase { Ready };  
-    private ShootingPhase phase = ShootingPhase.Ready;
-
     //서버 전송 데이터
     private DiceGameData diceData = new();
     public DiceGameData DiceGameData
@@ -24,8 +20,6 @@ public class SelectOrderDart : MonoBehaviour
     private bool isIncrease = true; //증감 여부
     private int actionPhase = 0;
 
-    private float curAim = 0f;
-    private float curAimX = 0f;
     private float minAim, maxAim;
     private Vector3 aimVector;
     public Vector3 CurAim
