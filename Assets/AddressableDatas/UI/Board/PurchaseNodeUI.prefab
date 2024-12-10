@@ -516,9 +516,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
-  isDestroyAtClosed: 1
+  isDestroyAtClosed: 0
   uiPosition: 2
   content: {fileID: 659462186356966676}
+  buttons: []
 --- !u!1 &4147539034908840964
 GameObject:
   m_ObjectHideFlags: 0

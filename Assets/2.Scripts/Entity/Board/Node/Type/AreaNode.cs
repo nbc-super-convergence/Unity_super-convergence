@@ -4,13 +4,13 @@ using UnityEngine;
 public class AreaNode : BaseNode, IPurchase
 {
     private StringBuilder owner = new StringBuilder("");
-    //private int saleAmount = 10; //¸Å¼ö±İÀº ÆÇ¸Å¾×ÀÇ 2¹è
-
+    private int saleAmount = 10;
+    //ë§¤ìˆ˜ê¸ˆì€ íŒë§¤ì•¡ì˜ 2ë°°
+    //ë²Œê¸ˆì€ íŒë§¤ì•¡ì˜ ë°˜
 
     [SerializeField] MeshRenderer plane;
-    int price;
 
-    string IPurchase.message => $"{price}ÀÇ ¿­¼è¸¦ ÁöºÒÇÏ¿© ÇØ´ç Ä­À» ±¸¸Å ÇÒ ¼ö ÀÖ½À´Ï´Ù.";
+    string IPurchase.message => $"{saleAmount}ì˜ ì—´ì‡ ë¥¼ ì§€ë¶ˆí•˜ì—¬ í•´ë‹¹ ì¹¸ì„ êµ¬ë§¤ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
 
 
     public async override void Action()
@@ -43,7 +43,10 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            var ui = await UIManager.Show<PurchaseNodeUI>(purchase);
+            if (player.data.keyAmount >= saleAmount)
+                await UIManager.Show<PurchaseNodeUI>(purchase);
+            else
+                BoardManager.Instance.TurnEnd();
         }
         else
             Cancle();
@@ -73,6 +76,9 @@ public class AreaNode : BaseNode, IPurchase
         };
 
         SocketManager.Instance.OnSend(packet);
+
+        if (owner.ToString() != "")
+            saleAmount = (int)(saleAmount * 1.5f);
 
         SetArea(id);
         Cancle();
