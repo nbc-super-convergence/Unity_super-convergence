@@ -679,7 +679,7 @@ syntax = "proto3";
         int64 endTime = 2; // 일단 ice랑 똑같이 +6초 해서?
 
         message Rank { 
-            int32 sessionId = 1;
+            string sessionId = 1;
             int32 rank = 2; 
         }
     }

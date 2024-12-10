@@ -211,7 +211,7 @@ public static partial class ProtocolReflection {
           "UzJDX0JvbWJNb3ZlTm90aWZpY2F0aW9uEhEKCXNlc3Npb25JZBgBIAEoCSKL",
           "AQocUzJDX0JvbWJHYW1lT3Zlck5vdGlmaWNhdGlvbhIxCgVyYW5rcxgBIAMo",
           "CzIiLlMyQ19Cb21iR2FtZU92ZXJOb3RpZmljYXRpb24uUmFuaxIPCgdlbmRU",
-          "aW1lGAIgASgDGicKBFJhbmsSEQoJc2Vzc2lvbklkGAEgASgFEgwKBHJhbmsY",
+          "aW1lGAIgASgDGicKBFJhbmsSEQoJc2Vzc2lvbklkGAEgASgJEgwKBHJhbmsY",
           "AiABKAUivi8KCkdhbWVQYWNrZXQSLwoPcmVnaXN0ZXJSZXF1ZXN0GAEgASgL",
           "MhQuQzJTX1JlZ2lzdGVyUmVxdWVzdEgAEjEKEHJlZ2lzdGVyUmVzcG9uc2UY",
           "AiABKAsyFS5TMkNfUmVnaXN0ZXJSZXNwb25zZUgAEikKDGxvZ2luUmVxdWVz",
@@ -18963,12 +18963,12 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
 
       /// <summary>Field number for the "sessionId" field.</summary>
       public const int SessionIdFieldNumber = 1;
-      private int sessionId_;
+      private string sessionId_ = "";
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-      public int SessionId {
+      public string SessionId {
         get { return sessionId_; }
         set {
-          sessionId_ = value;
+          sessionId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
         }
       }
 
@@ -19004,7 +19004,7 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
       public override int GetHashCode() {
         int hash = 1;
-        if (SessionId != 0) hash ^= SessionId.GetHashCode();
+        if (SessionId.Length != 0) hash ^= SessionId.GetHashCode();
         if (Rank_ != 0) hash ^= Rank_.GetHashCode();
         if (_unknownFields != null) {
           hash ^= _unknownFields.GetHashCode();
@@ -19019,9 +19019,9 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
 
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
       public void WriteTo(pb::CodedOutputStream output) {
-        if (SessionId != 0) {
-          output.WriteRawTag(8);
-          output.WriteInt32(SessionId);
+        if (SessionId.Length != 0) {
+          output.WriteRawTag(10);
+          output.WriteString(SessionId);
         }
         if (Rank_ != 0) {
           output.WriteRawTag(16);
@@ -19035,8 +19035,8 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
       [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
       public int CalculateSize() {
         int size = 0;
-        if (SessionId != 0) {
-          size += 1 + pb::CodedOutputStream.ComputeInt32Size(SessionId);
+        if (SessionId.Length != 0) {
+          size += 1 + pb::CodedOutputStream.ComputeStringSize(SessionId);
         }
         if (Rank_ != 0) {
           size += 1 + pb::CodedOutputStream.ComputeInt32Size(Rank_);
@@ -19052,7 +19052,7 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
         if (other == null) {
           return;
         }
-        if (other.SessionId != 0) {
+        if (other.SessionId.Length != 0) {
           SessionId = other.SessionId;
         }
         if (other.Rank_ != 0) {
@@ -19069,8 +19069,8 @@ public sealed partial class S2C_BombGameOverNotification : pb::IMessage<S2C_Bomb
             default:
               _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
               break;
-            case 8: {
-              SessionId = input.ReadInt32();
+            case 10: {
+              SessionId = input.ReadString();
               break;
             }
             case 16: {
