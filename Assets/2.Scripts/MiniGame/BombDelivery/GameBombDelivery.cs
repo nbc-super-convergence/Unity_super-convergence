@@ -58,4 +58,10 @@ public class GameBombDelivery : IGame
         //MiniToken token = MinigameManager.Instance.GetMiniToken(id);
         //bomb.SetTarget(token.transform);
     }
+
+    public void GameOver()
+    {
+        Object.Destroy(bomb);
+        Object.Destroy(MinigameManager.Instance.curMap.gameObject);
+    }
 }
