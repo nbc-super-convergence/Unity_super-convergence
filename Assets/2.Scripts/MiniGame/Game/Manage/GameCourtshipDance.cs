@@ -1,4 +1,6 @@
+using Google.Protobuf.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 // 임시 클래스
 public class Player
@@ -15,9 +17,10 @@ public class GameCourtshipDance : IGame
     public UICommandBoardHandler commandBoardHandler;
 
     private CommandGenerator commandGenerator;
-    public Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic;
+    public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
     private List<Player> players;    // TODO:: 패킷정보에 맞게 고치기
-        
+    private TaskCompletionSource<bool> sourceTcs;
+
     public GameCourtshipDance()
     {
     }
@@ -32,8 +35,8 @@ public class GameCourtshipDance : IGame
         var commandBoardHandler = await UIManager.Show<UICommandBoardHandler>();
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMapDance();
-        S2C_IceMiniGameReadyNotification response;
-        if (param[0] is S2C_IceMiniGameReadyNotification item)
+        S2C_DanceMiniGameReadyNotification response;
+        if (param[0] is S2C_DanceMiniGameReadyNotification item)
         {
             response = item;
         }
@@ -50,12 +53,45 @@ public class GameCourtshipDance : IGame
         {
             commandGenerator = new CommandGenerator();
             commandGenerator.InitFFA(players);
-            playerPoolDic = commandGenerator.GetPlayerPoolDic();
-        } // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
-                
-        commandBoardHandler.MakeCommandBoard(players);
+            commandPoolDic = commandGenerator.GetPlayerPoolDic();
+        }
+        // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
+        /* 405 */
+        sourceTcs = new();
+        if (commandGenerator != null)
+        {
+            List<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
 
+            GamePacket packet = new();
+
+            packet.DanceTableCreateRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId,
+            };
+            packet.DanceTableCreateRequest.DancePools.Add(sp);
+            //sourceTcs = new();
+            SocketManager.Instance.OnSend(packet);
+        }
+        else
+        {
+            await sourceTcs.Task;
+            // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
+        }
+
+        commandBoardHandler.MakeCommandBoard(players);
+        
     }
+
+    public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
+    {
+        commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
+    }
+
+    public void TrySetTask(bool isSuccess)
+    {
+        bool b = sourceTcs.TrySetResult(isSuccess);
+    }
+
 
     /// <summary>
     /// S2C게임시작알림 서버의 알림에 따라 실행. 진짜 게임 시작.

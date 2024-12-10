@@ -16,7 +16,7 @@ public class UICommandBoardHandler : UIBase
             var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
             board.transform.localPosition = Vector3.zero;
             //board.SetPool(MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GetCommandInfoPool());
-            if(MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().playerPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
+            if(MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
             {
                 board.SetSessionId(players[i].SessionId);
                 board.SetTeamId(players[i].TeamId);
