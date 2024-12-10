@@ -145,7 +145,7 @@ public class BoardManager : Singleton<BoardManager>
         //}
         #endregion
 
-        //Curplayer.Ready();
+        Curplayer.Ready();
     }
 
     //테스트용
