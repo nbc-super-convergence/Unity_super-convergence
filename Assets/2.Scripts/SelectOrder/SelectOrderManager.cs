@@ -103,6 +103,7 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         }
         else
         {
+            DartPannel.isMove = false;  //판은 멈춰라
             DartPannel.DistanceRank();
         }
     }

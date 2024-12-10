@@ -10,7 +10,7 @@ public class SelectOrderPannel : MonoBehaviour
     private float xPositionLimit = 0.5f;  //옆으로 이동하기까지 제한
     private float pannelSpeed = 0.3f;   //다트판 이동 속도
     private bool swapDirection = false;
-    private bool isMove = true;
+    public bool isMove = true;  //움직이고 있는지
 
     private int curDartCnt = 0;
     public int maxDartCnt = 4;
@@ -34,13 +34,6 @@ public class SelectOrderPannel : MonoBehaviour
 
             //다음 차례
             SelectOrderManager.Instance.NextDart();
-
-            //curDartCnt++;
-            //if (curDartCnt >= maxDartCnt)    //모두 던졌으면 그만
-            //{
-            //    isMove = false;
-            //    DistanceRank();
-            //}
         }
     }
 
@@ -63,7 +56,6 @@ public class SelectOrderPannel : MonoBehaviour
     public void DistanceRank()
     {
         int rank = 1;
-        int miss = 4;
         
         foreach (var dart in SelectOrderManager.Instance.DartOrder)
             distanceRank.Add(dart.MyDistance);
