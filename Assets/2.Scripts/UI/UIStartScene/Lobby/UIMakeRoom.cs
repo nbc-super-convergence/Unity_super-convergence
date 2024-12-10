@@ -15,7 +15,11 @@ public class UIMakeRoom : UIBase
 
     public async void OnApplyBtn()
     {
-        //Send Make Room
+        if (RoomNameInput.text.Length > 12 || RoomNameInput.text.Length < 2)
+        {
+            await UIManager.Show<UIError>("ë°© ì´ë¦„ì˜ ê¸¸ì´ë¥¼ 2ì ì´ìƒ 12ì ì´í•˜ë¡œ ì§€ì–´ì£¼ì„¸ìš”.");
+            return;
+        }
 
         if (SocketManager.Instance.isConnected)
         {
@@ -34,15 +38,12 @@ public class UIMakeRoom : UIBase
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
-            //await UIManager.Show<UIRoom>();
             UIManager.Hide<UILobby>();
-
             UIManager.Hide<UIMakeRoom>();
         }
     }
     public void TrySetTask(bool isSuccess)
     {
-        bool boolll = sourceTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "¹æ »ı¼º ¼º°ø" : "¹æ »ı¼º ½ÇÆĞ");
+        bool b = sourceTcs.TrySetResult(isSuccess);
     }
 }

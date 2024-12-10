@@ -31,7 +31,7 @@ public static class AnimState
                 break;
 
             // 서버처리가 먼저필요?  // Protocol.cs에 임시로 직접 입력함. CurState는 서버에서 받음.
-            case State.DanceIdle:
+            case State.DanceWait:
                 player.SetTrigger(DanceIdleHash);
                 break;
             case State.DanceUp:
@@ -46,7 +46,7 @@ public static class AnimState
             case State.DanceRight:
                 player.SetTrigger(DanceRightHash);
                 break;
-            case State.DanceSlip:
+            case State.DanceFail:
                 player.SetTrigger(DanceSlipHash);
                 break;
         }
@@ -59,7 +59,7 @@ public static class AnimState
         animator.GetComponent<AnimationEventHandler>().OnAnimationComplete += () =>
         {
             animator.ResetTrigger(GetHashFromState(state));
-            ChangePlayerAnimState(animator, State.DanceIdle);
+            ChangePlayerAnimState(animator, State.DanceWait);
         };
     }
 
@@ -71,7 +71,7 @@ public static class AnimState
             case State.DanceDown: return DanceDownHash;
             case State.DanceLeft: return DanceLeftHash;
             case State.DanceRight: return DanceRightHash;
-            case State.DanceSlip: return DanceSlipHash;
+            case State.DanceFail: return DanceSlipHash;
             default: return DanceIdleHash;
         }
     }

@@ -114,7 +114,7 @@ public class UIRoom : UIBase
 
         Init();
 
-        roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
+        //roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
         roomName.text = (data.RoomName != null) ? data.RoomName : "";
 
         for (int i = 0; i < data.Users.Count; i++)
@@ -388,7 +388,6 @@ public class UIRoom : UIBase
     {
         maxTurn = turnOptions[index];
     }
-
     #endregion           
 
     #region Button

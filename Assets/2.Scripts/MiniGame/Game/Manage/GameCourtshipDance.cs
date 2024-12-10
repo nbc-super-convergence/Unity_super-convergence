@@ -92,7 +92,6 @@ public class GameCourtshipDance : IGame
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            //miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
             if (true)
             {
 
@@ -101,7 +100,7 @@ public class GameCourtshipDance : IGame
                 miniToken.transform.rotation = map.spawnPosition[num].rotation;
                 miniToken.MiniData.nextPos = map.spawnPosition[num].position;
                 miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
-               // miniToken.InputHandler.ChangeActionMap("SimpleInput");
+                miniToken.InputHandler.ChangeActionMap("SimpleInput");
                 map.TokenInit(miniToken);
             }
             else
