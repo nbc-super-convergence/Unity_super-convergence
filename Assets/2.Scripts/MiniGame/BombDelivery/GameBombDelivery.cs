@@ -21,9 +21,9 @@ public class GameBombDelivery : IGame
             await ResourceManager.Instance.LoadAsset<MapGameBombDelivery>
             ($"Map{MinigameManager.gameType}",eAddressableType.Prefab);
 
-        //MinigameManager.Instance.MakeMap();
+        MinigameManager.Instance.MakeMap<MapGameBombDelivery>();
 
-        if(param.Length > 0 && param[0] is S2C_BombMiniGameReadyNotification response)
+        if (param.Length > 0 && param[0] is S2C_BombMiniGameReadyNotification response)
         {
             SetPlayer(response.Players);
         }
