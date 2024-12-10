@@ -563,14 +563,14 @@ syntax = "proto3";
     
     message S2C_DanceStartNotification {
     }
-    
+        
     message C2S_DanceTableCreateRequest {
         string sessionId = 1;                 // 방장 세션 ID
-        repeated DancePool dancePool = 2;     // 생성된 춤표들
+        repeated DancePool dancePools = 2;     // 생성된 춤표들
     }
     
     message S2C_DanceTableNotification {
-        repeated DancePool dancePool = 1;     // 새로운 테이블
+        repeated DancePool dancePools = 1;     // 새로운 테이블
     }
     
     message C2S_DanceKeyPressRequest {

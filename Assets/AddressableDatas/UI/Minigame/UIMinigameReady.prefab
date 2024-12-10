@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<\uC870\uC791\uD0A4><size=40>\n\uC774\uB3D9 : W, A, S, D\n</size>"
+  m_text: "<\uC870\uC791\uD0A4><size=40>\n\uC774\uB3D9 : W, A, S, D or Arrow\n</size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb37e2afeb582ff459f9b1974a4e7584, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: cb37e2afeb582ff459f9b1974a4e7584,
@@ -1121,7 +1121,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ...
+  m_text: "\uB2F9\uC2E0\uC758 \uCDA4 \uC2E4\uB825\uC744 \uBF50\uB0B4\uC138\uC694.\n\n\uC790\uC138\uD55C
+    \uC124\uBA85\uC740 \uC0DD\uB7B5\uD55C\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aaaa22c111a9ec045a15dda04cc98ac3, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: aaaa22c111a9ec045a15dda04cc98ac3,
