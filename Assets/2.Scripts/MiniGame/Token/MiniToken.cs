@@ -66,7 +66,7 @@ public class MiniToken : MonoBehaviour
                         Controller.MoveToken(eMoveType.AddForce);
                         break;
                     case eGameType.GameBombDelivery:
-                        Controller.MoveToken(eMoveType.Server);
+                        Controller.MoveToken(eMoveType.Velocity);
                         break;
                     case eGameType.GameDropper:
                         Controller.MoveToken(eMoveType.Dropper);

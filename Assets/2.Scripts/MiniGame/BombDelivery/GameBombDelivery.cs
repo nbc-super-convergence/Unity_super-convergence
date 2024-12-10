@@ -21,9 +21,9 @@ public class GameBombDelivery : IGame
             await ResourceManager.Instance.LoadAsset<MapGameBombDelivery>
             ($"Map{MinigameManager.gameType}",eAddressableType.Prefab);
 
-        //MinigameManager.Instance.MakeMap();
+        MinigameManager.Instance.MakeMap<MapGameBombDelivery>();
 
-        if(param.Length > 0 && param[0] is S2C_BombMiniGameReadyNotification response)
+        if (param.Length > 0 && param[0] is S2C_BombMiniGameReadyNotification response)
         {
             SetPlayer(response.Players);
         }
@@ -57,5 +57,11 @@ public class GameBombDelivery : IGame
         bomb.SetTarget(id);
         //MiniToken token = MinigameManager.Instance.GetMiniToken(id);
         //bomb.SetTarget(token.transform);
+    }
+
+    public void GameOver()
+    {
+        Object.Destroy(bomb);
+        Object.Destroy(MinigameManager.Instance.curMap.gameObject);
     }
 }

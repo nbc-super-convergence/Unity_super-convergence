@@ -93,24 +93,11 @@ public partial class ClientTest : Singleton<ClientTest>
             yield return null;
         }
 
-        //DropLevelStartNotification
-        while (true)
-        {
-            if (Input.GetKey(KeyCode.CapsLock) &&
-            Input.GetKeyDown(KeyCode.O))
-            {
-                GamePacket packet = new();
-                SocketManager.Instance.DropLevelStartNotification(packet);
-                break;
-            }
-            yield return null;
-        }
-
         //DropLevelEndNotification
         while (true)
         {
             if (Input.GetKey(KeyCode.CapsLock) &&
-            Input.GetKeyDown(KeyCode.I))
+            Input.GetKeyDown(KeyCode.O))
             {
                 GamePacket packet = new()
                 {

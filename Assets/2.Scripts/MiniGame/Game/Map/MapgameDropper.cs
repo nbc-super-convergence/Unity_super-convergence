@@ -11,6 +11,9 @@ public class MapGameDropper : MapBase
     [SerializeField] private float cameraFollowDelay = 0.5f;
     [SerializeField] private float cameraMoveTime = 2f;
 
+    [Header("Light")]
+    public Light spotLight;
+
     private GameDropperData gameData;
     private int prevPhase;
 
