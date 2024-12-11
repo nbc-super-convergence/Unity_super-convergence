@@ -21,7 +21,7 @@ public class SelectOrderPanel : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         //다음 차례
-        MinigameManager.Instance.GetMiniGame<GameSelectOrder>().NextDart();
+        MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
     private void FixedUpdate()
@@ -44,7 +44,7 @@ public class SelectOrderPanel : MonoBehaviour
     {
         int rank = 1;
 
-        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().DartOrder;
+        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
 
 
         foreach (var dart in dartOrder)
@@ -70,7 +70,7 @@ public class SelectOrderPanel : MonoBehaviour
             }
         }
 
-        MinigameManager.Instance.GetMiniGame<GameSelectOrder>().FinishSelectOrder();
+        MinigameManager.Instance.GetMiniGame<GameDart>().FinishSelectOrder();
     }
 
     private void SendServer()

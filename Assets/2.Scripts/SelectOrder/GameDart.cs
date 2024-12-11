@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameSelectOrder : IGame
+public class GameDart : IGame
 {
+    private UIMinigameDart ingameUI;
+
+    #region 일단 바꿔야할 것들
     //다트판
-    public SelectOrderPannel DartPannel;
+    public SelectOrderPanel DartPannel;
 
     //다트그룹
     public List<SelectOrderDart> DartOrder;
@@ -14,7 +17,6 @@ public class GameSelectOrder : IGame
     [SerializeField] private RectTransform targetUI;    //타겟 지점
     [SerializeField] private SelectOrderDartUI dartPowerUI;
     [SerializeField] private Transform resultGroup; //다트 결과
-    private List<SelectOrderResultUI> resultsUI = new();
 
     [SerializeField] private Transform Title;   //타이틀 및 설명
 
@@ -37,23 +39,18 @@ public class GameSelectOrder : IGame
     public float minForce { get; private set; }
     public float maxForce { get; private set; }
     #endregion
+    #endregion
 
     /// <summary>
     ///  기본 설정 세팅
     /// </summary>
     private void SettingBasic()
     {
-        for (int i = 0; i < resultGroup.childCount; i++)
-        {
-            resultsUI.Add(resultGroup.GetChild(i).GetComponent<SelectOrderResultUI>());
-        }
-
         minAim = -20f;
         maxAim = 20f;
         minForce = 1.5f;
         maxForce = 3f;
 
-        //dartUI.SetAimLimit(minAim, maxAim);
         dartPowerUI.SetForceLimit(minForce, maxForce);
         for (int i = 0; i < DartOrder.Count; i++)
         {
@@ -72,15 +69,6 @@ public class GameSelectOrder : IGame
     }
 
     /// <summary>
-    /// 지금부터 시작
-    /// </summary>
-    public void BeginSelectOrder()
-    {
-        DartOrder[nowPlayer].gameObject.SetActive(true);
-        resultsUI[nowPlayer].SetMyTurn();
-    }
-
-    /// <summary>
     /// 던졌으면 UI 감추기
     /// </summary>
     public void HideDartUI()
@@ -94,12 +82,10 @@ public class GameSelectOrder : IGame
     /// </summary>
     public void NextDart()
     {
-        resultsUI[nowPlayer].SetFinish();
 
         nowPlayer++;
         if (nowPlayer < DartOrder.Count)    //최대 인원보다 초과되지 않게
         {
-            resultsUI[nowPlayer].SetMyTurn();
             DartOrder[nowPlayer].gameObject.SetActive(true);
         }
         else
@@ -114,24 +100,21 @@ public class GameSelectOrder : IGame
     /// </summary>
     public void FinishSelectOrder()
     {
-        for (int i = 0; i < DartOrder.Count; i++)
-        {
-            resultsUI[i].SetRank(DartOrder[i].MyRank);
-            resultsUI[i].SetScore(DartOrder[i].MyDistance);
-        }
+
     }
 
     #region IGame
     public async void Init(params object[] param)
     {
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameSelectOrder>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap<MapGameSelectOrder>();
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDart>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMap<MapGameDart>();
         SettingBasic();
     }
 
-    public void GameStart(params object[] param)
+    public async void GameStart(params object[] param)
     {
-        BeginSelectOrder();
+        ingameUI = await UIManager.Show<UIMinigameDart>();
+        MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     #endregion
 }
