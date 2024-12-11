@@ -50,7 +50,7 @@ public class MiniTokenController
                     new (transform.localPosition.x, transform.localPosition.z),
                     new (miniData.nextPos.x, miniData.nextPos.z)
                 );
-                threshold = 0.5f;
+                threshold = 0.1f;
 
                 if (distance > threshold)
                 {

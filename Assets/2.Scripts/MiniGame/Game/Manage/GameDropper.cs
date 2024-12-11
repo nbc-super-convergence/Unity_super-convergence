@@ -64,8 +64,8 @@ public class GameDropper : IGame
             Vector3 initPos = GetSlotPosition(p.Slot);
             miniToken.transform.localPosition = initPos;
             miniToken.MiniData.nextPos = initPos;
-            
             miniToken.MiniData.rotY = p.Rotation;
+            miniToken.MiniData.PlayerSpeed = 20f;
         }
     }
     #endregion
