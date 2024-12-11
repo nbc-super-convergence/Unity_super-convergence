@@ -41,7 +41,7 @@ public class GameCourtshipDance : IGame
         }
 
         // 토큰 배치 및 세팅하기
-        ResetPlayers(players);
+        //ResetPlayers(players);
 
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
@@ -94,7 +94,9 @@ public class GameCourtshipDance : IGame
         {
             ingameUI = await UIManager.Show<UICourtshipDance>(gameData, startTime);
         }
+       // MinigameManager.Instance.GetMyToken().InputHandler.DisablePlayerInput();
         MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
+        ResetPlayers(players);
         UIManager.Get<UICourtshipDance>().PlayStart();
     }
 
@@ -130,9 +132,6 @@ public class GameCourtshipDance : IGame
                 //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
                 miniToken.transform.position = map.spawnPosition[num].position;
                 miniToken.transform.rotation = map.spawnPosition[num].rotation;
-                //miniToken.MiniData.nextPos = map.spawnPosition[num].position;
-                //miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
-                miniToken.InputHandler.ChangeActionMap("SimpleInput");
                 map.TokenInit(miniToken);
             }
             else

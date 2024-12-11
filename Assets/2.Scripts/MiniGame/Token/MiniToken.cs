@@ -153,7 +153,7 @@ public class MiniToken : MonoBehaviour
     #region CourtshipDance
     public void EnableInputSystem(eGameType eGameType)
     {
-        if (IsClient)
+        if (eGameType== eGameType.GameCourtshipDance)
         {//방어코드
             InputHandler.EnablePlayerInput();
             //StartCoroutine(SendClientMove());
