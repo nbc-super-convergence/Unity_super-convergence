@@ -82,12 +82,15 @@ public partial class ClientTest : Singleton<ClientTest>
             {
                 GamePacket packet = new()
                 {
-                    DropLevelEndNotification = new()
+                    DropPlayerSyncNotification = new()
                     {
-                        Holes = {0, 1, 3, 5, 7}
+                        SessionId = "Session1",
+                        Slot = 1,
+                        Rotation = 0,
+                        State = 0,
                     }
                 };
-                SocketManager.Instance.DropLevelEndNotification(packet);
+                SocketManager.Instance.DropPlayerSyncNotification(packet);
                 break;
             }
             yield return null;
@@ -104,7 +107,7 @@ public partial class ClientTest : Singleton<ClientTest>
                     DropPlayerSyncNotification = new()
                     {
                         SessionId = "Session1",
-                        Slot = 1,
+                        Slot = 4,
                         Rotation = 0,
                         State = 0,
                     }
