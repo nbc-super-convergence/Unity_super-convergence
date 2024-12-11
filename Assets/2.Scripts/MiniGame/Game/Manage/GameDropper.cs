@@ -65,7 +65,8 @@ public class GameDropper : IGame
             miniToken.transform.localPosition = initPos;
             miniToken.MiniData.nextPos = initPos;
             miniToken.MiniData.rotY = p.Rotation;
-            miniToken.MiniData.PlayerSpeed = 20f;
+
+            miniToken.MiniData.PlayerSpeed = 5f;
         }
     }
     #endregion
@@ -74,7 +75,7 @@ public class GameDropper : IGame
     public void ReceiveMove(string sessionId, int slot, float rotation, State state)
     {
         MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
-        miniToken.MiniData.nextPos = GetSlotPosition(slot);
+        miniToken.MiniData.nextPos = GetSlotPosition(slot, miniToken.transform.position.y);
         miniToken.MiniData.rotY = rotation;
 
         if (sessionId == MinigameManager.Instance.mySessonId)
