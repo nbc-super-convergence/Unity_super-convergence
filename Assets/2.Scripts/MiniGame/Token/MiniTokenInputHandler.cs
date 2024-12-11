@@ -22,11 +22,6 @@ public class MiniTokenInputHandler
 
         playerInput.MiniPlayerToken.Move.performed += OnMove;
         playerInput.MiniPlayerToken.Move.canceled += OnMoveCanceled;
-
-        playerInput.SimpleInput.Up.started += OnUp;
-        playerInput.SimpleInput.Left.started += OnLeft;
-        playerInput.SimpleInput.Down.started += OnDown;
-        playerInput.SimpleInput.Right.started += OnRight;
     }
 
     public void DisablePlayerInput()
@@ -35,13 +30,29 @@ public class MiniTokenInputHandler
 
         playerInput.MiniPlayerToken.Move.performed -= OnMove;
         playerInput.MiniPlayerToken.Move.canceled -= OnMoveCanceled;
+    }
+
+    public void EnableSimpleInput()
+    {
+        playerInput.Enable();
+        playerInput.MiniPlayerToken.Disable();
+
+        playerInput.SimpleInput.Up.started += OnUp;
+        playerInput.SimpleInput.Left.started += OnLeft;
+        playerInput.SimpleInput.Down.started += OnDown;
+        playerInput.SimpleInput.Right.started += OnRight;
+    }
+
+    public void DisableSimpleInput()
+    {
+        playerInput.Disable();
+        playerInput.MiniPlayerToken.Disable();
 
         playerInput.SimpleInput.Up.started -= OnUp;
         playerInput.SimpleInput.Left.started -= OnLeft;
         playerInput.SimpleInput.Down.started -= OnDown;
         playerInput.SimpleInput.Right.started -= OnRight;
     }
-
 
 
     public IEnumerator PauseCotoutine(float time)
@@ -84,6 +95,8 @@ public class MiniTokenInputHandler
         if (newActionMap != null)
         {
             newActionMap.Enable();
+            Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
+            Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
         }
         else
         {
@@ -117,6 +130,9 @@ public class MiniTokenInputHandler
         {
             UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
         }
+        
+        Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
+        Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
     }
     private void OnLeft(InputAction.CallbackContext context)
     {

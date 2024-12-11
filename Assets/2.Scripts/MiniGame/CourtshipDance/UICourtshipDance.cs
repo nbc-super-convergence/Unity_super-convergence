@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -58,9 +57,9 @@ public class UICourtshipDance : UIBase
     {
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
-    
-    
 
+
+    #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)
     {        
         List<int> teamRank = new();
@@ -111,4 +110,5 @@ public class UICourtshipDance : UIBase
         MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
         UIManager.Hide<UICourtshipDance>();
     }
+    #endregion
 }

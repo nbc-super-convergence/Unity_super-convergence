@@ -35,6 +35,7 @@ public class MapGameCourtshipDance : MapBase
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 1);
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 0);
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.Idle);
+        token.InputHandler.DisableSimpleInput();
         token.InputHandler.ChangeActionMap(eActionMap.MiniPlayerToken.ToString());
     }
 }
