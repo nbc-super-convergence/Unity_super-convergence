@@ -55,10 +55,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //307
     public void DropPlayerDeathNotification(GamePacket gamePacket)
     {
-        var response = gamePacket.IcePlayerDeathNotification;
+        var response = gamePacket.DropPlayerDeathNotification;
 
         //플레이어 사망 이벤트
-        MinigameManager.Instance.GetMiniGame<GameDropper>().PlayerDeath(response.SessionId);
+        MinigameManager.Instance.GetMiniGame<GameDropper>()
+            .PlayerDeath(response.SessionId);
     }
 
     //308
