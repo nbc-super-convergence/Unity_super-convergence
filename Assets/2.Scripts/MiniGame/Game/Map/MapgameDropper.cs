@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,8 +9,8 @@ public class MapGameDropper : MapBase
 
     [Header("Camera")]
     [SerializeField] private Camera gameCamera;
-    [SerializeField] private float cameraFollowDelay = 0.5f;
-    [SerializeField] private float cameraMoveTime = 2f;
+    private readonly float cameraFollowDelay = 0.3f;
+    private readonly float cameraMoveTime = 2f;
 
     [Header("Light")]
     public Light spotLight;
@@ -53,16 +54,11 @@ public class MapGameDropper : MapBase
         yield return new WaitForSeconds(cameraFollowDelay);
         
         Vector3 curPos = gameCamera.transform.position;
-        Vector3 nextPos = new Vector3(curPos.x, curPos.y - 10, curPos.z);
-        float elapsedTime = 0f;
+        Vector3 nextPos = new (curPos.x, curPos.y - 10, curPos.z);
 
-        while (elapsedTime < cameraMoveTime)
-        {
-            float t = elapsedTime / cameraMoveTime;
-            gameCamera.transform.position = Vector3.Lerp(curPos, nextPos, t);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        gameCamera.transform.position = nextPos;
+        gameCamera.transform.DOMove(nextPos, cameraMoveTime)
+       .SetEase(Ease.InOutBack);
+
+        yield return new WaitForSeconds(cameraMoveTime);
     }
 }
