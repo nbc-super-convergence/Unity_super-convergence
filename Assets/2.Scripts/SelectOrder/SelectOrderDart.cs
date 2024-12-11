@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SelectOrderDart : MonoBehaviour
 {
@@ -84,6 +83,9 @@ public class SelectOrderDart : MonoBehaviour
 
         orderEvent.OnAimEvent += SetAim;
         orderEvent.OnShootEvent += PressKey;
+
+        SetAimRange(-20f, 20f);
+        SetForceRange(1.5f, 3f);
     }
 
     /// <summary>
@@ -109,11 +111,11 @@ public class SelectOrderDart : MonoBehaviour
         }
 
         //각도를 조절
-        if(GetAim != Vector2.zero)
+        if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
         }
-           
+
         transform.rotation = Quaternion.Euler(CurAim);
 
         Debug.DrawRay(transform.position, -transform.forward * 2);
@@ -127,8 +129,12 @@ public class SelectOrderDart : MonoBehaviour
         //다트가 판을 따라가게
         transform.SetParent(collision.transform);
 
+        //collision.transform으로 불러오기
+        MyDistance = Vector3.Distance(collision.transform.position, transform.position);
+
         orderEvent.OnAimEvent -= SetAim;
         orderEvent.OnShootEvent -= PressKey;
+        SendServer();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -136,7 +142,7 @@ public class SelectOrderDart : MonoBehaviour
         //무효처리
         MissDart();
 
-        MinigameManager.Instance.GetMiniGame<GameSelectOrder>().NextDart();
+        MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
     /// <summary>
@@ -198,7 +204,7 @@ public class SelectOrderDart : MonoBehaviour
 
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
-        MyRank = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().MissRank;
+        MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
         SendServer();
     }
