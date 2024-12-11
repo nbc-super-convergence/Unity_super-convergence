@@ -61,10 +61,10 @@ public class Bomb : MonoBehaviour
 
     public void ChangeTarget(int i)
     {
-        var c = MinigameManager.Instance.miniTokens[i].MyColor;
+        //var c = MinigameManager.Instance.miniTokens[i].MyColor;
 
         string id = BoardManager.Instance.playerTokenHandlers.
-            Find((p) => p.data.userInfo.Color == c).data.userInfo.SessionId;
+            Find((p) => p.data.userInfo.Color == i).data.userInfo.SessionId;
 
         GamePacket packet = new();
 
@@ -74,9 +74,6 @@ public class Bomb : MonoBehaviour
         };
 
         SocketManager.Instance.OnSend(packet);
-
-        if (MinigameManager.Instance.miniTokens[c] is MiniToken token && token.IsClient)
-            token.Stun();
     }
 
     public void SetTarget(string id)
@@ -86,17 +83,21 @@ public class Bomb : MonoBehaviour
         if (this.token != null)
         {
             this.token.MiniData.PlayerSpeed = 15;
-            token.MiniData.PlayerSpeed = 15 * 1.2f;
+
+            if (token.IsClient) token.Stun();
         }
+
+        token.MiniData.PlayerSpeed = 15 * 1.2f;
 
         this.token = token;
         targetIndex = token.MyColor;
+
         target = token.transform;
     }
 
     public void Explosion(string id)
     {
-        MiniToken token = MinigameManager.Instance.GetMiniToken(id);    
+        MiniToken token = MinigameManager.Instance.GetMiniToken(id);
 
         if (MinigameManager.Instance.mySessonId == id)
         {
@@ -104,5 +105,7 @@ public class Bomb : MonoBehaviour
         }
 
         token.DisableMiniToken();
+        target = null;
+        token = null;
     }
 }
