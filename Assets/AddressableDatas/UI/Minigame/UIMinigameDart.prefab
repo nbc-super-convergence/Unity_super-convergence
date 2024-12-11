@@ -243,7 +243,6 @@ GameObject:
   - component: {fileID: 1602760186450039478}
   - component: {fileID: 937686139802678536}
   - component: {fileID: 2182247833665862730}
-  - component: {fileID: 3365455720641996366}
   m_Layer: 5
   m_Name: Play2_Bg
   m_TagString: Untagged
@@ -310,25 +309,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &3365455720641996366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2101107019745847746}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3766ab220c6c1924fae7e92c9eaefe1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActiveInCreated: 1
-  isDestroyAtClosed: 1
-  uiPosition: 0
-  player: 2
-  bgImage: {fileID: 0}
-  stateText: {fileID: 9217104656559505992}
-  scoreText: {fileID: 7679148576722601696}
 --- !u!1 &2334413826728319043
 GameObject:
   m_ObjectHideFlags: 0
@@ -760,7 +740,6 @@ GameObject:
   - component: {fileID: 5228971110717341357}
   - component: {fileID: 7510591857054265793}
   - component: {fileID: 915573161057935517}
-  - component: {fileID: 6477426623036945653}
   m_Layer: 5
   m_Name: Play4_Bg
   m_TagString: Untagged
@@ -827,25 +806,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6477426623036945653
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3031803939100475446}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3766ab220c6c1924fae7e92c9eaefe1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActiveInCreated: 1
-  isDestroyAtClosed: 1
-  uiPosition: 0
-  player: 4
-  bgImage: {fileID: 0}
-  stateText: {fileID: 2588646315563467511}
-  scoreText: {fileID: 2989412550322169300}
 --- !u!1 &3207534976305865581
 GameObject:
   m_ObjectHideFlags: 0
@@ -857,7 +817,6 @@ GameObject:
   - component: {fileID: 3428249367803481000}
   - component: {fileID: 6842807770525567121}
   - component: {fileID: 3449822442714040932}
-  - component: {fileID: 4500059509409077783}
   m_Layer: 5
   m_Name: Play1_Bg
   m_TagString: Untagged
@@ -924,25 +883,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4500059509409077783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3207534976305865581}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3766ab220c6c1924fae7e92c9eaefe1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActiveInCreated: 1
-  isDestroyAtClosed: 1
-  uiPosition: 0
-  player: 1
-  bgImage: {fileID: 3449822442714040932}
-  stateText: {fileID: 7314470345068335683}
-  scoreText: {fileID: 2445315467644036706}
 --- !u!1 &4487354438157393400
 GameObject:
   m_ObjectHideFlags: 0
@@ -1994,7 +1934,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7642674880708511324
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2124,7 +2064,6 @@ GameObject:
   - component: {fileID: 5148155073583869323}
   - component: {fileID: 6089717649119798532}
   - component: {fileID: 2508967280998117014}
-  - component: {fileID: 4330388182901190105}
   m_Layer: 5
   m_Name: Play3_Bg
   m_TagString: Untagged
@@ -2191,25 +2130,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4330388182901190105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8199256234831098138}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3766ab220c6c1924fae7e92c9eaefe1a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isActiveInCreated: 1
-  isDestroyAtClosed: 1
-  uiPosition: 0
-  player: 3
-  bgImage: {fileID: 0}
-  stateText: {fileID: 8320038166662731046}
-  scoreText: {fileID: 219338014411729552}
 --- !u!1 &8538746662733715203
 GameObject:
   m_ObjectHideFlags: 0
