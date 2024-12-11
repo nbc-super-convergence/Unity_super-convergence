@@ -1,8 +1,8 @@
+using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UILogin : UIBase
 {
@@ -12,8 +12,10 @@ public class UILogin : UIBase
     [SerializeField] private TMP_InputField PasswardInput;
 
     [SerializeField] private TextMeshProUGUI versionTxt;
+    private StringBuilder sbError = new();
 
     private TaskCompletionSource<bool> sourceTcs;
+    
 
     private void Start()
     {
@@ -21,24 +23,23 @@ public class UILogin : UIBase
     }
 
     #region Button
-    //Inspector: È¸¿ø°¡ÀÔ ÆÇ³Ú Å°±â
+    //Inspector: íšŒì›ê°€ì… íŒë„¬ í‚¤ê¸°
     public async void OnRegisterBtn()
     {
         await UIManager.Show<UIRegister>();
     }
 
-    //Inspector: ·Î±×ÀÎ ÈÄ ·Îºñ·Î µé¾î°¡±â
+    //Inspector: ë¡œê·¸ì¸ í›„ ë¡œë¹„ë¡œ ë“¤ì–´ê°€ê¸°
     public async void OnLoginBtn()
     {
-        //Å×½ºÆ® ÄÚµå
-        //if (IsSceneInBuild(targetScene))
-        //{
-        //    SocketManager.Instance.Init();
-        //    SendPacketIceJoinRequest();
-        //    SceneManager.LoadScene(targetScene);
-        //}
+        if (!IsValidation())
+        {
+            await UIManager.Show<UIError>(sbError.ToString());
+            sbError.Clear();
+            return;
+        }
 
-        ////Send: ¼­¹ö·Î ID PW.
+        ////Send: ì„œë²„ë¡œ ID PW.
         string id = IDInput.text;
         string passward = PasswardInput.text;
 
@@ -51,7 +52,7 @@ public class UILogin : UIBase
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        ////Receive: ¼­¹ö·ÎºÎÅÍ ·Î±×ÀÎ À¯È¿¼º °Ë»ç.
+        ////Receive: ì„œë²„ë¡œë¶€í„° ë¡œê·¸ì¸ ìœ íš¨ì„± ê²€ì‚¬.
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
@@ -64,16 +65,29 @@ public class UILogin : UIBase
         if (sourceTcs.TrySetResult(isSuccess))
         {            
         }
-    }
+    }    
 
-    
-
-    //Inspector: °ÔÀÓÁ¾·á ÆÇ³Ú Å°±â
+    //Inspector: ê²Œì„ì¢…ë£Œ íŒë„¬ í‚¤ê¸°
     public async void OnQuitBtn()
     {
         await UIManager.Show<UIQuit>();
     }
     #endregion
+    private bool IsValidation()
+    {
+        if (IDInput.text.Length < 4 || IDInput.text.Length > 12)
+        {
+            sbError.AppendLine($"ì•„ì´ë””ëŠ” 4ì ì´ìƒ, 12ì ì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”.");
+            return false;
+        }
+        if (PasswardInput.text.Length < 4 || PasswardInput.text.Length > 16)
+        {
+            sbError.Append($"ë¹„ë°€ë²ˆí˜¸ëŠ” 4ì ì´ìƒ, 16ì ì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”.");
+            return false;
+        }
+
+        return true;
+    }
 
     #region Test Zone
     private bool IsSceneInBuild(string sceneName)

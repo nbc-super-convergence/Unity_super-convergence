@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public class CommandBoard : MonoBehaviour
@@ -43,6 +42,8 @@ public class CommandBoard : MonoBehaviour
         }
         token = MinigameManager.Instance.GetMiniToken(SessionId);
         tokenData = token.MiniData;
+
+        MakeNextBoard();
     }
     public void SetSessionId(string sessionId)
     { SessionId = sessionId; }

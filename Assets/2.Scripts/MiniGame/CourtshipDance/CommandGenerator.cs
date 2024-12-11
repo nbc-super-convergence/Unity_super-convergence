@@ -17,6 +17,7 @@ public class CommandGenerator
     public CommandGenerator()
     {
         gameData = new CourtshipDanceData();
+        gameData.Init();
     }
 
     public void InitFFA(List<PlayerInfo> players)
@@ -42,7 +43,7 @@ public class CommandGenerator
 
     public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
     {
-        return new(playerPoolDic);
+        return playerPoolDic;
     }
 
     public Queue<Queue<BubbleInfo>> GenerateBoardInfoPool(int poolCount)
@@ -129,21 +130,23 @@ public class CommandGenerator
     }
 
     #region Convert
-    public static List<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
+    public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
     {
-        List<DancePool> dancePools = new List<DancePool>();
+        RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
 
-        foreach (var kvp in playerPoolDic)
+        foreach (var pool in playerPoolDic)
         {
-            DancePool dancePool = new DancePool
+            DancePool obj = new()
             {
-                SessionId = kvp.Key,
+                SessionId = pool.Key,
+                DanceTables = { }
             };
-
-            foreach (var queue in kvp.Value)
+            foreach (var queue in pool.Value)
             {
-                DanceTable danceTable = new DanceTable();
-
+                DanceTable danceTable = new()
+                {
+                    Commands = { }
+                };
                 foreach (var bubbleInfo in queue)
                 {
                     DanceCommand command = new DanceCommand
@@ -153,11 +156,10 @@ public class CommandGenerator
                     };
                     danceTable.Commands.Add(command);
                 }
-
-                dancePool.DanceTables.Add(danceTable);
+                obj.DanceTables.Add(danceTable);
             }
 
-            dancePools.Add(dancePool);
+            dancePools.Add(obj);
         }
 
         return dancePools;
