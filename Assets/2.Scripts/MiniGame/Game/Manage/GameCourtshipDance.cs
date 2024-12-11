@@ -130,7 +130,7 @@ public class GameCourtshipDance : IGame
                 miniToken.transform.position = map.spawnPosition[num].position;
                 miniToken.transform.rotation = map.spawnPosition[num].rotation;
                 miniToken.MiniData.nextPos = map.spawnPosition[num].position;
-                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.y;
+                miniToken.MiniData.rotY = -map.spawnPosition[num].rotation.y;
                 miniToken.InputHandler.ChangeActionMap("SimpleInput");
                 map.TokenInit(miniToken);
             }

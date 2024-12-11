@@ -38,6 +38,7 @@ public class UICourtshipDance : UIBase
         }
     }
 
+    // 시작할 때 이거 호출, 다른 사람 완료할 때 이거 호출.
     public void Next(string sessionId)
     {
         boardDic[sessionId].MakeNextBoard();

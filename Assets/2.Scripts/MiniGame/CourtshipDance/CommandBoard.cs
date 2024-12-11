@@ -42,8 +42,6 @@ public class CommandBoard : MonoBehaviour
         }
         token = MinigameManager.Instance.GetMiniToken(SessionId);
         tokenData = token.MiniData;
-
-        MakeNextBoard();
     }
     public void SetSessionId(string sessionId)
     { SessionId = sessionId; }
@@ -72,6 +70,7 @@ public class CommandBoard : MonoBehaviour
 
     /* 412 */
     // 정보에 따라 방향방울 만들기
+    bool isFirst = true;
     private Queue<ArrowBubble> MakeCommandQueue()
     {
         if(curQueueInfo != null)
@@ -84,20 +83,25 @@ public class CommandBoard : MonoBehaviour
             successQueue.Clear();
         }
 
-        if(queuePool.Count != 0)
+        if (queuePool.Count != 0)
         {
-            curQueueInfo = queuePool.Dequeue();
-
-            GamePacket packet = new();
-            packet.DanceTableCompleteRequest = new()
+            if (!isFirst)
             {
-                SessionId = SessionId,
-                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
-            };
-            SocketManager.Instance.OnSend(packet);
+                curQueueInfo = queuePool.Dequeue();
+
+                GamePacket packet = new();
+                packet.DanceTableCompleteRequest = new()
+                {
+                    SessionId = SessionId,
+                    EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+                };
+                SocketManager.Instance.OnSend(packet);
+            }
+            isFirst = true;
         }
         else
         {
+
             // 완료 로직
             // 완료 효과
             GamePacket packet = new();
@@ -111,6 +115,7 @@ public class CommandBoard : MonoBehaviour
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
             token.InputHandler.DisablePlayerInput();
+
         }
 
         Queue<ArrowBubble> queue = new();
