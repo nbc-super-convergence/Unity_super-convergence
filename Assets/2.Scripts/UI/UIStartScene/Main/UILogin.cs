@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class UILogin : UIBase
 {
@@ -21,16 +20,16 @@ public class UILogin : UIBase
     }
 
     #region Button
-    //Inspector: È¸¿ø°¡ÀÔ ÆÇ³Ú Å°±â
+    //Inspector: íšŒì›ê°€ì… íŒë„¬ í‚¤ê¸°
     public async void OnRegisterBtn()
     {
         await UIManager.Show<UIRegister>();
     }
 
-    //Inspector: ·Î±×ÀÎ ÈÄ ·Îºñ·Î µé¾î°¡±â
+    //Inspector: ë¡œê·¸ì¸ í›„ ë¡œë¹„ë¡œ ë“¤ì–´ê°€ê¸°
     public async void OnLoginBtn()
     {
-        //Å×½ºÆ® ÄÚµå
+        //í…ŒìŠ¤íŠ¸ ì½”ë“œ
         //if (IsSceneInBuild(targetScene))
         //{
         //    SocketManager.Instance.Init();
@@ -38,7 +37,7 @@ public class UILogin : UIBase
         //    SceneManager.LoadScene(targetScene);
         //}
 
-        ////Send: ¼­¹ö·Î ID PW.
+        ////Send: ì„œë²„ë¡œ ID PW.
         string id = IDInput.text;
         string passward = PasswardInput.text;
 
@@ -51,7 +50,7 @@ public class UILogin : UIBase
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        ////Receive: ¼­¹ö·ÎºÎÅÍ ·Î±×ÀÎ À¯È¿¼º °Ë»ç.
+        ////Receive: ì„œë²„ë¡œë¶€í„° ë¡œê·¸ì¸ ìœ íš¨ì„± ê²€ì‚¬.
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
@@ -68,7 +67,7 @@ public class UILogin : UIBase
 
     
 
-    //Inspector: °ÔÀÓÁ¾·á ÆÇ³Ú Å°±â
+    //Inspector: ê²Œì„ì¢…ë£Œ íŒë„¬ í‚¤ê¸°
     public async void OnQuitBtn()
     {
         await UIManager.Show<UIQuit>();

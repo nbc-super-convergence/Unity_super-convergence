@@ -1,9 +1,3 @@
-using Google.Protobuf.Collections;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UIElements;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {

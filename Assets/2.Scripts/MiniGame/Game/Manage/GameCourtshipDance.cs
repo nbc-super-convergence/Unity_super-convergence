@@ -1,7 +1,6 @@
 using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine.Playables;
 
 //// 임시 클래스
 //public class PlayerInfo
