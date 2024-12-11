@@ -9,7 +9,7 @@ public class GameDart : IGame
     public SelectOrderPanel DartPannel;
 
     //다트그룹
-    public List<SelectOrderDart> DartOrder;
+    public List<DartPlayer> DartOrder;
 
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
@@ -99,7 +99,7 @@ public class GameDart : IGame
     {
         int rank = 1;
 
-        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
+        List<DartPlayer> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
 
 
         foreach (var dart in dartOrder)

@@ -6,7 +6,7 @@ public class MapGameDart : MapBase
     [SerializeField] private SelectOrderPanel DartPannel;
 
     //다트그룹
-    public List<SelectOrderDart> DartOrder;
+    public List<DartPlayer> DartOrder;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
     private int missRank = 4;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SelectOrderDart : MonoBehaviour
+public class DartPlayer : MonoBehaviour
 {
     private SelectOrderEvent orderEvent;
     private Rigidbody rgdby;
@@ -161,6 +161,9 @@ public class SelectOrderDart : MonoBehaviour
         float speed = 1f;
         if (isIncrease) CurForce += Time.deltaTime * speed;
         else CurForce -= Time.deltaTime * speed;
+
+        //변경된 Force를 UI에 전달
+        UIManager.Get<UIMinigameDart>().ChangeForcePower(CurForce);
     }
 
     /// <summary>

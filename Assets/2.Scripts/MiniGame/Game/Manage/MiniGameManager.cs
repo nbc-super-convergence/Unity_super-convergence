@@ -7,7 +7,8 @@ public enum eGameType
     GameIceSlider,
     GameBombDelivery,
     GameCourtshipDance,
-    GameDropper
+    GameDropper,
+    GameDart
 }
 
 public class MinigameManager : Singleton<MinigameManager>
