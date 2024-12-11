@@ -199,8 +199,6 @@ public class BoardManager : Singleton<BoardManager>
             //}
             //else
             //{
-            UIManager.Get<BoardUI>().Refresh();
-
             GamePacket packet = new();
 
             packet.TurnEndRequest = new()

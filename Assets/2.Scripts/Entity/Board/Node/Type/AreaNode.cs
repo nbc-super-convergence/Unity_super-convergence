@@ -10,7 +10,7 @@ public class AreaNode : BaseNode, IPurchase
 
     [SerializeField] MeshRenderer plane;
 
-    string IPurchase.message => $"{saleAmount}의 열쇠를 지불하여 해당 칸을 구매 할 수 있습니다.";
+    string IPurchase.message => $"{saleAmount}의 코인을 지불하여 해당 칸을 구매 할 수 있습니다.";
 
 
     public async override void Action()
@@ -77,8 +77,8 @@ public class AreaNode : BaseNode, IPurchase
 
         SocketManager.Instance.OnSend(packet);
 
-        if (owner.ToString() != "")
-            saleAmount = (int)(saleAmount * 1.5f);
+        //if (owner.ToString() != "")
+        //    saleAmount = (int)(saleAmount * 2f);
 
         SetArea(id);
         Cancle();
@@ -95,7 +95,6 @@ public class AreaNode : BaseNode, IPurchase
 
     public void SetArea(string id)
     {
-        //this.owner = owner;
         this.owner.Clear();
         this.owner.Append(id);
         int i = GameManager.Instance.SessionDic[id].Color;
