@@ -56,7 +56,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceKeyPressResponse;
         if(response.Success)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnEventInput(response.Correct);
+            //UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnEventInput(response.Correct);
+            MinigameManager.Instance.GetMyToken().InputHandler.EnablePlayerInput();
         }
     }
 

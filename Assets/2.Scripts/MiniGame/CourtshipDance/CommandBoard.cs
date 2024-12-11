@@ -143,28 +143,26 @@ public class CommandBoard : MonoBehaviour
 
 
     /* 407 C2S_DanceKeyPressRequest*/
+    // 본인 커맨드 보드에서만 호출됨.
     public async void OnActionInput(int dir)
     {
         token.InputHandler.DisablePlayerInput();
-        if (isClient)
+        GamePacket packet = new();
+        packet.DanceKeyPressRequest = new()
         {
-            GamePacket packet = new();
-            packet.DanceKeyPressRequest = new()
-            {
-                SessionId = GameManager.Instance.myInfo.SessionId,
-                PressKey = (Direction)dir
-            };
-            sourceTcs = new();
-            SocketManager.Instance.OnSend(packet);
-            bool isSuccess = await sourceTcs.Task;
-            if (isSuccess)
-            {
-            }
-            else
-            {
-                onInputDetected?.Invoke(dir, true);
-            }
-            token.InputHandler.EnablePlayerInput();
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            PressKey = (Direction)dir
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+
+        }
+        else
+        {
+            onInputDetected?.Invoke(dir, true);
         }
     }
 
@@ -176,10 +174,7 @@ public class CommandBoard : MonoBehaviour
 
     public void MyHandleInput(float inputData, bool isFail)
     {
-        if(!isFail)
-        {
-            CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
-        }
+        CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
     }
 
     /* 409 */
@@ -245,16 +240,13 @@ public class CommandBoard : MonoBehaviour
     }
 
     public IEnumerator FailInput()
-    {
-        Debug.Log("입력이 틀렸습니다.");
-        
-        
+    {        
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        token.InputHandler.DisablePlayerInput();
+        if(isClient) token.InputHandler.DisablePlayerInput();
         yield return new WaitForSeconds(1.5f);
-        token.InputHandler.EnablePlayerInput();
+        if (isClient) token.InputHandler.EnablePlayerInput();
         isFail = false;
         failImage.gameObject.SetActive(false);
     }
