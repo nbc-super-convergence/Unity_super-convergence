@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class UIMinigameDart : UIBase
 {
+    #region UI 속성
     [Header("Backgrounds")]
     [SerializeField] private Image background;
     [SerializeField] private TextMeshProUGUI title;
@@ -18,15 +19,17 @@ public class UIMinigameDart : UIBase
     [SerializeField] private Image[] resultImage;
     [SerializeField] private TextMeshProUGUI[] stateTexts;
     [SerializeField] private TextMeshProUGUI[] scoreTexts;
+    #endregion
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
 
     private void Start()
     {
         //forcePower 초기
-        forcePower.minValue = 1.5f;
-        forcePower.maxValue = 3f;
-
+        //float min = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().minForce;
+        //float max = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().maxForce;
+        SetForceLimit(1.5f, 3f);
+        
         for (int i = 0; i < stateTexts.Length; i++)
         {
             stateTexts[i].color = playerColor[i];
@@ -41,6 +44,12 @@ public class UIMinigameDart : UIBase
         forcePower.maxValue = max;
     }
 
+    public void ChangeForcePower(float f)
+    {
+        forcePower.value = f;
+    }
+
+    #region Result 메서드
     private void SetReady(int idx)
     {
         ApplyText(idx, "준비");
@@ -68,5 +77,29 @@ public class UIMinigameDart : UIBase
         //GameManager.Instance.myInfo.Nickname;
         string nickname = "user"; //사용자 이름 (임시로)
         stateTexts[idx].text = $"{nickname} : {txt}";
+    }
+    #endregion
+
+    //Todo : 내 차례가 되면 힘조절 UI 활성
+
+    public override void Opened(object[] param)
+    {
+        HashSet<int> usedColors = new HashSet<int>();
+        foreach(var dic in GameManager.Instance.SessionDic)
+        {
+            int color = dic.Value.Color;
+            
+        }
+        for (int i = 0; i < resultImage.Length; i++)
+        {
+            if(!usedColors.Contains(i))
+            {
+                resultImage[i].gameObject.SetActive(false);
+            }
+        }
+    }
+    public override void Closed(object[] param)
+    {
+
     }
 }

@@ -13,7 +13,6 @@ public class GameDart : IGame
 
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
-    [SerializeField] private SelectOrderDartUI dartPowerUI;
     [SerializeField] private Transform resultGroup; //다트 결과
 
     [SerializeField] private Transform Title;   //타이틀 및 설명
@@ -48,7 +47,6 @@ public class GameDart : IGame
         minForce = 1.5f;
         maxForce = 3f;
 
-        dartPowerUI.SetForceLimit(minForce, maxForce);
         for (int i = 0; i < DartOrder.Count; i++)
         {
             DartOrder[i].SetAimRange(minAim, maxAim);
@@ -61,7 +59,6 @@ public class GameDart : IGame
         if (nowPlayer < DartOrder.Count)
         {
             //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-            dartPowerUI.GetForce(DartOrder[nowPlayer].CurForce);
         }
     }
 
@@ -71,7 +68,6 @@ public class GameDart : IGame
     public void HideDartUI()
     {
         //dartPowerUI.HideDirect();
-        dartPowerUI.gameObject.SetActive(false);
     }
 
     /// <summary>
