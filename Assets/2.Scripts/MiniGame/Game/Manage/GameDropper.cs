@@ -87,6 +87,11 @@ public class GameDropper : IGame
     {
         MinigameManager.Instance.GetMiniToken(sessionId).DisableMiniToken();
     }
+
+    public void DisableUI()
+    {
+        UIManager.Hide<UIMinigameDropper>();    
+    }
     #endregion
 
     #region 보조함수

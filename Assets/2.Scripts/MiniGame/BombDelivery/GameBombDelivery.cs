@@ -66,4 +66,9 @@ public class GameBombDelivery : IGame
         Object.Destroy(bomb.gameObject);
         Object.Destroy(MinigameManager.Instance.curMap.gameObject);
     }
+
+    public void DisableUI()
+    {
+        
+    }
 }

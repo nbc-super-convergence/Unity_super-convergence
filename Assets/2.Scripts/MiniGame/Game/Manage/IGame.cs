@@ -14,4 +14,5 @@ public interface IGame
 
         await UIManager.Show<UIMinigameResult>(ranks, boardTime);
     }
+    public void DisableUI();
 }
