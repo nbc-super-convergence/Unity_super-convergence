@@ -198,7 +198,7 @@ public class CommandBoard : MonoBehaviour
             }
             if (tokenData.CurState == newState)
             {
-                token.GetAnimator().Play(newState.GetHashCode(), -1);
+                //token.GetAnimator().Play(newState.GetHashCode(), 1);
             }
             else
             {
@@ -261,6 +261,7 @@ public class CommandBoard : MonoBehaviour
         {
             PopBubble();
             tokenData.CurState = state;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
         }
     }
     #endregion

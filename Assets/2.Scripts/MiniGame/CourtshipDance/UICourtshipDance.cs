@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -53,12 +54,12 @@ public class UICourtshipDance : UIBase
     }
 
     // 카운트다운이 끝나면 실행하기
-    public void StartTime()
+    public void StartTimer()
     {
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
-
-
+    
+    
 
     public void GameOver(S2C_DanceGameOverNotification response)
     {        

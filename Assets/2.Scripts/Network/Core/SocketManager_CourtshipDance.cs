@@ -28,11 +28,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceStartNotification(GamePacket packet)
     {
         var response = packet.DanceStartNotification;
-
+        long startTime = response.StartTime;
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart(response);
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart(startTime);
     }
 
     /* 405 : DanceTableCreateRequest
