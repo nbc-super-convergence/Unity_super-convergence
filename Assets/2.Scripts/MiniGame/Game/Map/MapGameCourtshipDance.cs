@@ -18,9 +18,9 @@ public class MapGameCourtshipDance : MapBase
 
         token.GetComponent<Rigidbody>().isKinematic = true;
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 0);
-        token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);
-
+        token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);        
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceWait);
+        token.InputHandler.ChangeActionMap(eActionMap.SimpleInput.ToString());
     }
 
     public void TokenReset(MiniToken token)
@@ -28,7 +28,7 @@ public class MapGameCourtshipDance : MapBase
         token.GetComponent<Rigidbody>().isKinematic = false;
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 1);
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 0);
-
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.Idle);
+        token.InputHandler.ChangeActionMap(eActionMap.MiniPlayerToken.ToString());
     }
 }

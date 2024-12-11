@@ -85,7 +85,6 @@ public class UIMinigameResult : UIBase
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
 
         await UIManager.Show<BoardUI>();
-        UIManager.Get<BoardUI>().Refresh();
         BoardManager.Instance.NextTurn();
     }
 
