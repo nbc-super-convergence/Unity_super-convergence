@@ -35,7 +35,7 @@ public class CommandBoard : MonoBehaviour
 
     public void Init()
     {
-        onInputDetected += MyHandleInput;
+        //onInputDetected += MyHandleInput;
         if(SessionId == GameManager.Instance.myInfo.SessionId)
         {
             isClient = true;
@@ -138,7 +138,7 @@ public class CommandBoard : MonoBehaviour
     #region 플레이
 
     public bool isFail = false;
-    public event Action<float, bool> onInputDetected;
+    //public event Action<float, bool> onInputDetected;
 
     private Queue<ArrowBubble> successQueue = new();
 
@@ -163,27 +163,19 @@ public class CommandBoard : MonoBehaviour
         }
         else
         {
-            onInputDetected?.Invoke(dir, true);
+            //onInputDetected?.Invoke(dir, true);
         }
     }
 
     /* 408 */
-    public void OnEventInput(bool isCorrect)
-    {
-        onInputDetected?.Invoke(tokenData.arrowInput, isCorrect);
-    }
 
-    public void MyHandleInput(float inputData, bool isFail)
+    public void MyHandleInput(bool isFail)
     {
-        CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
+        CheckInput(curQueueInfo.Peek().Rotation, GameManager.Instance.myInfo.SessionId);
     }
 
     /* 409 */
-    public void OtherHandleInput(bool isCorrenct, string sessionId)
-    {
-        CheckInput(curQueueInfo.Peek().Rotation, sessionId);
-    }
-
+   
     private void CheckInput(float rot, string sessionId)
     {
         var target = curQueueInfo.Peek();

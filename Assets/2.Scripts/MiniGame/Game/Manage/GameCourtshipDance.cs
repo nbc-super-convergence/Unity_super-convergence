@@ -41,7 +41,7 @@ public class GameCourtshipDance : IGame
         }
 
         // 토큰 배치 및 세팅하기
-        //ResetPlayers(players);
+        ResetPlayers(players);
 
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
@@ -96,7 +96,7 @@ public class GameCourtshipDance : IGame
         }
        // MinigameManager.Instance.GetMyToken().InputHandler.DisablePlayerInput();
         MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
-        ResetPlayers(players);
+        
         UIManager.Get<UICourtshipDance>().PlayStart();
     }
 
