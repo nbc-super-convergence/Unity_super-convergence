@@ -85,15 +85,15 @@ public class CommandBoard : MonoBehaviour
 
         if (queuePool.Count != 0)
         {
+            curQueueInfo = queuePool.Dequeue();
+
             if (!isFirst)
             {
-                curQueueInfo = queuePool.Dequeue();
-
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
                 {
                     SessionId = SessionId,
-                    EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+                    EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()  // 테스트하면서 알아보기
                 };
                 SocketManager.Instance.OnSend(packet);
             }
@@ -108,7 +108,7 @@ public class CommandBoard : MonoBehaviour
             packet.DanceTableCompleteRequest = new()
             {
                 SessionId = SessionId,
-                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()   // 테스트하면서 알아보기
             };
             SocketManager.Instance.OnSend(packet);
 
