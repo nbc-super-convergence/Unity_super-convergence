@@ -75,4 +75,9 @@ public class GameIceSlider : IGame
             .MapDecreaseEvent(gameData.phase);
     }
     #endregion
+
+    public void DisableUI()
+    {
+        UIManager.Hide<UIMinigameIce>();
+    }
 }

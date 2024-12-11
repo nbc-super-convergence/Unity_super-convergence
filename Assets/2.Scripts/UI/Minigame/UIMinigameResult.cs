@@ -21,8 +21,7 @@ public class UIMinigameResult : UIBase
     public override void Opened(object[] param)
     {
         GameManager.OnPlayerLeft += PlayerLeftEvent;
-
-        UIManager.Hide<UIMinigameIce>();
+        MinigameManager.Instance.curMiniGame.DisableUI();
 
         foreach (var panel in RankPanels)
         {
