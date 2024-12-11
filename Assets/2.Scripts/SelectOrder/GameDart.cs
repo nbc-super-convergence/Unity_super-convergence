@@ -27,31 +27,11 @@ public class GameDart : IGame
         }
     }   //빗나간 랭크
 
-    #region 조절 속성
-    //조절 속성
-    public float minAim { get; private set; }
-    public float maxAim { get; private set; }
-
-    //힘 속성
-    public float minForce { get; private set; }
-    public float maxForce { get; private set; }
-    #endregion
-
     /// <summary>
     ///  기본 설정 세팅
     /// </summary>
     private void SettingData()
     {
-        minAim = -20f;
-        maxAim = 20f;
-        minForce = 1.5f;
-        maxForce = 3f;
-
-        for (int i = 0; i < DartOrder.Count; i++)
-        {
-            DartOrder[i].SetAimRange(minAim, maxAim);
-            DartOrder[i].SetForceRange(minForce, maxForce);
-        }
     }
 
     private void Update()

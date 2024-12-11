@@ -84,6 +84,8 @@ public class DartPlayer : MonoBehaviour
         orderEvent.OnAimEvent += SetAim;
         orderEvent.OnShootEvent += PressKey;
 
+        //이걸 Data클래스에서 받지 말고 그냥 여기서 설정하도록 할까?
+        //UI만 보내는거 말고 없는것 같다......
         SetAimRange(-20f, 20f);
         SetForceRange(1.5f, 3f);
     }
