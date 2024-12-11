@@ -60,6 +60,8 @@ public class BoardManager : Singleton<BoardManager>
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
+    public Dice dice { get; private set; }
+
 #pragma warning disable
     public CinemachineVirtualCamera camera;
     public event Action OnEvent;
@@ -110,6 +112,9 @@ public class BoardManager : Singleton<BoardManager>
     private async void Init()
     {
         var ids = GameManager.Instance.SessionDic.Keys;
+        var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
+        dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
+        dice.gameObject.SetActive(false);
 
         foreach (string key in ids)
         {
@@ -145,6 +150,7 @@ public class BoardManager : Singleton<BoardManager>
         //    playerTokenHandlers.Add(handle);
         //}
         #endregion
+        dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
         Curplayer.Ready();
     }
@@ -232,7 +238,10 @@ public class BoardManager : Singleton<BoardManager>
 
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
-        camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
+
+        Transform t = playerTokenHandlers[playerIndex].transform;
+        camera.Follow = camera.LookAt = t;
+        dice.SetDicePosition(t);
 
         Curplayer.Ready();
     }
