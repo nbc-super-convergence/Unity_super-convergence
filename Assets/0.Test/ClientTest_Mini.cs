@@ -65,7 +65,7 @@ public partial class ClientTest : Singleton<ClientTest>
                 {
                     DropMiniGameStartNotification = new()
                     {
-                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 5000
                     }
                 };
                 SocketManager.Instance.DropMiniGameStartNotification(packet);
@@ -101,12 +101,15 @@ public partial class ClientTest : Singleton<ClientTest>
             {
                 GamePacket packet = new()
                 {
-                    DropLevelEndNotification = new()
+                    DropPlayerSyncNotification = new()
                     {
-                        Holes = { 0, 1, 3, 5, 7 }
+                        SessionId = "Session1",
+                        Slot = 1,
+                        Rotation = 0,
+                        State = 0,
                     }
                 };
-                SocketManager.Instance.DropLevelEndNotification(packet);
+                SocketManager.Instance.DropPlayerSyncNotification(packet);
                 break;
             }
             yield return null;

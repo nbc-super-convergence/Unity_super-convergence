@@ -167,4 +167,9 @@ public class GameCourtshipDance : IGame
         }
         return null;
     }
+
+    public void DisableUI()
+    {
+        UIManager.Hide<UICourtshipDance>();
+    }
 }
