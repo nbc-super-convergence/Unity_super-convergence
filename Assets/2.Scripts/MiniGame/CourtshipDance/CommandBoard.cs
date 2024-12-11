@@ -42,6 +42,8 @@ public class CommandBoard : MonoBehaviour
         }
         token = MinigameManager.Instance.GetMiniToken(SessionId);
         tokenData = token.MiniData;
+
+        MakeNextBoard();
     }
     public void SetSessionId(string sessionId)
     { SessionId = sessionId; }
