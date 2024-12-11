@@ -113,33 +113,33 @@ public class MiniTokenInputHandler
     private void OnUp(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 0;
-        if (UIManager.IsOpened<UICommandBoardHandler>())
+        if (UIManager.IsOpened<UICourtshipDance>())
         {
-            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
         }
     }
     private void OnLeft(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 90;
-        if (UIManager.IsOpened<UICommandBoardHandler>())
+        if (UIManager.IsOpened<UICourtshipDance>())
         {
-            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
         }
     }
     private void OnDown(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 180;
-        if (UIManager.IsOpened<UICommandBoardHandler>())
+        if (UIManager.IsOpened<UICourtshipDance>())
         {
-            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
         }
     }
     private void OnRight(InputAction.CallbackContext context)
     {
         miniData.arrowInput = 270;
-        if (UIManager.IsOpened<UICommandBoardHandler>())
+        if (UIManager.IsOpened<UICourtshipDance>())
         {
-            UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
         }
     }
     #endregion

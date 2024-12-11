@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ public class CommandBoard : MonoBehaviour
     [SerializeField] private Image background;
     [SerializeField] private GameObject prefabBubble;
     [SerializeField] private Image failImage;
+    [SerializeField] private TMP_Text completeText;
 
     [SerializeField] private Queue<ArrowBubble> curCommandQueue;
 
@@ -24,9 +27,16 @@ public class CommandBoard : MonoBehaviour
     public int numOfbubbles = -1;
     public int round = 0;
 
+    private TaskCompletionSource<bool> sourceTcs;
+
+    public void TrySetTask(bool isSuccess)
+    {
+        bool b = sourceTcs.TrySetResult(isSuccess);
+    }
+
     public void Init()
     {
-        onInputDetected += HandleInput;
+        onInputDetected += MyHandleInput;
         if(SessionId == GameManager.Instance.myInfo.SessionId)
         {
             isClient = true;
@@ -59,7 +69,7 @@ public class CommandBoard : MonoBehaviour
         rtfailImage.sizeDelta = new(60f + bubbleCount * 100f, rtfailImage.sizeDelta.y);
     }
 
-
+    /* 412 */
     // 정보에 따라 방향방울 만들기
     private Queue<ArrowBubble> MakeCommandQueue()
     {
@@ -76,12 +86,32 @@ public class CommandBoard : MonoBehaviour
         if(queuePool.Count != 0)
         {
             curQueueInfo = queuePool.Dequeue();
+
+            GamePacket packet = new();
+            packet.DanceTableCompleteRequest = new()
+            {
+                SessionId = SessionId,
+                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+            };
+            SocketManager.Instance.OnSend(packet);
         }
         else
         {
-            // 완료 버블 띄우기? C O M P L E T E
-            // return;
+            // 완료 로직
+            // 완료 효과
+            GamePacket packet = new();
+            packet.DanceTableCompleteRequest = new()
+            {
+                SessionId = SessionId,
+                EndTime = DateTimeOffset.UtcNow.Ticks   // 테스트하면서 알아보기
+            };
+            SocketManager.Instance.OnSend(packet);
+
+            completeText.gameObject.SetActive(true);
+            background.gameObject.SetActive(false);
+            token.InputHandler.DisablePlayerInput();
         }
+
         Queue<ArrowBubble> queue = new();
         foreach ( var info in curQueueInfo)
         {
@@ -101,25 +131,55 @@ public class CommandBoard : MonoBehaviour
     #region 플레이
 
     public bool isFail = false;
-    public event Action<float> onInputDetected;
+    public event Action<float, bool> onInputDetected;
 
     private Queue<ArrowBubble> successQueue = new();
 
-    
-    public void OnActionInput(int dir)
+
+    /* 407 C2S_DanceKeyPressRequest*/
+    public async void OnActionInput(int dir)
     {
+        token.InputHandler.DisablePlayerInput();
         if (isClient)
         {
-            onInputDetected?.Invoke(dir);
+            GamePacket packet = new();
+            packet.DanceKeyPressRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId,
+                PressKey = (Direction)dir
+            };
+            sourceTcs = new();
+            SocketManager.Instance.OnSend(packet);
+            bool isSuccess = await sourceTcs.Task;
+            if (isSuccess)
+            {
+            }
+            else
+            {
+                onInputDetected?.Invoke(dir, true);
+            }
+            token.InputHandler.EnablePlayerInput();
         }
     }
 
-    public void HandleInput(float inputData)
+    /* 408 */
+    public void OnEventInput(bool isCorrect)
+    {
+        onInputDetected?.Invoke(tokenData.arrowInput, isCorrect);
+    }
+
+    public void MyHandleInput(float inputData, bool isFail)
     {
         if(!isFail)
         {
             CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
         }
+    }
+
+    /* 409 */
+    public void OtherHandleInput(bool isCorrenct, string sessionId)
+    {
+        CheckInput(curQueueInfo.Peek().Rotation, sessionId);
     }
 
     private void CheckInput(float rot, string sessionId)
@@ -166,7 +226,6 @@ public class CommandBoard : MonoBehaviour
 
         if(curQueueInfo.Count == 0)
         {
-            //UIManager.Get<UICommandBoardHandler>().Next();
             MakeNextBoard();
         }
     }
@@ -194,5 +253,4 @@ public class CommandBoard : MonoBehaviour
         failImage.gameObject.SetActive(false);
     }
     #endregion
-
 }
