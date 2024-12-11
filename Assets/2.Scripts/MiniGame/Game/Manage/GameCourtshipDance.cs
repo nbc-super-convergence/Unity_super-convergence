@@ -2,13 +2,6 @@ using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-//// 임시 클래스
-//public class PlayerInfo
-//{
-//    public string SessionId;
-//    public int TeamId;
-//}
-
 // 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
@@ -25,11 +18,6 @@ public class GameCourtshipDance : IGame
     {
     }
 
-    /// <summary>
-    /// MinigameManager의 SetMiniGame에서 처음 실행함.
-    /// param (== response) 안에 서버로부터 받은 players 참가유저 정보가 들어있음.
-    /// </summary>
-    /// <param name="param"></param>
     public async void Init(params object[] param)
     {
         gameData = new CourtshipDanceData();
@@ -52,7 +40,6 @@ public class GameCourtshipDance : IGame
             }
         }
 
-
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
@@ -62,6 +49,7 @@ public class GameCourtshipDance : IGame
             commandGenerator.InitFFA(players);
             commandPoolDic = commandGenerator.GetPlayerPoolDic();
         }
+
         // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
         /* 405 */
         sourceTcs = new();
@@ -100,9 +88,6 @@ public class GameCourtshipDance : IGame
     }
 
 
-    /// <summary>
-    /// S2C게임시작알림 서버의 알림에 따라 실행. 진짜 게임 시작.
-    /// </summary>
     public async void GameStart(params object[] param)
     {
         if (param[0] is long startTime)
@@ -131,7 +116,7 @@ public class GameCourtshipDance : IGame
     /// 입력 교체
     /// </summary>
     /// <param name="players"></param>
-    private void ResetPlayers(List<PlayerInfo> players) // 매개변수 바뀔 수 있음.
+    private void ResetPlayers(List<PlayerInfo> players)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
