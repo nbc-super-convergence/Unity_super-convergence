@@ -222,7 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e061f4b1d1e3ad4c8d3b5758e6c8589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DartPannel: {fileID: 3509898443734092488}
+  DartPannel: {fileID: 3509898443734092491}
   DartOrder:
   - {fileID: 6403889701363611231}
   - {fileID: 2626016692065605476}
@@ -333,7 +333,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6947800949843573042}
-  - {fileID: 632544813410040859}
   - {fileID: 7886432017676200996}
   - {fileID: 6953186607772020767}
   - {fileID: 6249303605443502961}
@@ -645,7 +644,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1416608128}
-  m_Father: {fileID: 156470871313393538}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -996,7 +995,7 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &3509898443734092488
+--- !u!114 &3509898443734092491
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1005,7 +1004,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 108549705}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aeaffd9048960fe4696b099ed366cb5c, type: 3}
+  m_Script: {fileID: 11500000, guid: 2457e27dfa297b343886bd8fe41daad8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isMove: 1
@@ -1310,7 +1309,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1142770143751240, guid: d31d5e07362494e468582cf3e3d08eaf,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3509898443734092488}
+      addedObject: {fileID: 3509898443734092491}
   m_SourcePrefab: {fileID: 100100000, guid: d31d5e07362494e468582cf3e3d08eaf, type: 3}
 --- !u!1 &6492287238339410436
 GameObject:
@@ -1409,19 +1408,7 @@ MonoBehaviour:
       m_Calls: []
   m_ActionEvents:
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 6403889701363611231}
-        m_TargetAssemblyTypeName: SelectOrderDart, Assembly-CSharp
-        m_MethodName: OnShooting
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: b5d7af5d-dde8-400e-b68b-ff08b5883d6c
     m_ActionName: Player/Shoot[/Keyboard/space,/Mouse/leftButton]
   - m_PersistentCalls:
@@ -1953,5 +1940,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1962020477}
+  - {fileID: 632544813410040859}
   - {fileID: 156470871313393538}
   - {fileID: 1696584587}
