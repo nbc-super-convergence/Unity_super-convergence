@@ -46,6 +46,8 @@ public class GameIceSlider : IGame
             miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.rotY = p.Rotation;
+
+            miniToken.MiniData.PlayerSpeed = 15f;
         }
     }
     #endregion

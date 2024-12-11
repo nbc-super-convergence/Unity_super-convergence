@@ -50,14 +50,14 @@ public class MiniTokenController
                     new (transform.localPosition.x, transform.localPosition.z),
                     new (miniData.nextPos.x, miniData.nextPos.z)
                 );
-                threshold = 0.1f;
+                threshold = 0.2f;
 
                 if (distance > threshold)
                 {
                     if (miniData.CurState != State.Move)
                         miniData.CurState = State.Move;
                     Vector3 direction = (miniData.nextPos - transform.localPosition).normalized;
-                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, rb.velocity.y, direction.z * miniData.PlayerSpeed);
+                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, direction.y, direction.z * miniData.PlayerSpeed);
                 }
                 else
                 {
