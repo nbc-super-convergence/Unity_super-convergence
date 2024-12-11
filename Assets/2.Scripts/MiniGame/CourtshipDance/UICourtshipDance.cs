@@ -81,9 +81,9 @@ public class UICourtshipDance : UIBase
             rankings.Add(teamResults[i].SessionId[0], rank);
         }
 
-        StartCoroutine(GameOverText(teamResults, rankings));
+        StartCoroutine(GameOverText(teamResults, rankings, response.EndTime));
     }
-    public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings)
+    public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)
     {
         end.SetActive(true);
         yield return new WaitForSeconds(2f);
@@ -98,7 +98,7 @@ public class UICourtshipDance : UIBase
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
-        //MinigameManager.Instance.curMiniGame.GameEnd(rankings, response.EndTime);
+        MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
         UIManager.Hide<UICourtshipDance>();
     }
 }
