@@ -129,34 +129,34 @@ public class CommandGenerator
     }
 
     #region Convert
-    public static List<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
+    public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
     {
-        List<DancePool> dancePools = new List<DancePool>();
+        RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
 
         foreach (var kvp in playerPoolDic)
         {
             DancePool dancePool = new DancePool
             {
-                SessionId = kvp.Key,
+                SessionId = kvp.Key,                
             };
-
-            foreach (var queue in kvp.Value)
-            {
-                DanceTable danceTable = new DanceTable();
-
-                foreach (var bubbleInfo in queue)
+                RepeatedField<DanceTable> danceTables = new();
+                foreach (var queue in kvp.Value)
                 {
-                    DanceCommand command = new DanceCommand
+                    DanceTable danceTable = new DanceTable();
+                    RepeatedField<DanceCommand> danceCommands = new();
+                    foreach (var bubbleInfo in queue)
                     {
-                        Direction = (Direction)bubbleInfo.Rotation,
-                        TargetSessionId = bubbleInfo.sessionId
-                    };
-                    danceTable.Commands.Add(command);
+                        DanceCommand command = new DanceCommand
+                        {
+                            Direction = (Direction)bubbleInfo.Rotation,
+                            TargetSessionId = bubbleInfo.sessionId
+                        };
+                        danceCommands.Add(command);
+                    }
+                    danceTable.Commands.Add(danceCommands);
+                    danceTables.Add(danceTable);
                 }
-
-                dancePool.DanceTables.Add(danceTable);
-            }
-
+            dancePool.DanceTables.Add(danceTables);
             dancePools.Add(dancePool);
         }
 

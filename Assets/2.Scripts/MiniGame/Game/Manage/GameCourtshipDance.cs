@@ -1,7 +1,6 @@
 using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using UnityEngine.Playables;
 
 //// 임시 클래스
 //public class PlayerInfo
@@ -68,7 +67,7 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            List<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
+            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
 
             GamePacket packet = new();
 
