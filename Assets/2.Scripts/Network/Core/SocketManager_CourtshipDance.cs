@@ -11,6 +11,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceMiniGameReadyNotification(GamePacket packet)
     {
         var response = packet.DanceMiniGameReadyNotification;
+        UIManager.Hide<BoardUI>();
 #pragma warning disable CS4014
         UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
 #pragma warning restore CS4014

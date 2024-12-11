@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 2878489951109708165}
   - component: {fileID: 3602825729138492462}
   m_Layer: 5
-  m_Name: UICommandBoardHandler
+  m_Name: UICourtshipDance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,4 +1,6 @@
 
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,25 +16,17 @@ public class InsuDebugger : Singleton<InsuDebugger>
         { OpenDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
-            Setminigame(); 
-            MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
-            
+            StartCoroutine(CourtshipDanceSkipper());             
         }
-        if (Input.GetKeyDown(KeyCode.Alpha8) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        
+
+        if (Input.GetKeyDown(KeyCode.Alpha4) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
             UIManager.Get<UICourtshipDance>().Next("Session1");
             UIManager.Get<UICourtshipDance>().Next("Session2");
             UIManager.Get<UICourtshipDance>().Next("Session3");
             UIManager.Get<UICourtshipDance>().Next("Session4");
         }
-
-
-        if (Input.GetKeyDown(KeyCode.Alpha7) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { JumpExecuteCourtshipDance(); }
-        if (Input.GetKeyDown(KeyCode.Alpha6) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { StartDance(); }
-        if (Input.GetKeyDown(KeyCode.Alpha5) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { UIManager.Get<UICourtshipDance>().Next(GameManager.Instance.myInfo.SessionId); }
     }
 
     private void OpenDance()
@@ -41,38 +35,116 @@ public class InsuDebugger : Singleton<InsuDebugger>
         SceneManager.LoadScene(3, LoadSceneMode.Additive);
     }
 
-    private void Setminigame()
+    private IEnumerator CourtshipDanceSkipper()
     {
-        var a = GameManager.Instance.SessionDic;
-        List<PlayerInfo> list = new List<PlayerInfo>();
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "BoardScene");
 
-        foreach (var p in a)
+        while (true)
         {
-            var player = new PlayerInfo { SessionId = p.Value.SessionId , TeamNumber = 0 };
-            list.Add(player);
+            if (Input.GetKey(KeyCode.LeftControl) &&
+            Input.GetKeyDown(KeyCode.Alpha8))
+            {
+                GamePacket packet = new GamePacket()
+                {
+                    DanceMiniGameReadyNotification = new()
+                    {
+                        Players =
+                        {
+                            new PlayerInfo
+                            {
+                                SessionId = "Session1",
+                                TeamNumber = 1
+                            },
+                            new PlayerInfo
+                            {
+                                SessionId = "Session2",
+                                TeamNumber = 2
+                            },
+                            new PlayerInfo
+                            {
+                                SessionId = "Session3",
+                                TeamNumber = 3
+                            },
+                            new PlayerInfo
+                            {
+                                SessionId = "Session4",
+                                TeamNumber = 4
+                            },
+                        }
+                    }
+                };
+                SocketManager.Instance.DanceMiniGameReadyNotification(packet);
+                break;
+            }
+            yield return null;
+
         }
 
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(list);
-    }
-    
-
-    private void JumpExecuteCourtshipDance()
-    {
-        GameManager.Instance.myInfo.SetSessionId("debugInsu");
-        SceneManager.LoadScene(3);
-    }
-    private void StartDance()
-    {        
-        PlayerInfo debugPlayer0 = new PlayerInfo() { SessionId = GameManager.Instance.myInfo.SessionId };
-        List<PlayerInfo> debugPlayers = new List<PlayerInfo>
+        while(true)
         {
-            debugPlayer0
-        };
+            if (Input.GetKey(KeyCode.LeftControl) &&
+            Input.GetKeyDown(KeyCode.Alpha7))
+            {
+                GamePacket packet = new GamePacket()
+                {
+                    DanceStartNotification = new()
+                    {
+                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                    }
+                };
+                SocketManager.Instance.DanceStartNotification(packet);
+                break;
+            }
+            yield return null;
+        }
 
-        GameManager.Instance.AddNewPlayer(debugPlayer0.SessionId, "DebugInsu", 0, 0);
-
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(debugPlayers);
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart();
+        while(true)
+        {
+            if (Input.GetKey(KeyCode.LeftControl) &&
+            Input.GetKeyDown(KeyCode.Alpha6))
+            {
+                GamePacket packet = new GamePacket()
+                {
+                    DanceGameOverNotification = new()
+                    {
+                        TeamRank = {1,2,3,4 },
+                        Result = 
+                        {
+                            new TeamResult
+                            {
+                                SessionId = { "Session1" },
+                                Score = 20,
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                            },
+                            new TeamResult
+                            {
+                                SessionId = { "Session2" },
+                                Score = 15,
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                            },
+                            new TeamResult
+                            {
+                                SessionId = { "Session3" },
+                                Score = 10,
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                            },
+                            new TeamResult
+                            {
+                                SessionId = { "Session4" },
+                                Score = 5,
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                            }
+                        },
+                        Reason = GameEndReason.TimeOver,
+                        EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                    }
+                };
+                SocketManager.Instance.DanceGameOverNotification(packet);
+                break;
+            }
+            yield return null;
+        }
     }
+
 }
 #endif
