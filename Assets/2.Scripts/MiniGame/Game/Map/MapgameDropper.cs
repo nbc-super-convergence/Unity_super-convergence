@@ -32,10 +32,12 @@ public class MapGameDropper : MapBase
         StartCoroutine(MoveCamera());
     }
 
-    public void NextLevelEvent(int[] holes)
+    public IEnumerator NextLevelEvent(int[] holes)
     {
         //테스트 코드
         if (gameData.phase == 0) gameData.phase = 1;
+
+        yield return new WaitForSeconds(1f);
 
         //바닥 없애기.
         foreach (int hole in holes)

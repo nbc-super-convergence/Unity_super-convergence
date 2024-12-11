@@ -12568,10 +12568,55 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1096913456}
     m_Modifications:
+    - target: {fileID: 1309463090491258447, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_text
+      value: Start
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309463090491258447, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1309463090491258447, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 16777215
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170915335177039, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170915335177039, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170915335177039, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170915335177039, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2463170915335177039, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2944268776985174760, guid: d1d8de2d64da5374ca7212810686f9b0,
         type: 3}
       propertyPath: m_Name
       value: UIMinigameDropper
+      objectReference: {fileID: 0}
+    - target: {fileID: 4443255102658030769, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6948912261394234755, guid: d1d8de2d64da5374ca7212810686f9b0,
         type: 3}
@@ -12671,6 +12716,36 @@ PrefabInstance:
     - target: {fileID: 6948912261394234755, guid: d1d8de2d64da5374ca7212810686f9b0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7037428396381262149, guid: d1d8de2d64da5374ca7212810686f9b0,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
