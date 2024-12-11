@@ -1,7 +1,10 @@
+using System.Text;
 using System.Threading.Tasks;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UILogin : UIBase
 {
@@ -11,8 +14,10 @@ public class UILogin : UIBase
     [SerializeField] private TMP_InputField PasswardInput;
 
     [SerializeField] private TextMeshProUGUI versionTxt;
+    private StringBuilder sbError = new();
 
     private TaskCompletionSource<bool> sourceTcs;
+    
 
     private void Start()
     {
@@ -29,13 +34,12 @@ public class UILogin : UIBase
     //Inspector: 로그인 후 로비로 들어가기
     public async void OnLoginBtn()
     {
-        //테스트 코드
-        //if (IsSceneInBuild(targetScene))
-        //{
-        //    SocketManager.Instance.Init();
-        //    SendPacketIceJoinRequest();
-        //    SceneManager.LoadScene(targetScene);
-        //}
+        if (!IsValidation())
+        {
+            await UIManager.Show<UIError>(sbError.ToString());
+            sbError.Clear();
+            return;
+        }
 
         ////Send: 서버로 ID PW.
         string id = IDInput.text;
@@ -63,9 +67,7 @@ public class UILogin : UIBase
         if (sourceTcs.TrySetResult(isSuccess))
         {            
         }
-    }
-
-    
+    }    
 
     //Inspector: 게임종료 판넬 키기
     public async void OnQuitBtn()
@@ -73,6 +75,21 @@ public class UILogin : UIBase
         await UIManager.Show<UIQuit>();
     }
     #endregion
+    private bool IsValidation()
+    {
+        if (IDInput.text.Length < 4 || IDInput.text.Length > 12)
+        {
+            sbError.AppendLine($"아이디는 4자 이상, 12자 이하로 입력하세요.");
+            return false;
+        }
+        if (PasswardInput.text.Length < 4 || PasswardInput.text.Length > 16)
+        {
+            sbError.Append($"비밀번호는 4자 이상, 16자 이하로 입력하세요.");
+            return false;
+        }
+
+        return true;
+    }
 
     #region Test Zone
     private bool IsSceneInBuild(string sceneName)
