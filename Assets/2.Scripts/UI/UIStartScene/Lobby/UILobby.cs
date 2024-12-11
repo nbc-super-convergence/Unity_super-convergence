@@ -37,9 +37,8 @@ public class UILobby : UIBase
         else
         {
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
-        }
-
-        OnBtnRefresh();
+            OnBtnRefresh();
+        }        
     }
     private async void LobbyJoinRequest()
     {
@@ -61,6 +60,8 @@ public class UILobby : UIBase
         {
             Debug.LogError($"UILobby sourceTcs : {isSuccess}");
         }
+
+        OnBtnRefresh();
     }
 
     public void TrySetTask(bool isSuccess)
