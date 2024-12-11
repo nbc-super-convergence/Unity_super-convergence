@@ -107,37 +107,37 @@ public class GameDropper : IGame
             case 0:
             case 1:
             case 2:
-                xPos = 2.2f;
+                zPos = -2.1f;
                 break;
             case 3:
             case 4:
             case 5:
-                xPos = 0f;
+                zPos = 0f;
                 break;
             case 6:
             case 7:
             case 8:
-                xPos = -2.2f;
+                zPos = 2.1f;
                 break;
         }
 
-        //zPos
+        //xPos
         switch (slot)
         {
             case 0:
             case 3:
             case 6:
-                zPos = -2.2f;
+                xPos = 2.1f;
                 break;
             case 1:
             case 4:
             case 7:
-                zPos = 0f;
+                xPos = 0f;
                 break;
             case 2:
             case 5:
             case 8:
-                zPos = 2.2f;
+                xPos = -2.1f;
                 break;
         }
 
