@@ -171,7 +171,7 @@ public class CommandBoard : MonoBehaviour
 
     public void MyHandleInput(bool isFail)
     {
-        CheckInput(curQueueInfo.Peek().Rotation, GameManager.Instance.myInfo.SessionId);
+        CheckInput(tokenData.arrowInput, GameManager.Instance.myInfo.SessionId);
     }
 
     /* 409 */
@@ -236,7 +236,7 @@ public class CommandBoard : MonoBehaviour
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        //if (isClient) token.PausePlayerInput(1.5f);
+        token.PausePlayerInput(1.5f);
         yield return new WaitForSeconds(1.5f);        
         isFail = false;
         failImage.gameObject.SetActive(false);
