@@ -15,7 +15,8 @@ public class InsuDebugger : Singleton<InsuDebugger>
         { OpenDance(); }
         if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
-            StartCoroutine(CourtshipDanceSkipper());             
+            Debug.Log("디버그 시작");
+            StartCoroutine(CourtshipDanceSkipper());   
         }
         
 

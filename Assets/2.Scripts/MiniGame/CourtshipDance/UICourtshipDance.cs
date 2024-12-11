@@ -38,9 +38,18 @@ public class UICourtshipDance : UIBase
         }
     }
 
+
     public void Next(string sessionId)
     {
         boardDic[sessionId].MakeNextBoard();
+    }
+    
+    public void PlayStart()
+    {
+        foreach( var item in boardDic.Values)
+        {
+            item.MakeNextBoard();
+        }
     }
 
     // 카운트다운이 끝나면 실행하기
