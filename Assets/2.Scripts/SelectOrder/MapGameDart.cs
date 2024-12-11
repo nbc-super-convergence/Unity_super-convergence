@@ -9,29 +9,6 @@ public class MapGameDart : MapBase
     public List<DartPlayer> DartOrder;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
-    private int missRank = 4;
-    public int MissRank
-    {
-        get
-        {
-            return missRank--;
-        }
-    }   //빗나간 랭크
-
-    #region 조절 속성
-    //조절 속성
-    public float minAim { get; private set; }
-    public float maxAim { get; private set; }
-
-    //힘 속성
-    public float minForce { get; private set; }
-    public float maxForce { get; private set; }
-    #endregion
-
-    private void Awake()
-    {
-
-    }
 
     private void Start()
     {
