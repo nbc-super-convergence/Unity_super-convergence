@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class SelectOrderPanel : MonoBehaviour
 {
-    private List<float> distanceRank;    //다트 거리의 매겨줄 랭킹
     private List<DiceGameData> sendServerData;  //서버에 전송할 데이터
 
     //다트판 속성
@@ -14,7 +13,6 @@ public class SelectOrderPanel : MonoBehaviour
 
     private void Awake()
     {
-        distanceRank = new List<float>();
         sendServerData = new List<DiceGameData>();
     }
 
@@ -37,40 +35,6 @@ public class SelectOrderPanel : MonoBehaviour
 
             transform.Translate((swapDirection ? Vector3.right : Vector3.left) * (Time.deltaTime * pannelSpeed));
         }
-    }
-
-    //중심과 가까운 다트가 우선순위
-    public void DistanceRank()
-    {
-        int rank = 1;
-
-        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
-
-
-        foreach (var dart in dartOrder)
-            distanceRank.Add(dart.MyDistance);
-
-        distanceRank.Sort();
-
-        //정렬후 랭킹
-        for (int i = 0; i < distanceRank.Count; i++)
-        {
-            foreach (var dart in dartOrder)
-            {
-                if (dart.MyDistance.Equals(distanceRank[i]))
-                {
-                    if (dart.MyDistance >= 10f)
-                        continue;
-                    else
-                    {
-                        dart.MyRank = rank;
-                        rank++;
-                    }
-                }
-            }
-        }
-
-        MinigameManager.Instance.GetMiniGame<GameDart>().FinishSelectOrder();
     }
 
     private void SendServer()

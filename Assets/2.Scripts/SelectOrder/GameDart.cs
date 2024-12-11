@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,6 @@ public class GameDart : IGame
 {
     private UIMinigameDart ingameUI;
 
-    #region 일단 바꿔야할 것들
     //다트판
     public SelectOrderPanel DartPannel;
 
@@ -39,12 +37,11 @@ public class GameDart : IGame
     public float minForce { get; private set; }
     public float maxForce { get; private set; }
     #endregion
-    #endregion
 
     /// <summary>
     ///  기본 설정 세팅
     /// </summary>
-    private void SettingBasic()
+    private void SettingData()
     {
         minAim = -20f;
         maxAim = 20f;
@@ -91,8 +88,44 @@ public class GameDart : IGame
         else
         {
             DartPannel.isMove = false;  //판은 멈춰라
-            DartPannel.DistanceRank();
+            DistanceRank();
         }
+    }
+
+    private List<float> distanceRank = new List<float>();    //다트 거리의 매겨줄 랭킹
+
+    //중심과 가까운 다트가 우선순위
+    public void DistanceRank()
+    {
+        int rank = 1;
+
+        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
+
+
+        foreach (var dart in dartOrder)
+            distanceRank.Add(dart.MyDistance);
+
+        distanceRank.Sort();
+
+        //정렬후 랭킹
+        for (int i = 0; i < distanceRank.Count; i++)
+        {
+            foreach (var dart in dartOrder)
+            {
+                if (dart.MyDistance.Equals(distanceRank[i]))
+                {
+                    if (dart.MyDistance >= 10f)
+                        continue;
+                    else
+                    {
+                        dart.MyRank = rank;
+                        rank++;
+                    }
+                }
+            }
+        }
+
+        MinigameManager.Instance.GetMiniGame<GameDart>().FinishSelectOrder();
     }
 
     /// <summary>
@@ -108,7 +141,7 @@ public class GameDart : IGame
     {
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDart>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMap<MapGameDart>();
-        SettingBasic();
+        SettingData();
     }
 
     public async void GameStart(params object[] param)
