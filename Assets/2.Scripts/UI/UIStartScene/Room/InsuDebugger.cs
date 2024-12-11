@@ -37,7 +37,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
 
     private IEnumerator CourtshipDanceSkipper()
     {
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "BoardScene");
+        //yield return new WaitUntil(() => SceneManager.GetActiveScene().name == "BoardScene");
 
         while (true)
         {

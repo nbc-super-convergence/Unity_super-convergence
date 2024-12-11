@@ -19,7 +19,7 @@ public class GameCourtshipDance : IGame
 
     private CommandGenerator commandGenerator;
     public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
-    private List<PlayerInfo> players;    
+    private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
     public GameCourtshipDance()
@@ -35,17 +35,22 @@ public class GameCourtshipDance : IGame
     {
         gameData = new CourtshipDanceData();
         gameData.Init();
-        var commandBoardHandler = await UIManager.Show<UICourtshipDance>();
+        var commandBoardHandler = await UIManager.Show<UICourtshipDance>(gameData);
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMapDance();
-        S2C_DanceMiniGameReadyNotification response;
-        if (param[0] is S2C_DanceMiniGameReadyNotification item)
+        if (param[0] is S2C_DanceMiniGameReadyNotification response)
         {
-            response = item;
+            foreach (var p in response.Players)
+            {
+                this.players.Add(p);
+            }
         }
-        else if (param[0] is List<PlayerInfo> players)
+        else if (param[0] is RepeatedField<PlayerInfo> players)
         {
-            this.players = players;
+            foreach ( var p in players)
+            {
+                this.players.Add(p);
+            }
         }
 
 

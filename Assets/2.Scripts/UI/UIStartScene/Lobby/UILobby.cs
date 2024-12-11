@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Google.Protobuf.Collections;
@@ -39,8 +39,7 @@ public class UILobby : UIBase
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
         }
 
-        //AddRoom("테스트룸1", 4, 10);
-        //AddRoom("TestRoom22", 1, 100);
+        OnBtnRefresh();
     }
     private async void LobbyJoinRequest()
     {
