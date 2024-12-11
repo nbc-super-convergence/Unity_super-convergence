@@ -1,8 +1,6 @@
 using System;
-using System.Data.SqlTypes;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.InputSystem.Utilities;
 using UnityEngine.UI;
 
 public class FadeScreen : Singleton<FadeScreen>

@@ -198,7 +198,7 @@ public class CommandBoard : MonoBehaviour
             }
             if (tokenData.CurState == newState)
             {
-                token.GetAnimator().Play(newState.GetHashCode(), -1);
+                //token.GetAnimator().Play(newState.GetHashCode(), 1);
             }
             else
             {
@@ -236,8 +236,9 @@ public class CommandBoard : MonoBehaviour
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        token.PausePlayerInput(1.5f);
-        yield return new WaitForSeconds(1.5f);        
+        token.InputHandler.DisableSimpleInput();
+        yield return new WaitForSeconds(1.5f);
+        token.InputHandler.EnableSimpleInput();
         isFail = false;
         failImage.gameObject.SetActive(false);
     }
@@ -261,6 +262,7 @@ public class CommandBoard : MonoBehaviour
         {
             PopBubble();
             tokenData.CurState = state;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
         }
     }
     #endregion

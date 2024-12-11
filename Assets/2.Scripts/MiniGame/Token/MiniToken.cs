@@ -154,9 +154,9 @@ public class MiniToken : MonoBehaviour
     public void EnableInputSystem(eGameType eGameType)
     {
         if (eGameType== eGameType.GameCourtshipDance)
-        {//방어코드
-            InputHandler.EnablePlayerInput();
-            //StartCoroutine(SendClientMove());
+        {
+            InputHandler.DisablePlayerInput();
+            InputHandler.EnableSimpleInput();
         }
     }
     public Animator GetAnimator()
