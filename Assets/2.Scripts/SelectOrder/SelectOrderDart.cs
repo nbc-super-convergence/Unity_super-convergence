@@ -81,17 +81,23 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<SelectOrderEvent>();
-    }
 
-    private void Start()
-    {
         orderEvent.OnAimEvent += SetAim;
         orderEvent.OnShootEvent += PressKey;
+    }
 
-        minAim = SelectOrderManager.Instance.minAim;
-        maxAim = SelectOrderManager.Instance.maxAim;
-        minForce = SelectOrderManager.Instance.minForce;
-        maxForce = SelectOrderManager.Instance.maxForce;
+    /// <summary>
+    /// 각 속성의 최소 최대 결정
+    /// </summary>
+    public void SetAimRange(float min, float max)
+    {
+        minAim = min;
+        maxAim = max;
+    }
+    public void SetForceRange(float min, float max)
+    {
+        minForce = min;
+        maxForce = max;
     }
 
     private void FixedUpdate()
@@ -130,7 +136,7 @@ public class SelectOrderDart : MonoBehaviour
         //무효처리
         MissDart();
 
-        SelectOrderManager.Instance.NextDart();
+        MinigameManager.Instance.GetMiniGame<GameSelectOrder>().NextDart();
     }
 
     /// <summary>
@@ -178,7 +184,7 @@ public class SelectOrderDart : MonoBehaviour
     }
 
     /// <summary>
-    /// 다트 초기화
+    /// 다트 빗나감
     /// </summary>
     private void MissDart()
     {
@@ -192,16 +198,9 @@ public class SelectOrderDart : MonoBehaviour
 
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
-        MyRank = SelectOrderManager.Instance.MissRank;
-    }
+        MyRank = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().MissRank;
 
-    /// <summary>
-    /// 다트 표적 벡터
-    /// </summary>
-    /// <returns>WorldToScreenPoint</returns>
-    public Vector3 TargetPosition()
-    {
-        return Camera.main.WorldToScreenPoint(-transform.forward);
+        SendServer();
     }
 
     /// <summary>

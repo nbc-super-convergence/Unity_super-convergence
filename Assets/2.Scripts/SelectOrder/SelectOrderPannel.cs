@@ -30,7 +30,7 @@ public class SelectOrderPannel : MonoBehaviour
             dart.SendServer();
 
             //다음 차례
-            SelectOrderManager.Instance.NextDart();
+            MinigameManager.Instance.GetMiniGame<GameSelectOrder>().NextDart();
         }
     }
 
@@ -53,8 +53,11 @@ public class SelectOrderPannel : MonoBehaviour
     public void DistanceRank()
     {
         int rank = 1;
-        
-        foreach (var dart in SelectOrderManager.Instance.DartOrder)
+
+        List<SelectOrderDart> dartOrder = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().DartOrder;
+
+
+        foreach (var dart in dartOrder)
             distanceRank.Add(dart.MyDistance);
 
         distanceRank.Sort();
@@ -62,7 +65,7 @@ public class SelectOrderPannel : MonoBehaviour
         //정렬후 랭킹
         for (int i = 0; i < distanceRank.Count; i++)
         {
-            foreach (var dart in SelectOrderManager.Instance.DartOrder)
+            foreach (var dart in dartOrder)
             {
                 if (dart.MyDistance.Equals(distanceRank[i]))
                 {
@@ -77,7 +80,7 @@ public class SelectOrderPannel : MonoBehaviour
             }
         }
 
-        SelectOrderManager.Instance.FinishSelectOrder();
+        MinigameManager.Instance.GetMiniGame<GameSelectOrder>().FinishSelectOrder();
         //디버깅
         //foreach(var dart in SelectOrderManager.Instance.DartOrder)
         //{

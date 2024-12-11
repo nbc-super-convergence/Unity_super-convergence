@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectOrderManager : Singleton<SelectOrderManager>
+public class GameSelectOrder : IGame
 {
     //다트판
     public SelectOrderPannel DartPannel;
@@ -38,10 +38,11 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     public float maxForce { get; private set; }
     #endregion
 
-    protected override void Awake()
+    /// <summary>
+    ///  기본 설정 세팅
+    /// </summary>
+    private void SettingBasic()
     {
-        base.Awake();
-
         for (int i = 0; i < resultGroup.childCount; i++)
         {
             resultsUI.Add(resultGroup.GetChild(i).GetComponent<SelectOrderResultUI>());
@@ -54,11 +55,11 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
 
         //dartUI.SetAimLimit(minAim, maxAim);
         dartPowerUI.SetForceLimit(minForce, maxForce);
-    }
-
-    private void Start()
-    {
-        BeginSelectOrder();
+        for (int i = 0; i < DartOrder.Count; i++)
+        {
+            DartOrder[i].SetAimRange(minAim, maxAim);
+            DartOrder[i].SetForceRange(minForce, maxForce);
+        }
     }
 
     private void Update()
@@ -67,14 +68,13 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         {
             //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
             dartPowerUI.GetForce(DartOrder[nowPlayer].CurForce);
-            SetTargetDart();
         }
     }
 
     /// <summary>
     /// 지금부터 시작
     /// </summary>
-    private void BeginSelectOrder()
+    public void BeginSelectOrder()
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
         resultsUI[nowPlayer].SetMyTurn();
@@ -85,6 +85,7 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
     /// </summary>
     public void HideDartUI()
     {
+        //dartPowerUI.HideDirect();
         dartPowerUI.gameObject.SetActive(false);
     }
 
@@ -120,12 +121,17 @@ public class SelectOrderManager : Singleton<SelectOrderManager>
         }
     }
 
-    /// <summary>
-    /// 표적을 UI표시
-    /// </summary>
-    private void SetTargetDart()
+    #region IGame
+    public async void Init(params object[] param)
     {
-        Vector3 set = DartOrder[nowPlayer].TargetPosition();
-        targetUI.localPosition = Camera.main.ScreenToWorldPoint(set);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameSelectOrder>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMap<MapGameSelectOrder>();
+        SettingBasic();
     }
+
+    public void GameStart(params object[] param)
+    {
+        BeginSelectOrder();
+    }
+    #endregion
 }

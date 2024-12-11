@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectOrderResultUI : MonoBehaviour
+public class SelectOrderResultUI : UIBase
 {
     public int player = 1;
     [SerializeField] private Image bgImage;
@@ -15,14 +15,15 @@ public class SelectOrderResultUI : MonoBehaviour
     private Color myColor;
 
     // 닉네임 : 상태 (준비중 / 내차례 / 거리)
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         bgImage = GetComponent<Image>();
     }
 
     private void Start()
     {
+
         bgImage.color = Color.gray;
         
         switch(player)  //플레이어 색상
@@ -40,6 +41,11 @@ public class SelectOrderResultUI : MonoBehaviour
         SetReady();
     }
 
+    public override void Opened(object[] param)
+    {
+        base.Opened(param);
+    }
+
     /// <summary>
     /// 갱신된 데이터를 텍스트에 적용
     /// </summary>
@@ -47,6 +53,8 @@ public class SelectOrderResultUI : MonoBehaviour
     {
         stateText.text = $"{Nickname} : {state}";
     }
+
+    #region 상태 설정
     /// <summary>
     /// 준비상태 텍스트
     /// </summary>
@@ -102,4 +110,5 @@ public class SelectOrderResultUI : MonoBehaviour
         else
             scoreText.text = dist.ToString("N4");
     }
+    #endregion
 }

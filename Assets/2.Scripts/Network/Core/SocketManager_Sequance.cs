@@ -17,7 +17,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             Debug.Log(result);
 
             int i = 0;
-            var playerDart = SelectOrderManager.Instance.DartOrder;
+            var playerDart = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().DartOrder;
 
             foreach(var dart in playerDart)
             {
@@ -37,8 +37,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     public void DiceGameNotification(GamePacket packet)
     {
-        var notification = packet.DiceGameNotification;
-        var result = notification.Result;
+        var response = packet.DiceGameNotification;
+        var result = response.Result;
+
+        MinigameManager.Instance.SetMiniGame<GameSelectOrder>(response);
 
         Debug.Log(result);
     }

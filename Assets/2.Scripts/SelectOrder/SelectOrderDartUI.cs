@@ -1,22 +1,20 @@
-﻿using UnityEngine;
+using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 
-public class SelectOrderDartUI : MonoBehaviour
+public class SelectOrderDartUI : UIBase
 {
-    [SerializeField] private Slider aimSlider;
+    [SerializeField] private Image background;  //배경
+    [SerializeField] private Image HowToBG; //설명 창
+    [SerializeField] private TextMeshProUGUI HowToText; //설명 텍스트
+    
+    //힘 조절 슬라이드
     [SerializeField] private Slider forceSlider;
 
-    #region 미사용 메서드
-    public void SetAimLimit(float min, float max)
+    public override void Opened(object[] param)
     {
-        aimSlider.minValue = min;
-        aimSlider.maxValue = max;
+        base.Opened(param);
     }
-    public void GetAim(float val)
-    {
-        aimSlider.value = val;
-    }
-    #endregion
 
     /// <summary>
     /// 힘 조절 한계 설정
