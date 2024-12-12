@@ -13,6 +13,7 @@ public class CommandGenerator
     private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;
 
     private Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new();
+    private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
 
     public CommandGenerator()
     {
@@ -32,6 +33,20 @@ public class CommandGenerator
         }
     }
 
+    public void InitTeamGame(Dictionary<int, List<PlayerInfo>> teamDic)
+    {
+        teamPoolDic = new();
+        var originPool = GenerateBoardInfoPool(gameData.boardAmount);
+
+        int boardCount = teamDic.Keys.Max();
+        for (int i = 0; i < boardCount; ++i)
+        {
+            Queue<Queue<BubbleInfo>> dancePool = DeepCopyPool(originPool);
+            SetBoardPoolColor(dancePool, teamDic[i+1]);
+            teamPoolDic.Add(i + 1, dancePool);
+        }
+    }
+
     private Queue<Queue<BubbleInfo>> DeepCopyPool(Queue<Queue<BubbleInfo>> original)
     {
         return new Queue<Queue<BubbleInfo>>(
@@ -44,6 +59,10 @@ public class CommandGenerator
     public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
     {
         return playerPoolDic;
+    }
+    public Dictionary<int, Queue<Queue<BubbleInfo>>> GetTeamPoolDic() 
+    {
+        return teamPoolDic;
     }
 
     public Queue<Queue<BubbleInfo>> GenerateBoardInfoPool(int poolCount)
@@ -86,21 +105,23 @@ public class CommandGenerator
     private void SetBoardColor(Queue<BubbleInfo> queue, List<PlayerInfo> teamPlayers)
     {
         List<int> colors = new();
+        List<string> sessionIds = new();
         foreach (var player in teamPlayers)
         {
             if (SessionDic.TryGetValue(player.SessionId, out UserInfo userInfo))
             {
                 colors.Add(userInfo.Color);
+                sessionIds.Add(player.SessionId);
             }
         }
         if (colors.Count == 0) return;
 
-        int colorIndex = 0;
-
+        int index = 0;
         foreach (BubbleInfo b in queue)
         {
-            b.SetColor(colors[colorIndex]);
-            colorIndex = (colorIndex + 1) % colors.Count;
+            b.SetColor(colors[index]);
+            b.SetSessionId(sessionIds[index]);
+            index = (index + 1) % colors.Count;
         }
     }
 
@@ -162,6 +183,41 @@ public class CommandGenerator
             dancePools.Add(obj);
         }
 
+        return dancePools;
+    }
+
+    public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic, Dictionary<int, List<PlayerInfo>> teamDic)
+    {
+        RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
+        
+        foreach (var pool in teamPoolDic)
+        {
+            DancePool obj = new()
+            {
+                SessionId = teamDic[pool.Key][0].SessionId, // 팀 첫번째 플레이어의 세션ID
+                //TeamNumber = teamDic[1][0].TeamNumber,
+                DanceTables = { }
+            };
+            foreach (var queue in pool.Value)
+            {
+                DanceTable danceTable = new()
+                {
+                    Commands = { }
+                };
+                foreach (var bubbleInfo in queue)
+                {
+                    DanceCommand command = new DanceCommand
+                    {
+                        Direction = (Direction)bubbleInfo.Rotation,
+                        TargetSessionId = bubbleInfo.sessionId
+                    };
+                    danceTable.Commands.Add(command);
+                }
+                obj.DanceTables.Add(danceTable);
+            }
+
+            dancePools.Add(obj);
+        }
         return dancePools;
     }
 

@@ -10,9 +10,13 @@ public class GameCourtshipDance : IGame
     public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
-    public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
+    //public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
+    private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
+
+    public bool isTeamGame;
+    public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
     {
@@ -34,11 +38,26 @@ public class GameCourtshipDance : IGame
         }
         else if (param[0] is RepeatedField<PlayerInfo> players)
         {
-            foreach ( var p in players)
+            foreach (var p in players)
             {
                 this.players.Add(p);
             }
         }
+
+        if (players.Count == 4)
+        {
+            isTeamGame = true;
+        }
+        teamDic = new();
+        foreach (var p in players)
+        {
+            if (!teamDic.ContainsKey(p.TeamNumber))
+            {
+                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+            }
+            teamDic[p.TeamNumber].Add(p);
+        }
+
 
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
@@ -46,8 +65,16 @@ public class GameCourtshipDance : IGame
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
-            commandGenerator.InitFFA(players);
-            commandPoolDic = commandGenerator.GetPlayerPoolDic();
+            if (!isTeamGame)
+            {
+                commandGenerator.InitFFA(players);
+                commandPoolDic = commandGenerator.GetPlayerPoolDic();
+            }
+            else
+            {
+                commandGenerator.InitTeamGame(teamDic);
+                teamPoolDic = commandGenerator.GetTeamPoolDic();
+            }
         }
 
         // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
@@ -55,17 +82,31 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
-
-            GamePacket packet = new();
-
-            packet.DanceTableCreateRequest = new()
+            if (!isTeamGame)
             {
-                SessionId = GameManager.Instance.myInfo.SessionId,
-            };
-            packet.DanceTableCreateRequest.DancePools.Add(sp);
-            //sourceTcs = new();
-            SocketManager.Instance.OnSend(packet);
+                RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
+
+                GamePacket packet = new();
+
+                packet.DanceTableCreateRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                };
+                packet.DanceTableCreateRequest.DancePools.Add(sp);
+                //sourceTcs = new();
+                SocketManager.Instance.OnSend(packet);
+            }
+            else
+            {
+                RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic,teamDic);
+                GamePacket packet = new();
+                packet.DanceTableCreateRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                };
+                packet.DanceTableCreateRequest.DancePools.Add(sp);
+                SocketManager.Instance.OnSend(packet);
+            }
         }
         else
         {
@@ -74,7 +115,7 @@ public class GameCourtshipDance : IGame
         }
 
         uiCourtship.MakeCommandBoard(players);
-        
+
     }
 
     public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
@@ -86,7 +127,6 @@ public class GameCourtshipDance : IGame
     {
         bool b = sourceTcs.TrySetResult(isSuccess);
     }
-
 
     public async void GameStart(params object[] param)
     {

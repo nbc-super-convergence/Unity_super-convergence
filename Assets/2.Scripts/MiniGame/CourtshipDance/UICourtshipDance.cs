@@ -7,6 +7,7 @@ public class UICourtshipDance : UIBase
 {
     private CourtshipDanceData gameData;
     private GameCourtshipDance game;
+    private bool isTeamGame;
     
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
@@ -19,6 +20,7 @@ public class UICourtshipDance : UIBase
     {
         gameData = param[0] as CourtshipDanceData;
         game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
+        isTeamGame = game.isTeamGame;
     }
 
     public async void MakeCommandBoard(List<PlayerInfo> players)
@@ -36,6 +38,24 @@ public class UICourtshipDance : UIBase
                 board.Init();
             }
             boardDic.Add(players[i].SessionId, board);
+        }
+    }
+
+    public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
+    {
+        for (int i = 0; i < teamDic.Count; ++i)
+        {
+            int num = i + 1;
+            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
+            board.transform.localPosition = Vector3.zero;
+            if (teamPoolDic.TryGetValue(num, out Queue<Queue<BubbleInfo>> pool))
+            {
+                board.SetSessionId(teamDic[num][0].SessionId);
+                board.SetTeamId(num);
+                board.SetPool(pool);
+                board.Init();
+            }
+            //boardDic.Add(players[i].SessionId, board);
         }
     }
 
