@@ -9,6 +9,7 @@ public class GameBombDelivery : IGame
     public void GameStart(params object[] param)
     {
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+        bomb.gameObject.SetActive(true);
     }
 
     public async void Init(params object[] param)
@@ -42,28 +43,37 @@ public class GameBombDelivery : IGame
             token.transform.localPosition = SocketManager.ToVector3(players[i].Position);
             token.MiniData.nextPos = SocketManager.ToVector3(players[i].Position);
             token.MiniData.rotY = players[i].Rotation;
+            Debug.Log(players[i].Position);
         }
+        SetTarget(players[0].BombSessionId);
+        bomb.gameObject.SetActive(false);
     }
 
     public void Explosion(string id)
     {
         bomb.gameObject.SetActive(false);
-        //bomb.Explosion();
         bomb.Explosion(id);
-
     }
 
     public void SetTarget(string id)
     {
-        bomb.gameObject.SetActive(true);
         bomb.SetTarget(id);
-        //MiniToken token = MinigameManager.Instance.GetMiniToken(id);
-        //bomb.SetTarget(token.transform);
+        bomb.gameObject.SetActive(true);
     }
 
     public void GameOver()
     {
+        var tokens = MinigameManager.Instance.miniTokens;
+
+        for(int i = 0; i < 4; i++)
+            tokens[i].MiniData.PlayerSpeed = 15;
+
         Object.Destroy(bomb.gameObject);
         Object.Destroy(MinigameManager.Instance.curMap.gameObject);
+    }
+
+    public void DisableUI()
+    {
+        
     }
 }

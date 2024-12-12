@@ -38,19 +38,28 @@ public class UICourtshipDance : UIBase
         }
     }
 
+
     public void Next(string sessionId)
     {
         boardDic[sessionId].MakeNextBoard();
     }
+    
+    public void PlayStart()
+    {
+        foreach( var item in boardDic.Values)
+        {
+            item.MakeNextBoard();
+        }
+    }
 
     // 카운트다운이 끝나면 실행하기
-    public void StartTime()
+    public void StartTimer()
     {
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
 
 
-
+    #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)
     {        
         List<int> teamRank = new();
@@ -101,4 +110,5 @@ public class UICourtshipDance : UIBase
         MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
         UIManager.Hide<UICourtshipDance>();
     }
+    #endregion
 }

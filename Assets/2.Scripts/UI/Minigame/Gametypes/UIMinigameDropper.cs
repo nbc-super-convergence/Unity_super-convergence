@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class UIMinigameDropper : UIBase
@@ -39,7 +40,7 @@ public class UIMinigameDropper : UIBase
 
             if (param[1] is long startTime)
             {
-                StartCoroutine(StartCountDown(startTime));
+                StartCoroutine(StartCountDown(startTime)); //시작 카운트다운.
             }
             else
             {
@@ -53,8 +54,7 @@ public class UIMinigameDropper : UIBase
             return;
         }
 
-        spotLight = MinigameManager.Instance.GetMap<MapGameDropper>()
-            .spotLight;
+        spotLight = MinigameManager.Instance.GetMap<MapGameDropper>().spotLight;
     }
 
     public override void Closed(object[] param)
@@ -65,40 +65,37 @@ public class UIMinigameDropper : UIBase
 
     private IEnumerator StartCountDown(long startdelay)
     {
+        DisableBtnInput(); //input 비활성화
+
         Sequence readySequence = DOTween.Sequence();
 
         /*"Ready?" 연출*/
         StartCountTxt.gameObject.SetActive(true);
         StartCountTxt.text = "Ready?";
-        StartCountTxt.color = new Color(StartCountTxt.color.r, StartCountTxt.color.g, StartCountTxt.color.b, 0);
-        readySequence.AppendInterval(0.2f);
-        readySequence.Append(StartCountTxt.DOFade(1, 0.5f)); 
-        readySequence.AppendInterval(0.8f);   
-        readySequence.Append(StartCountTxt.DOFade(0, 0.5f));
-
-        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= startdelay); //시작시간 대기
-
-        gameData.phase++; //바닥 없어짐
-        EnableBtnInput(); //input 활성화
-
-        //"Start!" 연출
-        Sequence startSequence = DOTween.Sequence();
-        startSequence.AppendCallback(() =>
+        StartCountTxt.transform.rotation = Quaternion.Euler(90, 0, 0);
+        readySequence.AppendInterval(0.5f);
+        readySequence.Append(StartCountTxt.transform.DORotate(new(0, 0, 0), 0.5f, RotateMode.FastBeyond360));
+        readySequence.AppendInterval(0.5f);
+        readySequence.Append(StartCountTxt.transform.DORotate(new(0, 180, 0), 0.5f, RotateMode.FastBeyond360));
+        readySequence.OnComplete(() =>
         {
             StartCountTxt.text = "Start!";
-            StartCountTxt.color = new Color(StartCountTxt.color.r, StartCountTxt.color.g, StartCountTxt.color.b, 0);
-            StartCountTxt.transform.localScale = Vector3.one * 0.8f;
+            gameData.phase++; //바닥 없어짐
         });
-        startSequence.Append(StartCountTxt.DOFade(1, 0.5f));
-        startSequence.Join(StartCountTxt.transform.DOScale(1.2f, 0.5f).SetEase(Ease.OutQuad));
-        startSequence.AppendInterval(0.5f); 
-        startSequence.Append(StartCountTxt.DOFade(0, 0.3f));
+        yield return readySequence.WaitForCompletion();
+
+        Sequence startSequence = DOTween.Sequence();
+        startSequence.Append(StartCountTxt.transform.DORotate(new(0, 0, 0), 0.5f, RotateMode.FastBeyond360));
+        startSequence.Append(StartCountTxt.DOFade(0f, 0.5f));
         startSequence.OnComplete(() =>
         {
             StartCountTxt.gameObject.SetActive(false);
         });
         yield return startSequence.WaitForCompletion();
 
+        //바닥에 닿는 시간 감지해서 추가 대기.
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= startdelay); //시작시간 대기
+        EnableBtnInput(); //input 활성화
         descTxt.transform.parent.gameObject.SetActive(true);
         DescEffect(false);
     }
@@ -114,7 +111,7 @@ public class UIMinigameDropper : UIBase
         DisableBtnInput();
         DescEffect(true);
         
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3.5f);
         EnableBtnInput();
         DescEffect(false);
     }
@@ -206,9 +203,13 @@ public class UIMinigameDropper : UIBase
     #endregion
 
     #region Deco
+    private Tweener textTween;
+    private Tweener lightTween;
+
     private void DescEffect(bool isFall)
     {
-        descTxt.rectTransform.DOKill();
+        textTween?.Kill();
+        lightTween?.Kill();
 
         if (isFall)
         {
@@ -216,18 +217,18 @@ public class UIMinigameDropper : UIBase
             descTxt.text = "떨어집니다!!!";
             descTxt.color = Color.yellow;
             descTxt.rectTransform.localScale = Vector3.one;
-            descTxt.rectTransform.DOAnchorPosX(5f, 0.1f)
+            textTween = descTxt.rectTransform.DOAnchorPosX(5f, 0.1f)
                 .SetRelative()
                 .SetLoops(-1, LoopType.Yoyo)
                 .SetEase(Ease.InOutSine);
 
             //light dotween
             spotLight.color = Color.red;
-            DOTween.To(
+            lightTween = DOTween.To(
                 () => spotLight.intensity,
                 x => { spotLight.intensity = x; },
-                spotLight.intensity / 2,
-                0.5f
+                spotLight.intensity * 5,
+                0.4f
                 ).SetEase(Ease.Linear)
                  .SetLoops(-1, LoopType.Yoyo);
         }
@@ -237,14 +238,16 @@ public class UIMinigameDropper : UIBase
             descTxt.text = "It's Dance Time ~";
             descTxt.color = Color.white;
             descTxt.rectTransform.localScale = Vector3.one;
-            descTxt.rectTransform.DOScale(1.2f, 1f)
-                .SetEase(Ease.InBack)
+            textTween = descTxt.rectTransform.DOScale(1.2f, 0.5f)
+                .SetEase(Ease.OutCirc)
                 .SetLoops(-1, LoopType.Yoyo);
 
             //light dotween
+            spotLight.gameObject.SetActive(true);
             spotLight.color = Color.red;
+            spotLight.intensity = 50;
             Color.RGBToHSV(spotLight.color, out float initialHue, out float saturation, out float value);
-            DOTween.To(
+            lightTween = DOTween.To(
                 () => initialHue,
                 x => { spotLight.color = Color.HSVToRGB(x % 1f, saturation, value); },
                 1f,//목표 색깔

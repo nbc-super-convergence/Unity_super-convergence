@@ -28,11 +28,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceStartNotification(GamePacket packet)
     {
         var response = packet.DanceStartNotification;
-
+        long startTime = response.StartTime;
         //ReadyUI 숨기기
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart(response);
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().GameStart(startTime);
     }
 
     /* 405 : DanceTableCreateRequest
@@ -56,7 +56,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceKeyPressResponse;
         if(response.Success)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnEventInput(response.Correct);
+            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].MyHandleInput(response.Correct);
+            //MinigameManager.Instance.GetMyToken().InputHandler.EnablePlayerInput();
         }
     }
 
@@ -64,7 +65,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceKeyPressNotification(GamePacket packet)
     {
         var response = packet.DanceKeyPressNotification;
-        UIManager.Get<UICourtshipDance>().boardDic[response.SessionId].OtherHandleInput(response.Correct, response.SessionId);
+        UIManager.Get<UICourtshipDance>().boardDic[response.SessionId].OtherBoardNoti(response.SessionId, response.Correct, response.State);
     }
 
     /* 410 */

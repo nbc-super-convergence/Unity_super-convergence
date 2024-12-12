@@ -43,21 +43,21 @@ public class MiniTokenController
                 rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
             case eMoveType.Velocity:
-                rb.velocity = new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y) * miniData.PlayerSpeed;
+                rb.velocity = new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y) * (miniData.PlayerSpeed * 0.1f);
                 break;
             case eMoveType.Dropper:
                 distance = Vector2.Distance(
                     new (transform.localPosition.x, transform.localPosition.z),
                     new (miniData.nextPos.x, miniData.nextPos.z)
                 );
-                threshold = 0.5f;
+                threshold = 0.2f;
 
                 if (distance > threshold)
                 {
                     if (miniData.CurState != State.Move)
                         miniData.CurState = State.Move;
                     Vector3 direction = (miniData.nextPos - transform.localPosition).normalized;
-                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, rb.velocity.y, direction.z * miniData.PlayerSpeed);
+                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, direction.y, direction.z * miniData.PlayerSpeed);
                 }
                 else
                 {

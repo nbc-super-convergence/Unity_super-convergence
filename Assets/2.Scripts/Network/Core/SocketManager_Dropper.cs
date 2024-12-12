@@ -55,10 +55,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     //307
     public void DropPlayerDeathNotification(GamePacket gamePacket)
     {
-        var response = gamePacket.IcePlayerDeathNotification;
+        var response = gamePacket.DropPlayerDeathNotification;
 
         //플레이어 사망 이벤트
-        MinigameManager.Instance.GetMiniGame<GameDropper>().PlayerDeath(response.SessionId);
+        MinigameManager.Instance.GetMiniGame<GameDropper>()
+            .PlayerDeath(response.SessionId);
     }
 
     //308
@@ -72,9 +73,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.DropLevelEndNotification;
         int[] holes = response.Holes.ToArray();
-        MinigameManager.Instance.GetMap<MapGameDropper>()
-            .NextLevelEvent(holes);
+
+        //글씨 변경, 2.5초 input 잠금.
         StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
+
+        //1초 후 구멍뚫기.
+        StartCoroutine(MinigameManager.Instance.GetMap<MapGameDropper>().NextLevelEvent(holes));
+        
+        
     }
 
     //310

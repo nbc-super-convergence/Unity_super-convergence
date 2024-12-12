@@ -17,6 +17,7 @@ public class CommandGenerator
     public CommandGenerator()
     {
         gameData = new CourtshipDanceData();
+        gameData.Init();
     }
 
     public void InitFFA(List<PlayerInfo> players)
@@ -42,7 +43,7 @@ public class CommandGenerator
 
     public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
     {
-        return new(playerPoolDic);
+        return playerPoolDic;
     }
 
     public Queue<Queue<BubbleInfo>> GenerateBoardInfoPool(int poolCount)
@@ -133,31 +134,32 @@ public class CommandGenerator
     {
         RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
 
-        foreach (var kvp in playerPoolDic)
+        foreach (var pool in playerPoolDic)
         {
-            DancePool dancePool = new DancePool
+            DancePool obj = new()
             {
-                SessionId = kvp.Key,                
+                SessionId = pool.Key,
+                DanceTables = { }
             };
-                RepeatedField<DanceTable> danceTables = new();
-                foreach (var queue in kvp.Value)
+            foreach (var queue in pool.Value)
+            {
+                DanceTable danceTable = new()
                 {
-                    DanceTable danceTable = new DanceTable();
-                    RepeatedField<DanceCommand> danceCommands = new();
-                    foreach (var bubbleInfo in queue)
+                    Commands = { }
+                };
+                foreach (var bubbleInfo in queue)
+                {
+                    DanceCommand command = new DanceCommand
                     {
-                        DanceCommand command = new DanceCommand
-                        {
-                            Direction = (Direction)bubbleInfo.Rotation,
-                            TargetSessionId = bubbleInfo.sessionId
-                        };
-                        danceCommands.Add(command);
-                    }
-                    danceTable.Commands.Add(danceCommands);
-                    danceTables.Add(danceTable);
+                        Direction = (Direction)bubbleInfo.Rotation,
+                        TargetSessionId = bubbleInfo.sessionId
+                    };
+                    danceTable.Commands.Add(command);
                 }
-            dancePool.DanceTables.Add(danceTables);
-            dancePools.Add(dancePool);
+                obj.DanceTables.Add(danceTable);
+            }
+
+            dancePools.Add(obj);
         }
 
         return dancePools;

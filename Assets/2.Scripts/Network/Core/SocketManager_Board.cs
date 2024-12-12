@@ -16,7 +16,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            player.GetDice(dice);
+            //TODO : 주석해제 필수
+            //player.GetDice(dice);
+            player.GetDice(1);
             Debug.Log("RollDiceResponse");
         }
         else
