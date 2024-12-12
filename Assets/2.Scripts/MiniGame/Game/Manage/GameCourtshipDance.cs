@@ -96,7 +96,7 @@ public class GameCourtshipDance : IGame
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);                
                 uiCourtship.StartTimer();
-                uiCourtship.PlayStart();
+                uiCourtship.ShowDanceBoard();
             };
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
@@ -110,9 +110,18 @@ public class GameCourtshipDance : IGame
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             map.TokenReset(miniToken);
         }
-        UIManager.Hide<UICourtshipDance>();
     }
-    
+
+    public async void GameEnd(Dictionary<string, int> ranks, long boardTime)
+    {
+        foreach (var mini in MinigameManager.Instance.miniTokens)
+        {
+            mini.gameObject.SetActive(false);
+        }
+        UIManager.Hide<UICourtshipDance>();
+        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 2500);
+    }
+
     #region 초기화
     // 팀 가르기
 

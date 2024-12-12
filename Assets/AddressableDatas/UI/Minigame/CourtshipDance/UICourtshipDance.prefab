@@ -64,13 +64,13 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 5619915650144493289}
   - {fileID: 7304562717171518125}
   - {fileID: 3736518876259041801}
   - {fileID: 1632045739726703265}
   - {fileID: 6736193337775522218}
   - {fileID: 3120197284184243499}
   - {fileID: 1318842830070250919}
+  - {fileID: 5619915650144493289}
   - {fileID: 7305744581290215024}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -96,6 +96,12 @@ MonoBehaviour:
   uiPosition: 0
   end: {fileID: 1734344520224777658}
   timeText: {fileID: 4758508777279058491}
+  sfxClips:
+  - {fileID: 8300000, guid: 879cea6101e5f314489dfeb5dabd87a5, type: 3}
+  - {fileID: 8300000, guid: 0f1af6ea2cc4e3a4a844a3554f3e57c4, type: 3}
+  - {fileID: 8300000, guid: d696a912ec4e70649955fea3f784ef4b, type: 3}
+  - {fileID: 8300000, guid: 191073f5f42bd36428999a364469b158, type: 3}
+  - {fileID: 8300000, guid: c074368876918d943b253097a5e76507, type: 3}
   spawnPosition:
   - {fileID: 1632045739726703265}
   - {fileID: 6736193337775522218}
@@ -637,7 +643,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5619915650144493289
 RectTransform:
   m_ObjectHideFlags: 0
@@ -686,7 +692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 120
+  m_text: 60
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aaaa22c111a9ec045a15dda04cc98ac3, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: aaaa22c111a9ec045a15dda04cc98ac3,

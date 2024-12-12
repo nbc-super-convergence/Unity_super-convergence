@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -17,7 +15,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             Debug.Log(result);
 
             int i = 0;
-            var playerDart = SelectOrderManager.Instance.DartOrder;
+            var playerDart = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
 
             foreach(var dart in playerDart)
             {
@@ -37,8 +35,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     public void DiceGameNotification(GamePacket packet)
     {
-        var notification = packet.DiceGameNotification;
-        var result = notification.Result;
+        var response = packet.DiceGameNotification;
+        var result = response.Result;
+
+        MinigameManager.Instance.SetMiniGame<GameDart>(response);
 
         Debug.Log(result);
     }

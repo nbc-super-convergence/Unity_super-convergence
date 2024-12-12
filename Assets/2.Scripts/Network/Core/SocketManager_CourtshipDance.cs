@@ -44,7 +44,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceTableNotification;
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetCommandPoolDic(response.DancePools);
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(true);
-
     }
 
     /* 407 : DanceKeyPressRequest
@@ -57,7 +56,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         if(response.Success)
         {
             UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].MyHandleInput(response.Correct);
-            //MinigameManager.Instance.GetMyToken().InputHandler.EnablePlayerInput();
         }
     }
 
@@ -69,17 +67,20 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     /* 410 */
+    // 타이머가 다 끝나거나 모든 유저가 댄스풀을 다 마쳤을 때.
     public void DanceGameOverNotification(GamePacket packet)
     {
-        var response = packet.DanceGameOverNotification;      
+        var response = packet.DanceGameOverNotification;
 
+        MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
 
     /* 411 */
-    public void DanceTableCompleteRequest(GamePacket packet)
+    public void DanceCloseSocketNotification(GamePacket packet)
     {
-        var response = packet.DanceTableCompleteRequest;
+        var response = packet.DanceCloseSocketNotification;
+        // 개인전은 방치. 팀전은 남은 유저가 입력가능하게 바꾸기.
     }
 
     /* 412 : DanceTableCompleteRequest

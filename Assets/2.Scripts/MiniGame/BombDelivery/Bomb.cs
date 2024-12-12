@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -8,9 +9,10 @@ public class Bomb : MonoBehaviour
     int length, targetIndex;
     private Transform target;
     private MiniToken token;
-
+    private List<int> loser = new();
     private void OnEnable()
     {
+        loser.Clear();
         //timer = Random.Range(10f, 15f);
         length = MinigameManager.Instance.miniTokens.Length;
     }
@@ -36,7 +38,7 @@ public class Bomb : MonoBehaviour
         {
             for (int i = 0; i < length; i++)
             {
-                if (i == targetIndex) continue;
+                if (i == targetIndex || loser.Contains(i)) continue;
 
                 Transform t = MinigameManager.Instance.miniTokens[i].transform;
 
@@ -71,6 +73,7 @@ public class Bomb : MonoBehaviour
         packet.BombMoveRequest = new()
         {
             SessionId = id,
+            BombUserId = MinigameManager.Instance.mySessonId,
         };
 
         SocketManager.Instance.OnSend(packet);
@@ -98,6 +101,7 @@ public class Bomb : MonoBehaviour
     public void Explosion(string id)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(id);
+        loser.Add(token.MyColor);
 
         if (MinigameManager.Instance.mySessonId == id)
         {

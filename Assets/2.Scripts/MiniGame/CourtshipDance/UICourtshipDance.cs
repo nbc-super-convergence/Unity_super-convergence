@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class UICourtshipDance : UIBase
 {
+    private CourtshipDanceData gameData;
+    private GameCourtshipDance game;
+    
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] public AudioClip[] sfxClips;
 
     public List<Transform> spawnPosition;
     public Dictionary<string, CommandBoard> boardDic = new();
 
-    private CourtshipDanceData gameData;
-    GameCourtshipDance game;
-    
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
@@ -38,13 +39,12 @@ public class UICourtshipDance : UIBase
         }
     }
 
-
     public void Next(string sessionId)
     {
         boardDic[sessionId].MakeNextBoard();
     }
     
-    public void PlayStart()
+    public void ShowDanceBoard()
     {
         foreach( var item in boardDic.Values)
         {
@@ -55,6 +55,7 @@ public class UICourtshipDance : UIBase
     // 카운트다운이 끝나면 실행하기
     public void StartTimer()
     {
+        timeText.gameObject.SetActive(true);
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
 
@@ -92,6 +93,7 @@ public class UICourtshipDance : UIBase
 
         StartCoroutine(GameOverText(teamResults, rankings, response.EndTime));
     }
+
     public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)
     {
         end.SetActive(true);
@@ -107,8 +109,7 @@ public class UICourtshipDance : UIBase
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
-        MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
-        UIManager.Hide<UICourtshipDance>();
+        game.GameEnd(rankings, endTime);
     }
     #endregion
 }

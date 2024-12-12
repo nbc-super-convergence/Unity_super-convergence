@@ -28,7 +28,7 @@ public class MiniToken : MonoBehaviour
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
         IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color;
-        InputHandler.ChangeActionMap("MiniPlayerToken");
+        InputHandler.DisableSimpleInput();
     }
 
     private void Update()
@@ -48,6 +48,9 @@ public class MiniToken : MonoBehaviour
                     break;
                 case eGameType.GameDropper:
                     Controller.MoveToken(eMoveType.Dropper);
+                    break;
+                case eGameType.GameDart:
+                    Controller.MoveToken(eMoveType.Server);
                     break;
             }
         }
@@ -69,6 +72,9 @@ public class MiniToken : MonoBehaviour
                         break;
                     case eGameType.GameDropper:
                         Controller.MoveToken(eMoveType.Dropper);
+                        break;
+                    case eGameType.GameDart:
+                        Controller.MoveToken(eMoveType.AddForce);
                         break;
                 }
             }
