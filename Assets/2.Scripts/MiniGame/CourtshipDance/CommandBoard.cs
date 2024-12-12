@@ -35,7 +35,7 @@ public class CommandBoard : MonoBehaviour
 
     public void Init()
     {
-        onInputDetected += MyHandleInput;
+        //onInputDetected += MyHandleInput;
         if(SessionId == GameManager.Instance.myInfo.SessionId)
         {
             isClient = true;
@@ -73,10 +73,11 @@ public class CommandBoard : MonoBehaviour
     bool isFirst = true;
     private Queue<ArrowBubble> MakeCommandQueue()
     {
-        if(curQueueInfo != null)
+
+        if (curQueueInfo != null)
         {
             curQueueInfo.Clear();
-            foreach(var b in successQueue)  
+            foreach (var b in successQueue)
             {
                 PoolManager.Instance.Release(b);
             }
@@ -87,7 +88,7 @@ public class CommandBoard : MonoBehaviour
         {
             curQueueInfo = queuePool.Dequeue();
 
-            if (!isFirst)
+            if (!isFirst && isClient)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
@@ -101,25 +102,25 @@ public class CommandBoard : MonoBehaviour
         }
         else
         {
-
             // 완료 로직
             // 완료 효과
-            GamePacket packet = new();
-            packet.DanceTableCompleteRequest = new()
+            if (isClient)
             {
-                SessionId = SessionId,
-                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()   // 테스트하면서 알아보기
-            };
-            SocketManager.Instance.OnSend(packet);
-
+                GamePacket packet = new();
+                packet.DanceTableCompleteRequest = new()
+                {
+                    SessionId = SessionId,
+                    EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()   // 테스트하면서 알아보기
+                };
+                SocketManager.Instance.OnSend(packet);
+            }
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
-            token.InputHandler.DisablePlayerInput();
-
+            //token.InputHandler.DisablePlayerInput();
         }
 
         Queue<ArrowBubble> queue = new();
-        foreach ( var info in curQueueInfo)
+        foreach (var info in curQueueInfo)
         {
             var bubble = PoolManager.Instance.Spawn<ArrowBubble>("ArrowBubble");
             bubble.SetArrowBubble(info);
@@ -137,57 +138,44 @@ public class CommandBoard : MonoBehaviour
     #region 플레이
 
     public bool isFail = false;
-    public event Action<float, bool> onInputDetected;
+    //public event Action<float, bool> onInputDetected;
 
     private Queue<ArrowBubble> successQueue = new();
 
 
     /* 407 C2S_DanceKeyPressRequest*/
+    // 본인 커맨드 보드에서만 호출됨.
     public async void OnActionInput(int dir)
     {
-        token.InputHandler.DisablePlayerInput();
-        if (isClient)
+        //token.InputHandler.DisablePlayerInput();
+        GamePacket packet = new();
+        packet.DanceKeyPressRequest = new()
         {
-            GamePacket packet = new();
-            packet.DanceKeyPressRequest = new()
-            {
-                SessionId = GameManager.Instance.myInfo.SessionId,
-                PressKey = (Direction)dir
-            };
-            sourceTcs = new();
-            SocketManager.Instance.OnSend(packet);
-            bool isSuccess = await sourceTcs.Task;
-            if (isSuccess)
-            {
-            }
-            else
-            {
-                onInputDetected?.Invoke(dir, true);
-            }
-            token.InputHandler.EnablePlayerInput();
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            PressKey = (Direction)dir
+        };
+        sourceTcs = new();
+        SocketManager.Instance.OnSend(packet);
+        bool isSuccess = await sourceTcs.Task;
+        if (isSuccess)
+        {
+
+        }
+        else
+        {
+            //onInputDetected?.Invoke(dir, true);
         }
     }
 
     /* 408 */
-    public void OnEventInput(bool isCorrect)
-    {
-        onInputDetected?.Invoke(tokenData.arrowInput, isCorrect);
-    }
 
-    public void MyHandleInput(float inputData, bool isFail)
+    public void MyHandleInput(bool isFail)
     {
-        if(!isFail)
-        {
-            CheckInput(inputData, GameManager.Instance.myInfo.SessionId);
-        }
+        CheckInput(tokenData.arrowInput, GameManager.Instance.myInfo.SessionId);
     }
 
     /* 409 */
-    public void OtherHandleInput(bool isCorrenct, string sessionId)
-    {
-        CheckInput(curQueueInfo.Peek().Rotation, sessionId);
-    }
-
+   
     private void CheckInput(float rot, string sessionId)
     {
         var target = curQueueInfo.Peek();
@@ -210,7 +198,7 @@ public class CommandBoard : MonoBehaviour
             }
             if (tokenData.CurState == newState)
             {
-                token.GetAnimator().Play(newState.GetHashCode(), -1);
+                //token.GetAnimator().Play(newState.GetHashCode(), 1);
             }
             else
             {
@@ -220,7 +208,6 @@ public class CommandBoard : MonoBehaviour
 
             // 보드 상호작용
             PopBubble();
-            //UIManager.Get<UICommandBoardHandler>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(tokenData.arrowInput);
         }
         else
         {
@@ -228,12 +215,7 @@ public class CommandBoard : MonoBehaviour
             tokenData.CurState = State.DanceFail;
             AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
-        }
-
-        if(curQueueInfo.Count == 0)
-        {
-            MakeNextBoard();
-        }
+        }        
     }
 
     public void PopBubble()
@@ -242,21 +224,46 @@ public class CommandBoard : MonoBehaviour
         successQueue.Enqueue(b);
         curQueueInfo.Dequeue();
         b.PlayEffect();
+
+        if (curQueueInfo.Count == 0)
+        {
+            MakeNextBoard();
+        }
     }
 
     public IEnumerator FailInput()
-    {
-        Debug.Log("입력이 틀렸습니다.");
-        
-        
+    {        
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        token.InputHandler.DisablePlayerInput();
+        token.InputHandler.DisableSimpleInput();
         yield return new WaitForSeconds(1.5f);
-        token.InputHandler.EnablePlayerInput();
+        token.InputHandler.EnableSimpleInput();
         isFail = false;
         failImage.gameObject.SetActive(false);
+    }
+
+    // 노티를 받으면 다른 유저의 보드에서 실행될 메서드
+    public void OtherBoardNoti(string sessionId, bool correct, State state)
+    {
+        if(sessionId != this.SessionId)
+        {
+            Debug.Log("올바르지 않은 접근입니다.");
+            return;
+        }
+
+        if(!correct)
+        {
+            tokenData.CurState = State.DanceFail;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
+            StartCoroutine(FailInput());
+        }
+        else
+        {
+            PopBubble();
+            tokenData.CurState = state;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
+        }
     }
     #endregion
 }
