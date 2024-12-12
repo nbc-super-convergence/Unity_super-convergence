@@ -136,7 +136,7 @@ public class DartPlayer : MonoBehaviour
 
         orderEvent.OnAimEvent -= SetAim;
         orderEvent.OnShootEvent -= PressKey;
-        SendServer();
+        ThrowToServer();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -192,6 +192,7 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
+        ThrowToServer();
     }
 
     /// <summary>
@@ -211,16 +212,15 @@ public class DartPlayer : MonoBehaviour
         MyDistance = 10;    //랭크에서 빠지는 걸로
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
-        SendServer();
     }
 
     /// <summary>
     /// 해당 데이터를 서버에 전송
     /// </summary>
-    public void SendServer()
+    public void ThrowToServer()
     {
         GamePacket packet = new();
-        var data = packet.DiceGameRequest = new()
+        var data = packet.DartGameThrowRequest = new()
         {
             //SessionId = GameManager.Instance.myInfo.SessionId
             SessionId = gameObject.name,
