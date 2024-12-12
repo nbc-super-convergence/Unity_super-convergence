@@ -1,10 +1,12 @@
-
+using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    #region ∫∏µÂ
+    #region Î≥¥Îìú
 
+    #region Ï£ºÏÇ¨ÏúÑ
     public void RollDiceResponse(GamePacket packet)
     {
         var response = packet.RollDiceResponse;
@@ -14,7 +16,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            player.GetDice(dice);
+            //TODO : Ï£ºÏÑùÌï¥Ï†ú ÌïÑÏàò
+            //player.GetDice(dice);
+            StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
+
+            player.GetDice(1);
+            Debug.Log("RollDiceResponse");
         }
         else
         {
@@ -28,15 +35,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         var player = BoardManager.Instance.Curplayer;
         int dice = response.DiceResult;
+
+        StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
+        Debug.Log("RollDiceNotification");
     }
 
+    #endregion
+
+    #region Î≥¥Îìú ÌîåÎ†àÏù¥Ïñ¥ Ïù¥Îèô
     public void MovePlayerBoardResponse(GamePacket packet)
     {
         var response = packet.MovePlayerBoardResponse;
 
         if (response.Success)
         {
-
+            Debug.Log("MovePlayerBoardResponse");
         }
         else
         {
@@ -47,27 +60,35 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void MovePlayerBoardNotification(GamePacket packet)
     {
         var response = packet.MovePlayerBoardNotification;
-        //int index = GameManager.Instance.SessionDic //response.PlayerId;
-
-        //«√∑π¿ÃæÓid »∞øÎπÊæ» º˜¡ˆ « ø‰
-        int index = response.PlayerId;
 
         Vector3 pos = ToVector3(response.TargetPoint);
-        var players = BoardManager.Instance.playerTokenHandlers;
-        players[index].ReceivePosition(pos);
+        float rotY = response.Rotation;
+
+        var token = BoardManager.Instance.GetToken(response.SessionId);
+        token.ReceivePosition(pos, rotY);
+
+        Debug.Log("MovePlayerBoardNotification");
     }
 
+    #endregion
+
+    #region ÌÉÄÏùº Íµ¨Îß§
     public void PurchaseTileResponse(GamePacket packet)
     {
         var response = packet.PurchaseTileResponse;
 
         if (response.Success)
         {
-            //«√∑π¿ÃæÓid º˜¡ˆ « ø‰
+            int i = response.Tile;
 
-            //int index = response.Tile; //Vector -> int∑Œ ∫Ø∞Ê « ø‰
-            //int p = BoardManager.Instance.curPlayerIndex;
-            //BoardManager.Instance.areaNodes[0].SetArea(p);
+            var playerinfo = response.PlayerInfo;
+            string id = playerinfo.SessionId;
+
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfo.Gold;
+            data.trophyAmount = playerinfo.Trophy;
+
+            BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
         }
         else
         {
@@ -75,25 +96,155 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-    public void purchaseTileNotification(GamePacket packet)
+    public void PurchaseTileNotification(GamePacket packet)
     {
         var response = packet.PurchaseTileNotification;
 
-        int id = response.PlayerId;
-        //int index = response.Tile; //Vector -> int∑Œ ∫Ø∞Ê « ø‰
-        //BoardManager.Instance.PurChaseNode(indexer,id);
+        string id = response.SessionId;
+
+        int i = response.Tile;
+        var player = BoardManager.Instance.GetToken(id);
+
+        BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+        UIManager.Get<BoardUI>().Refresh();
+    }
+    #endregion
+
+    #region Ìä∏Î°úÌîº Íµ¨Îß§
+    //public void PurchaseTrophyResponse(GamePacket packet)
+    //{
+    //    var response = packet.PurchaseTrophyResponse;
+
+    //    if(response.Success)
+    //    {
+    //        int i = response.NextTile;
+
+    //        var playerinfo = response.PlayerInfo;
+    //        string id = playerinfo.SessionId;
+
+    //        var data = BoardManager.Instance.GetToken(id).data;
+    //        data.keyAmount = playerinfo.Gold;
+    //        data.trophyAmount = playerinfo.Trophy;
+
+    //        var list = BoardManager.Instance.trophyNode;
+    //        list[i].Toggle();
+    //    }
+    //    else
+    //    {
+    //        Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+    //    }
+    //}
+    
+    //public void PurchaseTrophyNotification(GamePacket packet)
+    //{
+    //    var response = packet.PurchaseTrophyNotification;
+
+    //    var playerinfos = response.PlayersInfo.ToList();
+
+    //    for(int i = 0; i < playerinfos.Count; i++)
+    //    {
+    //        string id = playerinfos[i].SessionId;
+
+    //        var data = BoardManager.Instance.GetToken(id).data;
+    //        data.keyAmount = playerinfos[i].Gold;
+    //        data.trophyAmount = playerinfos[i].Trophy;
+    //    }
+
+    //    int b = response.BeforeTile;
+    //    int n = response.NextTile;
+
+    //    BoardManager.Instance.trophyNode[b].Toggle();
+    //    BoardManager.Instance.trophyNode[n].Toggle();
+    //}
+
+    #endregion
+
+    #region ÌÉÄÏùº Ìå®ÎÑêÌã∞
+
+    public void TilePenaltyResponse(GamePacket packet)
+    {
+        var response = packet.TilePenaltyResponse;
+
+        if (response.Success)
+        {
+            var playerinfos = response.PlayersInfo.ToList();
+
+            for(int i = 0; i < playerinfos.Count; i++)
+            {
+                string id = playerinfos[i].SessionId;
+
+                var data = BoardManager.Instance.GetToken(id).data;
+                data.keyAmount = playerinfos[i].Gold;
+                data.trophyAmount = playerinfos[i].Trophy;
+            }
+            UIManager.Get<BoardUI>().Refresh();
+        }
+        else
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void TilePenaltyNotification(GamePacket packet)
+    {
+        var response = packet.TilePenaltyNotification;
+
+        var playerinfos = response.PlayersInfo.ToList();
+
+        for (int i = 0; i < playerinfos.Count; i++)
+        {
+            string id = playerinfos[i].SessionId;
+
+            var data = BoardManager.Instance.GetToken(id).data;
+            data.keyAmount = playerinfos[i].Gold;
+            data.trophyAmount = playerinfos[i].Trophy;
+        }
+
+        UIManager.Get<BoardUI>().Refresh();
     }
 
     #endregion
 
-    #region ∞‘¿”¡æ∑·
+    #region ÌÑ¥ Ï¢ÖÎ£å
+
+    public void TurnEndNotification(GamePacket packet)
+    {
+        BoardManager.Instance.NextTurn();
+        Debug.Log("TurnEndNotification");
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Í≤åÏûÑÏ¢ÖÎ£å
 
     public void GameEndNotification(GamePacket packet)
     {
         var response = packet.GameEndNotification;
 
-        //∞‘¿”¡æ∑· « ø‰
-        //BoardManager.Instance
+        //Í≤åÏûÑÏ¢ÖÎ£å ÌïÑÏöî
+        BoardManager.Instance.GameOver();
+    }
+
+    public async void BackToTheRoomResponse(GamePacket packet)
+    {
+        var response = packet.BackToTheRoomResponse;
+
+        if (response.Success)
+        {
+            SceneManager.LoadScene(0);
+            await UIManager.Show<UIRoom>(response.Room);
+        }
+        else
+        {
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void BackToTheRoomNotification(GamePacket packet)
+    {
+        var response = packet.BackToTheRoomNotification;
     }
 
     #endregion

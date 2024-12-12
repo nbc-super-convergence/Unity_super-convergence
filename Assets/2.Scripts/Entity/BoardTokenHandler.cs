@@ -3,22 +3,28 @@ using System.Collections;
 using UnityEngine;
 using System;
 
-
 public class BoardTokenHandler : MonoBehaviour
 {
     private bool isReady = false;
-    private bool isTurn = false; //³» ÅÏÀÎÁö?
+    private bool isTurn = false; //ë‚´ í„´ì¸ì§€?
     public bool isMine = false;
 
     private float speed = 5f;
     private float syncTime = 0f;
     public Dice diceObject;
     private Vector3 nextPositon;
-    public MeshRenderer renderer;
+    //public MeshRenderer renderer;
 
-    public int dice { get; private set; } //ÁÖ»çÀ§ ´«
+#pragma warning disable
+    public SkinnedMeshRenderer renderer;
+#pragma warning restore
 
-    private IBoardNode curNode; //ÇöÀç À§Ä¡ÇÑ ³ëµå
+    public Animator animator;
+    private int runhash;
+
+    public int dice { get; private set; } //ì£¼ì‚¬ìœ„ ëˆˆ
+
+    private IBoardNode curNode; //í˜„ìž¬ ìœ„ì¹˜í•œ ë…¸ë“œ
     public BoardTokenData data;
     [SerializeField] Transform character;
 
@@ -27,8 +33,17 @@ public class BoardTokenHandler : MonoBehaviour
     private void Awake()
     {
         queue = new();
+        nextPositon = transform.position;
         Transform node = BoardManager.Instance.startNode;
         node.TryGetComponent(out curNode);
+
+        runhash = Animator.StringToHash("Run");
+        diceObject = BoardManager.Instance.dice;
+    }
+
+    public void Init(UserInfo userInfo)
+    {
+        data = new(userInfo);
     }
 
     private void Update()
@@ -56,13 +71,23 @@ public class BoardTokenHandler : MonoBehaviour
         //}
         #endregion
 
-        //ÀÌµ¿ µ¿±âÈ­, Á¶°ÇÇÊ¿ä
-        float d = Vector3.Distance(transform.position, nextPositon);
-        transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+        //ì´ë™ ë™ê¸°í™”, ì¡°ê±´í•„ìš”
 
-        if (!isMine) return;
+        if (!isMine)
+        {
+            if(transform.position != nextPositon)
+            {
+                float d = Vector3.Distance(transform.position, nextPositon);
+                transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
+                SetAnimation(true);
+            }
+            else
+                SetAnimation(false);
 
-        #region ÁÖ»çÀ§ ±¼¸²
+            return;
+        }
+
+        #region ì£¼ì‚¬ìœ„ êµ´ë¦¼
 
         if (isReady)
         {
@@ -71,21 +96,20 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                isReady = false;
 
                 GamePacket packet = new();
-                packet.RollDiceRequest = new() { };
-
+                packet.RollDiceRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
                 SocketManager.Instance.OnSend(packet);
-
-
-                diceObject.gameObject.SetActive(false);
-                isReady = false;
             }
         }
 
         #endregion
 
-        #region ¿òÁ÷ÀÌ´Â µ¿¾È ÀÛµ¿
+        #region ì›€ì§ì´ëŠ” ë™ì•ˆ ìž‘ë™
         if (isTurn)
         {
             syncTime += Time.deltaTime;
@@ -98,33 +122,52 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (transform.position == target)
             {
+                GamePacket packet = new();
+
+                packet.MovePlayerBoardRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = character.transform.eulerAngles.y
+                };
+
+                SocketManager.Instance.OnSend(packet);
+
                 Transform node = queue.Peek();
                 queue.Dequeue();
 
-                if (node.TryGetComponent(out IAction n))
-                    n.Action();
+                //if (node.TryGetComponent(out IAction n))
+                //    n.Action();
             }
 
-            if (syncTime >= 1.0f)
+            if (syncTime >= 0.1f)
             {
                 GamePacket packet = new();
 
                 packet.MovePlayerBoardRequest = new()
                 {
                     SessionId = GameManager.Instance.myInfo.SessionId,
-                    TargetPoint = SocketManager.ToVector(transform.position)
+                    TargetPoint = SocketManager.ToVector(transform.position),
+                    Rotation = character.transform.eulerAngles.y
                 };
+
+                SocketManager.Instance.OnSend(packet);
+                Debug.Log("MovePlayerBoardRequest");
 
                 syncTime = 0.0f;
             }
 
-            if (queue.Count == 0) isTurn = false;
+            if (queue.Count == 0)
+            {
+                isTurn = false;
+                SetAnimation(isTurn);
+            }
         }
 
         #endregion
     }
 
-    //ÁÖ»çÀ§ ´« ÀÔ·Â
+    //ì£¼ì‚¬ìœ„ ëˆˆ ìž…ë ¥
     public void GetDice(int num)
     {
         dice = dice > num ? dice : num;
@@ -134,7 +177,7 @@ public class BoardTokenHandler : MonoBehaviour
     public void SetNode(Transform node,bool minus = false)
     {
         if(minus) dice -= 1;
-        if (dice < 0) return;        
+        if (dice < 0) return;
 
         queue.Enqueue(node);
         node.TryGetComponent(out curNode);
@@ -142,20 +185,43 @@ public class BoardTokenHandler : MonoBehaviour
 
     private void Enqueue(int num)
     {
-        for (int i = 0; i < num; i++,dice--)
+        if(num == 0 && queue.Count > 0)
         {
-            if (curNode.TryGetNode(out Transform node))
-                SetNode(node);
-            else
-            {
-                Action action = curNode.transform.GetComponent<IAction>().Action;
+            Action action = queue.Peek().GetComponent<IAction>().Action;
 
-                StartCoroutine(ArrivePlayer(action, curNode.transform));
-                break;
+            StartCoroutine(ArrivePlayer(action, curNode.transform));
+        }
+        else
+        {
+            for (int i = 0; i < num; i++,dice--)
+            {
+                if (curNode.TryGetNode(out Transform node))
+                {
+                    SetNode(node);
+
+                    if (i == (num - 1))
+                    {
+                        Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                        StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    }
+                }
+                else
+                {
+                    Action action = curNode.transform.GetComponent<IAction>().Action;
+
+                    StartCoroutine(ArrivePlayer(action, curNode.transform));
+                    break;
+                }
             }
         }
 
-        if(queue.Count > 0) isTurn = true;
+
+        if(queue.Count > 0)
+        {
+            isTurn = true;
+            SetAnimation(isTurn);
+        }
     }
 
     public bool IsTurnEnd()
@@ -165,6 +231,7 @@ public class BoardTokenHandler : MonoBehaviour
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
+
         while (true)
         {
             if (transform.position.Equals(t.position))
@@ -184,13 +251,19 @@ public class BoardTokenHandler : MonoBehaviour
         diceObject.gameObject.SetActive(true);
     }
 
-    public void ReceivePosition(Vector3 position)
+    public void ReceivePosition(Vector3 position,float rotY)
     {
         nextPositon = position;
+        character.transform.eulerAngles = new Vector3(0, rotY, 0);
     }
 
     public void SetColor(int index)
     {
         renderer.material = BoardManager.Instance.materials[index];
+    }
+
+    public void SetAnimation(bool isRun)
+    {
+        animator.SetBool(runhash,isRun);
     }
 }

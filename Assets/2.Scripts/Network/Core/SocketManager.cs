@@ -34,6 +34,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
+    #region 공통
+    public void CloseSocketNotification(GamePacket packet)
+    {
+        var response = packet.CloseSocketNotification;
+        GameManager.Instance.DeleteSessionId(response.SessionId);
+    }
+    #endregion
+
     #region 인증 서버
     public void RegisterResponse(GamePacket packet)
     {
@@ -186,4 +194,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
     #endregion
+
+
 }

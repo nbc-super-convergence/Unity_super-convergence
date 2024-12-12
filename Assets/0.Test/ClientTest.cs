@@ -16,6 +16,8 @@ public partial class ClientTest : Singleton<ClientTest>
         GameManager.Instance.AddNewPlayer("Session2", "Player2", 1, 1);
         GameManager.Instance.AddNewPlayer("Session3", "Player3", 2, 2);
         GameManager.Instance.AddNewPlayer("Session4", "Player4", 3, 3);
+
+        GameManager.Instance.myInfo = GameManager.Instance.SessionDic["Session1"];
     }
 
     private IEnumerator BoardSkipper()

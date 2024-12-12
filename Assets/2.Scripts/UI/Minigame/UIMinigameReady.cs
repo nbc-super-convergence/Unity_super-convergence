@@ -1,73 +1,87 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIMinigameReady : UIBase
 {
-    private eGameType type;
+    [Serializable]
+    private class ReadyPanels
+    {
+        public Outline outline;
+        public TextMeshProUGUI txt;
+        public GameObject mask;
+    }
 
     [SerializeField] private TextMeshProUGUI gameTitle;
     [SerializeField] private GameObject[] gameDescription;
-
-    [SerializeField] private GameObject[] players;
-    [SerializeField] private GameObject[] isReady;
-
-    protected override void Awake()
-    {
-        base.Awake();
-        foreach (var p in players)
-        {
-            p.SetActive(true);
-        }
-    }
+    [SerializeField] private ReadyPanels[] readyPanels;
+    
+    private eGameType gameType;
 
     public override void Opened(object[] param)
     {
-        type = (eGameType)param[0];
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
 
-        //Á¦¸ñ ¼³Á¤
-        switch (type)
+        gameType = (eGameType)param[0]; // ê²Œì„ íƒ€ì…
+
+        //ê²Œì„ ì œëª©
+        gameTitle.text = gameType switch
         {
-            case eGameType.GameIceSlider:
-                gameTitle.text = "¹Ì²ø¹Ì²ø ¾óÀ½ÆÇ";
-                break;
-            case eGameType.GameBombDelivery:
-                break;
-            default:
-                gameTitle.text = "ERROR!!!";
-                break;
-        }
+            eGameType.GameIceSlider => "ë¯¸ëŒë¯¸ëŒ ì–¼ìŒíŒ",
+            eGameType.GameBombDelivery => "í­íƒ„ ë°°ë‹¬ì™”ì–´ìš”",
+            eGameType.GameCourtshipDance => "êµ¬ì• ì˜ ì¶¤",
+            eGameType.GameDropper => "ì§€í•˜ì—ì„œ ë””ìŠ¤ì½”íŒŒí‹°",
+            eGameType.GameDart => "ë‹¤íŠ¸ë¥¼ ë§ì¶°ë¼",
+            _ => "ERROR!!!",
+        };
 
-        //°ÔÀÓ¿¡ ¸Â´Â ¼³¸í
-        gameDescription[(int)type].SetActive(true);
+        //ê²Œì„ ì„¤ëª…
+        gameDescription[(int)gameType - 1].SetActive(true);
 
-        //ready »óÅÂ ÃÊ±âÈ­
-        int i = 0;
+        //ready ìƒíƒœ ì´ˆê¸°í™”
+        HashSet<int> usedColors = new HashSet<int>();
         foreach (var dic in GameManager.Instance.SessionDic)
         {
-            if (dic.Value.Color == -1) players[i].SetActive(false);
-            isReady[i].SetActive(false);
-        }
-            
+            int color = dic.Value.Color;
+            usedColors.Add(color);
 
-        //RÅ° ÀÔ·Â ´ë±â
-        StartCoroutine(WaitReady());
+            readyPanels[color].outline.enabled = false;
+            readyPanels[color].txt.text = "ì¤€ë¹„ì¤‘...";
+        }
+        for (int i = 0; i < readyPanels.Length; i++)
+        {
+            if (!usedColors.Contains(i))
+            {
+                readyPanels[i].outline.enabled = false;
+                readyPanels[i].txt.text = "ì˜¤í”„ë¼ì¸";
+                readyPanels[i].mask.SetActive(true);
+            }
+        }
+
+        //Rí‚¤(ë ˆë”” ì…ë ¥) ëŒ€ê¸°
+        StartCoroutine(WaitForReady());
     }
 
     public override void Closed(object[] param)
     {
-        gameDescription[(int)type].SetActive(false);
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
+        gameDescription[(int)gameType - 1].SetActive(false);
     }
 
     public void SetReady(string sessionId, bool isMe = false)
     {
-        if (isMe) 
-            sessionId = GameManager.Instance.myInfo.SessionId;
+        if (isMe) sessionId = GameManager.Instance.myInfo.SessionId;
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
-        isReady[idx].SetActive(true);
+
+        //ì¤€ë¹„ìƒíƒœ ì „í™˜
+        readyPanels[idx].outline.enabled = true;
+        readyPanels[idx].txt.text = "ì¤€ë¹„ ì™„ë£Œ!";
     }
 
-    private IEnumerator WaitReady()
+    private IEnumerator WaitForReady()
     {
         while (true)
         {
@@ -75,19 +89,54 @@ public class UIMinigameReady : UIBase
             {
                 SetReady(null, true);
 
-                //Ready¸¦ ¾Ë¸®´Â ÆĞÅ¶ º¸³»±â
-                GamePacket packet = new()
-                {
-                    IceGameReadyRequest = new()
-                    {
-                        SessionId = GameManager.Instance.myInfo.SessionId
-                    }
-                };
-                SocketManager.Instance.OnSend(packet);
+                //Readyë¥¼ ì•Œë¦¬ëŠ” íŒ¨í‚· ë³´ë‚´ê¸°
+                GamePacket packet = new();
 
+                switch (MinigameManager.gameType) {
+                    case eGameType.GameIceSlider:
+                        packet.IceGameReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+                        break;
+                    case eGameType.GameBombDelivery:
+                        packet.BombGameReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+
+                        break;
+                    case eGameType.GameCourtshipDance:
+                        packet.DanceReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+                        break;
+                    case eGameType.GameDropper:
+                        packet.DropGameReadyRequest = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+                        break;
+                    case eGameType.GameDart:
+                        packet.DartGameReadyNotification = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+                        break;
+                }
+
+                SocketManager.Instance.OnSend(packet);
                 break;
             }
             yield return null;
         }
+    }
+
+    private void PlayerLeftEvent(int color)
+    {
+        readyPanels[color].outline.enabled = false;
+        readyPanels[color].txt.text = "ì˜¤í”„ë¼ì¸";
+        readyPanels[color].mask.SetActive(true);
     }
 }

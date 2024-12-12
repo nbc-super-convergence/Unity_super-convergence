@@ -2,82 +2,108 @@ using System;
 using UnityEngine;
 
 public enum eGameType
-{//½ÇÁ¸ Å¬·¡½º¸í°ú ÀÏÄ¡ÇØ¾ß ÇÔ. ¼­¼ø Àı´ë ¹Ù²ÙÁö ¸» °Í.
+{//ì‹¤ì¡´ í´ë˜ìŠ¤ëª…ê³¼ ì¼ì¹˜í•´ì•¼ í•¨. ì„œìˆœ ì ˆëŒ€ ë°”ê¾¸ì§€ ë§ ê²ƒ.
+    Default,
     GameIceSlider,
     GameBombDelivery,
+    GameCourtshipDance,
+    GameDropper,
+    GameDart
 }
 
 public class MinigameManager : Singleton<MinigameManager>
 {
-    [SerializeField] private Transform MiniParent; //¹Ì´Ï°ÔÀÓ ¿ÀºêÁ§Æ® ºÎ¸ğ
-    public MapBase CurMap;
+    #region Field
+    public GameObject boardCamera; //ë³´ë“œê²Œì„ ì¹´ë©”ë¼
+    [SerializeField] private Transform miniParent; //hiearchy ë¶€ëª¨
+    
+    public static eGameType gameType { get; private set; } //ê²Œì„ ì¢…ë¥˜ enum
+    public IGame curMiniGame; //íŠ¹ì • ë¯¸ë‹ˆê²Œì„ í•œì • ê¸°ëŠ¥êµ¬í˜„
+    public MapBase curMap; //ë¯¸ë‹ˆê²Œì„ ë§µ ì˜¤ë¸Œì íŠ¸ ê´€ë ¨ ê¸°ëŠ¥êµ¬í˜„
 
-    /*¹Ì´Ï°ÔÀÓ Á¤º¸*/
-    public static eGameType GameType { get; private set; } //°ÔÀÓ Á¾·ù
-    private IGame curMiniGame; //¹Ì´Ï°ÔÀÓ °ü·Ã ¸Ş¼­µå È£Ãâ¿ë
+    public MiniToken[] miniTokens; //ë¯¸ë‹ˆê²Œì„ ìºë¦­í„°
+    public string mySessonId => GameManager.Instance.myInfo.SessionId;
+    #endregion
 
-    public MiniToken[] MiniTokens; //¹Ì´Ï°ÔÀÓ Ä³¸¯ÅÍ
-    public string MySessonId
+    protected override void Awake()
     {
-        get { return MySessonId; }
-        set
-        {
-            if (MySessonId == null)
-            {
-                MySessonId = value;
-            }
-            else
-            {
-                Debug.LogWarning("ÀÌ¹Ì mySessonId ¼³Á¤ÇÑ Àû ÀÖÀ½");
-            }
-        }
+        base.Awake();
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
     }
 
     #region Properties
+    /// <summary>
+    /// curMiniGame Të¡œ ë³€í™˜
+    /// </summary>
     public T GetMiniGame<T>() where T : IGame
     {
         return (T)curMiniGame;
     }
 
+    /// <summary>
+    /// sessionIdì— ë§ëŠ” ë¯¸ë‹ˆí† í°
+    /// </summary>
     public MiniToken GetMiniToken(string sessionId)
     {
-        if (GameManager.Instance.SessionDic.TryGetValue(sessionId, out UserInfo idx))
-            return MiniTokens[idx.Color];
+        if (GameManager.Instance.SessionDic.TryGetValue(sessionId, out UserInfo info))
+            return miniTokens[info.Color];
         else
             return null;
     }
 
+    /// <summary>
+    /// í´ë¼ ë¯¸ë‹ˆí† í°
+    /// </summary>
     public MiniToken GetMyToken()
     {
-        int idx = GameManager.Instance.SessionDic[MySessonId].Color;
-        return MiniTokens[idx];
+        int idx = GameManager.Instance.SessionDic[mySessonId].Color;
+        return miniTokens[idx];
     }
 
+    /// <summary>
+    /// curMap Të¡œ ë³€í™˜
+    /// </summary>
     public T GetMap<T>() where T : MapBase
     {
-        return (T)CurMap;
+        return (T)curMap;
     }
     #endregion
 
-    #region Minigame ÃÊ±âÈ­D
+    #region Minigame ì´ˆê¸°í™”
     /// <summary>
-    /// ¼­¹ö¿¡¼­ Á¤ÇÑ ¹Ì´Ï°ÔÀÓ ¼±ÅÃ.
+    /// ì„œë²„ì—ì„œ ì •í•œ ë¯¸ë‹ˆê²Œì„ ì„ íƒ ë° ì´ˆê¸°í™”
     /// </summary>
-    /// <typeparam name="T">IGameÀÇ ÀÚ½Ä Å¬·¡½º</typeparam>
-    public T SetMiniGame<T>() where T : IGame, new()
+    /// <typeparam name="T">IGameì˜ ìì‹ í´ë˜ìŠ¤</typeparam>
+    public T SetMiniGame<T>(params object[] param) where T : IGame, new()
     {
-        GameType = (eGameType)Enum.Parse(typeof(eGameType), nameof(T));
+        gameType = (eGameType)Enum.Parse(typeof(eGameType), typeof(T).Name);
         curMiniGame = new T();
-        curMiniGame.Init();
-        MakeMap();
-
+        curMiniGame.Init(param);
+        
         return (T)curMiniGame;
     }
 
-    //¹Ì´Ï°ÔÀÓ ¸Ê ¼³Á¤
-    private void MakeMap()
+    //ë¯¸ë‹ˆê²Œì„ ë§µ ìƒì„±
+    public void MakeMap<T>() where T : MapBase
     {
-        Instantiate(CurMap.gameObject, MiniParent);
+         GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
+        curMap = instantiatedMap.GetComponent<T>();
+    }
+
+    public void MakeMapDance()
+    {
+        GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
+        curMap = instantiatedMap.GetComponent<MapGameCourtshipDance>();
     }
     #endregion
+
+    private void PlayerLeftEvent(int color)
+    {
+        miniTokens[color].gameObject.SetActive(false);
+    }
 }

@@ -1,75 +1,114 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using DG.Tweening;
 
 public class UIMinigameResult : UIBase
 {
+    [SerializeField] private TextMeshProUGUI titleText;
     [SerializeField] private Image[] RankPanels;
     [SerializeField] private Sprite[] RankPanelsSprites;
-
     [SerializeField] private TextMeshProUGUI[] RankTxts;
     [SerializeField] private TextMeshProUGUI returnTxt;
+
+    private Dictionary<int, int> colorIdxs = new();
     private Dictionary<int, int> coinDics = new()
     { { 1, 20 }, { 2, 10 }, { 3, 5 }, { 4, 1 } };
 
     public override void Opened(object[] param)
     {
+        GameManager.OnPlayerLeft += PlayerLeftEvent;
+        MinigameManager.Instance.curMiniGame.DisableUI();
+
         foreach (var panel in RankPanels)
         {
             panel.gameObject.SetActive(false);
         }
 
-        //ranksÀÇ string : sessionId, int : µî¼ö
-        if (param.Length > 0 && param[0] is Dictionary<string, int> ranks)
+        //ranksì˜ string : sessionId, int : ë“±ìˆ˜
+        if (param.Length == 2)
         {
-            int i = 0;
-            foreach (var rank in ranks)
+            if (param[0] is Dictionary<string, int> ranks)
             {
-                string sessionid = rank.Key; //id
-                int rankNum = rank.Value; //µî¼ö
-                int idx = GameManager.Instance.SessionDic[sessionid].Color; //»ö±ò
+                foreach (var rank in ranks)
+                {
+                    string sessionid = rank.Key; //id
+                    int rankNum = rank.Value; //ë“±ìˆ˜
+                    int color = GameManager.Instance.SessionDic[sessionid].Color; //ìƒ‰ê¹”
+                    colorIdxs.Add(color, rankNum);
 
-                if (idx != -1)
-                {    
-                    //µî¼ö¿¡ ¸Â´Â À§Ä¡¿¡ »ö±ò ÁöÁ¤
-                    RankPanels[rankNum - 1].sprite = RankPanelsSprites[idx];
+                    RankPanels[color].gameObject.SetActive(true);
 
-                    //µî¼ö + ´Ğ³×ÀÓ ¼³Á¤
-                    RankTxts[rankNum - 1].text = $"{rankNum}µî\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
-                    
-                    //º¸»ó Áö±Ş
-                    BoardManager.Instance.playerTokenHandlers[idx].data.keyAmount += coinDics[rankNum];
+                    //ë“±ìˆ˜ì— ë§ëŠ” ìœ„ì¹˜ì— ìƒ‰ê¹” ì§€ì •
+                    RankPanels[rankNum - 1].sprite = RankPanelsSprites[color];
 
-                    //¹Ì´Ï°ÔÀÓ ¼ø¼­ ÀçÁ¤ÀÇ
+                    //ë“±ìˆ˜ + ë‹‰ë„¤ì„ ì„¤ì •
+                    RankTxts[rankNum - 1].text = $"{rankNum}ë“±\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
+
+                    //ë³´ìƒ ì§€ê¸‰
+                    BoardManager.Instance.playerTokenHandlers[color].data.keyAmount += coinDics[rankNum];
+
+                    //ë¯¸ë‹ˆê²Œì„ ìˆœì„œ ì¬ì •ì˜
                     GameManager.Instance.SessionDic[sessionid].SetOrder(rankNum - 1);
                 }
-
-                i++;
+            }
+            else
+            {
+                Debug.LogError("param ì˜¤ë¥˜ : idx0ì´ ranksê°€ ì•„ë‹˜");
             }
 
-            for (; i < 4; i++)
+            if (param[1] is long returnTime)
             {
-                RankPanels[i].gameObject.SetActive(false);
-                RankTxts[i].text = "";
+                StartCoroutine(ReturnTxt());
+                StartCoroutine(ReturnBoard(returnTime));
             }
         }
+        else
+        {
+            Debug.LogError("param ì˜¤ë¥˜ : object[] lengthê°€ ë‹¤ë¦„");
+        }
 
-        StartCoroutine(ReturnBoard());
+        Sequence sequence = DOTween.Sequence();
+        sequence.Append(titleText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack));
+        sequence.Append(titleText.transform.DOScale(1f, 0.3f).SetEase(Ease.InOutBounce));
+        sequence.Join(titleText.transform.DOShakePosition(0.3f, new Vector3(10f, 0, 0), 20, 90, false, true));
     }
 
-    private IEnumerator ReturnBoard()
+    public override async void Closed(object[] param)
+    {
+        base.Closed(param);
+        colorIdxs.Clear();
+        GameManager.OnPlayerLeft -= PlayerLeftEvent;
+
+        await UIManager.Show<BoardUI>();
+        BoardManager.Instance.NextTurn();
+    }
+
+    private IEnumerator ReturnTxt()
     {
         int leftSeconds = 5;
         
         while (leftSeconds > 0)
         {
-            returnTxt.text = $"{leftSeconds}ÃÊ ÈÄ º¸µå·Î µ¹¾Æ°©´Ï´Ù...";
+            returnTxt.text = $"{leftSeconds}ì´ˆ í›„ ë³´ë“œë¡œ ëŒì•„ê°‘ë‹ˆë‹¤...";
             leftSeconds--;
             yield return new WaitForSeconds(1);
         }
+    }
 
+    private IEnumerator ReturnBoard(long returnTime)
+    {
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= returnTime);
         UIManager.Hide<UIMinigameResult>();
+    }
+
+    private void PlayerLeftEvent(int color)
+    {
+        RankPanels[colorIdxs[color]].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
+        RankTxts[colorIdxs[color]].text = "ì˜¤í”„ë¼ì¸";
+        RankTxts[colorIdxs[color]].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
     }
 }

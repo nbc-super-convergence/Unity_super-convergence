@@ -11,4 +11,9 @@ public class LoadingScreen : MonoBehaviour
     {
         image.Rotate(0f, (rotateSpeed * Time.deltaTime), 0f);
     }
+
+    public void SetActive(bool boolean)
+    {
+        gameObject.SetActive(boolean);
+    }
 }

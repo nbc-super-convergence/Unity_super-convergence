@@ -1,15 +1,20 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public static bool isGameStart; //BoardSceneÀ¸·Î ³Ñ¾î°¥ ¶§???
-    
+    public static bool isGameStart; //BoardSceneìœ¼ë¡œ ë„˜ì–´ê°ˆ ë•Œ???
+    public static Action<int> OnPlayerLeft; //ìƒ‰ê¹” ì „ë‹¬
+
     public UserInfo myInfo = new();
 
-    //0:»¡°­, 1:³ë¶û, 2:ÃÊ·Ï, 3:ÆÄ¶û
+    //0:ë¹¨ê°•, 1:ë…¸ë‘, 2:ì´ˆë¡, 3:íŒŒë‘
     public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
+    public Dictionary<int, string> failCodeDic;
+
 
     protected override void Awake()
     {
@@ -33,10 +38,20 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.Init();
         yield return new WaitUntil(() => UIManager.Instance.isInitialized);
 
+        CSVParser.Instance.Init();
+        yield return new WaitUntil(() => CSVParser.Instance.isInitialized);
+
+        FadeScreen.Instance.Init();
+        yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
+
+        PoolManager.Instance.Init();
+        yield return new WaitUntil(() => PoolManager.Instance.isInitialized);
+
+
         //Initialize SocketManager
         SocketManager.Instance.Init();
 
-        //Initialize GameManager : È®½ÇÇÑ ÃÊ±âÈ­ º¸Àå.
+        //Initialize GameManager : í™•ì‹¤í•œ ì´ˆê¸°í™” ë³´ì¥.
         isInitialized = true;
     }
 
@@ -48,7 +63,14 @@ public class GameManager : Singleton<GameManager>
 
     public void DeleteSessionId(string sessionId)
     {
+        OnPlayerLeft?.Invoke(SessionDic[sessionId].Color);
         SessionDic.Remove(sessionId);
+    }
+
+    public string FindSessionIdByColor(int color)
+    {
+        var pair = SessionDic.FirstOrDefault(x => x.Value.Color == color);
+        return pair.Key != null ? pair.Key : null;
     }
     #endregion
 }

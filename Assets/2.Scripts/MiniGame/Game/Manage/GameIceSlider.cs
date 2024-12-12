@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using UnityEngine;
 
 public class GameIceSlider : IGame
@@ -6,45 +6,64 @@ public class GameIceSlider : IGame
     private GameIceSliderData gameData;
     private UIMinigameIce ingameUI;
 
-    public async void Init()
+    #region IGame
+    public async void Init(params object[] param)
     {
         gameData = new GameIceSliderData();
         gameData.Init();
-        MinigameManager.Instance.CurMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.GameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameIceSlider>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMap<MapGameIceSlider>();
         SetBGM();
-    }
 
-    //TODO : ¹è°æÀ½ ¼³Á¤
+        if (param.Length > 0 && param[0] is S2C_IceMiniGameReadyNotification response)
+        {
+            ResetPlayers(response.Players);
+        }
+        else
+        {
+            Debug.LogError("startPlayers ìë£Œí˜• ì „ë‹¬ ê³¼ì •ì—ì„œ ë¬¸ì œ ë°œìƒ");
+        }
+    }
+    public async void GameStart(params object[] param)
+    {
+        ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
+        MinigameManager.Instance.GetMyToken().EnableInputSystem();
+    }
+    #endregion
+
+    #region ì´ˆê¸°í™”
     private void SetBGM()
     {
 
     }
 
-    public async void GameStart()
+    private void ResetPlayers(RepeatedField<S2C_IceMiniGameReadyNotification.Types.startPlayers> players)
     {
-        ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
-        MinigameManager.Instance.GetMyToken().EnableInputSystem();
-    }
+        foreach (var p in players)
+        {//ë¯¸ë‹ˆ í† í° ìœ„ì¹˜ ì´ˆê¸°í™”
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.EnableMiniToken();
+            miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
+            miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
+            miniToken.MiniData.rotY = p.Rotation;
 
-    //TODO : Damage ÁÖ´Â ¹Ù´Ú¿¡µµ ÇÊ¿ä.(³ªÀÇ µ¥¹ÌÁö)
+            miniToken.MiniData.PlayerSpeed = 15f;
+        }
+    }
+    #endregion
+
+    #region ì¸ê²Œì„ ì´ë²¤íŠ¸
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
         gameData.playerHps[idx] -= dmg;
         ingameUI.ChangeHPUI();
-
-        /*¼­¹ö ¾øÀ» ¶§ ÀÓ½Ã ·ÎÁ÷*/
-        if (gameData.playerHps[idx] == 0)
-        {
-            MinigameManager.Instance.GetMiniGame<GameIceSlider>()
-            .PlayerDeath(sessionId);
-        }
     }
 
     public void PlayerDeath(string sessionId)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
-        if (sessionId == MinigameManager.Instance.MySessonId)
+        if (sessionId == MinigameManager.Instance.mySessonId)
         {
             token.DisableMyToken();
         }
@@ -53,20 +72,14 @@ public class GameIceSlider : IGame
 
     public void MapChangeEvent()
     {
-        //¸Ê Å©±â º¯°æ 
-        gameData.phase--;
+        gameData.phase++; //ë§µ ë³€ê²½ ë‹¨ê³„
         MinigameManager.Instance.GetMap<MapGameIceSlider>()
             .MapDecreaseEvent(gameData.phase);
     }
-    
-    public async void GameEnd(Dictionary<string, int> ranks)
-    {
-        foreach (var mini in MinigameManager.Instance.MiniTokens)
-        {
-            mini.gameObject.SetActive(false);
-        }
+    #endregion
 
-        await UIManager.Show<UIMinigameResult>(ranks);
-        
+    public void DisableUI()
+    {
+        UIManager.Hide<UIMinigameIce>();
     }
 }

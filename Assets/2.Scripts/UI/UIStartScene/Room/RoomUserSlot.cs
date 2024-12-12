@@ -31,7 +31,8 @@ public class RoomUserSlot : MonoBehaviour
             nickNameTMP.text = userData.Nickname;
         }
         this.sessionId = userData.SessionId;
-        SetImage(i);
+        //SetImage(i);
+        userImage.enabled = true;
     }
 
     public void SetImage(int color)
@@ -58,6 +59,7 @@ public class RoomUserSlot : MonoBehaviour
 
     public void EmptyRoomUser()
     {
+        userImage.enabled = false;
         nickNameTMP.text = "EMPTY";
         objReady.SetActive(false);
         sessionId = "";

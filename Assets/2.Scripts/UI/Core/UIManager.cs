@@ -23,6 +23,7 @@ public class UIManager : Singleton<UIManager>
     private List<Transform> parents;
     private List<UIBase> uiList = new List<UIBase>();
 
+    [SerializeField] private Canvas loadingCanvas;
     [SerializeField] private GameObject prefabLoadingScreen;
     private GameObject loadingScreen;
 
@@ -47,9 +48,7 @@ public class UIManager : Singleton<UIManager>
 
         if (UIManager.Instance.loadingScreen == null)
         {
-            Transform canvas = FindObjectOfType<Canvas>().transform;
-            int targetIndex = canvas.childCount;
-            Transform targetCanvas = canvas.GetChild(targetIndex - 1);
+            Transform targetCanvas = Instance.loadingCanvas.transform;
             UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
             UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
         }
@@ -69,8 +68,8 @@ public class UIManager : Singleton<UIManager>
 
             Instance.uiList.Add(ui);
         }
-        ui.opened?.Invoke(param);
         ui.gameObject.SetActive(ui.isActiveInCreated);
+        ui.opened?.Invoke(param);
         ui.isActiveInCreated = true;
         UIManager.Instance.loadingScreen.SetActive(false);
         return (T)ui;
@@ -123,9 +122,7 @@ public class UIManager : Singleton<UIManager>
     {
         if (UIManager.Instance.loadingScreen == null)
         {
-            Transform canvas = FindObjectOfType<Canvas>().transform;
-            int targetIndex = canvas.childCount;
-            Transform targetCanvas = canvas.GetChild(targetIndex - 1);
+            Transform targetCanvas = Instance.loadingCanvas.transform;
             UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
             UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
         }

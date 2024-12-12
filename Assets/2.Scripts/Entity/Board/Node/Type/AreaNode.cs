@@ -1,13 +1,16 @@
+using System.Text;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class AreaNode : BaseNode, IPurchase
 {
-    private int playerIndex = -1;
-    [SerializeField] MeshRenderer plane;
-    int price;
+    private StringBuilder owner = new StringBuilder("");
+    private int saleAmount = 10;
+    //ë§¤ìˆ˜ê¸ˆì€ íŒë§¤ì•¡ì˜ 2ë°°
+    //ë²Œê¸ˆì€ íŒë§¤ì•¡ì˜ ë°˜
 
-    string IPurchase.message => $"{price}ÀÇ ¿­¼è¸¦ ÁöºÒÇÏ¿© ÇØ´ç Ä­À» ±¸¸Å ÇÒ ¼ö ÀÖ½À´Ï´Ù.";
+    [SerializeField] MeshRenderer plane;
+
+    string IPurchase.message => $"{saleAmount}ì˜ ì½”ì¸ì„ ì§€ë¶ˆí•˜ì—¬ í•´ë‹¹ ì¹¸ì„ êµ¬ë§¤ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
 
 
     public async override void Action()
@@ -33,44 +36,49 @@ public class AreaNode : BaseNode, IPurchase
         //    var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
         //    return;
         //}
+        string o = owner.ToString();
+        string id = GameManager.Instance.myInfo.SessionId;
 
-        if (playerIndex != index)
+        if (o != id)
         {
-            if (playerIndex != -1) Damage(player.data);
-            var ui = await UIManager.Show<PurchaseNodeUI>(purchase, index);
+            if (o != "") Penalty(player.data);
+
+            if (player.data.keyAmount >= saleAmount)
+                await UIManager.Show<PurchaseNodeUI>(purchase);
+            else
+                BoardManager.Instance.TurnEnd();
         }
+        else
+            Cancle();
     }
-    private void Damage(BoardTokenData p)
+    private void Penalty(BoardTokenData p)
     {
-        //ÀÓ½Ã ÁÖ¼®
-        //p.hp -= 0;
+        GamePacket packet = new();
 
-        //GamePacket packet = new();
+        packet.TilePenaltyRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+        };
 
-        ////packet. = new()
-        ////{
-
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
+        SocketManager.Instance.OnSend(packet);
     }
 
-    public void Purchase(int index)
+    public void Purchase()
     {
-        //¼¼¼Çid ¼÷Áö ÇÊ¿ä
-        //playerIndex = index;
-        //plane.material = BoardManager.Instance.materials[index];
-        //int i = BoardManager.Instance.areaNodes.IndexOf(this);
+        string id = GameManager.Instance.myInfo.SessionId;
 
-        //GamePacket packet = new();
-        //packet.PurchaseTileRequest = new()
-        //{
-        //    //ÃßÈÄ º¯°æµÇ¸é ¼öÁ¤
-        //    //SessionId = GameManager.Instance.,
-        //    //Tile = SocketManager.ToVector(transform.position)
-        //};
+        GamePacket packet = new();
+        packet.PurchaseTileRequest = new()
+        {
+            SessionId = id,
+            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+        };
 
-        //SocketManager.Instance.OnSend(packet);
+        SocketManager.Instance.OnSend(packet);
+
+        //if (owner.ToString() != "")
+        //    saleAmount = (int)(saleAmount * 2f);
 
         Cancle();
     }
@@ -84,9 +92,13 @@ public class AreaNode : BaseNode, IPurchase
         BoardManager.Instance.TurnEnd();
     }
 
-    public void SetArea(int index)
+    public void SetArea(string id,int sale)
     {
-        //playerIndex = index;
-        plane.material = BoardManager.Instance.materials[index];
+        this.owner.Clear();
+        this.owner.Append(id);
+        int i = GameManager.Instance.SessionDic[id].Color;
+        plane.material = BoardManager.Instance.materials[i];
+
+        this.saleAmount = sale;
     }
 }

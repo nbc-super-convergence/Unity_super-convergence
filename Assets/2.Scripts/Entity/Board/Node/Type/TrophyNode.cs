@@ -6,7 +6,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
     private bool isTrophy;
     private int price;
 
-    public string message => $"{price}ÀÇ ¿­¼è¸¦ ÁöºÒÇÏ¿© Æ®·ÎÇÇ¸¦ ±¸¸Å ÇÒ ¼ö ÀÖ½À´Ï´Ù.";
+    public string message => $"{price}ì˜ ì—´ì‡ ë¥¼ ì§€ë¶ˆí•˜ì—¬ íŠ¸ë¡œí”¼ë¥¼ êµ¬ë§¤ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.";
 
 
     private void Start()
@@ -43,7 +43,7 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
             int index = BoardManager.Instance.curPlayerIndex;
             IPurchase purchase = this;
 
-            var ui = await UIManager.Show<PurchaseNodeUI>(purchase,index);
+            var ui = await UIManager.Show<PurchaseNodeUI>(purchase);
         }
         else if(player.IsTurnEnd())
         {
@@ -56,20 +56,19 @@ public class TrophyNode : BaseNode,IToggle,IPurchase
         return isTrophy;
     }
 
-    public void Purchase(int index)
+    public void Purchase()
     {
-        //Æ®·ÎÇÇ + 1
-        //BoardManager.Instance.Curplayer.data.trophyAmount += 1;
+        GamePacket packet = new();
 
-        //GamePacket packet = new();
+        packet.PurchaseTrophyRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Tile = BoardManager.Instance.trophyNode.IndexOf(this)
+        };
 
-        ////packet. = new()
-        ////{
+        SocketManager.Instance.OnSend(packet);
 
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
-
+        Toggle();
         Cancle();
     }
 

@@ -1,9 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIRoom : UIBase
@@ -26,7 +25,7 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Dropdown ddMaxTurn;
     private int[] turnOptions = { 10, 15, 20, 25, 30 };
     [Range(0, 4)] public int maxTurnValue = 0;
-    private int maxTurn;
+    private int maxTurn = 10;
 
     [Header("Start Countdown")]
     [SerializeField] private TMP_Text count;
@@ -64,7 +63,9 @@ public class UIRoom : UIBase
         int num = 0;
         foreach (var user in roomData.Users)
         {
-            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num++));
+            // TODO:: 없는 유저는 -1로 남게... 
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num, num));
+            num += 1;
         }
         SetHost();
         SetDropdown();       
@@ -112,7 +113,7 @@ public class UIRoom : UIBase
 
         Init();
 
-        roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
+        //roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
         roomName.text = (data.RoomName != null) ? data.RoomName : "";
 
         for (int i = 0; i < data.Users.Count; i++)
@@ -186,13 +187,13 @@ public class UIRoom : UIBase
     }
 
     private void ReadyUsersSync(RoomData roomData)
-    {
-        foreach(RoomUserSlot user in userSlots)
+    {        
+        foreach (RoomUserSlot user in userSlots)
         {           
-            if(isHost || roomData.ReadyUsers.Contains(user.sessionId))
+            if(roomData.ReadyUsers.Contains(user.sessionId) || roomData.OwnerId == user.sessionId)
             {
                 user.CheckReadyState(true, roomData.OwnerId);
-            }            
+            }
         }
     }
 
@@ -326,7 +327,8 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.GameStartRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Turn = maxTurn,
         };
         SocketManager.Instance.OnSend(packet);
     }
@@ -338,9 +340,13 @@ public class UIRoom : UIBase
     public async void GameStart()
     {
         await CountDownAsync(3);
-        await UIManager.Show<UIFadeScreen>("FadeOut");
-        invisibleWall.SetActive(false);
-        GameManager.isGameStart = true;
+        //await UIManager.Show<UIFadeScreen>("FadeOut");
+        FadeScreen.Instance.FadeOut(Capsule, 1.5f);        
+        void Capsule()
+        {
+            invisibleWall.SetActive(false);
+            GameManager.isGameStart = true;
+        }
     }
     private async Task CountDownAsync(int countNum)
     {
@@ -381,7 +387,6 @@ public class UIRoom : UIBase
     {
         maxTurn = turnOptions[index];
     }
-
     #endregion           
 
     #region Button
@@ -414,7 +419,7 @@ public class UIRoom : UIBase
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId
+            SessionId = GameManager.Instance.myInfo.SessionId            
         };
         SocketManager.Instance.OnSend(packet);
 

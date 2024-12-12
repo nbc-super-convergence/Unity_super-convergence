@@ -1,31 +1,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Cinemachine;
 
-#region ¼­¹ö¿¬°á
+#region ì„œë²„ì—°ê²°
 ///// <summary>
-///// C2S_RollDiceRequest ¿äÃ»ÆĞÅ¶ Àü¼Û.
+///// C2S_RollDiceRequest ìš”ì²­íŒ¨í‚· ì „ì†¡.
 ///// GamePacket packet = new();
 ///// packet.RollDiceRequest = new()
 ///// {
 /////     PlayerId = GameManager.Instance.GetPlayerId()
 ///// };
 ///// SocketManager.Instance.OnSend(packet);
-///// S2C_RollDiceResponse ¸®½ºÆù½º ÆĞÅ¶ ¿Ã¶§±îÁö ´ë±â. (WaitUntil or Task...)
-///// S2C_RollDiceResponse ¸®½ºÆù½º¸¦ ¼º°øÀûÀ¸·Î ¹ŞÀ¸¸é if(response.Success) { Curplayer.GetDice(response.DiceResult); }
+///// S2C_RollDiceResponse ë¦¬ìŠ¤í°ìŠ¤ íŒ¨í‚· ì˜¬ë•Œê¹Œì§€ ëŒ€ê¸°. (WaitUntil or Task...)
+///// S2C_RollDiceResponse ë¦¬ìŠ¤í°ìŠ¤ë¥¼ ì„±ê³µì ìœ¼ë¡œ ë°›ìœ¼ë©´ if(response.Success) { Curplayer.GetDice(response.DiceResult); }
 ///// </summary>
 //public void TestRandomDice()
 //{
-//    //ÁÖ»çÀ§ µ¹¸²
+//    //ì£¼ì‚¬ìœ„ ëŒë¦¼
 //    int rand = Random.Range(1, 7);
 
-//    //³ª¿Â ÁÖ»çÀ§ÀÇ ¼ö¸¦ ÇÃ·¹ÀÌ¾î¿¡ ÀÔ·Â
+//    //ë‚˜ì˜¨ ì£¼ì‚¬ìœ„ì˜ ìˆ˜ë¥¼ í”Œë ˆì´ì–´ì— ì…ë ¥
 //    Curplayer.GetDice(rand);
 //}
 
 ///// <summary>
-///// ¼­¹ö¿¡¼­´Â ÁÖ»çÀ§ µ¹¸° À¯Àú¿¡°Ô S2C_RollDiceResponse¸¦ º¸³»ÁÖ°í °°Àº °ªÀ» ´Ù¸¥ À¯Àú¿¡°Ô S2C_RollDiceNotificationÀ» º¸³½´Ù.
-///// SocketManager¿¡ ¼±¾ğÇÏ´Â ¸Ş¼­µå. S2C_RollDiceNotificationÀ» ¹ŞÀ¸¸é SocketManager°¡ ÀÚµ¿À¸·Î RollDiceNotification¿¡ ´ëÀÀÇÏ´Â ¸Ş¼­µå¸¦ Ã£¾Æ È£ÃâÇÑ´Ù.
+///// ì„œë²„ì—ì„œëŠ” ì£¼ì‚¬ìœ„ ëŒë¦° ìœ ì €ì—ê²Œ S2C_RollDiceResponseë¥¼ ë³´ë‚´ì£¼ê³  ê°™ì€ ê°’ì„ ë‹¤ë¥¸ ìœ ì €ì—ê²Œ S2C_RollDiceNotificationì„ ë³´ë‚¸ë‹¤.
+///// SocketManagerì— ì„ ì–¸í•˜ëŠ” ë©”ì„œë“œ. S2C_RollDiceNotificationì„ ë°›ìœ¼ë©´ SocketManagerê°€ ìë™ìœ¼ë¡œ RollDiceNotificationì— ëŒ€ì‘í•˜ëŠ” ë©”ì„œë“œë¥¼ ì°¾ì•„ í˜¸ì¶œí•œë‹¤.
 ///// 
 ///// </summary>
 //public void RollDiceNotification(GamePacket gamePacket)
@@ -34,34 +35,54 @@ using System;
 //    int playerId = response.PlayerId;
 //    int diceResult = response.DiceResult;
 
-//    // S2C_RollDiceNotificationÀ» ¹ŞÀ¸¸é ½ÇÇàÇÒ ÄÚµå¸¦ ¿©±â¿¡ ÀÛ¼ºÇÑ´Ù.
-//    // ÀÚ±â ÅÏÀÌ ¾Æ´Ñ À¯Àú¿¡°Ô Áö±İ ÅÏ À¯ÀúÀÇ ÁÖ»çÀ§±¼¸² °á°ú¸¦ º¸¿©ÁØ´Ù.
-//    // BoardManager.Instance.ÇöÀçÅÏÁÖ»çÀ§±¼¸²º¸¿©ÁÖ´Â¸Ş¼­µåÀÌ¸§(diceResult);
+//    // S2C_RollDiceNotificationì„ ë°›ìœ¼ë©´ ì‹¤í–‰í•  ì½”ë“œë¥¼ ì—¬ê¸°ì— ì‘ì„±í•œë‹¤.
+//    // ìê¸° í„´ì´ ì•„ë‹Œ ìœ ì €ì—ê²Œ ì§€ê¸ˆ í„´ ìœ ì €ì˜ ì£¼ì‚¬ìœ„êµ´ë¦¼ ê²°ê³¼ë¥¼ ë³´ì—¬ì¤€ë‹¤.
+//    // BoardManager.Instance.í˜„ì¬í„´ì£¼ì‚¬ìœ„êµ´ë¦¼ë³´ì—¬ì£¼ëŠ”ë©”ì„œë“œì´ë¦„(diceResult);
 //}
 
 #endregion
 
 public class BoardManager : Singleton<BoardManager>
 {
-    //½ÃÀÛ ÁöÁ¡
+    //ì‹œì‘ ì§€ì 
     public Transform startNode;
 
-    // Å×½ºÆ® ÇÃ·¹ÀÌ¾î ÇÁ¸®Æé
+    // í…ŒìŠ¤íŠ¸ í”Œë ˆì´ì–´ í”„ë¦¬í©
     public GameObject TestPlayerPrefab;
 
-    //ÇÃ·¹ÀÌ¾î ¸®½ºÆ®
+    //í”Œë ˆì´ì–´ ë¦¬ìŠ¤íŠ¸
     public List<BoardTokenHandler> playerTokenHandlers = new();
     public Material[] materials;
 
-    //ÇöÀç ÅÏÀÇ ÇÃ·¹ÀÌ¾î ÀÎµ¦½º
+    //í˜„ì¬ í„´ì˜ í”Œë ˆì´ì–´ ì¸ë±ìŠ¤
     [SerializeField] private int playerIndex = 0;
 
     public List<IToggle> trophyNode = new List<IToggle>();
     public List<AreaNode> areaNodes = new List<AreaNode>();
-    private int prevTrophyIndex = -1;
-    public event Action OnEvent;
 
-    private List<IGameResult> bonus;
+    public Dice dice { get; private set; }
+
+#pragma warning disable
+    public CinemachineVirtualCamera camera;
+    public event Action OnEvent;
+#pragma warning restore
+
+    //private List<IGameResult> bonus;
+    public bool isMIniPlay { get; private set; }
+
+
+    public BoardTokenHandler GetToken(string sessionID)
+    {
+        string id = sessionID;
+        var user = GameManager.Instance.SessionDic[id];
+        int i = user.Order;
+
+        var player = playerTokenHandlers.Find((obj) => obj.data.userInfo == user);
+
+        //TODO ìˆœìœ„ ì •í•˜ëŠ” ê²Œì„ì˜ ë¶€ì¬ë¡œ Order ì¸ë±ìŠ¤ê°€ ì´ìƒí•œ ì´ìœ ë¡œ ì£¼ì„ì²˜ë¦¬
+        //return playerTokenHandlers[i]; 
+        return player;
+    }
 
     public BoardTokenHandler Curplayer
     {
@@ -78,38 +99,45 @@ public class BoardManager : Singleton<BoardManager>
         base.Awake();
         isDontDestroyOnLoad = false;
 
-        //Å×½ºÆ®¿ë
+        //í…ŒìŠ¤íŠ¸ìš©
         //StartCoroutine(Init());
 
         Init();
 
-        //Æ®·ÎÇÇÄ­ ¼³Á¤
-        SetTrophyNode();
-        SetBonus();
+        //íŠ¸ë¡œí”¼ì¹¸ ì„¤ì •
+        //SetTrophyNode();
+        //SetBonus();
     }
 
-    private void Init()
+    private async void Init()
     {
         var ids = GameManager.Instance.SessionDic.Keys;
+        var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
+        dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
+        dice.gameObject.SetActive(false);
 
         foreach (string key in ids)
         {
             var dict = GameManager.Instance.SessionDic;
             var info = dict[key];
+
             BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
-            handle.data.userInfo = info;
+            handle.Init(info);
+            //handle.data.userInfo = info;
+            handle.SetColor(info.Color);
+            handle.gameObject.name = key;
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
-            handle.SetColor(info.Color);
 
             playerTokenHandlers.Add(handle);
         }
+        camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
 
-
+        await UIManager.Show<BoardUI>();
         #region Old
         //for (int i = 0; i < count; i++)
         //{
-        //    //½ÃÀÛ ÁöÁ¡¿¡ ÇÃ·¹ÀÌ¾î »ı¼º
+        //    //ì‹œì‘ ì§€ì ì— í”Œë ˆì´ì–´ ìƒì„±
         //    BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
 
         //    if (GameManager.Instance.myInfo.Color == i) handle.isMine = true;
@@ -118,209 +146,236 @@ public class BoardManager : Singleton<BoardManager>
 
         //    //GameManager.Instance.
 
-        //    //¸®½ºÆ®¿¡ ÇÃ·¹ÀÌ¾î º¸°ü
+        //    //ë¦¬ìŠ¤íŠ¸ì— í”Œë ˆì´ì–´ ë³´ê´€
         //    playerTokenHandlers.Add(handle);
         //}
         #endregion
+        dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
         Curplayer.Ready();
     }
 
-    //Å×½ºÆ®¿ë
+    //í…ŒìŠ¤íŠ¸ìš©
     //private IEnumerator Init()
     //{
     //    //yield return new WaitUntil(() => GameManager.Instance.isInitialized);
 
     //    for(int i =0; i < 2; i++)
     //    {
-    //        //½ÃÀÛ ÁöÁ¡¿¡ ÇÃ·¹ÀÌ¾î »ı¼º
+    //        //ì‹œì‘ ì§€ì ì— í”Œë ˆì´ì–´ ìƒì„±
     //        BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
     //        //handle.data.
-    //        //¸®½ºÆ®¿¡ ÇÃ·¹ÀÌ¾î º¸°ü
+    //        //ë¦¬ìŠ¤íŠ¸ì— í”Œë ˆì´ì–´ ë³´ê´€
     //        playerTokenHandlers.Add(handle);
     //    }
 
     //    Curplayer.Ready();
     //}
 
-    public void RandomDice()
-    {
-        //GamePacket packet = new();
+    //public void RandomDice()
+    //{
+    //    #region Old
+    //    ////ì£¼ì‚¬ìœ„ ëŒë¦¼
+    //    //int rand = Random.Range(1, 7);
 
-        ////packet.RollDiceReqeust = new()
-        ////{
-        ////    PlayerId = playerIndex
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
-
-        #region Old
-        ////ÁÖ»çÀ§ µ¹¸²
-        //int rand = Random.Range(1, 7);
-
-        ////³ª¿Â ÁÖ»çÀ§ÀÇ ¼ö¸¦ ÇÃ·¹ÀÌ¾î¿¡ ÀÔ·Â
-        //Curplayer.GetDice(rand);
-        #endregion
-    }
+    //    ////ë‚˜ì˜¨ ì£¼ì‚¬ìœ„ì˜ ìˆ˜ë¥¼ í”Œë ˆì´ì–´ì— ì…ë ¥
+    //    //Curplayer.GetDice(rand);
+    //    #endregion
+    //}
 
     public void TurnEnd()
     {
         if(Curplayer.IsTurnEnd())
         {
-            //GamePacket packet = new();
 
-            ////packet. = new()
-            ////{
+            //if(playerIndex + 1 == playerTokenHandlers.Count)
+            //{
+            //    int count = playerTokenHandlers.Count;
 
-            ////};
+            //    GamePacket packet = new();
+            //    packet.StartMiniGameRequest = new()
+            //    {
+            //        SessionId = GameManager.Instance.myInfo.SessionId,
+            //    };
 
-            //SocketManager.Instance.OnSend(packet);    
+            //    SocketManager.Instance.OnSend(packet);
+            //    UIManager.Hide<BoardUI>();
 
+            //    Debug.Log("StartMiniGameRequest");
+            //}
+            //else
+            //{
+            GamePacket packet = new();
 
+            packet.TurnEndRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId
+            };
+                
+            SocketManager.Instance.OnSend(packet);
+
+            NextTurn();
+            //}
 
             #region Old
 
-            //(ÇöÀçÀÎ¿ø + 1) % (ÇöÀçÀÎ¿ø + 1)
-            int count = playerTokenHandlers.Count;
-            playerIndex = (playerIndex + 1) % (count);
-            Curplayer.Ready();
+            //(í˜„ì¬ì¸ì› + 1) % (í˜„ì¬ì¸ì› + 1)
+            //int count = playerTokenHandlers.Count;
+            //playerIndex = (playerIndex + 1) % (count);
+            //Curplayer.Ready();
 
-            //¹Ì´Ï°ÔÀÓ ½ÃÀÛ
+            //ë¯¸ë‹ˆê²Œì„ ì‹œì‘
             //OnEvent?.Invoke();
 
-            //°ÔÀÓÁ¾·á
+            //ê²Œì„ì¢…ë£Œ
             //GameOver();
             #endregion
         }
     }
-
-    public void SetTrophyNode()
+    public void NextTurn()
     {
-        //GamePacket packet = new();
+        isMIniPlay = false;
 
-        ////packet.() = new()
-        ////{
+        int count = playerTokenHandlers.Count;
+        playerIndex = (playerIndex + 1) % count;
 
-        ////};
+        Transform t = playerTokenHandlers[playerIndex].transform;
+        camera.Follow = camera.LookAt = t;
+        dice.SetDicePosition(t);
 
-        //SocketManager.Instance.OnSend(packet);
-
-        #region Old
-        //int rand = Random.Range(0, trophyNode.Count);
-
-        //while(rand == prevTrophyIndex)
-        //    rand = Random.Range(0, trophyNode.Count);
-
-        //if(prevTrophyIndex != -1)
-        //    trophyNode[prevTrophyIndex].Toggle();
-
-        //trophyNode[rand].Toggle();
-
-        //prevTrophyIndex = rand;
-        #endregion
+        Curplayer.Ready();
     }
 
-    private void StartMiniGame()
+    //public void SetTrophyNode()
+    //{
+    //    //GamePacket packet = new();
+
+    //    ////packet.() = new()
+    //    ////{
+
+    //    ////};
+
+    //    //SocketManager.Instance.OnSend(packet);
+
+    //    #region Old
+    //    //int rand = Random.Range(0, trophyNode.Count);
+
+    //    //while(rand == prevTrophyIndex)
+    //    //    rand = Random.Range(0, trophyNode.Count);
+
+    //    //if(prevTrophyIndex != -1)
+    //    //    trophyNode[prevTrophyIndex].Toggle();
+
+    //    //trophyNode[rand].Toggle();
+
+    //    //prevTrophyIndex = rand;
+    //    #endregion
+    //}
+
+    public void StartMinigame()
     {
-        //GamePacket packet = new();
+        isMIniPlay = true;
 
-        ////packet.MiniGame() = new()
-        ////{
+        GamePacket packet = new();
 
-        ////};
-
-        //SocketManager.Instance.OnSend(packet);
-    }
-
-    public void PurChaseNode(int node,int playerIndex)
-    {
-        areaNodes[node].SetArea(playerIndex);
-    }
-    
-    private void SetBonus()
-    {
-        bonus = new();
-        List<int> num = new();
-        
-        for(int i = 0; i < 3;)
+        packet.StartMiniGameRequest = new()
         {
-            int rand = UnityEngine.Random.Range(0, 13);
+            SessionId = GameManager.Instance.myInfo.SessionId,
+        };
 
-            if (num.Contains(rand)) continue;
-            num.Add(rand);
-            //***ÁÖÀÇ ¿­Áö¸¶½Ã¿À, ÁøÂ¥ °æ°íÇßÀ½
-            switch(rand)
-            {
-                case 0:
-                    bonus.Add(new FastCoinZero());
-                    break;
-                case 1:
-                    bonus.Add(new HighComebackCount());
-                    break;
-                case 2:
-                    bonus.Add(new HighDiceCount());
-                    break;
-                case 3:
-                    bonus.Add(new HighPaymentCount());
-                    break;
-                case 4:
-                    bonus.Add(new HighPurchaseCount());
-                    break;
-                case 5:
-                    bonus.Add(new HighSaveCoin());
-                    break;
-                case 6:
-                    bonus.Add(new HighSellCount());
-                    break;
-                case 7:
-                    bonus.Add(new HighTaxCount());
-                    break;
-                case 8:
-                    bonus.Add(new LoseCount());
-                    break;
-                case 9:
-                    bonus.Add(new LowDiceCount());
-                    break;
-                case 10:
-                    bonus.Add(new LowPurchaseCount());
-                    break;
-                case 11:
-                    bonus.Add(new NoneTrophy());
-                    break;
-                case 12:
-                    bonus.Add(new WinCount());
-                    break;
-            }
-
-            i++;
-        }
+        SocketManager.Instance.OnSend(packet);
     }
+
+    //public void PurChaseNode(int node,int playerIndex)
+    //{
+    //    areaNodes[node].SetArea(playerIndex);
+    //}
+
+    //private void SetBonus()
+    //{
+    //    bonus = new();
+    //    List<int> num = new();
+        
+    //    for(int i = 0; i < 3;)
+    //    {
+    //        int rand = UnityEngine.Random.Range(0, 13);
+
+    //        if (num.Contains(rand)) continue;
+    //        num.Add(rand);
+    //        //***ì£¼ì˜ ì—´ì§€ë§ˆì‹œì˜¤, ì§„ì§œ ê²½ê³ í–ˆìŒ
+    //        switch(rand)
+    //        {
+    //            case 0:
+    //                bonus.Add(new FastCoinZero());
+    //                break;
+    //            case 1:
+    //                bonus.Add(new HighComebackCount());
+    //                break;
+    //            case 2:
+    //                bonus.Add(new HighDiceCount());
+    //                break;
+    //            case 3:
+    //                bonus.Add(new HighPaymentCount());
+    //                break;
+    //            case 4:
+    //                bonus.Add(new HighPurchaseCount());
+    //                break;
+    //            case 5:
+    //                bonus.Add(new HighSaveCoin());
+    //                break;
+    //            case 6:
+    //                bonus.Add(new HighSellCount());
+    //                break;
+    //            case 7:
+    //                bonus.Add(new HighTaxCount());
+    //                break;
+    //            case 8:
+    //                bonus.Add(new LoseCount());
+    //                break;
+    //            case 9:
+    //                bonus.Add(new LowDiceCount());
+    //                break;
+    //            case 10:
+    //                bonus.Add(new LowPurchaseCount());
+    //                break;
+    //            case 11:
+    //                bonus.Add(new NoneTrophy());
+    //                break;
+    //            case 12:
+    //                bonus.Add(new WinCount());
+    //                break;
+    //        }
+
+    //        i++;
+    //    }
+    //}
 
     public async void GameOver()
     {
-        //°ÔÀÓÁ¾·á½Ã ·¹Å©¸®¿¡ÀÌ¼Ç, Ãß°¡ Æ®·ÎÇÇ ÁõÁ¤
-        foreach (var result in bonus)
-        {
-            List<int> list = result.Result();
+        //ê²Œì„ì¢…ë£Œì‹œ ë ˆí¬ë¦¬ì—ì´ì…˜, ì¶”ê°€ íŠ¸ë¡œí”¼ ì¦ì •
+        //foreach (var result in bonus)
+        //{
+        //    List<int> list = result.Result();
 
-            foreach (int i in list)
-                playerTokenHandlers[i].data.trophyAmount += 1;
-        }
-
-        //¼øÀ§º°·Î ÀÎµ¦½º º¯°æ
+        //    foreach (int i in list)
+        //        playerTokenHandlers[i].data.trophyAmount += 1;
+        //}
+        
+        //ìˆœìœ„ë³„ë¡œ ì¸ë±ìŠ¤ ë³€ê²½
         playerTokenHandlers.Sort((a,b) => 
         {
-            if(a.data.trophyAmount == b.data.trophyAmount)
-                return b.data.keyAmount.CompareTo(a.data.keyAmount);
+            //if(a.data.trophyAmount == b.data.trophyAmount)
+            return b.data.keyAmount.CompareTo(a.data.keyAmount);
 
-            return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+            //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
 
-        await UIManager.Show<BoardResult>();
+        await UIManager.Show<BoardResultUI>();
     }
 
-    private void SeqeunceUpdate()
-    {
-        playerTokenHandlers.Sort((a,b) => { return a.data.userInfo.Order.CompareTo(b.data.userInfo.Order); });
-    }
+    //ìˆœì„œ ë³€ê²½ ì—†ìŒìœ¼ë¡œ ì¸í•œ ì£¼ì„ì²˜ë¦¬
+    //private void SeqeunceUpdate()
+    //{
+    //    playerTokenHandlers.Sort((a,b) => { return a.data.userInfo.Order.CompareTo(b.data.userInfo.Order); });
+    //}
 }

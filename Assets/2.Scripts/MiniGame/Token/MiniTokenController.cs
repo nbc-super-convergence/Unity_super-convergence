@@ -4,7 +4,8 @@ public enum eMoveType
 {
     Server,
     AddForce,
-    Velocity
+    Velocity,
+    Dropper
 }
 
 public class MiniTokenController
@@ -25,32 +26,51 @@ public class MiniTokenController
        switch (type)
         {
             case eMoveType.Server:
-                SetPos(Vector3.MoveTowards(transform.localPosition, miniData.nextPos, 30 * Time.deltaTime * Vector3.Distance(transform.localPosition, miniData.nextPos)));
-                //시도해볼 보간법1.
-                //transform.position = Vector3.Lerp(transform.position, nextPos, 0.1f * Time.deltaTime);
-                //시도해볼 보간법2.
-                //transform.position = Vector3.SmoothDamp(transform.position, nextPos, ref velocity, 0.2f);
+                float distance = Vector3.Distance(transform.localPosition, miniData.nextPos);
+                float threshold = 0.5f;
+
+                if (distance > threshold)
+                {
+                    transform.localPosition = Vector3.MoveTowards(transform.localPosition, miniData.nextPos, 30 * Time.deltaTime * distance);
+                }
+                else
+                {
+                    transform.localPosition = miniData.nextPos;
+                }
                 break;
             case eMoveType.AddForce:
                 Vector3 force = new(miniData.wasdVector.x, 0, miniData.wasdVector.y);
-                rb.AddForce(force * miniData.icePlayerSpeed, ForceMode.Force);
+                rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
             case eMoveType.Velocity:
+                rb.velocity = new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y) * (miniData.PlayerSpeed * 0.5f);
+                break;
+            case eMoveType.Dropper:
+                distance = Vector2.Distance(
+                    new (transform.localPosition.x, transform.localPosition.z),
+                    new (miniData.nextPos.x, miniData.nextPos.z)
+                );
+                threshold = 0.2f;
+
+                if (distance > threshold)
+                {
+                    if (miniData.CurState != State.Move)
+                        miniData.CurState = State.Move;
+                    Vector3 direction = (miniData.nextPos - transform.localPosition).normalized;
+                    rb.velocity = new Vector3(direction.x * miniData.PlayerSpeed, direction.y, direction.z * miniData.PlayerSpeed);
+                }
+                else
+                {
+                    if (miniData.CurState != State.Idle)
+                        miniData.CurState = State.Idle;
+                    rb.velocity = new(0, rb.velocity.y, 0);
+                    miniData.rotY = 0;
+                }
                 break;
         }
     }
 
-    public void SetPos(Vector3 pos)
-    {
-        transform.localPosition = pos;
-    }
-
-    public void SetNextPos(Vector3 pos)
-    {
-        miniData.nextPos = pos;
-    }
-
-    public void SetRotY(float rotY)
+    public void RotateToken(float rotY)
     {
         transform.rotation = Quaternion.Euler(0f, rotY, 0f);
     }

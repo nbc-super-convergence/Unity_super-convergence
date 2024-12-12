@@ -4,5 +4,7 @@ using UnityEngine;
 
 public abstract class MapBase : MonoBehaviour
 {
-    public abstract void HandleCollision(Collision collision, eCollisionType type);
+    public virtual void HandleCollision(eCollisionType type, Collision collision) { }
+
+    public virtual void HandleCollider(eCollisionType type, Collider other) { }
 }

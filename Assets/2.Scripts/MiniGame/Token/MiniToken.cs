@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -8,6 +8,7 @@ public class MiniToken : MonoBehaviour
     [SerializeField] private Animator animator;
 
     /*Data*/
+    public int MyColor;
     public MiniTokenData MiniData;
 
     /*Input & Control*/
@@ -17,29 +18,39 @@ public class MiniToken : MonoBehaviour
     /*Server*/
     public bool IsClient { get; private set; }
     private bool isEnabled = false;
-
+    public bool isStun { get; private set; }
     Coroutine PauseInput = null;
 
     #region Unity Messages
     private void Awake()
     {//BoardScene 진입 시 일어나는 초기화.
-        MiniData = new(animator);
+        MiniData = new(animator, MyColor);
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
-
-        MinigameManager.Instance.MySessonId = GameManager.Instance.myInfo.SessionId;
-        IsClient = MiniData.miniTokenId == GameManager.Instance.SessionDic[MinigameManager.Instance.MySessonId].Color;
+        IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color;
+        InputHandler.DisableSimpleInput();
     }
 
     private void Update()
     {
         if (!IsClient && isEnabled)
         {
-            switch (MinigameManager.GameType)
+            switch (MinigameManager.gameType)
             {
                 case eGameType.GameIceSlider:
                     Controller.MoveToken(eMoveType.Server);
-                    Controller.SetRotY(MiniData.rotY);
+                    break;
+                case eGameType.GameBombDelivery:
+                    Controller.MoveToken(eMoveType.Server);
+                    break;
+                case eGameType.GameCourtshipDance:
+                    // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
+                    break;
+                case eGameType.GameDropper:
+                    Controller.MoveToken(eMoveType.Dropper);
+                    break;
+                case eGameType.GameDart:
+                    Controller.MoveToken(eMoveType.Server);
                     break;
             }
         }
@@ -47,15 +58,28 @@ public class MiniToken : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsClient && isEnabled)
+        if (isEnabled)
         {
-            switch (MinigameManager.GameType)
+            if (IsClient)
             {
-                case eGameType.GameIceSlider:
-                    Controller.MoveToken(eMoveType.AddForce);
-                    Controller.SetRotY(MiniData.rotY);
-                    break;
+                switch (MinigameManager.gameType)
+                {
+                    case eGameType.GameIceSlider:
+                        Controller.MoveToken(eMoveType.AddForce);
+                        break;
+                    case eGameType.GameBombDelivery:
+                        Controller.MoveToken(eMoveType.Velocity);
+                        break;
+                    case eGameType.GameDropper:
+                        Controller.MoveToken(eMoveType.Dropper);
+                        break;
+                    case eGameType.GameDart:
+                        Controller.MoveToken(eMoveType.AddForce);
+                        break;
+                }
             }
+
+            Controller.RotateToken(MiniData.rotY);
         }
     }
     #endregion
@@ -89,13 +113,29 @@ public class MiniToken : MonoBehaviour
             {
                 GamePacket packet = new();
                 {
-                    packet.IcePlayerSyncRequest = new()
+                    switch(MinigameManager.gameType)
                     {
-                        SessionId = MinigameManager.Instance.MySessonId,
-                        Position = SocketManager.ToVector(transform.localPosition),
-                        Rotation = transform.rotation.y,
-                        State = MiniData.CurState
-                    };
+                        case eGameType.GameIceSlider:
+                            packet.IcePlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+
+                        case eGameType.GameBombDelivery:
+                            packet.BombPlayerSyncRequest = new()
+                            {
+                                SessionId = MinigameManager.Instance.mySessonId,
+                                Position = SocketManager.ToVector(transform.localPosition),
+                                Rotation = transform.eulerAngles.y,
+                                State = MiniData.CurState
+                            };
+                            break;
+                    }
+
                 };
                 SocketManager.Instance.OnSend(packet);
                 lastPos = curPos;
@@ -115,6 +155,21 @@ public class MiniToken : MonoBehaviour
     }
     #endregion
 
+    #region CourtshipDance
+    public void EnableInputSystem(eGameType eGameType)
+    {
+        if (eGameType== eGameType.GameCourtshipDance)
+        {
+            InputHandler.DisablePlayerInput();
+            InputHandler.EnableSimpleInput();
+        }
+    }
+    public Animator GetAnimator()
+    {
+        return animator;
+    }
+    #endregion
+
     public void EnableMiniToken()
     {
         gameObject.SetActive(true);
@@ -131,12 +186,28 @@ public class MiniToken : MonoBehaviour
         isEnabled = false;
         rb.velocity = Vector3.zero; //움직임 멈춤
         MiniData.CurState = State.Die; //사망 애니메이션 재생
-        StartCoroutine(disableDelay());
+        StartCoroutine(DisableDelay());
     }
 
-    private IEnumerator disableDelay()
+    private IEnumerator DisableDelay()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         gameObject.SetActive(false);
+    }
+
+    public void Stun()
+    {
+        StartCoroutine(StunDelay());
+    }
+
+    private IEnumerator StunDelay()
+    {
+        isStun = true;
+        InputHandler.DisablePlayerInput();
+
+        yield return new WaitForSeconds(1.5f);
+
+        InputHandler.EnablePlayerInput();
+        isStun = false;
     }
 }
