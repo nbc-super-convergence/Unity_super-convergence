@@ -9,6 +9,7 @@ public class MiniTokenInputHandler
     private MiniTokenData miniData;
 
     private List<InputActionMap> prevEnableMap = new List<InputActionMap>();
+    public bool isEnable = true;
 
     public MiniTokenInputHandler(MiniTokenData data)
     {
@@ -126,37 +127,49 @@ public class MiniTokenInputHandler
     #region SimpleInput   
     private void OnUp(InputAction.CallbackContext context)
     {
-        miniData.arrowInput = 0;
-        if (UIManager.IsOpened<UICourtshipDance>())
+        if (isEnable)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            miniData.arrowInput = 0;
+            if (UIManager.IsOpened<UICourtshipDance>())
+            {
+                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            }
+
+            Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
+            Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
         }
-        
-        Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
-        Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
     }
     private void OnLeft(InputAction.CallbackContext context)
     {
-        miniData.arrowInput = 90;
-        if (UIManager.IsOpened<UICourtshipDance>())
+        if (isEnable)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            miniData.arrowInput = 90;
+            if (UIManager.IsOpened<UICourtshipDance>())
+            {
+                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            }
         }
     }
     private void OnDown(InputAction.CallbackContext context)
     {
-        miniData.arrowInput = 180;
-        if (UIManager.IsOpened<UICourtshipDance>())
+        if (isEnable)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            miniData.arrowInput = 180;
+            if (UIManager.IsOpened<UICourtshipDance>())
+            {
+                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            }
         }
     }
     private void OnRight(InputAction.CallbackContext context)
     {
-        miniData.arrowInput = 270;
-        if (UIManager.IsOpened<UICourtshipDance>())
+        if (isEnable)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            miniData.arrowInput = 270;
+            if (UIManager.IsOpened<UICourtshipDance>())
+            {
+                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+            }
         }
     }
     #endregion
