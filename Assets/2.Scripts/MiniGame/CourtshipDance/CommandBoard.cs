@@ -266,9 +266,7 @@ public class CommandBoard : MonoBehaviour
         if(!correct)
         {
             tokenData.CurState = State.DanceFail;
-            SetAudioClip(State.DanceFail);
 
-            SoundManager.Instance.PlaySFX(audioClip, 0.3f);
             AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
         }
@@ -276,8 +274,6 @@ public class CommandBoard : MonoBehaviour
         {
             PopBubble();
             tokenData.CurState = state;
-            SetAudioClip(state);
-            SoundManager.Instance.PlaySFX(audioClip, 0.3f);
             AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
         }
     }
