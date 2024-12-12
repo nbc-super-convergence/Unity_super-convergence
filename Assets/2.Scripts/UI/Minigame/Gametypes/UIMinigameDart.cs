@@ -22,11 +22,11 @@ public class UIMinigameDart : UIBase
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
 
+    private string nickname = "";
+
     private void Start()
     {
         //forcePower 초기
-        //float min = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().minForce;
-        //float max = MinigameManager.Instance.GetMiniGame<GameSelectOrder>().maxForce;
         SetForceLimit(1.5f, 3f);
         
         for (int i = 0; i < stateTexts.Length; i++)
@@ -49,21 +49,25 @@ public class UIMinigameDart : UIBase
     }
 
     #region Result 메서드
-    private void SetReady(int idx)
+    public void SetNickname(string name)
+    {
+        nickname = name;
+    }
+    public void SetReady(int idx)
     {
         ApplyText(idx, "준비");
     }
-    private void SetMyTurn(int idx)
+    public void SetMyTurn(int idx)
     {
         stateTexts[idx].color = Color.white;
         resultImage[idx].color = playerColor[idx];
         ApplyText(idx, "내 차례");
     }
-    private void SetFinish(int idx)
+    public void SetFinish(int idx)
     {
         ApplyText(idx, "OK!");
     }
-    private void SetScore(int idx, float score)
+    public void SetScore(int idx, float score)
     {
         if (score >= 10f)
             ApplyText(idx, "Miss");
@@ -73,8 +77,6 @@ public class UIMinigameDart : UIBase
 
     private void ApplyText(int idx, string txt)
     {
-        //GameManager.Instance.myInfo.Nickname;
-        string nickname = "user"; //사용자 이름 (임시로)
         stateTexts[idx].text = $"{nickname} : {txt}";
     }
     #endregion
