@@ -699,7 +699,56 @@ syntax = "proto3";
             int32 rank = 2; 
         }
     }
+//ChamCham
+    // 미니게임 시작 노티 
+    message S2C_ChamMiniGameReadyNotification {
+        repeated startPlayers players = 1;
 
+        message startPlayers {
+            string sessionId = 1; 
+            Vector position = 2; 
+            float rotation = 3;
+        } 
+    }
+
+
+    // 미니게임 레디 판넬 - 준비 
+    message C2S_ChamGameReadyRequest {
+        string sessionId = 1;
+    }
+
+    message S2C_ChamGameReadyNotification {
+        string sessionId = 1;
+    }
+
+    // 미니게임 캐릭터 싱크 
+    message C2S_ChamPlayerSyncRequest {
+        string sessionId = 1;
+        Direction state = 2;    
+    }
+
+    message S2C_ChamPlayerSyncNotification {
+        string sessionId = 1;
+        Direction state = 2;
+    }
+
+
+    // 사망…?
+    message S2C_ChamPlayerDeathNotification {
+        string sessionId = 1;
+    }
+
+
+    // 미니게임 종료 
+    message S2C_ChamGameOverNotification {
+    repeated Rank ranks = 1;
+        int64 endTime = 2; 
+
+        message Rank {
+            string sessionId = 1;
+            int32 rank = 2; 
+        }
+    }
 //Dart
     // 미니게임 시작 노티 
     message S2C_DartMiniGameReadyNotification {
