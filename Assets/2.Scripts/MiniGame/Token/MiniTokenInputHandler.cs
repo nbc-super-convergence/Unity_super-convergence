@@ -19,6 +19,7 @@ public class MiniTokenInputHandler
     public void EnablePlayerInput()
     {
         playerInput.Enable();
+        playerInput.SimpleInput.Disable();
 
         playerInput.MiniPlayerToken.Move.performed += OnMove;
         playerInput.MiniPlayerToken.Move.canceled += OnMoveCanceled;

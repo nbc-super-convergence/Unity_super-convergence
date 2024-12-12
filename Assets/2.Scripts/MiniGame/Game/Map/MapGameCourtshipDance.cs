@@ -23,7 +23,7 @@ public class MapGameCourtshipDance : MapBase
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 0);
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);        
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceWait);
-        token.InputHandler.ChangeActionMap(eActionMap.SimpleInput.ToString());
+        //token.InputHandler.ChangeActionMap(eActionMap.SimpleInput.ToString());
     }
 
     public void TokenReset(MiniToken token)
@@ -36,6 +36,6 @@ public class MapGameCourtshipDance : MapBase
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 0);
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.Idle);
         token.InputHandler.DisableSimpleInput();
-        token.InputHandler.ChangeActionMap(eActionMap.MiniPlayerToken.ToString());
+        //token.InputHandler.ChangeActionMap(eActionMap.MiniPlayerToken.ToString());
     }
 }
