@@ -11,6 +11,8 @@ public class PoolManager : Singleton<PoolManager>
 
     public async void Init()
     {
+        if (isInit) return;
+
         foreach (var prefab in prefabList)
         {
             prefab.data.prefab = await ResourceManager.Instance.LoadAsset<ObjectPoolBase>(prefab.data.rCode, eAddressableType.Prefab);

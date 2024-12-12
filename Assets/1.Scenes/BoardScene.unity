@@ -9450,7 +9450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb45dd7ec4c944348a377f9cf5376d9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDontDestroyOnLoad: 1
+  isDontDestroyOnLoad: 0
   startNode: {fileID: 930751182}
   TestPlayerPrefab: {fileID: 6072940022074981736, guid: 36e8e3e4884437943a14696ae672fc3e,
     type: 3}

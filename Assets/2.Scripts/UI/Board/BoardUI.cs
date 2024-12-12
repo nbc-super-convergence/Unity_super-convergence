@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BoardUI : UIBase
 {
@@ -40,14 +41,17 @@ public class BoardUI : UIBase
 
     private void ExitPlayer()
     {
-        var list = BoardManager.Instance.playerTokenHandlers;
-
-        for (int i = 0; i < list.Count; i++)
+        if(SceneManager.GetActiveScene().buildIndex == 2)
         {
-            if (list[i].data.userInfo.Order == -1)
+            var list = BoardManager.Instance.playerTokenHandlers;
+
+            for (int i = 0; i < list.Count; i++)
             {
-                tokens[i].SetActive(false);
-                tokens[i].ExitPlayer();
+                if (list[i].data.userInfo.Order == -1)
+                {
+                    tokens[i].SetActive(false);
+                    tokens[i].ExitPlayer();
+                }
             }
         }
     }

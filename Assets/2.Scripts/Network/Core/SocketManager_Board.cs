@@ -1,6 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Collections;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -227,14 +228,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         BoardManager.Instance.GameOver();
     }
 
-    public async void BackToTheRoomResponse(GamePacket packet)
+    public void BackToTheRoomResponse(GamePacket packet)
     {
         var response = packet.BackToTheRoomResponse;
 
         if (response.Success)
         {
-            SceneManager.LoadScene(0);
-            await UIManager.Show<UIRoom>(response.Room);
+            StartCoroutine(ReturnStartScene(response));
         }
         else
         {
@@ -247,5 +247,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.BackToTheRoomNotification;
     }
 
+    private IEnumerator ReturnStartScene(S2C_BackToTheRoomResponse response)
+    {
+        SceneManager.LoadScene(0);
+
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0 && StartCanvas.isSet);
+
+        yield return UIManager.Show<UIRoom>(response.Room);
+    }
+
     #endregion
+
 }
