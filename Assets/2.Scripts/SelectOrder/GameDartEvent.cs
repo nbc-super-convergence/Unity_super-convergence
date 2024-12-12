@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SelectOrderEvent : MonoBehaviour
+public class GameDartEvent : MonoBehaviour
 {
     public event Action<Vector2> OnAimEvent;
     public event Action<bool> OnShootEvent;

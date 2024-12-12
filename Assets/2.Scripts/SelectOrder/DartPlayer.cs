@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DartPlayer : MonoBehaviour
 {
-    private SelectOrderEvent orderEvent;
+    private GameDartEvent orderEvent;
     private Rigidbody rgdby;
 
     //서버 전송 데이터
@@ -79,7 +79,7 @@ public class DartPlayer : MonoBehaviour
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
-        orderEvent = GetComponent<SelectOrderEvent>();
+        orderEvent = GetComponent<GameDartEvent>();
 
         orderEvent.OnAimEvent += SetAim;
         orderEvent.OnShootEvent += PressKey;
