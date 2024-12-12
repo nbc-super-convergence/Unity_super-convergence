@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MapGameDart : MapBase
 {
-    [SerializeField] private SelectOrderPanel DartPanel;
+    [SerializeField] private GameDartPanel DartPanel;
 
     //다트그룹
     public List<DartPlayer> DartOrder;

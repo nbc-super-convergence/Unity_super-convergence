@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectOrderPanel : MonoBehaviour
+public class GameDartPanel : MonoBehaviour
 {
     private List<DiceGameData> sendServerData;  //서버에 전송할 데이터
 

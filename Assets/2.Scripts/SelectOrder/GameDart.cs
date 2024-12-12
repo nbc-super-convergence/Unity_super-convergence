@@ -6,7 +6,7 @@ public class GameDart : IGame
     private UIMinigameDart ingameUI;
 
     //다트판
-    public SelectOrderPanel DartPannel;
+    public GameDartPanel DartPannel;
 
     //다트그룹
     public List<DartPlayer> DartOrder;
@@ -26,6 +26,9 @@ public class GameDart : IGame
             return missRank--;
         }
     }   //빗나간 랭크
+
+    private int curRound = 0;   //현재 라운드
+    private int maxRound = 3;   //최대 라운드
 
     /// <summary>
     ///  기본 설정 세팅
@@ -47,7 +50,7 @@ public class GameDart : IGame
     /// </summary>
     public void HideDartUI()
     {
-        //dartPowerUI.HideDirect();
+
     }
 
     /// <summary>
@@ -59,10 +62,12 @@ public class GameDart : IGame
         nowPlayer++;
         if (nowPlayer < DartOrder.Count)    //최대 인원보다 초과되지 않게
         {
+            Debug.Log("다음 사람");
             DartOrder[nowPlayer].gameObject.SetActive(true);
         }
         else
         {
+            Debug.Log("결과");
             DartPannel.isMove = false;  //판은 멈춰라
             DistanceRank();
         }
@@ -118,12 +123,21 @@ public class GameDart : IGame
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDart>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMap<MapGameDart>();
         SettingData();
+
+        if(param.Length > 0 && param[0] is S2C_DiceGameNotification response)
+        {
+
+        }
     }
 
     public async void GameStart(params object[] param)
     {
         ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+    }
+    public void DisableUI()
+    {
+
     }
     #endregion
 }
