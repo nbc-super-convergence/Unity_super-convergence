@@ -20,7 +20,7 @@
                     "id": "37cad893-84fb-4fda-9834-c56014c3c519",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press",
+                    "interactions": "",
                     "initialStateCheck": true
                 }
             ],

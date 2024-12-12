@@ -729,6 +729,9 @@ syntax = "proto3";
         Vector location = 4;
         float power = 5;
     }
+    message S2C_DartMiniGameStartNotification {
+        int64 startTime = 1; 
+    }
 
     // 미니게임 - 던지기 알림 
     message S2C_DartGameThrowNotification {
@@ -875,8 +878,9 @@ syntax = "proto3";
             S2C_DartMiniGameReadyNotification dartMiniGameReadyNotification = 601;
             C2S_DartGameReadyRequest dartGameReadyRequest = 602;
             S2C_DartGameReadyNotification dartGameReadyNotification = 603;
-            C2S_DartGameThrowRequest dartGameThrowRequest = 604;
-            S2C_DartGameThrowNotification dartGameThrowNotification = 605;
-            S2C_DartGameOverNotification dartGameOverNotification = 606;
+            S2C_DartMiniGameStartNotification dartMiniGameStartNotification = 604;
+            C2S_DartGameThrowRequest dartGameThrowRequest = 605;
+            S2C_DartGameThrowNotification dartGameThrowNotification = 606;
+            S2C_DartGameOverNotification dartGameOverNotification = 607;
         }
     }

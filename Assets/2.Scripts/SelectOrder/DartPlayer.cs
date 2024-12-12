@@ -1,9 +1,8 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class SelectOrderDart : MonoBehaviour
+public class DartPlayer : MonoBehaviour
 {
-    private SelectOrderEvent orderEvent;
+    private GameDartEvent orderEvent;
     private Rigidbody rgdby;
 
     //서버 전송 데이터
@@ -80,18 +79,29 @@ public class SelectOrderDart : MonoBehaviour
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
-        orderEvent = GetComponent<SelectOrderEvent>();
-    }
+        orderEvent = GetComponent<GameDartEvent>();
 
-    private void Start()
-    {
         orderEvent.OnAimEvent += SetAim;
         orderEvent.OnShootEvent += PressKey;
 
-        minAim = SelectOrderManager.Instance.minAim;
-        maxAim = SelectOrderManager.Instance.maxAim;
-        minForce = SelectOrderManager.Instance.minForce;
-        maxForce = SelectOrderManager.Instance.maxForce;
+        //이걸 Data클래스에서 받지 말고 그냥 여기서 설정하도록 할까?
+        //UI만 보내는거 말고 없는것 같다......
+        SetAimRange(-20f, 20f);
+        SetForceRange(1.5f, 3f);
+    }
+
+    /// <summary>
+    /// 각 속성의 최소 최대 결정
+    /// </summary>
+    public void SetAimRange(float min, float max)
+    {
+        minAim = min;
+        maxAim = max;
+    }
+    public void SetForceRange(float min, float max)
+    {
+        minForce = min;
+        maxForce = max;
     }
 
     private void FixedUpdate()
@@ -103,11 +113,11 @@ public class SelectOrderDart : MonoBehaviour
         }
 
         //각도를 조절
-        if(GetAim != Vector2.zero)
+        if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
         }
-           
+
         transform.rotation = Quaternion.Euler(CurAim);
 
         Debug.DrawRay(transform.position, -transform.forward * 2);
@@ -121,8 +131,12 @@ public class SelectOrderDart : MonoBehaviour
         //다트가 판을 따라가게
         transform.SetParent(collision.transform);
 
+        //collision.transform으로 불러오기
+        MyDistance = Vector3.Distance(collision.transform.position, transform.position);
+
         orderEvent.OnAimEvent -= SetAim;
         orderEvent.OnShootEvent -= PressKey;
+        ThrowToServer();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -130,7 +144,7 @@ public class SelectOrderDart : MonoBehaviour
         //무효처리
         MissDart();
 
-        SelectOrderManager.Instance.NextDart();
+        MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
     /// <summary>
@@ -149,6 +163,9 @@ public class SelectOrderDart : MonoBehaviour
         float speed = 1f;
         if (isIncrease) CurForce += Time.deltaTime * speed;
         else CurForce -= Time.deltaTime * speed;
+
+        //변경된 Force를 UI에 전달
+        UIManager.Get<UIMinigameDart>().ChangeForcePower(CurForce);
     }
 
     /// <summary>
@@ -175,10 +192,11 @@ public class SelectOrderDart : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
+        ThrowToServer();
     }
 
     /// <summary>
-    /// 다트 초기화
+    /// 다트 빗나감
     /// </summary>
     private void MissDart()
     {
@@ -192,25 +210,17 @@ public class SelectOrderDart : MonoBehaviour
 
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
-        MyRank = SelectOrderManager.Instance.MissRank;
-    }
+        MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
-    /// <summary>
-    /// 다트 표적 벡터
-    /// </summary>
-    /// <returns>WorldToScreenPoint</returns>
-    public Vector3 TargetPosition()
-    {
-        return Camera.main.WorldToScreenPoint(-transform.forward);
     }
 
     /// <summary>
     /// 해당 데이터를 서버에 전송
     /// </summary>
-    public void SendServer()
+    public void ThrowToServer()
     {
         GamePacket packet = new();
-        var data = packet.DiceGameRequest = new()
+        var data = packet.DartGameThrowRequest = new()
         {
             //SessionId = GameManager.Instance.myInfo.SessionId
             SessionId = gameObject.name,
