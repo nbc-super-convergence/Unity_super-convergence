@@ -12,7 +12,7 @@ public class CommandGenerator
 
     private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;
 
-    private Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new();
+    //private Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new();
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
 
     public CommandGenerator()
@@ -21,17 +21,17 @@ public class CommandGenerator
         gameData.Init();
     }
 
-    public void InitFFA(List<PlayerInfo> players)
-    {
-        var originPool = GenerateBoardInfoPool(gameData.individualBoardAmount);
+    //public void InitFFA(List<PlayerInfo> players)
+    //{
+    //    var originPool = GenerateBoardInfoPool(gameData.individualBoardAmount);
 
-        for (int i = 0; i < players.Count; i++)
-        {
-            Queue<Queue<BubbleInfo>> playerPool = DeepCopyPool(originPool);   // 깊은 복사
-            SetBoardPoolColor(playerPool, players[i]);
-            playerPoolDic.Add(players[i].SessionId, playerPool);
-        }
-    }
+    //    for (int i = 0; i < players.Count; i++)
+    //    {
+    //        Queue<Queue<BubbleInfo>> playerPool = DeepCopyPool(originPool);   // 깊은 복사
+    //        SetBoardPoolColor(playerPool, players[i]);
+    //        playerPoolDic.Add(players[i].SessionId, playerPool);
+    //    }
+    //}
 
     public void InitTeamGame(Dictionary<int, List<PlayerInfo>> teamDic)
     {
@@ -56,10 +56,10 @@ public class CommandGenerator
               );
     }
 
-    public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
-    {
-        return playerPoolDic;
-    }
+    //public Dictionary<string, Queue<Queue<BubbleInfo>>> GetPlayerPoolDic()
+    //{
+    //    return playerPoolDic;
+    //}
     public Dictionary<int, Queue<Queue<BubbleInfo>>> GetTeamPoolDic() 
     {
         return teamPoolDic;
@@ -151,40 +151,40 @@ public class CommandGenerator
     }
 
     #region Convert
-    public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
-    {
-        RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
+    //public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic)
+    //{
+    //    RepeatedField<DancePool> dancePools = new RepeatedField<DancePool>();
 
-        foreach (var pool in playerPoolDic)
-        {
-            DancePool obj = new()
-            {
-                SessionId = pool.Key,
-                DanceTables = { }
-            };
-            foreach (var queue in pool.Value)
-            {
-                DanceTable danceTable = new()
-                {
-                    Commands = { }
-                };
-                foreach (var bubbleInfo in queue)
-                {
-                    DanceCommand command = new DanceCommand
-                    {
-                        Direction = (Direction)bubbleInfo.Rotation,
-                        TargetSessionId = bubbleInfo.sessionId
-                    };
-                    danceTable.Commands.Add(command);
-                }
-                obj.DanceTables.Add(danceTable);
-            }
+    //    foreach (var pool in playerPoolDic)
+    //    {
+    //        DancePool obj = new()
+    //        {
+    //            SessionId = pool.Key,
+    //            DanceTables = { }
+    //        };
+    //        foreach (var queue in pool.Value)
+    //        {
+    //            DanceTable danceTable = new()
+    //            {
+    //                Commands = { }
+    //            };
+    //            foreach (var bubbleInfo in queue)
+    //            {
+    //                DanceCommand command = new DanceCommand
+    //                {
+    //                    Direction = (Direction)bubbleInfo.Rotation,
+    //                    TargetSessionId = bubbleInfo.sessionId
+    //                };
+    //                danceTable.Commands.Add(command);
+    //            }
+    //            obj.DanceTables.Add(danceTable);
+    //        }
 
-            dancePools.Add(obj);
-        }
+    //        dancePools.Add(obj);
+    //    }
 
-        return dancePools;
-    }
+    //    return dancePools;
+    //}
 
     public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic, Dictionary<int, List<PlayerInfo>> teamDic)
     {
@@ -194,8 +194,8 @@ public class CommandGenerator
         {
             DancePool obj = new()
             {
-                SessionId = teamDic[pool.Key][0].SessionId, // 팀 첫번째 플레이어의 세션ID
-                //TeamNumber = teamDic[1][0].TeamNumber,
+                //SessionId = teamDic[pool.Key][0].SessionId, // 팀 첫번째 플레이어의 세션ID
+                TeamNumber = pool.Key,
                 DanceTables = { }
             };
             foreach (var queue in pool.Value)
@@ -221,9 +221,39 @@ public class CommandGenerator
         return dancePools;
     }
 
-    public static Dictionary<string, Queue<Queue<BubbleInfo>>> ConvertToPlayerPoolDic(RepeatedField<DancePool> dancePools)
+    //public static Dictionary<string, Queue<Queue<BubbleInfo>>> ConvertToPlayerPoolDic(RepeatedField<DancePool> dancePools)
+    //{
+    //    Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new Dictionary<string, Queue<Queue<BubbleInfo>>>();
+
+    //    foreach (var dancePool in dancePools)
+    //    {
+    //        Queue<Queue<BubbleInfo>> playerQueue = new Queue<Queue<BubbleInfo>>();
+
+    //        foreach (var danceTable in dancePool.DanceTables)
+    //        {
+    //            Queue<BubbleInfo> bubbleQueue = new Queue<BubbleInfo>();
+
+    //            foreach (var command in danceTable.Commands)
+    //            {
+    //                BubbleInfo bubbleInfo = new BubbleInfo();
+    //                bubbleInfo.SetSessionId(command.TargetSessionId);
+    //                bubbleInfo.SetRotation((float)command.Direction);
+    //                bubbleInfo.SetColor(command.TargetSessionId);
+
+    //                bubbleQueue.Enqueue(bubbleInfo);
+    //            }
+
+    //            playerQueue.Enqueue(bubbleQueue);
+    //        }
+
+    //        playerPoolDic[dancePool.SessionId] = playerQueue;
+    //    }
+
+    //    return playerPoolDic;
+    //}
+    public static Dictionary<int, Queue<Queue<BubbleInfo>>> ConvertToTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        Dictionary<string, Queue<Queue<BubbleInfo>>> playerPoolDic = new Dictionary<string, Queue<Queue<BubbleInfo>>>();
+        Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic = new();
 
         foreach (var dancePool in dancePools)
         {
@@ -246,10 +276,10 @@ public class CommandGenerator
                 playerQueue.Enqueue(bubbleQueue);
             }
 
-            playerPoolDic[dancePool.SessionId] = playerQueue;
+            teamPoolDic[dancePool.TeamNumber] = playerQueue;
         }
 
-        return playerPoolDic;
+        return teamPoolDic;
     }
     #endregion
 }

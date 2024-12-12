@@ -7,14 +7,16 @@ public class UICourtshipDance : UIBase
 {
     private CourtshipDanceData gameData;
     private GameCourtshipDance game;
-    private bool isTeamGame;
+    private bool isTeamGame;    
     
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] public AudioClip[] sfxClips;
 
     public List<Transform> spawnPosition;
-    public Dictionary<string, CommandBoard> boardDic = new();
+    public Dictionary<int, CommandBoard> boardDic = new();
+
+    public CommandBoard myBoard;
 
     public override void Opened(object[] param)
     {
@@ -23,45 +25,51 @@ public class UICourtshipDance : UIBase
         isTeamGame = game.isTeamGame;
     }
 
-    public async void MakeCommandBoard(List<PlayerInfo> players)
-    {
-        for (int i = 0; i < players.Count; ++i)
-        {
-            // 프리팹 생성.
-            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
-            board.transform.localPosition = Vector3.zero;
-            if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
-            {
-                board.SetSessionId(players[i].SessionId);
-                board.SetTeamId(players[i].TeamNumber);
-                board.SetPool(pool);
-                board.Init();
-            }
-            boardDic.Add(players[i].SessionId, board);
-        }
-    }
+    //public async void MakeCommandBoard(List<PlayerInfo> players)
+    //{
+    //    for (int i = 0; i < players.Count; ++i)
+    //    {
+    //        // 프리팹 생성.
+    //        var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
+    //        board.transform.localPosition = Vector3.zero;
+    //        if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
+    //        {
+    //            board.SetSessionId(players[i].SessionId);
+    //            board.SetTeamId(players[i].TeamNumber);
+    //            board.SetPool(pool);
+    //            board.Init();
+    //        }
+    //        boardDic.Add(players[i].SessionId, board);
+    //    }
+    //}
 
     public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
     {
-        for (int i = 0; i < teamDic.Count; ++i)
+        int num = 0;
+        foreach( var team in teamDic)
         {
-            int num = i + 1;
-            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
+            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[num++]);
             board.transform.localPosition = Vector3.zero;
-            if (teamPoolDic.TryGetValue(num, out Queue<Queue<BubbleInfo>> pool))
+            if (teamPoolDic.TryGetValue(team.Key, out Queue<Queue<BubbleInfo>> pool))
             {
-                board.SetSessionId(teamDic[num][0].SessionId);
-                board.SetTeamId(num);
-                board.SetPool(pool);
-                board.Init();
+                foreach (var id in team.Value)
+                {
+                    board.teamSessionIds.Add(id.SessionId);
+                }
+                board.Init(team.Key, pool);
             }
-            //boardDic.Add(players[i].SessionId, board);
+            boardDic.Add(team.Key, board);
+
+            if(game.GetMyTeam() == team.Key)
+            {
+                myBoard = board;
+            }
         }
     }
 
-    public void Next(string sessionId)
+    public void Next(int teamNumber)
     {
-        boardDic[sessionId].MakeNextBoard();
+        boardDic[teamNumber].MakeNextBoard();
     }
     
     public void ShowDanceBoard()

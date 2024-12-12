@@ -132,7 +132,7 @@ public class MiniTokenInputHandler
             miniData.arrowInput = 0;
             if (UIManager.IsOpened<UICourtshipDance>())
             {
-                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
             }
 
             Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
@@ -146,7 +146,7 @@ public class MiniTokenInputHandler
             miniData.arrowInput = 90;
             if (UIManager.IsOpened<UICourtshipDance>())
             {
-                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
             }
         }
     }
@@ -157,7 +157,7 @@ public class MiniTokenInputHandler
             miniData.arrowInput = 180;
             if (UIManager.IsOpened<UICourtshipDance>())
             {
-                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
             }
         }
     }
@@ -168,7 +168,7 @@ public class MiniTokenInputHandler
             miniData.arrowInput = 270;
             if (UIManager.IsOpened<UICourtshipDance>())
             {
-                UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].OnActionInput(miniData.arrowInput);
+                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
             }
         }
     }

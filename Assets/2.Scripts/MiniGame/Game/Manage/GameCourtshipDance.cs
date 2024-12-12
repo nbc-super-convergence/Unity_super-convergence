@@ -58,23 +58,14 @@ public class GameCourtshipDance : IGame
             teamDic[p.TeamNumber].Add(p);
         }
 
-
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
-            if (!isTeamGame)
-            {
-                commandGenerator.InitFFA(players);
-                commandPoolDic = commandGenerator.GetPlayerPoolDic();
-            }
-            else
-            {
-                commandGenerator.InitTeamGame(teamDic);
-                teamPoolDic = commandGenerator.GetTeamPoolDic();
-            }
+            commandGenerator.InitTeamGame(teamDic);
+            teamPoolDic = commandGenerator.GetTeamPoolDic();
         }
 
         // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
@@ -82,45 +73,46 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            if (!isTeamGame)
-            {
-                RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
+            //if (!isTeamGame)
+            //{
+            //    RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
 
-                GamePacket packet = new();
+            //    GamePacket packet = new();
 
-                packet.DanceTableCreateRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId,
-                };
-                packet.DanceTableCreateRequest.DancePools.Add(sp);
-                //sourceTcs = new();
-                SocketManager.Instance.OnSend(packet);
-            }
-            else
+            //    packet.DanceTableCreateRequest = new()
+            //    {
+            //        SessionId = GameManager.Instance.myInfo.SessionId,
+            //    };
+            //    packet.DanceTableCreateRequest.DancePools.Add(sp);
+            //    //sourceTcs = new();
+            //    SocketManager.Instance.OnSend(packet);
+            //}
+
+            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
+            GamePacket packet = new();
+            packet.DanceTableCreateRequest = new()
             {
-                RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic,teamDic);
-                GamePacket packet = new();
-                packet.DanceTableCreateRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId,
-                };
-                packet.DanceTableCreateRequest.DancePools.Add(sp);
-                SocketManager.Instance.OnSend(packet);
-            }
+                SessionId = GameManager.Instance.myInfo.SessionId,
+            };
+            packet.DanceTableCreateRequest.DancePools.Add(sp);
+            SocketManager.Instance.OnSend(packet);
         }
         else
         {
-            await sourceTcs.Task;
+            bool isSuccess = await sourceTcs.Task;
             // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
         }
 
-        uiCourtship.MakeCommandBoard(players);
-
+        uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
     }
 
-    public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
+    //public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
+    //{
+    //    commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
+    //}
+    public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
+        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
     }
 
     public void TrySetTask(bool isSuccess)
@@ -163,7 +155,6 @@ public class GameCourtshipDance : IGame
     }
 
     #region 초기화
-    // 팀 가르기
 
     /// <summary>
     /// 토큰의 위치 지정과 애니메이터 교체를 수행.
@@ -196,6 +187,17 @@ public class GameCourtshipDance : IGame
     #endregion
 
 
+    public int GetMyTeam()
+    {
+        foreach (var p in players)
+        {
+            if (p.SessionId == GameManager.Instance.myInfo.SessionId)
+            {
+                return p.TeamNumber;
+            }
+        }
+        return -1;
+    }
     public int GetPlayerTeam(string sessionId)
     {
         foreach (var p in players)
