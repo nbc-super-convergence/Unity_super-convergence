@@ -8,6 +8,9 @@ using UnityEngine.SceneManagement;
 public class InsuDebugger : Singleton<InsuDebugger>
 {
     public bool isSingle;
+    [SerializeField] private AudioClip sfxWatch;
+    [SerializeField] private AudioClip sfxWhistle;
+
 
     private void FixedUpdate()
     {
@@ -22,10 +25,13 @@ public class InsuDebugger : Singleton<InsuDebugger>
 
         if (Input.GetKeyDown(KeyCode.Alpha4) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
-            UIManager.Get<UICourtshipDance>().Next("Session1");
-            UIManager.Get<UICourtshipDance>().Next("Session2");
-            UIManager.Get<UICourtshipDance>().Next("Session3");
-            UIManager.Get<UICourtshipDance>().Next("Session4");
+            SoundManager.Instance.PlaySFX(sfxWhistle, 10f);
+            SoundManager.Instance.PlaySFX(sfxWatch);
+
+            //UIManager.Get<UICourtshipDance>().Next("Session1");
+            //UIManager.Get<UICourtshipDance>().Next("Session2");
+            //UIManager.Get<UICourtshipDance>().Next("Session3");
+            //UIManager.Get<UICourtshipDance>().Next("Session4");
         }
     }
 

@@ -1,12 +1,8 @@
 using DG.Tweening;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.Rendering;
 
-// SFX Á¤º¸¸¦ °ü¸®ÇÏ´Â ±¸Á¶Ã¼
+// SFX ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” êµ¬ì¡°ì²´
 
 
 public class SoundManager : Singleton<SoundManager>
@@ -16,9 +12,9 @@ public class SoundManager : Singleton<SoundManager>
     [SerializeField] AudioSource sfx;
     public AudioClip[] bgmClip;
 
-    private int activeChannel = 0; // ÇöÀç Àç»ı ÁßÀÎ Ã¤³Î
-    private Tween[] fadeInTweens = new Tween[2];  // °¢ Ã¤³ÎÀÇ ÆäÀÌµå ÀÎ Tween
-    private Tween[] fadeOutTweens = new Tween[2]; // °¢ Ã¤³ÎÀÇ ÆäÀÌµå ¾Æ¿ô Tween
+    private int activeChannel = 0; // í˜„ì¬ ì¬ìƒ ì¤‘ì¸ ì±„ë„
+    private Tween[] fadeInTweens = new Tween[2];  // ê° ì±„ë„ì˜ í˜ì´ë“œ ì¸ Tween
+    private Tween[] fadeOutTweens = new Tween[2]; // ê° ì±„ë„ì˜ í˜ì´ë“œ ì•„ì›ƒ Tween
     private int sfxCount = 0;
 
     protected override void Awake()
@@ -33,48 +29,51 @@ public class SoundManager : Singleton<SoundManager>
         PlayBGM(bgmClip[0]);
     }
 
-    #region ¸ŞÀÎ
+    #region ë©”ì¸
     public void PlayBGM(AudioClip clip)
     {
-        int nextChannel = 1 - activeChannel; // ´ÙÀ½ Ã¤³Î (0 -> 1, 1 -> 0)
+        int nextChannel = 1 - activeChannel; // ë‹¤ìŒ ì±„ë„ (0 -> 1, 1 -> 0)
 
-        // »õ Å¬¸³ ¼³Á¤
+        // ìƒˆ í´ë¦½ ì„¤ì •
         bgm[nextChannel].clip = clip;
 
-        // ÆäÀÌµå ÀÎ/¾Æ¿ô Tween ½ÇÇà
+        // í˜ì´ë“œ ì¸/ì•„ì›ƒ Tween ì‹¤í–‰
         fadeInTweens[nextChannel].Restart();
         fadeOutTweens[activeChannel].Restart();
 
-        // È°¼º Ã¤³Î °»½Å
+        // í™œì„± ì±„ë„ ê°±ì‹ 
         activeChannel = nextChannel;
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        //Ãß°¡ ¼³Á¤ÀÌ ÇÊ¿äÇÒ¼öµµ...?
+        //ì¶”ê°€ ì„¤ì •ì´ í•„ìš”í• ìˆ˜ë„...?
         if (sfxCount > 10) return;
 
         sfx.PlayOneShot(clip, volume);
         sfxCount++;
 
-        // DOTweenÀ¸·Î µô·¹ÀÌ ÈÄ Ä«¿îÆ® °¨¼Ò
+        // DOTweenìœ¼ë¡œ ë”œë ˆì´ í›„ ì¹´ìš´íŠ¸ ê°ì†Œ
         DOTween.To(() => 0f, x => { }, 0f, clip.length)
             .OnComplete(() => sfxCount--)
-            .SetAutoKill(true); // ÀÛ¾÷ ¿Ï·á ÈÄ ÀÚµ¿ Á¦°Å
+            .SetAutoKill(true); // ì‘ì—… ì™„ë£Œ í›„ ìë™ ì œê±°
     }
     #endregion
 
     private void InitTweens()
     {
+        // ëª°ë¼ì„œ ì¼ë‹¨ ì˜ˆì™¸ì²˜ë¦¬.
+        if (fadeInTweens[0] == null) return;
+
         for (int i = 0; i < 2; i++)
         {
-            // ÆäÀÌµå ÀÎ Tween
+            // í˜ì´ë“œ ì¸ Tween
             fadeInTweens[i] = bgm[i].DOFade(1f, 1f)
                 .SetAutoKill(false)
                 .Pause()
                 .OnPlay(() => bgm[i].Play());
 
-            // ÆäÀÌµå ¾Æ¿ô Tween
+            // í˜ì´ë“œ ì•„ì›ƒ Tween
             fadeOutTweens[i] = bgm[i].DOFade(0f, 1f)
                 .SetAutoKill(false)
                 .Pause()
@@ -82,7 +81,7 @@ public class SoundManager : Singleton<SoundManager>
         }
     }
 
-    #region ¿Àµğ¿À ¹Í¼­
+    #region ì˜¤ë””ì˜¤ ë¯¹ì„œ
     public void SetBGMAudioMixerValue(float value)
     {
         if (value == 0)

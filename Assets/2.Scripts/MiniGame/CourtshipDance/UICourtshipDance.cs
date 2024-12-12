@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class UICourtshipDance : UIBase
 {
+    private CourtshipDanceData gameData;
+    private GameCourtshipDance game;
+    
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] public AudioClip[] sfxClips;
 
     public List<Transform> spawnPosition;
     public Dictionary<string, CommandBoard> boardDic = new();
 
-    private CourtshipDanceData gameData;
-    GameCourtshipDance game;
-    
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
