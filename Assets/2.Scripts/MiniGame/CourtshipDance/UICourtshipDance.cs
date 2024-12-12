@@ -108,8 +108,7 @@ public class UICourtshipDance : UIBase
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
-        MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
-        UIManager.Hide<UICourtshipDance>();
+        game.GameEnd(rankings, endTime);
     }
     #endregion
 }

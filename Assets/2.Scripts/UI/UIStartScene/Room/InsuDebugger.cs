@@ -97,6 +97,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
             }
             yield return null;
         }
+                
 
         while(true)
         {
@@ -120,23 +121,23 @@ public class InsuDebugger : Singleton<InsuDebugger>
                             {
                                 SessionId = { "Session2" },
                                 Score = 15,
-                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 1000
                             },
                             new TeamResult
                             {
                                 SessionId = { "Session3" },
                                 Score = 10,
-                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 1200
                             },
                             new TeamResult
                             {
                                 SessionId = { "Session4" },
                                 Score = 5,
-                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()
+                                EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 1500
                             }
                         },
                         Reason = GameEndReason.TimeOver,
-                        EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                        EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 9000
                     }
                 };
                 SocketManager.Instance.DanceGameOverNotification(packet);
