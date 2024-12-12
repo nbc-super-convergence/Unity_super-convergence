@@ -7,9 +7,12 @@ public class BoardResultUI : UIBase
     //List<string> comment = new();
     [SerializeField] BoardResultRankUI prefab;
     [SerializeField] Transform layout;
+    [SerializeField] TMP_Text timeText;
 
+    private float timer;
     public override void Opened(object[] param)
     {
+        timer = 15f;
         //base.Opened(param);
         //result = (List<IGameResult>)param[0];
 
@@ -28,6 +31,14 @@ public class BoardResultUI : UIBase
             //g.trophy.text = list[i].data.trophyAmount.ToString();
             g.coin.text = list[i].data.keyAmount.ToString();
         }
+    }
+
+    private void Update()
+    {
+        timer -= Time.deltaTime;
+
+        timeText.text = timer.ToString("F0") + "초 후에 방으로 돌아갑니다.";
+        if(timer < 0.0f) OnClick();
     }
 
     //private IEnumerator Result()
