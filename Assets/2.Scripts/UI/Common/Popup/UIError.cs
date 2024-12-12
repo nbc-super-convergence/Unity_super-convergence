@@ -73,7 +73,7 @@ public class UIError : UIBase
 
     public void SetInfo(GlobalFailCode errorNum, string titleText = null)
     {
-        sbTitle.Clear().Append(titleText != null ? titleText : "");
+        sbTitle.Clear().Append(titleText ?? "Warning");
         titleTMP.text = sbTitle.ToString();
         sbInfo.Clear().AppendLine(GameManager.Instance.failCodeDic[(int)errorNum]);
         infoTMP.text = sbInfo.ToString();
@@ -81,7 +81,7 @@ public class UIError : UIBase
 
     public void SetInfo(string infoStr, string titleText = null)
     {
-        sbTitle.Clear().Append(titleText != null ? titleText : "");
+        sbTitle.Clear().Append(titleText ?? "Info");
         titleTMP.text = sbTitle.ToString();
         sbInfo.Clear().AppendLine(infoStr);
         infoTMP.text = sbInfo.ToString();
