@@ -41,8 +41,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         miniToken.MiniData.nextPos = ToVector3(response.Position);
         miniToken.MiniData.rotY = response.Rotation;
         miniToken.MiniData.CurState = response.State;
-
-        Debug.Log("BombPlayerSyncNotification");
     }
 
     public void BombPlayerDeathNotification(GamePacket packet)
@@ -51,7 +49,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         var game = MinigameManager.Instance.GetMiniGame<GameBombDelivery>();
         game.Explosion(response.SessionId);
-        game.SetTarget(response.BombSessionId);
+
+        if(!response.BombSessionId.Equals("NULL"))
+            game.SetTarget(response.BombSessionId);
     }
 
     public void BombMoveNotification(GamePacket packet)
