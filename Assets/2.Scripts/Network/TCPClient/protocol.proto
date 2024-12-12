@@ -601,7 +601,7 @@ syntax = "proto3";
     }
     
     message S2C_DanceKeyPressNotification {
-        string sessionId = 1;                 // 입력한 플레이어
+        int32 teamNumber = 1;                 // 입력한 플레이어팀
         bool correct = 2;                     // 올바른 입력이었는지
         State state = 3;                      // 애니메이션        
     }
@@ -619,7 +619,7 @@ syntax = "proto3";
     }
     
     message  C2S_DanceTableCompleteRequest{
-        string sessionId = 1;                 // 테이블을 완료한 유저의 세션 ID
+        string sessionId = 1;                 // 테이블을 완료한 유저의 팀 넘버
         int64 endTime = 2;                    // 테이블을 완료한 시간
     }
 
