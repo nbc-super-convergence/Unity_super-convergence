@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MapGameDart : MapBase
 {
-    [SerializeField] private SelectOrderPanel DartPannel;
+    [SerializeField] private SelectOrderPanel DartPanel;
 
     //다트그룹
     public List<DartPlayer> DartOrder;
@@ -29,5 +29,10 @@ public class MapGameDart : MapBase
     private void BeginSelectOrder()
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
+    }
+
+    public void StopPanel()
+    {
+        DartPanel.isMove = false;
     }
 }
