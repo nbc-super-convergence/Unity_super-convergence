@@ -118,6 +118,12 @@ public class UIMinigameReady : UIBase
                             SessionId = GameManager.Instance.myInfo.SessionId
                         };
                         break;
+                    case eGameType.GameDart:
+                        packet.DartGameReadyNotification = new()
+                        {
+                            SessionId = GameManager.Instance.myInfo.SessionId
+                        };
+                        break;
                 }
 
                 SocketManager.Instance.OnSend(packet);
