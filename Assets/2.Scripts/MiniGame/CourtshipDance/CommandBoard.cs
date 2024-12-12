@@ -21,6 +21,7 @@ public class CommandBoard : MonoBehaviour
     private bool isClient = false;
     private MiniToken token;
     private MiniTokenData tokenData;
+    private UICourtshipDance uiCourtshipDance;
     public string SessionId { get; private set; }
     public int TeamId { get; private set; }
     public int numOfbubbles = -1;
@@ -42,6 +43,7 @@ public class CommandBoard : MonoBehaviour
         }
         token = MinigameManager.Instance.GetMiniToken(SessionId);
         tokenData = token.MiniData;
+        uiCourtshipDance = UIManager.Get<UICourtshipDance>();
     }
     public void SetSessionId(string sessionId)
     { SessionId = sessionId; }
@@ -175,7 +177,7 @@ public class CommandBoard : MonoBehaviour
     }
 
     /* 409 */
-   
+    private AudioClip audioClip;
     private void CheckInput(float rot, string sessionId)
     {
         var target = curQueueInfo.Peek();
@@ -185,17 +187,23 @@ public class CommandBoard : MonoBehaviour
             // 애니메이션 재생
             //tokenData.CurState = State.DanceIdle;
             State newState = State.DanceWait;
+            
             switch (target.Rotation)
             {
                 case 0:
-                    newState = State.DanceUp; break;
+                    newState = State.DanceUp;
+                    break;
                 case 90:
-                    newState = State.DanceLeft; break;
+                    newState = State.DanceLeft;
+                    break;
                 case 180:
-                    newState = State.DanceDown; break;
+                    newState = State.DanceDown;
+                    break;
                 case 270:
-                    newState = State.DanceRight; break;
+                    newState = State.DanceRight;
+                    break;
             }
+            SetAudioClip(newState);
             if (tokenData.CurState == newState)
             {
                 //token.GetAnimator().Play(newState.GetHashCode(), 1);
@@ -208,11 +216,13 @@ public class CommandBoard : MonoBehaviour
 
             // 보드 상호작용
             PopBubble();
+            SoundManager.Instance.PlaySFX(audioClip);
         }
         else
         {
             // 실패
             tokenData.CurState = State.DanceFail;
+            SetAudioClip(State.DanceFail);
             AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
         }        
@@ -237,7 +247,7 @@ public class CommandBoard : MonoBehaviour
         isFail = true;
         failImage.gameObject.SetActive(true);
         token.InputHandler.isEnable = false;
-
+        SoundManager.Instance.PlaySFX(audioClip);
         yield return new WaitForSeconds(1.5f);
         token.InputHandler.isEnable = true;
         isFail = false;
@@ -256,6 +266,9 @@ public class CommandBoard : MonoBehaviour
         if(!correct)
         {
             tokenData.CurState = State.DanceFail;
+            SetAudioClip(State.DanceFail);
+
+            SoundManager.Instance.PlaySFX(audioClip, 0.3f);
             AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
         }
@@ -263,7 +276,31 @@ public class CommandBoard : MonoBehaviour
         {
             PopBubble();
             tokenData.CurState = state;
+            SetAudioClip(state);
+            SoundManager.Instance.PlaySFX(audioClip, 0.3f);
             AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
+        }
+    }
+
+    private void SetAudioClip(State state)
+    {
+        switch (state)
+        {
+            case State.DanceFail:
+                audioClip = uiCourtshipDance.sfxClips[4];
+                break;
+            case State.DanceUp:
+                audioClip = uiCourtshipDance.sfxClips[0];
+                break;
+            case State.DanceDown:
+                audioClip = uiCourtshipDance.sfxClips[1];
+                break;
+            case State.DanceLeft:
+                audioClip = uiCourtshipDance.sfxClips[2];
+                break;
+            case State.DanceRight:
+                audioClip = uiCourtshipDance.sfxClips[3];
+                break;
         }
     }
     #endregion
