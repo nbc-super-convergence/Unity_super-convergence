@@ -96,7 +96,7 @@ public class GameCourtshipDance : IGame
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);                
                 uiCourtship.StartTimer();
-                uiCourtship.PlayStart();
+                uiCourtship.ShowDanceBoard();
             };
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }

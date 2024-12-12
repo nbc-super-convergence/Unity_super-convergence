@@ -236,9 +236,10 @@ public class CommandBoard : MonoBehaviour
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        token.InputHandler.DisableSimpleInput();
+        token.InputHandler.isEnable = false;
+
         yield return new WaitForSeconds(1.5f);
-        token.InputHandler.EnableSimpleInput();
+        token.InputHandler.isEnable = true;
         isFail = false;
         failImage.gameObject.SetActive(false);
     }

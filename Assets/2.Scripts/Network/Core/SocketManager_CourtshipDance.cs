@@ -69,10 +69,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     /* 410 */
+    // 타이머가 다 끝나거나 모든 유저가 댄스풀을 다 마쳤을 때.
     public void DanceGameOverNotification(GamePacket packet)
     {
-        var response = packet.DanceGameOverNotification;      
+        var response = packet.DanceGameOverNotification;
 
+        MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
 

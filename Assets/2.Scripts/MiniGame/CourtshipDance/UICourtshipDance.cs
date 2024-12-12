@@ -38,13 +38,12 @@ public class UICourtshipDance : UIBase
         }
     }
 
-
     public void Next(string sessionId)
     {
         boardDic[sessionId].MakeNextBoard();
     }
     
-    public void PlayStart()
+    public void ShowDanceBoard()
     {
         foreach( var item in boardDic.Values)
         {
@@ -55,6 +54,7 @@ public class UICourtshipDance : UIBase
     // 카운트다운이 끝나면 실행하기
     public void StartTimer()
     {
+        timeText.gameObject.SetActive(true);
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
 
@@ -92,6 +92,7 @@ public class UICourtshipDance : UIBase
 
         StartCoroutine(GameOverText(teamResults, rankings, response.EndTime));
     }
+
     public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)
     {
         end.SetActive(true);
