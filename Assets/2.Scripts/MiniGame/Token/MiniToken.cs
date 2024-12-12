@@ -49,6 +49,9 @@ public class MiniToken : MonoBehaviour
                 case eGameType.GameDropper:
                     Controller.MoveToken(eMoveType.Dropper);
                     break;
+                case eGameType.GameDart:
+                    Controller.MoveToken(eMoveType.Server);
+                    break;
             }
         }
     }
@@ -69,6 +72,9 @@ public class MiniToken : MonoBehaviour
                         break;
                     case eGameType.GameDropper:
                         Controller.MoveToken(eMoveType.Dropper);
+                        break;
+                    case eGameType.GameDart:
+                        Controller.MoveToken(eMoveType.AddForce);
                         break;
                 }
             }

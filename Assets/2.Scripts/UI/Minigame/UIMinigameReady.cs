@@ -34,6 +34,7 @@ public class UIMinigameReady : UIBase
             eGameType.GameBombDelivery => "폭탄 배달왔어요",
             eGameType.GameCourtshipDance => "구애의 춤",
             eGameType.GameDropper => "지하에서 디스코파티",
+            eGameType.GameDart => "다트를 맞춰라",
             _ => "ERROR!!!",
         };
 
