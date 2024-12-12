@@ -80,7 +80,6 @@ public class AreaNode : BaseNode, IPurchase
         //if (owner.ToString() != "")
         //    saleAmount = (int)(saleAmount * 2f);
 
-        SetArea(id);
         Cancle();
     }
 
@@ -93,12 +92,13 @@ public class AreaNode : BaseNode, IPurchase
         BoardManager.Instance.TurnEnd();
     }
 
-    public void SetArea(string id)
+    public void SetArea(string id,int sale)
     {
         this.owner.Clear();
         this.owner.Append(id);
         int i = GameManager.Instance.SessionDic[id].Color;
-
         plane.material = BoardManager.Instance.materials[i];
+
+        this.saleAmount = sale;
     }
 }

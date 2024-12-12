@@ -32,7 +32,7 @@ public class Bomb : MonoBehaviour
         //else
         //{
 
-        if(targetIndex == GameManager.Instance.myInfo.Color)
+        if (!token.isStun && targetIndex == MinigameManager.Instance.GetMyToken().MyColor)
         {
             for (int i = 0; i < length; i++)
             {

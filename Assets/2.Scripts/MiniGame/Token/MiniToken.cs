@@ -18,7 +18,7 @@ public class MiniToken : MonoBehaviour
     /*Server*/
     public bool IsClient { get; private set; }
     private bool isEnabled = false;
-
+    public bool isStun { get; private set; }
     Coroutine PauseInput = null;
 
     #region Unity Messages
@@ -28,7 +28,7 @@ public class MiniToken : MonoBehaviour
         InputHandler = new(MiniData);
         Controller = new MiniTokenController(MiniData, transform, rb);
         IsClient = MiniData.tokenColor == GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color;
-        InputHandler.ChangeActionMap("MiniPlayerToken");
+        InputHandler.DisableSimpleInput();
     }
 
     private void Update()
@@ -133,7 +133,6 @@ public class MiniToken : MonoBehaviour
                                 Rotation = transform.eulerAngles.y,
                                 State = MiniData.CurState
                             };
-                            Debug.Log("GameBombDelivery");
                             break;
                     }
 
@@ -203,10 +202,12 @@ public class MiniToken : MonoBehaviour
 
     private IEnumerator StunDelay()
     {
+        isStun = true;
         InputHandler.DisablePlayerInput();
 
         yield return new WaitForSeconds(1.5f);
 
         InputHandler.EnablePlayerInput();
+        isStun = false;
     }
 }

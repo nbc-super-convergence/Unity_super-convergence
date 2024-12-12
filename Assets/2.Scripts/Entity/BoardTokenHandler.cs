@@ -38,6 +38,7 @@ public class BoardTokenHandler : MonoBehaviour
         node.TryGetComponent(out curNode);
 
         runhash = Animator.StringToHash("Run");
+        diceObject = BoardManager.Instance.dice;
     }
 
     public void Init(UserInfo userInfo)
@@ -103,9 +104,6 @@ public class BoardTokenHandler : MonoBehaviour
                     SessionId = GameManager.Instance.myInfo.SessionId
                 };
                 SocketManager.Instance.OnSend(packet);
-
-
-                diceObject.gameObject.SetActive(false);
             }
         }
 

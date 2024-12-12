@@ -18,6 +18,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
             //TODO : 주석해제 필수
             //player.GetDice(dice);
+            StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
+
             player.GetDice(1);
             Debug.Log("RollDiceResponse");
         }
@@ -34,6 +36,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var player = BoardManager.Instance.Curplayer;
         int dice = response.DiceResult;
 
+        StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
         Debug.Log("RollDiceNotification");
     }
 
@@ -85,7 +88,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             data.keyAmount = playerinfo.Gold;
             data.trophyAmount = playerinfo.Trophy;
 
-            BoardManager.Instance.areaNodes[i].SetArea(id);
+            BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
         }
         else
         {
@@ -102,7 +105,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         int i = response.Tile;
         var player = BoardManager.Instance.GetToken(id);
 
-        BoardManager.Instance.areaNodes[i].SetArea(id);
+        BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
         UIManager.Get<BoardUI>().Refresh();
     }
     #endregion
@@ -174,6 +177,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
                 data.keyAmount = playerinfos[i].Gold;
                 data.trophyAmount = playerinfos[i].Trophy;
             }
+            UIManager.Get<BoardUI>().Refresh();
         }
         else
         {
