@@ -48,8 +48,8 @@ public class UIMinigameResult : UIBase
                     //등수 + 닉네임 설정
                     RankTxts[rankNum - 1].text = $"{rankNum}등\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
 
-                    //보상 지급
-                    BoardManager.Instance.playerTokenHandlers[color].data.keyAmount += coinDics[rankNum];
+                    //보상 지급 - 서버에서 처리
+                    //BoardManager.Instance.playerTokenHandlers[color].data.keyAmount += coinDics[rankNum];
 
                     //미니게임 순서 재정의
                     GameManager.Instance.SessionDic[sessionid].SetOrder(rankNum - 1);

@@ -73,6 +73,7 @@ public class Bomb : MonoBehaviour
         packet.BombMoveRequest = new()
         {
             SessionId = id,
+            BombUserId = MinigameManager.Instance.mySessonId,
         };
 
         SocketManager.Instance.OnSend(packet);

@@ -5,15 +5,16 @@ using UnityEngine;
 
 public class UICourtshipDance : UIBase
 {
+    private CourtshipDanceData gameData;
+    private GameCourtshipDance game;
+    
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
+    [SerializeField] public AudioClip[] sfxClips;
 
     public List<Transform> spawnPosition;
     public Dictionary<string, CommandBoard> boardDic = new();
 
-    private CourtshipDanceData gameData;
-    GameCourtshipDance game;
-    
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
@@ -108,8 +109,7 @@ public class UICourtshipDance : UIBase
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
-        MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
-        UIManager.Hide<UICourtshipDance>();
+        game.GameEnd(rankings, endTime);
     }
     #endregion
 }
