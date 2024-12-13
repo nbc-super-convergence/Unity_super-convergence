@@ -9,6 +9,9 @@ public class StartCanvas : MonoBehaviour
 
     private IEnumerator Start()
     {
+        //set UIManager-Parents
+        UIManager.SetParents(parents);
+
         if (!GameManager.Instance.isInitialized)
         {
             //call Manager Scene
@@ -19,8 +22,7 @@ public class StartCanvas : MonoBehaviour
             yield return new WaitUntil(() => GameManager.Instance.isInitialized);
         }
 
-        //set UIManager-Parents
-        UIManager.SetParents(parents);
+        
 
         //wait until "Game Start" input
         yield return new WaitUntil(() => GameManager.isGameStart);

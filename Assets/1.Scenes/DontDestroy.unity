@@ -287,7 +287,13 @@ MonoBehaviour:
   audioMixer: {fileID: 24100000, guid: f5135635881f81f42801b89a1682ce2d, type: 2}
   bgmSource: {fileID: 1154719391}
   sfxSource: {fileID: 1154719390}
-  bgmClips: []
+  bgmClip:
+  - {fileID: 8300000, guid: 90fd43184704747459e6f377ad918ac9, type: 3}
+  - {fileID: 8300000, guid: 808b96574252dd64789aba3fed0a11d0, type: 3}
+  - {fileID: 8300000, guid: 90fa6b428894fe8469112ed2b9fb5edc, type: 3}
+  - {fileID: 8300000, guid: c2e76ffcd45d9c94c88fcc1238078e69, type: 3}
+  - {fileID: 8300000, guid: f491b11d72d74354abdf1779b1e131a2, type: 3}
+  - {fileID: 8300000, guid: e01d9af38815b7b4faf8d664a312455a, type: 3}
 --- !u!4 &1154719388
 Transform:
   m_ObjectHideFlags: 0

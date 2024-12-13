@@ -2,7 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public enum BGMType{
+public enum BGMType
+{
     StartScene,
     BoardScene,
     Ice,
@@ -15,74 +16,65 @@ public enum BGMType{
 public class SoundManager : Singleton<SoundManager>
 {
     [SerializeField] AudioMixer audioMixer;
-    [SerializeField] AudioSource[] bgm;
-    [SerializeField] AudioSource sfx;
+    [SerializeField] AudioSource bgmSource;
+    [SerializeField] AudioSource sfxSource;
     public AudioClip[] bgmClip;
 
-    private int activeChannel = 0; // 현재 재생 중인 채널
-    private Tween[] fadeInTweens = new Tween[2];  // 각 채널의 페이드 인 Tween
-    private Tween[] fadeOutTweens = new Tween[2]; // 각 채널의 페이드 아웃 Tween
+    private AudioClip currentBGM;
+    private Tween fadeTween;
     private int sfxCount = 0;
 
     protected override void Awake()
     {
         base.Awake();
-        InitTweens();
     }
 
     #region 메인
-    public void PlayBGM(BGMType type)
+    public void PlayBGM(BGMType type, float fadeDuration = 1f)
     {
         AudioClip clip = bgmClip[(int)type];
+        if (currentBGM == clip) return; // 이미 재생 중인 클립이면 무시
 
-        int nextChannel = 1 - activeChannel; // 다음 채널 (0 -> 1, 1 -> 0)
+        if (bgmSource.isPlaying)
+        {
+            // 페이드 아웃 처리
+            fadeTween?.Kill();
+            fadeTween = bgmSource.DOFade(0f, fadeDuration)
+                .OnComplete(() =>
+                {
+                    bgmSource.Stop();
+                    bgmSource.clip = clip;
+                    currentBGM = clip;
 
-        // 새 클립 설정
-        bgm[nextChannel].clip = clip;
-
-        // 페이드 인/아웃 Tween 실행
-        fadeInTweens[nextChannel].Restart();
-        fadeOutTweens[activeChannel].Restart();
-
-        // 활성 채널 갱신
-        activeChannel = nextChannel;
+                    // 새 클립 페이드 인 처리
+                    bgmSource.Play();
+                    fadeTween = bgmSource.DOFade(1f, fadeDuration);
+                });
+        }
+        else
+        {
+            // 바로 새 클립 재생
+            bgmSource.clip = clip;
+            currentBGM = clip;
+            bgmSource.volume = 0f;
+            bgmSource.Play();
+            fadeTween = bgmSource.DOFade(1f, fadeDuration);
+        }
     }
 
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
-        //추가 설정이 필요할수도...?
-        if (sfxCount > 10) return;
+        if (sfxCount >= 10) return; // SFX 재생 제한
 
-        sfx.PlayOneShot(clip, volume);
+        sfxSource.PlayOneShot(clip, volume);
         sfxCount++;
 
         // DOTween으로 딜레이 후 카운트 감소
         DOTween.To(() => 0f, x => { }, 0f, clip.length)
             .OnComplete(() => sfxCount--)
-            .SetAutoKill(true); // 작업 완료 후 자동 제거
+            .SetAutoKill(true);
     }
     #endregion
-
-    private void InitTweens()
-    {
-        // 몰라서 일단 예외처리.
-        if (fadeInTweens[0] == null) return;
-
-        for (int i = 0; i < 2; i++)
-        {
-            // 페이드 인 Tween
-            fadeInTweens[i] = bgm[i].DOFade(1f, 1f)
-                .SetAutoKill(false)
-                .Pause()
-                .OnPlay(() => bgm[i].Play());
-
-            // 페이드 아웃 Tween
-            fadeOutTweens[i] = bgm[i].DOFade(0f, 1f)
-                .SetAutoKill(false)
-                .Pause()
-                .OnComplete(() => bgm[i].Stop());
-        }
-    }
 
     #region 오디오 믹서
     public void SetBGMAudioMixerValue(float value)
