@@ -17,7 +17,7 @@ public class UIMakeRoom : UIBase
     {
         if (RoomNameInput.text.Length > 12 || RoomNameInput.text.Length < 2)
         {
-            await UIManager.Show<UIError>("방 이름의 길이를 2자 이상 12자 이하로 지어주세요.");
+            await UIManager.Show<UIError>("방 이름은 2자 이상 12자 이하이어야 합니다.");
             return;
         }
 
