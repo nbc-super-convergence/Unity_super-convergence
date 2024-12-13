@@ -19,7 +19,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
             //TODO : 주석해제 필수
             //player.GetDice(dice);
-            StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
+            StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
             player.GetDice(1);
             Debug.Log("RollDiceResponse");
@@ -37,7 +37,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var player = BoardManager.Instance.Curplayer;
         int dice = response.DiceResult;
 
-        StartCoroutine(BoardManager.Instance.dice.SetDice(dice));
+        StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
         Debug.Log("RollDiceNotification");
     }
 
@@ -252,7 +252,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         SceneManager.LoadScene(0);
 
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0 && StartCanvas.isSet);
+        yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0);
 
         yield return UIManager.Show<UIRoom>(response.Room);
     }
