@@ -73,6 +73,8 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
+    public int MyPlayerIndex { get; private set; }  //내 플레이어 인덱스
+
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
@@ -81,8 +83,11 @@ public class DartPlayer : MonoBehaviour
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<GameDartEvent>();
 
-        orderEvent.OnAimEvent += SetAim;
-        orderEvent.OnShootEvent += PressKey;
+        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
+        {
+            orderEvent.OnAimEvent += SetAim;
+            orderEvent.OnShootEvent += PressKey;
+        }
 
         //이걸 Data클래스에서 받지 말고 그냥 여기서 설정하도록 할까?
         //UI만 보내는거 말고 없는것 같다......
@@ -102,6 +107,11 @@ public class DartPlayer : MonoBehaviour
     {
         minForce = min;
         maxForce = max;
+    }
+
+    public void SetPlayerIndex(int idx)
+    {
+        MyPlayerIndex = idx;
     }
 
     private void FixedUpdate()
@@ -134,8 +144,11 @@ public class DartPlayer : MonoBehaviour
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
 
-        orderEvent.OnAimEvent -= SetAim;
-        orderEvent.OnShootEvent -= PressKey;
+        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
+        {
+            orderEvent.OnAimEvent -= SetAim;
+            orderEvent.OnShootEvent -= PressKey;
+        }
         ThrowToServer();
     }
 

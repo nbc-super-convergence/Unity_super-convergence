@@ -3,12 +3,21 @@ using UnityEngine;
 
 public class MapGameDart : MapBase
 {
-    [SerializeField] private GameDartPanel DartPanel;
+    public GameDartPanel DartPanel { get; private set; }
 
     //다트그룹
     public List<DartPlayer> DartOrder;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
+
+    private void Awake()
+    {
+        //각 플레이어의 인덱스 설정 (내가 몇P인지 위해)
+        for (int i = 0; i < DartOrder.Count; i++)
+        {
+            DartOrder[i].SetPlayerIndex(i + 1);
+        }
+    }
 
     private void Start()
     {
