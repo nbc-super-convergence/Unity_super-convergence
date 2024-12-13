@@ -323,7 +323,7 @@ public class UILobby : UIBase
                 userMap[name].SetName(name);
                 currentUserNames.Remove(name);
             }
-            else
+            else if (name != GameManager.Instance.myInfo.Nickname)
             {//새로운 유저 추가
                 AddUser(name);
             }
