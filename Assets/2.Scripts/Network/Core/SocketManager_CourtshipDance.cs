@@ -59,10 +59,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
 
     }
-
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
-    {
+    {        
         var response = packet.DanceKeyPressNotification;
         var ui = UIManager.Get<UICourtshipDance>();
         if (response.TeamNumber != ui.myBoard.TeamNumber)

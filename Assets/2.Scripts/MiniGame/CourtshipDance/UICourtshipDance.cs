@@ -19,6 +19,7 @@ public class UICourtshipDance : UIBase
 
     public CommandBoard myBoard;
 
+
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
@@ -116,7 +117,7 @@ public class UICourtshipDance : UIBase
         Dictionary<string, int> rankings = new();
         for (int i = 0; i < teamResults.Count; ++i)
         {
-            int rank = i + 1;
+            int rank = i + 1;            
             rankings.Add(teamResults[i].SessionId[0], rank);
         }
 

@@ -20,6 +20,8 @@ public class CommandBoard : MonoBehaviour
     private Queue<BubbleInfo> curQueueInfo;
 
     private bool isClient = false;
+    public bool isFirst = true;
+    public bool isFirstInput = false;
     private List<MiniToken> tokens = new();
     private MiniToken myToken;
     //private MiniTokenData tokenData;
@@ -71,7 +73,6 @@ public class CommandBoard : MonoBehaviour
 
     /* 412 */
     // 정보에 따라 방향방울 만들기
-    bool isFirst = true;
     private Queue<ArrowBubble> MakeCommandQueue()
     {
         if (curQueueInfo != null)
@@ -145,6 +146,10 @@ public class CommandBoard : MonoBehaviour
     // 본인 커맨드 보드에서만 호출됨.
     public async void OnActionInput(int dir)
     {
+        if (!isFirstInput)
+        {
+            isFirstInput = true;
+        }
         GamePacket packet = new();
         packet.DanceKeyPressRequest = new()
         {
@@ -162,6 +167,8 @@ public class CommandBoard : MonoBehaviour
         {
             //onInputDetected?.Invoke(dir, true);
         }
+
+        
     }
 
     /* 408 */
