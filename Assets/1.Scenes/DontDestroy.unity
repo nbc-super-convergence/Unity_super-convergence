@@ -567,7 +567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
-  ip: 54.180.144.68
+  ip: 3.38.170.128
   port: 7011
   isLobby: 0
 --- !u!1 &1917575823

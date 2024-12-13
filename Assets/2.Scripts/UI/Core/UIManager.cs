@@ -5,16 +5,16 @@ using UnityEngine.SceneManagement;
 
 public enum eUIPosition
 {
-    /// <summary> 0 : °¡Àå ¹Ø¿¡ ±ò¸®´Â ¹è°æÈ­¸é</summary>
+    /// <summary> 0 : ê°€ì¥ ë°‘ì— ê¹”ë¦¬ëŠ” ë°°ê²½í™”ë©´</summary>
     Background,
 
-    /// <summary> 1 : È­¸é »ó/ÇÏ´ÜÀÇ ¾È³» ¹Ù</summary>
+    /// <summary> 1 : í™”ë©´ ìƒ/í•˜ë‹¨ì˜ ì•ˆë‚´ ë°”</summary>
     Navigator,
 
-    /// <summary> 2 : ÆË¾÷Ã¢</summary>
+    /// <summary> 2 : íŒì—…ì°½</summary>
     Popup,
 
-    /// <summary> 3 : °¡Àå À§¿¡¼­ ¸ğµç°É °¡·ÁÁÖ´Â UI.</summary>
+    /// <summary> 3 : ê°€ì¥ ìœ„ì—ì„œ ëª¨ë“ ê±¸ ê°€ë ¤ì£¼ëŠ” UI.</summary>
     Overlap
 }
 
@@ -27,7 +27,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject prefabLoadingScreen;
     private GameObject loadingScreen;
 
-    //GameManagerÇØ¼­ È£ÃâÇÔÀ¸·Î½á Manager°£ ÃÊ±âÈ­ ¼­¼ø ÁöÅ°±â.
+    //GameManagerí•´ì„œ í˜¸ì¶œí•¨ìœ¼ë¡œì¨ Managerê°„ ì´ˆê¸°í™” ì„œìˆœ ì§€í‚¤ê¸°.
     public async void Init()
     {
         await Show<UILogin>();
@@ -39,9 +39,9 @@ public class UIManager : Singleton<UIManager>
         Instance.parents = parents;
     }
 
-    /// <typeparam name="T">UIBase¸¦ »ó¼Ó¹ŞÀº Å¬·¡½º ÀÌ¸§</typeparam>
-    /// <param name="param">¿øÇÏ´Â ¸ğµç ÇüÅÂÀÇ º¯¼ö Àü´Ş °¡´É</param>
-    /// <returns>T ¹İÈ¯</returns>
+    /// <typeparam name="T">UIBaseë¥¼ ìƒì†ë°›ì€ í´ë˜ìŠ¤ ì´ë¦„</typeparam>
+    /// <param name="param">ì›í•˜ëŠ” ëª¨ë“  í˜•íƒœì˜ ë³€ìˆ˜ ì „ë‹¬ ê°€ëŠ¥</param>
+    /// <returns>T ë°˜í™˜</returns>
     public async static Task<T> Show<T>(params object[] param) where T : UIBase
     {
         UIManager.Instance.uiList.RemoveAll(obj => obj == null);
@@ -76,10 +76,10 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// UIBaseÀÇ bool°ª¿¡ µû¶ó setactive false ¶Ç´Â ÆÄ±«
+    /// UIBaseì˜ boolê°’ì— ë”°ë¼ setactive false ë˜ëŠ” íŒŒê´´
     /// </summary>
-    /// <typeparam name="T">UIBase¸¦ »ó¼Ó¹ŞÀº Å¬·¡½º ÀÌ¸§</typeparam>
-    /// <param name="param">¿øÇÏ´Â ¸ğµç ÇüÅÂÀÇ º¯¼ö Àü´Ş °¡´É</param>
+    /// <typeparam name="T">UIBaseë¥¼ ìƒì†ë°›ì€ í´ë˜ìŠ¤ ì´ë¦„</typeparam>
+    /// <param name="param">ì›í•˜ëŠ” ëª¨ë“  í˜•íƒœì˜ ë³€ìˆ˜ ì „ë‹¬ ê°€ëŠ¥</param>
     public static void Hide<T>(params object[] param) where T : UIBase
     {
         var ui = Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
@@ -99,19 +99,19 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// µ¿Àû »ı¼ºÇÑ UI¸¦ °¡Á®¿À´Â ¸Ş¼­µå
+    /// ë™ì  ìƒì„±í•œ UIë¥¼ ê°€ì ¸ì˜¤ëŠ” ë©”ì„œë“œ
     /// </summary>
-    /// <typeparam name="T">UI ½ºÅ©¸³Æ® ÀÌ¸§</typeparam>
-    /// <returns>UI ½ºÅ©¸³Æ®</returns>
+    /// <typeparam name="T">UI ìŠ¤í¬ë¦½íŠ¸ ì´ë¦„</typeparam>
+    /// <returns>UI ìŠ¤í¬ë¦½íŠ¸</returns>
     public static T Get<T>() where T : UIBase
     {
         return (T)Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
     }
 
     /// <summary>
-    /// UI Á¸Àç ¿©ºÎ
+    /// UI ì¡´ì¬ ì—¬ë¶€
     /// </summary>
-    /// <typeparam name="T">UI ½ºÅ©¸³Æ® ÀÌ¸§</typeparam>
+    /// <typeparam name="T">UI ìŠ¤í¬ë¦½íŠ¸ ì´ë¦„</typeparam>
     /// <returns></returns>
     public static bool IsOpened<T>() where T : UIBase
     {

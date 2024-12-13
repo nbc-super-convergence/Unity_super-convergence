@@ -20,7 +20,7 @@ public class BoardTokenUI : UIBase
     public void Refresh()
     {
         //trophy.text = data.trophyAmount.ToString();
-        coin.text = data.keyAmount.ToString();
+        coin.text = data.coin.ToString();
     }
 
     public void ExitPlayer()

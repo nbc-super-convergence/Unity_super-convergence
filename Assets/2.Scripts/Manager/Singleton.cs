@@ -4,7 +4,7 @@ using UnityEngine;
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
-    [Tooltip("¾À ÀÌµ¿ ½Ã : true ºñÆÄ±«/ false ÆÄ±«")]
+    [Tooltip("ì”¬ ì´ë™ ì‹œ : true ë¹„íŒŒê´´/ false íŒŒê´´")]
     [SerializeField] protected bool isDontDestroyOnLoad = true;
     [NonSerialized] public bool isInitialized = false;
     protected static bool isUILoading = false;

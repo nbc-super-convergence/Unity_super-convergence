@@ -29,7 +29,7 @@ public class BoardResultUI : UIBase
             g.rank.text = (i + 1).ToString();
             g.id.text = list[i].data.userInfo.Nickname;
             //g.trophy.text = list[i].data.trophyAmount.ToString();
-            g.coin.text = list[i].data.keyAmount.ToString();
+            g.coin.text = list[i].data.coin.ToString();
         }
     }
 

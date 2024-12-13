@@ -55,7 +55,7 @@ syntax = "proto3";
     }
 
     message DancePool {
-        int32 teamNumber = 1;
+        string sessionId = 1;
         repeated DanceTable danceTables = 2;
     }
     
@@ -562,7 +562,7 @@ syntax = "proto3";
         int64 endTime = 2; 
     }
 
-// DANCE
+    // DANCE
     message S2C_DanceMiniGameReadyNotification {
         repeated PlayerInfo players = 1;
     }
