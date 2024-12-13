@@ -26,7 +26,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     public void DartMinigameStartNotification(GamePacket gamePacket)
     {
-
+        //ReadyUI 숨기기
+        UIManager.Hide<UIMinigameReady>();
+        //GameStart 함수 호출
+        MinigameManager.Instance.GetMiniGame<GameDart>().GameStart();
     }
 
     public void DartGameThrowNotification(GamePacket gamePacket)
