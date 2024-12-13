@@ -8,6 +8,8 @@ using System.Collections;
 public class UICountdown : UIBase
 {
     [SerializeField] private TMP_Text startCountdownTMP;
+    [SerializeField] private AudioClip sfxWatch;
+    [SerializeField] private AudioClip sfxWhistle;
 
     private int countTime;
     private long startTime;
@@ -68,8 +70,12 @@ public class UICountdown : UIBase
             }
             callback?.Invoke();
             startCountdownTMP.text = "시작!";
+            SoundManager.Instance.PlaySFX(sfxWhistle);
+            SoundManager.Instance.PlaySFX(sfxWatch);
             await Task.Delay(1000);
             // 준비땅 효과음
+            startCountdownTMP.gameObject.SetActive(false);
+
             UIManager.Hide<UICountdown>();
         }
         catch (OperationCanceledException)

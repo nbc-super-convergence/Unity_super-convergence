@@ -682,6 +682,7 @@ syntax = "proto3";
     //폭탄 건넴 
     message C2S_BombMoveRequest {
         string sessionId  = 1; // 폭탄 받는 유저 
+        string bombUserId = 2; // 폭탄 주는 유저
     }
 
     message S2C_BombMoveNotification {

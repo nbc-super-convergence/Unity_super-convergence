@@ -97,12 +97,13 @@ public class BoardManager : Singleton<BoardManager>
     protected override void Awake()
     {
         base.Awake();
+
         isDontDestroyOnLoad = false;
+        Init();
 
         //테스트용
         //StartCoroutine(Init());
 
-        Init();
 
         //트로피칸 설정
         //SetTrophyNode();
@@ -360,8 +361,10 @@ public class BoardManager : Singleton<BoardManager>
         //    foreach (int i in list)
         //        playerTokenHandlers[i].data.trophyAmount += 1;
         //}
-        
+
         //순위별로 인덱스 변경
+        UIManager.Hide<BoardUI>();
+
         playerTokenHandlers.Sort((a,b) => 
         {
             //if(a.data.trophyAmount == b.data.trophyAmount)
