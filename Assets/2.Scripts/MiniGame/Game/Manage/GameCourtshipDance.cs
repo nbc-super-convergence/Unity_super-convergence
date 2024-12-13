@@ -125,7 +125,7 @@ public class GameCourtshipDance : IGame
         }
     }
 
-    public async void GameEnd(Dictionary<string, int> ranks, long boardTime)
+    public async void GameEnd(List<(int Rank, string SessionId)> ranks, long boardTime)
     {
         foreach (var mini in MinigameManager.Instance.miniTokens)
         {

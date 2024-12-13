@@ -51,11 +51,12 @@ public class UICourtshipDance : UIBase
         }
     }
 
-    public void Next(int teamNumber)
-    {
-        boardDic[teamNumber].MakeNextBoard();
-    }
+    //public void Next(int teamNumber)
+    //{
+    //    boardDic[teamNumber].MakeNextBoard();
+    //}
     
+    // 처음 실행용.
     public void ShowDanceBoard()
     {
         foreach( var item in boardDic.Values)
@@ -95,18 +96,21 @@ public class UICourtshipDance : UIBase
                 return a.EndTime.CompareTo(b.EndTime);
         });
 
-        /*필요 데이터 파싱*/   // 세션Id, 등수
-        Dictionary<string, int> rankings = new();
-        for (int i = 0; i < teamResults.Count; ++i)
+        List<(int Rank, string SessionId)> rankings = new();
+        int rank = 1;
+        foreach (var teamResult in teamResults)
         {
-            int rank = i + 1;            
-            rankings.Add(teamResults[i].SessionId[0], rank);
+            for (int i = 0; i < teamResult.SessionId.Count; ++i)
+            {
+                rankings.Add((rank, teamResult.SessionId[i]));
+            }
+            rank++;
         }
 
         StartCoroutine(GameOverText(teamResults, rankings, response.EndTime + 7000));
     }
 
-    public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)
+    public IEnumerator GameOverText(List<TeamResult> teamResults, List<(int Rank, string SessionId)> rankings, long endTime)
     {
         end.SetActive(true);
         yield return new WaitForSeconds(2f);
