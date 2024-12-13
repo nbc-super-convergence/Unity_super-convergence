@@ -32,7 +32,6 @@ public class PurchaseNodeUI : UIBase
         //}
         //else Cancle();
         //Cancle();
-        UIManager.Get<BoardUI>().Refresh();
         Active(false);
         UIManager.Hide<PurchaseNodeUI>();
     }
