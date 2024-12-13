@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,26 +7,33 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class UILobby : UIBase
 {
     [Header("Name")]
     [SerializeField] private TextMeshProUGUI nameTxt;
+    [SerializeField] private ChatSizeFitter fitter;
 
     [Header("roomList")]
     [SerializeField] private Transform roomParent;
-    [SerializeField] private TMP_InputField searchField;
-
-    [Header("Prefabs")]
     [SerializeField] private GameObject roomObj;
-    [SerializeField] private GameObject myChatObj;
-    [SerializeField] private GameObject otherChatObj;
+    [SerializeField] private TMP_InputField searchField;
+    private Dictionary<string, RoomPrefab> roomMap;
+
+    [Header("UserList")]
+    [SerializeField] private Transform userParent;
+    [SerializeField] private GameObject userObj;
+    private Dictionary<string, UserPrefab> userMap;
 
     [Header("Button")]
     [SerializeField] private Button btnRefresh;
 
-    private Dictionary<string, RoomPrefab> roomMap = new();
-
-    private TaskCompletionSource<bool> sourceTcs;
+    private TaskCompletionSource<bool> lobbyTcs;
+    private TaskCompletionSource<bool> roomTcs;
+    private TaskCompletionSource<bool> userTcs;
+    private float elapseTime;
+    const int maxRetries = 5; // 최대 재시도 횟수
+    const float timeoutSeconds = 10f; // 타임아웃 (초 단위)
 
     public override void Opened(object[] param)
     {
@@ -37,37 +45,74 @@ public class UILobby : UIBase
         else
         {
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
-            OnBtnRefresh();
-        }        
-    }
-    private async void LobbyJoinRequest()
-    {
-        GamePacket packet = new();
-        packet.LobbyJoinRequest = new()
-        {
-            SessionId = GameManager.Instance.myInfo.SessionId
-        };
-        sourceTcs = new();
-        SocketManager.Instance.OnSend(packet);
+            fitter.UpdateSpeechBubbleSize();
 
-        bool isSuccess = await sourceTcs.Task;
-        if(isSuccess)
-        {
-            //닉네임 설정하기
-            nameTxt.text = GameManager.Instance.myInfo.Nickname;
         }
-        else
-        {
-            Debug.LogError($"UILobby sourceTcs : {isSuccess}");
-        }
-
+        roomMap = new();
+        userMap = new();
         OnBtnRefresh();
     }
 
-    public void TrySetTask(bool isSuccess)
+    private void Update()
     {
-        bool boolll = sourceTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "성공" : "실패");
+        elapseTime += Time.deltaTime;
+        if (elapseTime >= 30f)
+        {
+            OnBtnRefresh();
+            elapseTime = 0f;
+        }
+    }
+
+    private async void LobbyJoinRequest()
+    {
+        GamePacket packet = new()
+        {
+            LobbyJoinRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId
+            }
+        };
+
+        SocketManager.Instance.OnSend(packet);
+
+        bool isSuccess = await RetryWithTimeout(async () =>
+        {
+            lobbyTcs = new();
+            SocketManager.Instance.OnSend(packet);
+            return await lobbyTcs.Task;
+        }, maxRetries, timeoutSeconds);
+
+        if(!isSuccess)
+        {
+            Debug.LogError($"UILobby lobbyTcs : {isSuccess}");
+            OnBtnLogout();
+        }
+
+        nameTxt.text = GameManager.Instance.myInfo.Nickname;
+        fitter.UpdateSpeechBubbleSize();
+    }
+
+    public enum eTcs
+    {
+        Default,
+        Lobby,
+        Room,
+        User
+    };
+    public void TrySetTask(bool isSuccess, eTcs type)
+    {
+        switch (type)
+        {
+            case eTcs.Lobby:
+                lobbyTcs.TrySetResult(isSuccess);
+                break;
+            case eTcs.Room:
+                roomTcs.TrySetResult(isSuccess);
+                break;
+            case eTcs.User:
+                userTcs.TrySetResult(isSuccess);
+                break;
+        }
     }
 
     #region 버튼 이벤트
@@ -75,22 +120,24 @@ public class UILobby : UIBase
     public async void OnBtnMakeRoom()
     {
         //방 새로 만들기 팝업.
-        var result = await UIManager.Show<UIMakeRoom>();
+        await UIManager.Show<UIMakeRoom>();
     }
 
     //Inspector: 로그아웃 버튼
     public async void OnBtnLogout()
     {
         //Send: 로그아웃 신호.
-        GamePacket packet = new();
-        packet.LobbyLeaveRequest = new()
+        GamePacket packet = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId
+            LobbyLeaveRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId
+            }
         };
-        sourceTcs = new();
+        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await sourceTcs.Task;
+        bool isSuccess = await lobbyTcs.Task;
         if (isSuccess)
         {
             SocketManager.Instance.isLobby = false;
@@ -128,62 +175,105 @@ public class UILobby : UIBase
         }
     }
 
-    //Inspector: 방 새로고침
+    //todo : while문 무한반복 방지
+    //Inspector: 방 새로고침 
     public async void OnBtnRefresh()
     {
         btnRefresh.interactable = false;
 
-        GamePacket packet = new();
-        packet.RoomListRequest = new()
-        {
-            SessionId = GameManager.Instance.myInfo.SessionId
-        };
-        sourceTcs = new();
-        SocketManager.Instance.OnSend(packet);
+        
+        bool roomSuccess = false, userSuccess = false;
 
-        bool isSuccess = await sourceTcs.Task;
-        if (isSuccess)
+        roomSuccess = await RetryWithTimeout(async () =>
         {
+            GamePacket roomPacket = new()
+            {
+                RoomListRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                }
+            };
+            roomTcs = new();
+            SocketManager.Instance.OnSend(roomPacket);
+            return await roomTcs.Task;
+        }, maxRetries, timeoutSeconds);
+
+        if (!roomSuccess)
+        {
+            await UIManager.Show<UIError>("방 목록을 새로고침할 수 없습니다.");
         }
+
+        userSuccess = await RetryWithTimeout(async () =>
+        {
+            GamePacket userPacket = new()
+            {
+                LobbyUserListRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                }
+            };
+            userTcs = new();
+            SocketManager.Instance.OnSend(userPacket);
+            return await userTcs.Task;
+        }, maxRetries, timeoutSeconds);
+
+        if (!userSuccess)
+        {
+            await UIManager.Show<UIError>("사용자 목록을 새로고침할 수 없습니다.");
+        }
+
         btnRefresh.interactable = true;
+    }
+
+    private async Task<bool> RetryWithTimeout(Func<Task<bool>> action, int maxRetries, float timeoutSeconds)
+    {
+        for (int attempt = 1; attempt <= maxRetries; attempt++)
+        {
+            var timeoutTask = Task.Delay((int)(timeoutSeconds * 1000)); // 타임아웃
+            var actionTask = action(); // 요청 작업
+
+            var completedTask = await Task.WhenAny(actionTask, timeoutTask);
+
+            if (completedTask == actionTask && await actionTask)
+            {
+                return true;
+            }
+
+            Debug.LogWarning($"Attempt {attempt} failed. Retrying...");
+        }
+
+        return false;
     }
 
     // 방 참가
     public async void TryJoinRoom(RoomData roomData, Button participateBtn)
     {
         participateBtn.interactable = false;
-        GamePacket packet = new();
-        packet.JoinRoomRequest = new()
+        GamePacket packet = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId,
-            RoomId = roomData.RoomId
+            JoinRoomRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId,
+                RoomId = roomData.RoomId
+            }
         };
-        sourceTcs = new();
+        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await sourceTcs.Task;
+        bool isSuccess = await lobbyTcs.Task;
         if (isSuccess)
         {
         }
         participateBtn.interactable = true;
     }
 
-    //SetRoom 메서드에서 이벤트 등록.
-    private async void OnBtnParticipate()
-    {
-        //Send : 참여할 방.
-        await UIManager.Show<UIRoom>();
-        UIManager.Hide<UILobby>();
-    }
     #endregion
 
     #region Room 관리
-
-    // 새로고침
     // TODO:: RoomStateType state에 따라 참가불가능(클릭불가능)하게 만들기
     public void SetRoomList(RepeatedField<RoomData> roomList)
     {
-        HashSet<string> currentRoomNames = new HashSet<string>(roomMap.Keys);
+        HashSet<string> currentRoomNames = new(roomMap.Keys);
 
         foreach (RoomData info in roomList)
         {
@@ -200,24 +290,16 @@ public class UILobby : UIBase
 
         foreach (string roomName in currentRoomNames)
         {//사라진 방 제거
-            //roomMap[roomName].participateBtn.onClick.RemoveListener(OnBtnParticipate);
             Destroy(roomMap[roomName].gameObject);
             roomMap.Remove(roomName);
         }
     }
-    // 패킷페이로드에 ping이 없어서 임시코드.
-    private int GetRandomInt(int min, int max)
-    {
-        return UnityEngine.Random.Range(min, max);
-    }
-
-
+    
     private void AddRoom(string name, int participant, int ping, RoomData roomData)
     {
         RoomPrefab room = Instantiate(roomObj, roomParent.transform).GetComponent<RoomPrefab>();
         roomMap[name] = room;
         room.SetRoomInfo(name, participant, ping, roomData);
-        //room.participateBtn.onClick.AddListener(OnBtnParticipate);
     }
 
     private int SearchPriority(string roomName, string query)
@@ -229,8 +311,55 @@ public class UILobby : UIBase
     }
     #endregion
 
-    #region Chat
-    //채팅 (후순위)
-    //유저목록 (후순위)
+    #region User 관리
+    public void SetUserList(RepeatedField<string> userList)
+    {
+        HashSet<string> currentUserNames = new(userMap.Keys);
+
+        foreach (string name in userList)
+        {
+            if (userMap.ContainsKey(name))
+            {//이미 존재하는 정보 업데이트
+                userMap[name].SetName(name);
+                currentUserNames.Remove(name);
+            }
+            else if (name != GameManager.Instance.myInfo.Nickname)
+            {//새로운 유저 추가
+                AddUser(name);
+            }
+        }
+
+        foreach (string userName in currentUserNames)
+        {//사라진 유저 제거
+            if (userMap[userName] != null)
+            {
+                Destroy(userMap[userName].gameObject);
+            }
+            userMap.Remove(userName);
+        }
+    }
+
+    private void AddUser(string name)
+    {
+        GameObject userInstance = Instantiate(userObj, userParent);
+        if (userInstance != null)
+        {
+            if (userInstance.TryGetComponent(out UserPrefab user))
+            {
+                userMap[name] = user;
+                user.SetName(name);
+            }
+            else
+            {
+                Debug.LogError("User Prefab 없음");
+            }
+        }
+    }
     #endregion
+
+    // 패킷페이로드에 ping이 없어서 임시코드.
+    private int GetRandomInt(int min, int max)
+    {
+        return UnityEngine.Random.Range(min, max);
+    }
 }
