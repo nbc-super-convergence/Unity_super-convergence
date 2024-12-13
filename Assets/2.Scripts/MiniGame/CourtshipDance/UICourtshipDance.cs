@@ -120,7 +120,7 @@ public class UICourtshipDance : UIBase
             rankings.Add(teamResults[i].SessionId[0], rank);
         }
 
-        StartCoroutine(GameOverText(teamResults, rankings, response.EndTime));
+        StartCoroutine(GameOverText(teamResults, rankings, response.EndTime + 7000));
     }
 
     public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)

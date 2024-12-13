@@ -143,7 +143,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
                             }
                         },
                         Reason = GameEndReason.TimeOver,
-                        EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 9000
+                        EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()// + 9000
                     }
                 };
                 SocketManager.Instance.DanceGameOverNotification(packet);
