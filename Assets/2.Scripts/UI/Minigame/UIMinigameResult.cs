@@ -42,7 +42,7 @@ public class UIMinigameResult : UIBase
                     string sessionid = rank.Key; //id
                     int rankNum = rank.Value; //등수
                     int color = GameManager.Instance.SessionDic[sessionid].Color; //색깔
-                    colorIdxs.Add(color, rankNum); 
+                    colorIdxs.Add(color, rankNum);
 
                     RankPanels[i].gameObject.SetActive(true);
 
@@ -75,12 +75,17 @@ public class UIMinigameResult : UIBase
                 StartCoroutine(ReturnTxt());
                 StartCoroutine(ReturnBoard(returnTime));
             }
+            else
+            {
+                Debug.LogError("param parsing error : returnTime");
+            }
         }
         else
         {
             Debug.LogError("param 오류 : object[] length가 다름");
         }
 
+        titleSequence?.Kill();
         titleSequence = DOTween.Sequence();
         titleSequence.Append(titleText.transform.DOScale(1.5f, 0.5f).SetEase(Ease.OutBack));
         titleSequence.Append(titleText.transform.DOScale(1f, 0.3f).SetEase(Ease.InOutBounce));
@@ -118,8 +123,15 @@ public class UIMinigameResult : UIBase
 
     private void PlayerLeftEvent(int color)
     {
-        RankPanels[colorIdxs[color]].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
-        RankTxts[colorIdxs[color]].text = "오프라인";
-        RankTxts[colorIdxs[color]].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
+        if (colorIdxs.TryGetValue(color, out int rankIndex))
+        {
+            RankPanels[rankIndex].color = new Color(145 / 255f, 145 / 255f, 145 / 255f, 220 / 255f);
+            RankTxts[rankIndex].text = "오프라인";
+            RankTxts[rankIndex].color = new Color(150 / 255f, 150 / 255f, 150 / 255f);
+        }
+        else
+        {
+            Debug.LogWarning($"PlayerLeftEvent: Color {color} not found in colorIdxs.");
+        }
     }
 }
