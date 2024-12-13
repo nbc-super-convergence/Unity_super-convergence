@@ -94,20 +94,22 @@ public class BoardManager : Singleton<BoardManager>
         get { return playerIndex; }
     }
 
-    protected override void Awake()
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+
+    //    //테스트용
+    //    //StartCoroutine(Init());
+
+
+    //    //트로피칸 설정
+    //    //SetTrophyNode();
+    //    //SetBonus();
+    //}
+
+    private void Start()
     {
-        base.Awake();
-
-        isDontDestroyOnLoad = false;
         Init();
-
-        //테스트용
-        //StartCoroutine(Init());
-
-
-        //트로피칸 설정
-        //SetTrophyNode();
-        //SetBonus();
     }
 
     private async void Init()
@@ -154,6 +156,7 @@ public class BoardManager : Singleton<BoardManager>
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
         Curplayer.Ready();
+        GameOver();
     }
 
     //테스트용
@@ -372,7 +375,7 @@ public class BoardManager : Singleton<BoardManager>
 
             //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
-
+        Debug.Log("결과창 생성");
         await UIManager.Show<BoardResultUI>();
     }
 
