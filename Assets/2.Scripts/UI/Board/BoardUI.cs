@@ -18,13 +18,13 @@ public class BoardUI : UIBase
             tokens[i].SetPlayer(data);
             tokens[i].SetActive(true);
         }
+
+        Refresh();
     }
 
     public override void Opened(object[] param)
     {
         base.Opened(param);
-
-
         Refresh();
     }
 

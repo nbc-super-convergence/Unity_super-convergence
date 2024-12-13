@@ -61,6 +61,22 @@ public class UIMinigameResult : UIBase
                         _ => "0"
                     };
                     CoinTxts[i].text = coin;
+
+                    switch(rankNum)
+                    {
+                        case 1:
+                            BoardManager.Instance.GetToken(sessionId).data.coin += 20;
+                            break;
+                        case 2:
+                            BoardManager.Instance.GetToken(sessionId).data.coin += 10;
+                            break;
+                        case 3:
+                            BoardManager.Instance.GetToken(sessionId).data.coin += 5;
+                            break;
+                        case 4:
+                            BoardManager.Instance.GetToken(sessionId).data.coin += 1;
+                            break;
+                    }
                 }
             }
             else
