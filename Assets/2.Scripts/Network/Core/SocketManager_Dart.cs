@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SocketManager_Dart : TCPSocketManagerBase<SocketManager>
+public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     public void DartMiniGameReadyNotification(GamePacket gamePacket)
     {
@@ -30,6 +30,8 @@ public class SocketManager_Dart : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.DartMiniGameStartNotification;
         Debug.Log(response);
+
+
     }
 
     public void DartGameThrowNotification(GamePacket gamePacket)
