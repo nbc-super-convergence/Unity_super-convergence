@@ -5,7 +5,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DartMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartMiniGameReadyNotification;
-        Debug.Log(response);
+        //Debug.Log(response);
 
         UIManager.Hide<BoardUI>();
 #pragma warning disable CS4014 

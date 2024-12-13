@@ -62,12 +62,12 @@ public class GameDart : IGame
         nowPlayer++;
         if (nowPlayer < DartOrder.Count)    //최대 인원보다 초과되지 않게
         {
-            Debug.Log("다음 사람");
+            //Debug.Log("다음 사람");
             DartOrder[nowPlayer].gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("결과");
+            //Debug.Log("결과");
             DartPannel.isMove = false;  //판은 멈춰라
             DistanceRank();
         }
