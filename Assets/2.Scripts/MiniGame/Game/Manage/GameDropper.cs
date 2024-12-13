@@ -51,7 +51,7 @@ public class GameDropper : IGame
     #region 초기화
     private void SetBGM()
     {
-        SoundManager.Instance.PlayBGM(BGMType.Dropper);
+        //SoundManager.Instance.PlayBGM(BGMType.Dropper);
     }
 
     private void ResetPlayers(RepeatedField<S2C_DropMiniGameReadyNotification.Types.startPlayers> players)
