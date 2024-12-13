@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -47,6 +48,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DropPlayerSyncNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DropPlayerSyncNotification;
+        Debug.Log(GameManager.Instance.SessionDic[response.SessionId].Color);
+        Debug.Log(response.Slot);
 
         MinigameManager.Instance.GetMiniGame<GameDropper>()
             .ReceiveMove(response.SessionId, response.Slot, response.Rotation, response.State);
