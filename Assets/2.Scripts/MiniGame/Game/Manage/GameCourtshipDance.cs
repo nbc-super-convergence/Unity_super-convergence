@@ -151,7 +151,7 @@ public class GameCourtshipDance : IGame
             mini.gameObject.SetActive(false);
         }
         UIManager.Hide<UICourtshipDance>();
-        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 2500);
+        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
     }
 
     #region 초기화
