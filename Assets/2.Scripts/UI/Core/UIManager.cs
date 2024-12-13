@@ -142,7 +142,9 @@ public class UIManager : Singleton<UIManager>
         //}
         SceneManager.LoadScene(2);
 
-        if (SceneManager.GetSceneAt(2) != null)
+
+        if(SceneManager.sceneCount <= 2)
+        //if (SceneManager.GetSceneAt(2) != null)
         {
             UIManager.Instance.loadingScreen.SetActive(false);
         }

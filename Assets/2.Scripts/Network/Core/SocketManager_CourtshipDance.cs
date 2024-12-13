@@ -64,13 +64,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceKeyPressNotification(GamePacket packet)
     {
         var response = packet.DanceKeyPressNotification;
-        if(response.TeamNumber != UIManager.Get<UICourtshipDance>().myBoard.TeamNumber)
+        var ui = UIManager.Get<UICourtshipDance>();
+        if (response.TeamNumber != ui.myBoard.TeamNumber)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[response.TeamNumber].OtherBoardNoti(response.TeamNumber, response.Correct, response.State);
+            ui.boardDic[response.TeamNumber].OtherBoardNoti(response.TeamNumber, response.Correct, response.State);
         }
         else
         {
-            UIManager.Get<UICourtshipDance>().myBoard.MyTeamNotification(response.Correct, response.State);
+            ui.myBoard.MyTeamNotification(response.Correct, response.State);
         }
     }
 

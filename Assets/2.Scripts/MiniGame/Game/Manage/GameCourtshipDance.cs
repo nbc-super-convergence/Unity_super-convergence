@@ -151,7 +151,7 @@ public class GameCourtshipDance : IGame
             mini.gameObject.SetActive(false);
         }
         UIManager.Hide<UICourtshipDance>();
-        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 2500);
+        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
     }
 
     #region 초기화
@@ -165,15 +165,13 @@ public class GameCourtshipDance : IGame
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            if (true)
-                map.TokenInit(miniToken);
+            map.TokenInit(miniToken);
+            
             if (!isTeamGame)
             {
-                //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
                 //개인전 세팅. 
                 miniToken.transform.position = map.spawnPosition[num].position;
-                miniToken.transform.rotation = map.spawnPosition[num].rotation;
-                map.TokenInit(miniToken);
+                miniToken.transform.rotation = map.spawnPosition[num].rotation;                
                 miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
             }
             else
