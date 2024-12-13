@@ -10,10 +10,13 @@ public class Bomb : MonoBehaviour
     private Transform target;
     private MiniToken token;
     private List<int> colors = new();
+
+    private float coolTime;
+
     private void OnEnable()
     {
         colors.Clear();
-
+        coolTime = 0.0f;
         var list = BoardManager.Instance.playerTokenHandlers;
 
         for (int i = 0; i < list.Count; i++)
@@ -44,18 +47,29 @@ public class Bomb : MonoBehaviour
 
         if (!token.isStun && targetIndex == MinigameManager.Instance.GetMyToken().MyColor)
         {
-            for (int i = 0; i < colors.Count; i++)
+            coolTime += Time.deltaTime;
+
+            if(coolTime >= 0.1f)
             {
-                int c = colors[i];
+                coolTime = 0.0f;
 
-                if (i == targetIndex || !colors.Contains(c)) continue;
-                Debug.LogWarning(c);
+                for (int i = 0; i < colors.Count; i++)
+                {
+                    int c = colors[i];
 
-                Transform t = MinigameManager.Instance.miniTokens[c].transform;
+                    if (i == targetIndex || !colors.Contains(c))
+                    {
+                        Debug.Log(c);
+                        continue;
+                    }
+                    Debug.LogWarning(c);
 
-                float d = Vector3.Distance(target.position, t.position);
+                    Transform t = MinigameManager.Instance.miniTokens[c].transform;
 
-                if (1.5f > d) ChangeTarget(c);
+                    float d = Vector3.Distance(target.position, t.position);
+
+                    if (1.5f > d) ChangeTarget(c);
+                }
             }
         }
         //}
@@ -112,7 +126,8 @@ public class Bomb : MonoBehaviour
     public void Explosion(string id)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(id);
-        colors.Add(token.MyColor);
+        colors.Remove(token.MyColor);
+
         Debug.LogWarning(token.MyColor);
 
         if (MinigameManager.Instance.mySessonId == id)
