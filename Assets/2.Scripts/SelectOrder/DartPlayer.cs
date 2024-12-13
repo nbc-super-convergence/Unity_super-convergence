@@ -83,12 +83,6 @@ public class DartPlayer : MonoBehaviour
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<GameDartEvent>();
 
-        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
-        {
-            orderEvent.OnAimEvent += SetAim;
-            orderEvent.OnShootEvent += PressKey;
-        }
-
         //이걸 Data클래스에서 받지 말고 그냥 여기서 설정하도록 할까?
         //UI만 보내는거 말고 없는것 같다......
         SetAimRange(-20f, 20f);
@@ -97,7 +91,16 @@ public class DartPlayer : MonoBehaviour
 
     private void Start()
     {
-        UIManager.Get<UIMinigameDart>().ShowForcePower();
+        Debug.Log($"{GameManager.Instance.myInfo.Nickname}, " +
+            $"{GameManager.Instance.myInfo.Color}");
+
+        //이게 내 유저라면 이벤트 실행
+        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
+        {
+            UIManager.Get<UIMinigameDart>().ShowForcePower();
+            orderEvent.OnAimEvent += SetAim;
+            orderEvent.OnShootEvent += PressKey;
+        }
     }
 
     /// <summary>
@@ -136,8 +139,6 @@ public class DartPlayer : MonoBehaviour
         transform.rotation = Quaternion.Euler(CurAim);
 
         Debug.DrawRay(transform.position, -transform.forward * 2);
-
-        ThrowToServer();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -255,8 +256,7 @@ public class DartPlayer : MonoBehaviour
         GamePacket packet = new();
         var data = packet.DartGameThrowRequest = new()
         {
-            //SessionId = GameManager.Instance.myInfo.SessionId
-            SessionId = gameObject.name,
+            SessionId = GameManager.Instance.myInfo.SessionId,
             Distance = MyDistance,
             Angle = SocketManager.ToVector(CurAim),
             Location = SocketManager.ToVector(transform.localPosition),
