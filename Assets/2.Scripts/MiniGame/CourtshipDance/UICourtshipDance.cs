@@ -27,24 +27,6 @@ public class UICourtshipDance : UIBase
         isTeamGame = game.isTeamGame;
     }
 
-    //public async void MakeCommandBoard(List<PlayerInfo> players)
-    //{
-    //    for (int i = 0; i < players.Count; ++i)
-    //    {
-    //        // 프리팹 생성.
-    //        var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
-    //        board.transform.localPosition = Vector3.zero;
-    //        if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
-    //        {
-    //            board.SetSessionId(players[i].SessionId);
-    //            board.SetTeamId(players[i].TeamNumber);
-    //            board.SetPool(pool);
-    //            board.Init();
-    //        }
-    //        boardDic.Add(players[i].SessionId, board);
-    //    }
-    //}
-
     public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
     {
         int num = 0;
