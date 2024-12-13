@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using Unity.VisualScripting;
+using System.Collections;
 
 public class BoardTokenUI : UIBase
 {
@@ -9,6 +9,8 @@ public class BoardTokenUI : UIBase
     public TMP_Text coin;
 
     private BoardTokenData data;
+
+    public GameObject eventUI;
 
     public void SetPlayer(BoardTokenData data)
     {
@@ -20,7 +22,22 @@ public class BoardTokenUI : UIBase
     public void Refresh()
     {
         //trophy.text = data.trophyAmount.ToString();
-        coin.text = data.keyAmount.ToString();
+        coin.text = data.coin.ToString();
+    }
+
+    public void Event()
+    {
+        
+    }
+
+    public IEnumerator OnEvent(int coin)
+    {
+        eventUI.SetActive(true);
+
+        
+        yield return new WaitForSeconds(1.0f);
+
+        eventUI.SetActive(false);
     }
 
     public void ExitPlayer()

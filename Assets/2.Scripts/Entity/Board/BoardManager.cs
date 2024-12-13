@@ -94,20 +94,22 @@ public class BoardManager : Singleton<BoardManager>
         get { return playerIndex; }
     }
 
-    protected override void Awake()
+    //protected override void Awake()
+    //{
+    //    base.Awake();
+
+    //    //테스트용
+    //    //StartCoroutine(Init());
+
+
+    //    //트로피칸 설정
+    //    //SetTrophyNode();
+    //    //SetBonus();
+    //}
+
+    private void Start()
     {
-        base.Awake();
-
-        isDontDestroyOnLoad = false;
         Init();
-
-        //테스트용
-        //StartCoroutine(Init());
-
-
-        //트로피칸 설정
-        //SetTrophyNode();
-        //SetBonus();
     }
 
     private async void Init()
@@ -368,11 +370,11 @@ public class BoardManager : Singleton<BoardManager>
         playerTokenHandlers.Sort((a,b) => 
         {
             //if(a.data.trophyAmount == b.data.trophyAmount)
-            return b.data.keyAmount.CompareTo(a.data.keyAmount);
+            return b.data.coin.CompareTo(a.data.coin);
 
             //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
-
+        Debug.Log("결과창 생성");
         await UIManager.Show<BoardResultUI>();
     }
 

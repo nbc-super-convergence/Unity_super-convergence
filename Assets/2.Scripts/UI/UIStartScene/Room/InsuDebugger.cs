@@ -95,7 +95,7 @@ public class InsuDebugger : Singleton<InsuDebugger>
                 {
                     DanceStartNotification = new()
                     {
-                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 4000
+                        StartTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + 1000
                     }
                 };
                 SocketManager.Instance.DanceStartNotification(packet);

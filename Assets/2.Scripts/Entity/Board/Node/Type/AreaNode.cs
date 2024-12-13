@@ -10,7 +10,7 @@ public class AreaNode : BaseNode, IPurchase
 
     [SerializeField] MeshRenderer plane;
 
-    string IPurchase.message => $"{saleAmount}의 코인을 지불하여 해당 칸을 구매 할 수 있습니다.";
+    string IPurchase.message => GetMessage();
 
 
     public async override void Action()
@@ -43,7 +43,7 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            if (player.data.keyAmount >= saleAmount)
+            if (player.data.coin >= saleAmount)
                 await UIManager.Show<PurchaseNodeUI>(purchase);
             else
                 BoardManager.Instance.TurnEnd();
@@ -100,5 +100,13 @@ public class AreaNode : BaseNode, IPurchase
         plane.material = BoardManager.Instance.materials[i];
 
         this.saleAmount = sale;
+    }
+
+    private string GetMessage()
+    {
+        if(owner.Equals(""))
+            return $"{saleAmount}의 코인을 지불하여 해당 칸을 구매 할 수 있습니다.";
+        else
+            return $"{saleAmount}의 코인을 지불하여 해당 칸을 인수 할 수 있습니다.";
     }
 }

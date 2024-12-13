@@ -24,6 +24,7 @@ public class BoardUI : UIBase
     {
         base.Opened(param);
 
+
         Refresh();
     }
 

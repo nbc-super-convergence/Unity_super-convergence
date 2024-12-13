@@ -10,9 +10,13 @@ public class GameCourtshipDance : IGame
     public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
-    public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
+    //public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
+    private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
+
+    public bool isTeamGame;
+    public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
     {
@@ -34,10 +38,24 @@ public class GameCourtshipDance : IGame
         }
         else if (param[0] is RepeatedField<PlayerInfo> players)
         {
-            foreach ( var p in players)
+            foreach (var p in players)
             {
                 this.players.Add(p);
             }
+        }
+
+        if (players.Count == 4)
+        {
+            isTeamGame = true;
+        }
+        teamDic = new();
+        foreach (var p in players)
+        {
+            if (!teamDic.ContainsKey(p.TeamNumber))
+            {
+                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+            }
+            teamDic[p.TeamNumber].Add(p);
         }
 
         // 토큰 배치 및 세팅하기
@@ -46,8 +64,8 @@ public class GameCourtshipDance : IGame
         if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
         {
             commandGenerator = new CommandGenerator();
-            commandGenerator.InitFFA(players);
-            commandPoolDic = commandGenerator.GetPlayerPoolDic();
+            commandGenerator.InitTeamGame(teamDic);
+            teamPoolDic = commandGenerator.GetTeamPoolDic();
         }
 
         // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
@@ -55,38 +73,52 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
+            //if (!isTeamGame)
+            //{
+            //    RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
 
+            //    GamePacket packet = new();
+
+            //    packet.DanceTableCreateRequest = new()
+            //    {
+            //        SessionId = GameManager.Instance.myInfo.SessionId,
+            //    };
+            //    packet.DanceTableCreateRequest.DancePools.Add(sp);
+            //    //sourceTcs = new();
+            //    SocketManager.Instance.OnSend(packet);
+            //}
+
+            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
             GamePacket packet = new();
-
             packet.DanceTableCreateRequest = new()
             {
                 SessionId = GameManager.Instance.myInfo.SessionId,
             };
             packet.DanceTableCreateRequest.DancePools.Add(sp);
-            //sourceTcs = new();
             SocketManager.Instance.OnSend(packet);
         }
         else
         {
-            await sourceTcs.Task;
+            bool isSuccess = await sourceTcs.Task;
             // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
         }
 
-        uiCourtship.MakeCommandBoard(players);
-        
+        uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
     }
 
-    public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
+    //public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
+    //{
+    //    commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
+    //}
+    public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
+        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
     }
 
     public void TrySetTask(bool isSuccess)
     {
         bool b = sourceTcs.TrySetResult(isSuccess);
     }
-
 
     public async void GameStart(params object[] param)
     {
@@ -123,32 +155,34 @@ public class GameCourtshipDance : IGame
     }
 
     #region 초기화
-    // 팀 가르기
 
-    /// <summary>
-    /// 토큰의 위치 지정과 애니메이터 교체를 수행.
-    /// 입력 교체
-    /// </summary>
-    /// <param name="players"></param>
     private void ResetPlayers(List<PlayerInfo> players)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
+        int[] teamSpawnCount = new int[2] { 0, 0 };
         foreach (var p in players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
-            if (true)
+            map.TokenInit(miniToken);
+            
+            if (!isTeamGame)
             {
-                //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
+                //개인전 세팅. 
                 miniToken.transform.position = map.spawnPosition[num].position;
-                miniToken.transform.rotation = map.spawnPosition[num].rotation;
-                map.TokenInit(miniToken);
+                miniToken.transform.rotation = map.spawnPosition[num].rotation;                
+                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
             }
             else
             {
                 // 4명이면 2:2 팀전 세팅
+                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
+                int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
 
+                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
+                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
+                teamSpawnCount[teamIndex]++;
             }
             num++;
         }
@@ -156,6 +190,17 @@ public class GameCourtshipDance : IGame
     #endregion
 
 
+    public int GetMyTeam()
+    {
+        foreach (var p in players)
+        {
+            if (p.SessionId == GameManager.Instance.myInfo.SessionId)
+            {
+                return p.TeamNumber;
+            }
+        }
+        return -1;
+    }
     public int GetPlayerTeam(string sessionId)
     {
         foreach (var p in players)

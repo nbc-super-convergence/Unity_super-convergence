@@ -42,7 +42,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceTableNotification(GamePacket packet)
     {
         var response = packet.DanceTableNotification;
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetCommandPoolDic(response.DancePools);
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetTeamPoolDic(response.DancePools);
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(true);
     }
 
@@ -55,15 +55,23 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceKeyPressResponse;
         if(response.Success)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[GameManager.Instance.myInfo.SessionId].MyHandleInput(response.Correct);
+            UIManager.Get<UICourtshipDance>().myBoard.MyInputResponse(response.Correct, response.State);
         }
+
     }
 
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
     {
         var response = packet.DanceKeyPressNotification;
-        UIManager.Get<UICourtshipDance>().boardDic[response.SessionId].OtherBoardNoti(response.SessionId, response.Correct, response.State);
+        if(response.TeamNumber != UIManager.Get<UICourtshipDance>().myBoard.TeamNumber)
+        {
+            UIManager.Get<UICourtshipDance>().boardDic[response.TeamNumber].OtherBoardNoti(response.TeamNumber, response.Correct, response.State);
+        }
+        else
+        {
+            UIManager.Get<UICourtshipDance>().myBoard.MyTeamNotification(response.Correct, response.State);
+        }
     }
 
     /* 410 */
