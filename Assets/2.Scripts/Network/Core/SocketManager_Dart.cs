@@ -30,6 +30,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
         MinigameManager.Instance.GetMiniGame<GameDart>().GameStart();
+
+        Debug.Log(gamePacket.DartMiniGameStartNotification);
     }
 
     public void DartGameThrowNotification(GamePacket gamePacket)
@@ -37,7 +39,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DartGameThrowNotification;
         Debug.Log(response);
 
-
+        foreach(var dart in MinigameManager.Instance.GetMap<MapGameDart>().DartOrder)
+        {
+            Debug.Log(dart);
+        }
     }
 
     public void DartGameOverNotification(GamePacket gamePacket)
