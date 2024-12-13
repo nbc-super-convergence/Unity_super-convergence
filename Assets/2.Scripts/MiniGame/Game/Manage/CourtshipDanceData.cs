@@ -11,7 +11,7 @@ public class CourtshipDanceData : IGameData
     {
         totalTime = 120f;
 
-        boardAmount = 15;
+        boardAmount = 12;
         individualBoardAmount = 12;
         minBubbleCount = 3;
         maxBubbleCount = 13;
