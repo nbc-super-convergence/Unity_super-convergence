@@ -10,6 +10,11 @@ public class MapGameDart : MapBase
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
 
+    private void Awake()
+    {
+        
+    }
+
     private void Start()
     {
         BeginSelectOrder();
