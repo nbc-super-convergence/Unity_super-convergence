@@ -1,4 +1,6 @@
+using Sirenix.OdinInspector;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
@@ -6,15 +8,23 @@ public class Bomb : MonoBehaviour
     //public float coolTime;
     //private float curCoolTime;
     //private float timer;
-    int length, targetIndex;
+    int targetIndex;
     private Transform target;
     private MiniToken token;
-    private List<int> loser = new();
+    private List<int> colors = new();
     private void OnEnable()
     {
-        loser.Clear();
+        colors.Clear();
+
+        var list = BoardManager.Instance.playerTokenHandlers;
+
+        for (int i = 0; i < list.Count; i++)
+        {
+            var c = list[i].data.userInfo.Color;
+            colors.Add(c);
+        }
+
         //timer = Random.Range(10f, 15f);
-        length = MinigameManager.Instance.miniTokens.Length;
     }
 
     private void Update()
@@ -36,15 +46,18 @@ public class Bomb : MonoBehaviour
 
         if (!token.isStun && targetIndex == MinigameManager.Instance.GetMyToken().MyColor)
         {
-            for (int i = 0; i < length; i++)
+            for (int i = 0; i < colors.Count; i++)
             {
-                if (i == targetIndex || loser.Contains(i)) continue;
+                int c = colors[i];
 
-                Transform t = MinigameManager.Instance.miniTokens[i].transform;
+                if (i == targetIndex || !colors.Contains(c)) continue;
+                Debug.LogWarning(c);
+
+                Transform t = MinigameManager.Instance.miniTokens[c].transform;
 
                 float d = Vector3.Distance(target.position, t.position);
 
-                if (1.5f > d) ChangeTarget(i);
+                if (1.5f > d) ChangeTarget(c);
             }
         }
         //}
@@ -61,12 +74,12 @@ public class Bomb : MonoBehaviour
         //SocketManager.Instance.OnSend(packet);
     }
 
-    public void ChangeTarget(int i)
+    public void ChangeTarget(int c)
     {
         //var c = MinigameManager.Instance.miniTokens[i].MyColor;
 
         string id = BoardManager.Instance.playerTokenHandlers.
-            Find((p) => p.data.userInfo.Color == i).data.userInfo.SessionId;
+            Find((p) => p.data.userInfo.Color == c).data.userInfo.SessionId;
 
         GamePacket packet = new();
 
@@ -101,7 +114,8 @@ public class Bomb : MonoBehaviour
     public void Explosion(string id)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(id);
-        loser.Add(token.MyColor);
+        colors.Add(token.MyColor);
+        Debug.LogWarning(token.MyColor);
 
         if (MinigameManager.Instance.mySessonId == id)
         {
@@ -110,6 +124,6 @@ public class Bomb : MonoBehaviour
 
         token.DisableMiniToken();
         target = null;
-        token = null;
+        this.token = null;
     }
 }
