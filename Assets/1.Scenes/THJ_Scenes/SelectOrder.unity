@@ -275,6 +275,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIMinigameDart
       objectReference: {fileID: 0}
+    - target: {fileID: 3031803939100475446, guid: 7df8c8793bc98614b953b5a1c74ad6e7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3428249367803481000, guid: 7df8c8793bc98614b953b5a1c74ad6e7,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -438,6 +443,11 @@ PrefabInstance:
     - target: {fileID: 6698287203069021310, guid: 7df8c8793bc98614b953b5a1c74ad6e7,
         type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7986507759343826395, guid: 7df8c8793bc98614b953b5a1c74ad6e7,
+        type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

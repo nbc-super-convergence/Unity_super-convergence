@@ -37,6 +37,14 @@ public class GameDart : IGame
     {
     }
 
+    private void Update()
+    {
+        if (nowPlayer < DartOrder.Count)
+        {
+            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
+        }
+    }
+
     /// <summary>
     /// 던졌으면 UI 감추기
     /// </summary>

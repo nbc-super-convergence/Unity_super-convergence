@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class SocketManager : TCPSocketManagerBase<SocketManager>
+public class SocketManager_Dart : TCPSocketManagerBase<SocketManager>
 {
     public void DartMiniGameReadyNotification(GamePacket gamePacket)
     {
@@ -28,9 +28,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     public void DartMinigameStartNotification(GamePacket gamePacket)
     {
-        var response = gamePacket.DartMiniGameStartNotification;
-        Debug.Log(response);
-
 
     }
 
@@ -39,7 +36,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DartGameThrowNotification;
         Debug.Log(response);
 
-        //사용자가 아닌 상대라면 response의 데이터를 받아 던지기 신호
 
     }
 
