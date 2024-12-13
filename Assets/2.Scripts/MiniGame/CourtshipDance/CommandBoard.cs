@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public class CommandBoard : MonoBehaviour
@@ -19,14 +20,16 @@ public class CommandBoard : MonoBehaviour
     private Queue<BubbleInfo> curQueueInfo;
 
     private bool isClient = false;
-    private MiniToken token;
-    private MiniTokenData tokenData;
+    private List<MiniToken> tokens = new();
+    private MiniToken myToken;
+    //private MiniTokenData tokenData;
     private UICourtshipDance uiCourtshipDance;
-    public string SessionId { get; private set; }
-    public int TeamId { get; private set; }
+    //public string SessionId { get; private set; }
+    public List<string> teamSessionIds = new();
+    public int TeamNumber { get; private set; }
     public int numOfbubbles = -1;
     public int round = 0;
-
+    private AudioClip audioClip;
     private TaskCompletionSource<bool> sourceTcs;
 
     public void TrySetTask(bool isSuccess)
@@ -34,26 +37,22 @@ public class CommandBoard : MonoBehaviour
         bool b = sourceTcs.TrySetResult(isSuccess);
     }
 
-    public void Init()
+    public void Init(int teamNumber, Queue<Queue<BubbleInfo>> pool)
     {
-        //onInputDetected += MyHandleInput;
-        if(SessionId == GameManager.Instance.myInfo.SessionId)
+        TeamNumber = teamNumber;
+        queuePool = new(pool);
+        if (teamSessionIds.Contains(GameManager.Instance.myInfo.SessionId))
         {
             isClient = true;
         }
-        token = MinigameManager.Instance.GetMiniToken(SessionId);
-        tokenData = token.MiniData;
-        uiCourtshipDance = UIManager.Get<UICourtshipDance>();
-    }
-    public void SetSessionId(string sessionId)
-    { SessionId = sessionId; }
-    public void SetTeamId(int teamId)
-    {  TeamId = teamId; }
+        foreach(var item in teamSessionIds)
+        {
+            tokens.Add(MinigameManager.Instance.GetMiniToken(item));
+        }
+        myToken = MinigameManager.Instance.GetMyToken();
 
-    public void SetPool(Queue<Queue<BubbleInfo>> pool)
-    {
-        queuePool = new(pool);
-    }
+        uiCourtshipDance = UIManager.Get<UICourtshipDance>();
+    }    
 
     public void MakeNextBoard()
     {
@@ -75,7 +74,6 @@ public class CommandBoard : MonoBehaviour
     bool isFirst = true;
     private Queue<ArrowBubble> MakeCommandQueue()
     {
-
         if (curQueueInfo != null)
         {
             curQueueInfo.Clear();
@@ -90,12 +88,12 @@ public class CommandBoard : MonoBehaviour
         {
             curQueueInfo = queuePool.Dequeue();
 
-            if (!isFirst && isClient)
+            if (!isFirst && isClient && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
                 {
-                    SessionId = SessionId,
+                    SessionId = teamSessionIds[0],
                     EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()  // 테스트하면서 알아보기
                 };
                 SocketManager.Instance.OnSend(packet);
@@ -106,19 +104,18 @@ public class CommandBoard : MonoBehaviour
         {
             // 완료 로직
             // 완료 효과
-            if (isClient)
+            if (isClient && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
                 {
-                    SessionId = SessionId,
+                    SessionId = teamSessionIds[0],
                     EndTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds()   // 테스트하면서 알아보기
                 };
                 SocketManager.Instance.OnSend(packet);
             }
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
-            //token.InputHandler.DisablePlayerInput();
         }
 
         Queue<ArrowBubble> queue = new();
@@ -140,8 +137,6 @@ public class CommandBoard : MonoBehaviour
     #region 플레이
 
     public bool isFail = false;
-    //public event Action<float, bool> onInputDetected;
-
     private Queue<ArrowBubble> successQueue = new();
 
 
@@ -149,7 +144,6 @@ public class CommandBoard : MonoBehaviour
     // 본인 커맨드 보드에서만 호출됨.
     public async void OnActionInput(int dir)
     {
-        //token.InputHandler.DisablePlayerInput();
         GamePacket packet = new();
         packet.DanceKeyPressRequest = new()
         {
@@ -171,62 +165,91 @@ public class CommandBoard : MonoBehaviour
 
     /* 408 */
 
-    public void MyHandleInput(bool isFail)
+    public void MyInputResponse(bool isCorrect, State state)
     {
-        CheckInput(tokenData.arrowInput, GameManager.Instance.myInfo.SessionId);
-    }
-
-    /* 409 */
-    private AudioClip audioClip;
-    private void CheckInput(float rot, string sessionId)
-    {
-        var target = curQueueInfo.Peek();
-        if(target.sessionId == sessionId && target.Rotation == rot)
+        if (isCorrect)
         {
-            // 성공
-            // 애니메이션 재생
-            //tokenData.CurState = State.DanceIdle;
-            State newState = State.DanceWait;
-            
-            switch (target.Rotation)
-            {
-                case 0:
-                    newState = State.DanceUp;
-                    break;
-                case 90:
-                    newState = State.DanceLeft;
-                    break;
-                case 180:
-                    newState = State.DanceDown;
-                    break;
-                case 270:
-                    newState = State.DanceRight;
-                    break;
-            }
-            SetAudioClip(newState);
-            if (tokenData.CurState == newState)
-            {
-                //token.GetAnimator().Play(newState.GetHashCode(), 1);
-            }
-            else
-            {
-                tokenData.CurState = newState;
-            }
-            AnimState.TriggerDanceAnimation(token.GetAnimator(), newState);
-
-            // 보드 상호작용
+            SetAudioClip(state);
+            myToken.MiniData.CurState = state;
+            AnimState.TriggerDanceAnimation(myToken.GetAnimator(), state);
             PopBubble();
             SoundManager.Instance.PlaySFX(audioClip);
         }
         else
         {
-            // 실패
-            tokenData.CurState = State.DanceFail;
-            SetAudioClip(State.DanceFail);
-            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
             StartCoroutine(FailInput());
-        }        
+        }
     }
+
+    public void MyTeamNotification(bool isCorrect, State state)
+    {
+        if (isCorrect)
+        {
+            SetAudioClip(state);
+            foreach(var token in tokens)
+            {
+                if(token != myToken)
+                {
+                    token.MiniData.CurState = state;
+                    AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
+                }
+            }
+            PopBubble();
+            SoundManager.Instance.PlaySFX(audioClip);
+        }
+        else
+        {
+            StartCoroutine(FailInput());
+        }
+    }
+    /* 409 */
+    
+    //private void CheckInput(float rot, string sessionId)
+    //{
+    //    var target = curQueueInfo.Peek();
+    //    if(target.sessionId == sessionId && target.Rotation == rot)
+    //    {
+    //        State newState = State.DanceWait;
+            
+    //        switch (target.Rotation)
+    //        {
+    //            case 0:
+    //                newState = State.DanceUp;
+    //                break;
+    //            case 90:
+    //                newState = State.DanceLeft;
+    //                break;
+    //            case 180:
+    //                newState = State.DanceDown;
+    //                break;
+    //            case 270:
+    //                newState = State.DanceRight;
+    //                break;
+    //        }
+    //        SetAudioClip(newState);
+    //        if (tokenData.CurState == newState)
+    //        {
+    //            //token.GetAnimator().Play(newState.GetHashCode(), 1);
+    //        }
+    //        else
+    //        {
+    //            tokenData.CurState = newState;
+    //        }
+    //        AnimState.TriggerDanceAnimation(tokens.GetAnimator(), newState);
+
+    //        // 보드 상호작용
+    //        PopBubble();
+    //        SoundManager.Instance.PlaySFX(audioClip);
+    //    }
+    //    else
+    //    {
+    //        // 실패
+    //        tokenData.CurState = State.DanceFail;
+    //        SetAudioClip(State.DanceFail);
+    //        AnimState.TriggerDanceAnimation(tokens.GetAnimator(), State.DanceFail);
+    //        StartCoroutine(FailInput());
+    //    }        
+    //}
 
     public void PopBubble()
     {
@@ -242,22 +265,33 @@ public class CommandBoard : MonoBehaviour
     }
 
     public IEnumerator FailInput()
-    {        
+    {
         // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
-        token.InputHandler.isEnable = false;
+        SetAudioClip(State.DanceFail);
+        foreach (var token in tokens)
+        {
+            token.InputHandler.isEnable = false;
+            token.MiniData.CurState = State.DanceFail;
+            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
+        }
+
         SoundManager.Instance.PlaySFX(audioClip);
         yield return new WaitForSeconds(1.5f);
-        token.InputHandler.isEnable = true;
+
         isFail = false;
         failImage.gameObject.SetActive(false);
+        foreach (var token in tokens)
+        {
+            token.InputHandler.isEnable = true;            
+        }        
     }
 
     // 노티를 받으면 다른 유저의 보드에서 실행될 메서드
-    public void OtherBoardNoti(string sessionId, bool correct, State state)
+    public void OtherBoardNoti(int teamNumber, bool correct, State state)
     {
-        if(sessionId != this.SessionId)
+        if(teamNumber != TeamNumber)
         {
             Debug.Log("올바르지 않은 접근입니다.");
             return;
@@ -265,16 +299,21 @@ public class CommandBoard : MonoBehaviour
 
         if(!correct)
         {
-            tokenData.CurState = State.DanceFail;
-
-            AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
-            StartCoroutine(FailInput());
+            foreach( var token in tokens)
+            {
+                token.MiniData.CurState = State.DanceFail;
+                AnimState.TriggerDanceAnimation(token.GetAnimator(), State.DanceFail);
+                StartCoroutine(FailInput());
+            }
         }
         else
         {
             PopBubble();
-            tokenData.CurState = state;
-            AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
+            foreach(var token in tokens)
+            {
+                token.MiniData.CurState = state;
+                AnimState.TriggerDanceAnimation(token.GetAnimator(), state);
+            }
         }
     }
 
