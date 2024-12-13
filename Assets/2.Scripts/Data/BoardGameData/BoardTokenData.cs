@@ -16,16 +16,16 @@ public class BoardTokenData
     //public float rotY;
 
     //public string id;
-    public int keyAmount; //재화, 이름 언제든지 수정가능
-    public int trophyAmount;
+    public int coin; //재화
+    //public int trophyAmount;
 
     //public PlayerTokenState state;
 
     public BoardTokenData(UserInfo userInfo)
     {
         this.userInfo = userInfo;
-        keyAmount = 10;
-        trophyAmount = 0;
+        coin = 10;
+        //trophyAmount = 0;
         //gameData = new();
     }
 }

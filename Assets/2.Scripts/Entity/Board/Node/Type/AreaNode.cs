@@ -43,7 +43,7 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            if (player.data.keyAmount >= saleAmount)
+            if (player.data.coin >= saleAmount)
                 await UIManager.Show<PurchaseNodeUI>(purchase);
             else
                 BoardManager.Instance.TurnEnd();
