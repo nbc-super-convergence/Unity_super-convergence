@@ -21,7 +21,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             //player.GetDice(dice);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
-            player.GetDice(1);
+            player.GetDice(2);
             Debug.Log("RollDiceResponse");
         }
         else
