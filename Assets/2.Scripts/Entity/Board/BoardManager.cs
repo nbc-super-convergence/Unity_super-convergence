@@ -156,7 +156,6 @@ public class BoardManager : Singleton<BoardManager>
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
         Curplayer.Ready();
-        GameOver();
     }
 
     //테스트용
