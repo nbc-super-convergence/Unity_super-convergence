@@ -147,12 +147,12 @@ public class MiniToken : MonoBehaviour
     /// <summary>
     /// IcePlayerMoveNotification Receive받기.
     /// </summary>
-    public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
-    {
-        MiniData.nextPos = pos;
-        MiniData.rotY = rotY;
-        MiniData.CurState = state;
-    }
+    //public void ReceiveOtherMove(Vector3 pos, Vector3 force, float rotY, State state)
+    //{
+    //    MiniData.nextPos = pos;
+    //    MiniData.rotY = rotY;
+    //    MiniData.CurState = state;
+    //}
     #endregion
 
     #region CourtshipDance
