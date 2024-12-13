@@ -28,9 +28,9 @@ public class GameDartPanel : MonoBehaviour
         {
             //다트판 이동하기 (세로 한쪽만 던지면 시시하니까)
             //좌우로 왔다갔다 하게
-            if (transform.position.x < -xPositionLimit)
+            if (transform.localPosition.x < -xPositionLimit)
                 swapDirection = true;
-            else if (transform.position.x > xPositionLimit)
+            else if (transform.localPosition.x > xPositionLimit)
                 swapDirection = false;
 
             transform.Translate((swapDirection ? Vector3.right : Vector3.left) * (Time.deltaTime * pannelSpeed));
