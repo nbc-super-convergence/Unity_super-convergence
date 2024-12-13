@@ -17,12 +17,12 @@ public class UILobby : UIBase
     [SerializeField] private Transform roomParent;
     [SerializeField] private GameObject roomObj;
     [SerializeField] private TMP_InputField searchField;
-    private Dictionary<string, RoomPrefab> roomMap = new();
+    private Dictionary<string, RoomPrefab> roomMap;
 
     [Header("UserList")]
     [SerializeField] private Transform userParent;
     [SerializeField] private GameObject userObj;
-    private Dictionary<string, UserPrefab> userMap = new();
+    private Dictionary<string, UserPrefab> userMap;
 
     [Header("Button")]
     [SerializeField] private Button btnRefresh;
@@ -41,6 +41,9 @@ public class UILobby : UIBase
         {
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
         }
+
+        roomMap = new();
+        userMap = new();
 
         OnBtnRefresh();
     }
@@ -302,7 +305,10 @@ public class UILobby : UIBase
 
         foreach (string userName in currentUserNames)
         {//사라진 유저 제거
-            Destroy(userMap[userName].gameObject);
+            if (userMap[userName] != null)
+            {
+                Destroy(userMap[userName].gameObject);
+            }
             userMap.Remove(userName);
         }
 
@@ -314,9 +320,19 @@ public class UILobby : UIBase
 
     private void AddUser(string name)
     {
-        UserPrefab user = Instantiate(userObj, userParent).GetComponent<UserPrefab>();
-        userMap[name] = user;
-        user.SetName(name);
+        GameObject userInstance = Instantiate(userObj, userParent);
+        if (userInstance != null)
+        {
+            if (userInstance.TryGetComponent(out UserPrefab user))
+            {
+                userMap[name] = user;
+                user.SetName(name);
+            }
+            else
+            {
+                Debug.LogError("User Prefab 없음");
+            }
+        }
     }
     #endregion
 
