@@ -50,17 +50,18 @@ public class UIMinigameResult : UIBase
                     RankPanels[i].sprite = RankPanelsSprites[color];
 
                     //등수 + 닉네임 설정
-                    RankTxts[rankNum - 1].text = $"{rankNum}등\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
+                    RankTxts[i].text = $"{rankNum}등\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
 
                     //받을 금액 설정
                     string coin = rankNum switch
                     {
-                        1 => "+20",
-                        2 => "+10",
-                        3 => "+5",
-                        4 => "+1",
+                        1 => "+ 20",
+                        2 => "+ 10",
+                        3 => "+ 5",
+                        4 => "+ 1",
                         _ => "0"
                     };
+                    CoinTxts[i].text = coin;
 
                     i++;
                 }
