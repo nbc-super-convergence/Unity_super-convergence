@@ -368,7 +368,7 @@ public class BoardManager : Singleton<BoardManager>
         playerTokenHandlers.Sort((a,b) => 
         {
             //if(a.data.trophyAmount == b.data.trophyAmount)
-            return b.data.keyAmount.CompareTo(a.data.keyAmount);
+            return b.data.coin.CompareTo(a.data.coin);
 
             //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
