@@ -124,29 +124,29 @@ public class UIMinigameDropper : UIBase
         //방향버튼 유효성 검사
         switch(direction)
         {
-            case 0:
+            case 0: //up
                 if (curSlot - 3 >= 0)
                 {
                     nextSlot = curSlot - 3;
                     rotation = 180;
                 }
                 break;
-            case 1:
+            case 1: //down
                 if (curSlot + 3 <= 8)
                 {
                     nextSlot = curSlot + 3;
                     rotation = 0;
                 }
                 break;
-            case 2:
-                if (curSlot != 0 && curSlot != 3 && curSlot != 6)
+            case 2: //left
+                if (curSlot % 3 != 0)
                 {
                     nextSlot = curSlot - 1;
                     rotation = 90;
                 }   
                 break;
-            case 3:
-                if (curSlot != 2 && curSlot != 4 && curSlot != 8)
+            case 3: //right
+                if (curSlot % 3 != 2)
                 {
                     nextSlot = curSlot + 1;
                     rotation = 270;
