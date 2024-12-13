@@ -15,7 +15,7 @@ public class MapGameDart : MapBase
         //각 플레이어의 인덱스 설정 (내가 몇P인지 위해)
         for (int i = 0; i < DartOrder.Count; i++)
         {
-            DartOrder[i].SetPlayerIndex(i + 1);
+            DartOrder[i].SetPlayerIndex(i);
         }
     }
 
