@@ -70,6 +70,7 @@ public class GameDropper : IGame
             miniToken.transform.localPosition = initPos;
             miniToken.MiniData.nextPos = initPos;
             miniToken.MiniData.rotY = p.Rotation;
+            miniToken.MiniData.CurState = State.Idle;
 
             miniToken.MiniData.PlayerSpeed = 5f;
         }

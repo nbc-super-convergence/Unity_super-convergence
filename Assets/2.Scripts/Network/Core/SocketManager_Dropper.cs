@@ -102,7 +102,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     private IEnumerator DropGameEndDelay(Dictionary<string, int> rankings, long endTime)
     {
-        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() == endTime - 6000);
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= endTime - 2000);
         //UI Minigame Result 판넬 호출
         MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
 
