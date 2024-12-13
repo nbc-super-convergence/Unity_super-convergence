@@ -73,7 +73,7 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
-    public int MyPlayerIndex { get; private set; }  //내 플레이어 인덱스
+    public int MyColor { get; private set; }  //내 플레이어 인덱스
 
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
@@ -95,7 +95,7 @@ public class DartPlayer : MonoBehaviour
             $"{GameManager.Instance.myInfo.Color}");
 
         //이게 내 유저라면 이벤트 실행
-        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
+        if (GameManager.Instance.myInfo.Color.Equals(MyColor))
         {
             UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
@@ -103,6 +103,7 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
+    #region SetProperties
     /// <summary>
     /// 각 속성의 최소 최대 결정
     /// </summary>
@@ -116,11 +117,11 @@ public class DartPlayer : MonoBehaviour
         minForce = min;
         maxForce = max;
     }
-
     public void SetPlayerIndex(int idx)
     {
-        MyPlayerIndex = idx;
+        MyColor = idx;
     }
+    #endregion
 
     private void FixedUpdate()
     {
@@ -152,7 +153,7 @@ public class DartPlayer : MonoBehaviour
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
 
-        if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
+        if (GameManager.Instance.myInfo.Color.Equals(MyColor))
         {
             orderEvent.OnAimEvent -= SetAim;
             orderEvent.OnShootEvent -= PressKey;
@@ -175,6 +176,13 @@ public class DartPlayer : MonoBehaviour
     private void SetAim(Vector2 direction)
     {
         GetAim = direction;
+        GamePacket packet = new();
+        packet.DartSyncRequest = new()
+        {
+            Angle = SocketManager.ToVector(GetAim)
+        };
+
+        SocketManager.Instance.OnSend(packet);
     }
 
     /// <summary>
