@@ -12,6 +12,7 @@ public class UILobby : UIBase
 {
     [Header("Name")]
     [SerializeField] private TextMeshProUGUI nameTxt;
+    [SerializeField] private ChatSizeFitter fitter;
 
     [Header("roomList")]
     [SerializeField] private Transform roomParent;
@@ -31,7 +32,9 @@ public class UILobby : UIBase
     private TaskCompletionSource<bool> roomTcs;
     private TaskCompletionSource<bool> userTcs;
     private float elapseTime;
-    
+    const int maxRetries = 5; // 최대 재시도 횟수
+    const float timeoutSeconds = 10f; // 타임아웃 (초 단위)
+
     public override void Opened(object[] param)
     {
         if (!SocketManager.Instance.isLobby)
@@ -42,11 +45,11 @@ public class UILobby : UIBase
         else
         {
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
-        }
+            fitter.UpdateSpeechBubbleSize();
 
+        }
         roomMap = new();
         userMap = new();
-
         OnBtnRefresh();
     }
 
@@ -70,18 +73,23 @@ public class UILobby : UIBase
             }
         };
 
-        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await lobbyTcs.Task;
-        if(isSuccess)
+        bool isSuccess = await RetryWithTimeout(async () =>
         {
-            nameTxt.text = GameManager.Instance.myInfo.Nickname;
-        }
-        else
+            lobbyTcs = new();
+            SocketManager.Instance.OnSend(packet);
+            return await lobbyTcs.Task;
+        }, maxRetries, timeoutSeconds);
+
+        if(!isSuccess)
         {
-            Debug.LogError($"UILobby sourceTcs : {isSuccess}");
+            Debug.LogError($"UILobby lobbyTcs : {isSuccess}");
+            OnBtnLogout();
         }
+
+        nameTxt.text = GameManager.Instance.myInfo.Nickname;
+        fitter.UpdateSpeechBubbleSize();
     }
 
     public enum eTcs
@@ -173,8 +181,7 @@ public class UILobby : UIBase
     {
         btnRefresh.interactable = false;
 
-        const int maxRetries = 5; // 최대 재시도 횟수
-        const float timeoutSeconds = 10f; // 타임아웃 (초 단위)
+        
         bool roomSuccess = false, userSuccess = false;
 
         roomSuccess = await RetryWithTimeout(async () =>
