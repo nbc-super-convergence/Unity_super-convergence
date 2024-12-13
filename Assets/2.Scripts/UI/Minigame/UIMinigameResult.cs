@@ -34,14 +34,13 @@ public class UIMinigameResult : UIBase
         //ranks의 string : sessionId, int : 등수
         if (param.Length == 2)
         {
-            if (param[0] is Dictionary<string, int> ranks)
+            if (param[0] is List<(int Rank, string SessionId)> ranks)
             {
-                int i = 0;
-                foreach (var rank in ranks)
+                for (int i = 0; i < ranks.Count; i++)
                 {
-                    string sessionid = rank.Key; //id
-                    int rankNum = rank.Value; //등수
-                    int color = GameManager.Instance.SessionDic[sessionid].Color; //색깔
+                    string sessionId = ranks[i].SessionId;
+                    int rankNum = ranks[i].Rank;
+                    int color = GameManager.Instance.SessionDic[sessionId].Color;
                     colorIdxs.Add(color, rankNum);
 
                     RankPanels[i].gameObject.SetActive(true);
@@ -50,7 +49,7 @@ public class UIMinigameResult : UIBase
                     RankPanels[i].sprite = RankPanelsSprites[color];
 
                     //등수 + 닉네임 설정
-                    RankTxts[i].text = $"{rankNum}등\n{GameManager.Instance.SessionDic[sessionid].Nickname}";
+                    RankTxts[i].text = $"{rankNum}등\n{GameManager.Instance.SessionDic[sessionId].Nickname}";
 
                     //받을 금액 설정
                     string coin = rankNum switch
@@ -62,8 +61,6 @@ public class UIMinigameResult : UIBase
                         _ => "0"
                     };
                     CoinTxts[i].text = coin;
-
-                    i++;
                 }
             }
             else

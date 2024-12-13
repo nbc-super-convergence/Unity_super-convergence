@@ -4,7 +4,7 @@ public interface IGame
 {
     public void Init(params object[] param);
     public void GameStart(params object[] param);
-    public async void GameEnd(Dictionary<string, int> ranks, long boardTime)
+    public async void GameEnd(List<(int Rank, string SessionId)> ranks, long boardTime)
     {
         foreach (var mini in MinigameManager.Instance.miniTokens)
         {
