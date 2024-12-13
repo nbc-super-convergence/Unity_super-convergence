@@ -116,6 +116,7 @@ public class CommandBoard : MonoBehaviour
             }
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
+            myToken.InputHandler.DisableSimpleInput();
         }
 
         Queue<ArrowBubble> queue = new();
