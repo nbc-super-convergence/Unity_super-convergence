@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
 
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
@@ -95,8 +98,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             rankings.Add(r.SessionId, r.Rank_);
         }
 
+        StartCoroutine(DropGameEndDelay(rankings, response.EndTime));
+        
+    }
+    private IEnumerator DropGameEndDelay(Dictionary<string, int> rankings, long endTime)
+    {
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() == endTime - 6000);
         //UI Minigame Result 판넬 호출
-        MinigameManager.Instance.curMiniGame.GameEnd(rankings, response.EndTime);
+        MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
 
         //미니게임 맵 삭제
         MinigameManager.Instance.boardCamera.SetActive(true);
