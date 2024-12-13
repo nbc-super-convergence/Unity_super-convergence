@@ -631,6 +631,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDontDestroyOnLoad: 1
   isSingle: 0
+  sfxWatch: {fileID: 0}
+  sfxWhistle: {fileID: 0}
 --- !u!4 &1410931760
 Transform:
   m_ObjectHideFlags: 0
