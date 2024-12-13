@@ -124,7 +124,9 @@ public class GameDart : IGame
         MinigameManager.Instance.MakeMap<MapGameDart>();
         SettingData();
 
-        if(param.Length > 0 && param[0] is S2C_DiceGameNotification response)
+        //DartOrder데이터 설정
+        DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
+        if (param.Length > 0 && param[0] is S2C_DiceGameNotification response)
         {
 
         }
@@ -134,9 +136,6 @@ public class GameDart : IGame
     {
         ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
-
-        //DartOrder데이터 설정
-        DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
     }
     public void DisableUI()
     {
