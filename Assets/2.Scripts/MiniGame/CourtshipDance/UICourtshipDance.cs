@@ -1,3 +1,4 @@
+using Google.Protobuf.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,41 +8,69 @@ public class UICourtshipDance : UIBase
 {
     private CourtshipDanceData gameData;
     private GameCourtshipDance game;
+    private bool isTeamGame;    
     
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] public AudioClip[] sfxClips;
 
     public List<Transform> spawnPosition;
-    public Dictionary<string, CommandBoard> boardDic = new();
+    public Dictionary<int, CommandBoard> boardDic = new();
+
+    public CommandBoard myBoard;
 
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
         game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
+        isTeamGame = game.isTeamGame;
     }
 
-    public async void MakeCommandBoard(List<PlayerInfo> players)
+    //public async void MakeCommandBoard(List<PlayerInfo> players)
+    //{
+    //    for (int i = 0; i < players.Count; ++i)
+    //    {
+    //        // 프리팹 생성.
+    //        var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
+    //        board.transform.localPosition = Vector3.zero;
+    //        if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
+    //        {
+    //            board.SetSessionId(players[i].SessionId);
+    //            board.SetTeamId(players[i].TeamNumber);
+    //            board.SetPool(pool);
+    //            board.Init();
+    //        }
+    //        boardDic.Add(players[i].SessionId, board);
+    //    }
+    //}
+
+    public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
     {
-        for (int i = 0; i < players.Count; ++i)
+        int num = 0;
+        foreach( var team in teamDic)
         {
-            // 프리팹 생성.
-            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
+            var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[num++]);
             board.transform.localPosition = Vector3.zero;
-            if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
+            if (teamPoolDic.TryGetValue(team.Key, out Queue<Queue<BubbleInfo>> pool))
             {
-                board.SetSessionId(players[i].SessionId);
-                board.SetTeamId(players[i].TeamNumber);
-                board.SetPool(pool);
-                board.Init();
+                foreach (var id in team.Value)
+                {
+                    board.teamSessionIds.Add(id.SessionId);
+                }
+                board.Init(team.Key, pool);
             }
-            boardDic.Add(players[i].SessionId, board);
+            boardDic.Add(team.Key, board);
+
+            if(game.GetMyTeam() == team.Key)
+            {
+                myBoard = board;
+            }
         }
     }
 
-    public void Next(string sessionId)
+    public void Next(int teamNumber)
     {
-        boardDic[sessionId].MakeNextBoard();
+        boardDic[teamNumber].MakeNextBoard();
     }
     
     public void ShowDanceBoard()
@@ -99,9 +128,17 @@ public class UICourtshipDance : UIBase
         end.SetActive(true);
         yield return new WaitForSeconds(2f);
         end.SetActive(false);
-        MinigameManager.Instance.GetMiniToken(teamResults[0].SessionId[0]).MiniData.CurState = State.DanceUp;
-        // 1등은 우승 애니메이션 재생 루프
-        var info = MinigameManager.Instance.GetMiniToken(teamResults[0].SessionId[0]).GetAnimator().GetCurrentAnimatorStateInfo(1);
+        List<MiniToken> winTokens = new();
+        RepeatedField<string> winSessionIds = teamResults[0].SessionId;
+        foreach (var sessionId in winSessionIds)
+        {
+            winTokens.Add(MinigameManager.Instance.GetMiniToken(sessionId));
+        }
+        foreach (var winToken in winTokens)
+        {
+            winToken.MiniData.CurState = State.DanceUp;
+            winToken.GetAnimator().GetCurrentAnimatorStateInfo(1);
+        }
 
         yield return new WaitForSeconds(2f);
 

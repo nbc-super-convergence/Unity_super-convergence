@@ -55,7 +55,7 @@ syntax = "proto3";
     }
 
     message DancePool {
-        string sessionId = 1;
+        int32 teamNumber = 1;
         repeated DanceTable danceTables = 2;
     }
     
@@ -562,7 +562,7 @@ syntax = "proto3";
         int64 endTime = 2; 
     }
 
-    // DANCE
+// DANCE
     message S2C_DanceMiniGameReadyNotification {
         repeated PlayerInfo players = 1;
     }
@@ -601,7 +601,7 @@ syntax = "proto3";
     }
     
     message S2C_DanceKeyPressNotification {
-        string sessionId = 1;                 // 입력한 플레이어
+        int32 teamNumber = 1;                 // 입력한 플레이어팀
         bool correct = 2;                     // 올바른 입력이었는지
         State state = 3;                      // 애니메이션        
     }
@@ -619,9 +619,10 @@ syntax = "proto3";
     }
     
     message  C2S_DanceTableCompleteRequest{
-        string sessionId = 1;                 // 테이블을 완료한 유저의 세션 ID
+        string sessionId = 1;                 // 테이블을 완료한 유저의 팀 넘버
         int64 endTime = 2;                    // 테이블을 완료한 시간
     }
+
 
 //Bomb
     //폭탄 미니게임 시작 알림
