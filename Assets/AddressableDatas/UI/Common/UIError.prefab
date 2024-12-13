@@ -803,8 +803,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb79f5eff29a164da6a9eccbeb9c69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BubbleTransform: {fileID: 0}
-  chatTxt: {fileID: 0}
+  BubbleTransform: {fileID: 7503950762309240675}
+  chatTxt: {fileID: 3345198841714974702}
   left: 50
   right: 40
   top: 10
