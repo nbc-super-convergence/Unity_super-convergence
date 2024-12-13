@@ -22,6 +22,8 @@ public class UIMinigameDropper : UIBase
     private Coroutine StunCoroutine;
     private Sequence readySequence;
     private Sequence startSequence;
+    private Tweener textTween;
+    private Tweener lightTween;
 
     public override void Opened(object[] param)
     {
@@ -62,12 +64,6 @@ public class UIMinigameDropper : UIBase
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
         descTxt.transform.parent.gameObject.SetActive(false);
-    }
-
-    private void OnDestroy()
-    {
-        readySequence.Kill();
-        startSequence.Kill();
     }
 
     private IEnumerator StartCountDown(long startdelay)
@@ -210,9 +206,6 @@ public class UIMinigameDropper : UIBase
     #endregion
 
     #region Deco
-    private Tweener textTween;
-    private Tweener lightTween;
-
     private void DescEffect(bool isFall)
     {
         textTween?.Kill();
@@ -262,6 +255,12 @@ public class UIMinigameDropper : UIBase
             ).SetEase(Ease.Linear) 
              .SetLoops(-1, LoopType.Restart); 
         }
+    }
+
+    public void KillLightDotween()
+    {
+        textTween.Kill();
+        lightTween.Kill();
     }
     #endregion
 }

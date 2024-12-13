@@ -24,6 +24,11 @@ public class MapGameDropper : MapBase
         StartCoroutine(StartGame());
     }
 
+    private void OnDestroy()
+    {
+        UIManager.Get<UIMinigameDropper>().KillLightDotween();
+    }
+
     private IEnumerator StartGame()
     {
         yield return new WaitUntil(() => gameData.phase == 1);
