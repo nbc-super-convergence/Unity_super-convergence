@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class UIMinigameDropper : UIBase
@@ -21,6 +20,8 @@ public class UIMinigameDropper : UIBase
 
     private GameDropperData gameData;
     private Coroutine StunCoroutine;
+    private Sequence readySequence;
+    private Sequence startSequence;
 
     public override void Opened(object[] param)
     {
@@ -63,11 +64,17 @@ public class UIMinigameDropper : UIBase
         descTxt.transform.parent.gameObject.SetActive(false);
     }
 
+    private void OnDestroy()
+    {
+        readySequence.Kill();
+        startSequence.Kill();
+    }
+
     private IEnumerator StartCountDown(long startdelay)
     {
         DisableBtnInput(); //input 비활성화
 
-        Sequence readySequence = DOTween.Sequence();
+        readySequence = DOTween.Sequence();
 
         /*"Ready?" 연출*/
         StartCountTxt.gameObject.SetActive(true);
@@ -84,7 +91,7 @@ public class UIMinigameDropper : UIBase
         });
         yield return readySequence.WaitForCompletion();
 
-        Sequence startSequence = DOTween.Sequence();
+        startSequence = DOTween.Sequence();
         startSequence.Append(StartCountTxt.transform.DORotate(new(0, 0, 0), 0.5f, RotateMode.FastBeyond360));
         startSequence.Append(StartCountTxt.DOFade(0f, 0.5f));
         startSequence.OnComplete(() =>
