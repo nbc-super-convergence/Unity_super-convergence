@@ -57,7 +57,7 @@ public class GameDart : IGame
 
     //중심과 가까운 다트가 우선순위
     public void DistanceRank()
-    {
+    {   
         int rank = 1;
 
         List<DartPlayer> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
@@ -91,6 +91,7 @@ public class GameDart : IGame
     {
         playerCount = players.Count;
         MinigameManager.Instance.GetMap<MapGameDart>().SetDartPlayers(playerCount);
+
         foreach(var p in players)
         {
 
@@ -106,9 +107,14 @@ public class GameDart : IGame
         //DartOrder데이터 설정
         DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
         DartPannel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
+        }
+        else
+        {
+            Debug.LogError("param parsing error : startPlayers");
         }
     }
 
