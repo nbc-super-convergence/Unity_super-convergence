@@ -1,6 +1,4 @@
-using Sirenix.OdinInspector;
 using System.Collections.Generic;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Bomb : MonoBehaviour
