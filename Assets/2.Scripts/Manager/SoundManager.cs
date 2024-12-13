@@ -2,8 +2,15 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Audio;
 
-// SFX 정보를 관리하는 구조체
-
+public enum BGMType{
+    StartScene,
+    BoardScene,
+    Ice,
+    Dropper,
+    Dance,
+    Bomb,
+    Dart,
+}
 
 public class SoundManager : Singleton<SoundManager>
 {
@@ -23,15 +30,11 @@ public class SoundManager : Singleton<SoundManager>
         InitTweens();
     }
 
-    [ContextMenu("OnBGM")]
-    public void Test1()
-    {
-        PlayBGM(bgmClip[0]);
-    }
-
     #region 메인
-    public void PlayBGM(AudioClip clip)
+    public void PlayBGM(BGMType type)
     {
+        AudioClip clip = bgmClip[(int)type];
+
         int nextChannel = 1 - activeChannel; // 다음 채널 (0 -> 1, 1 -> 0)
 
         // 새 클립 설정
