@@ -15,7 +15,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             Debug.Log(result);
 
             int i = 0;
-            var playerDart = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
 
             foreach(var dart in playerDart)
             {
