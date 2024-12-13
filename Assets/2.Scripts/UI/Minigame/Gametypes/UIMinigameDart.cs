@@ -32,16 +32,25 @@ public class UIMinigameDart : UIBase
         }
     }
 
+    #region Force 메서드
     public void SetForceLimit(float min, float max)
     {
         forcePower.minValue = min;
         forcePower.maxValue = max;
     }
-
     public void ChangeForcePower(float f)
     {
         forcePower.value = f;
     }
+    public void ShowForcePower()
+    {
+        forcePower.gameObject.SetActive(true);
+    }
+    public void HideForcePower()
+    {
+        forcePower.gameObject.SetActive(false);
+    }
+    #endregion
 
     #region Result 메서드
     public void SetNickname(string name)
