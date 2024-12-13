@@ -68,6 +68,7 @@ public class BoardResultUI : UIBase
 
     public void OnClick()
     {
+        GameManager.isGameStart = false;
         GamePacket packet = new();
         packet.BackToTheRoomRequest = new()
         {
