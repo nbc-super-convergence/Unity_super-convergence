@@ -6,10 +6,10 @@ public class GameDart : IGame
     private UIMinigameDart ingameUI;
 
     //다트판
-    public GameDartPanel DartPannel;
+    private GameDartPanel DartPannel;
 
     //다트그룹
-    public List<DartPlayer> DartOrder;
+    private List<DartPlayer> DartOrder;
 
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
@@ -126,6 +126,7 @@ public class GameDart : IGame
 
         //DartOrder데이터 설정
         DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
+        DartPannel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
         if (param.Length > 0 && param[0] is S2C_DiceGameNotification response)
         {
 
