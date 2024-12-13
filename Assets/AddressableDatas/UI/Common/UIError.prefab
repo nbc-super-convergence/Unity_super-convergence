@@ -57,6 +57,7 @@ MonoBehaviour:
   infoTMP: {fileID: 3345198841714974702}
   closeCountTMP: {fileID: 3392844090776933981}
   Count: {fileID: 2909469688826967051}
+  chatSizeFitter: {fileID: 6954584159419455115}
   waitSeconds: 15
 --- !u!1 &2909469688826967051
 GameObject:
@@ -721,7 +722,7 @@ GameObject:
   - component: {fileID: 3614838703842369218}
   - component: {fileID: 7632933716711420131}
   - component: {fileID: 6593608899615427680}
-  - component: {fileID: 8959303976893603506}
+  - component: {fileID: 6954584159419455115}
   m_Layer: 5
   m_Name: BG
   m_TagString: Untagged
@@ -790,7 +791,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8959303976893603506
+--- !u!114 &6954584159419455115
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -802,14 +803,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: deb79f5eff29a164da6a9eccbeb9c69a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BubbleTransform: {fileID: 3614838703842369218}
-  chatTxt: {fileID: 3345198841714974702}
-  left: 0
-  right: 0
-  top: 120
-  bottom: 115
-  minTextWidth: 700
-  maxTextWidth: 700
+  BubbleTransform: {fileID: 0}
+  chatTxt: {fileID: 0}
+  left: 50
+  right: 40
+  top: 10
+  bottom: 20
+  minTextWidth: 210
+  maxTextWidth: 628
   mincontainerHeight: 70
 --- !u!1 &8319314618587456490
 GameObject:

@@ -101,7 +101,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 40
   m_fontSizeMax: 40
-  m_fontStyle: 16
+  m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 1024
   m_textAlignment: 65535
@@ -1070,6 +1070,7 @@ MonoBehaviour:
   isDestroyAtClosed: 1
   uiPosition: 1
   nameTxt: {fileID: 4117628798311603789}
+  fitter: {fileID: 994280814591862390}
   roomParent: {fileID: 1995446910077963771}
   roomObj: {fileID: 7842514716603963116, guid: 2d6f7819fd239084eb40c3088e6be0cd, type: 3}
   searchField: {fileID: 4501464017423523037}
