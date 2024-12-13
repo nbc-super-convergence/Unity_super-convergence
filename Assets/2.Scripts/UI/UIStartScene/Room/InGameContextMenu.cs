@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,7 +14,7 @@ public class InGameContextMenu : MonoBehaviour, IPointerClickHandler
                 var result = await UIManager.Show<UIKick>();
                 result.SetPosition(eventData.position.x, eventData.position.y);
                 var roomUser = GetComponent<RoomUserSlot>();
-                result.SetPlayerId(roomUser.loginId);
+                result.SetPlayerId(roomUser.sessionId);
                 Debug.Log($"Current PlayerId : {result.targetPlayerId}");
             }
         }

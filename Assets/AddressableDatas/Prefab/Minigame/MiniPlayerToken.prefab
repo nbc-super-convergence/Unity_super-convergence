@@ -1100,6 +1100,7 @@ GameObject:
   - component: {fileID: 4354627205027103094}
   - component: {fileID: 1300090847211069023}
   - component: {fileID: 7443276078078182267}
+  - component: {fileID: 2261074089797074126}
   m_Layer: 6
   m_Name: MiniPlayerToken
   m_TagString: Player
@@ -1209,6 +1210,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4354627205027103094}
   animator: {fileID: 1300090847211069023}
+  MyColor: 0
+  MiniData:
+    tokenColor: 0
+    wasdVector: {x: 0, y: 0}
+    nextPos: {x: 0, y: 0, z: 0}
+    rotY: 0
+    PlayerSpeed: 0
+    arrowInput: 0
+--- !u!114 &2261074089797074126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833503977316714578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad52b2a81c0e1a145acf15186c81dc18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6061559758917856231
 GameObject:
   m_ObjectHideFlags: 0

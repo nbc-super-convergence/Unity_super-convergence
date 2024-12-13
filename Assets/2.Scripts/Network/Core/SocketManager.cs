@@ -34,6 +34,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
+    #region 공통
+    public void CloseSocketNotification(GamePacket packet)
+    {
+        var response = packet.CloseSocketNotification;
+        GameManager.Instance.DeleteSessionId(response.SessionId);
+    }
+    #endregion
+
     #region 인증 서버
     public void RegisterResponse(GamePacket packet)
     {
@@ -50,7 +58,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LoginResponse;
         GameManager.Instance.myInfo.SetSessionId(response.SessionId);
-        UIManager.Show<UILobby>();
+        UIManager.Get<UILogin>().TrySetTask(response.Success);        
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
@@ -64,7 +72,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
-        GameManager.Instance.myInfo.userData = response.User;
+        GameManager.Instance.myInfo.SetUserData(response.User);
         UIManager.Get<UILobby>().TrySetTask(response.Success);
         if ((int)response.FailCode != 0)
         {
@@ -112,7 +120,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
@@ -132,17 +139,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomNotification;
-        UIManager.Get<UIRoom>().AddRoomUser(response.User);
+        UIManager.Get<UIRoom>().SetRoomInfo(response.Room);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomResponse;
-        bool isSuccess = UIManager.Get<UIRoom>().leaveRoomTcs.TrySetResult(response.Success);
-        if (isSuccess)
-        {
-            Debug.Log("Leave Room Success");
-        }
+        UIManager.Get<UIRoom>().TrySetTask(response.Success);        
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
@@ -153,14 +156,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().RemoveRoomUser(response.User.LoginId);
+        UIManager.Get<UIRoom>().SetRoomInfo(response.Room);
     }
 
     public void GamePrepareResponse(GamePacket packet)
     {
         var response = packet.GamePrepareResponse;
-        bool isSuccess = UIManager.Get<UIRoom>().readyTcs.TrySetResult(response.Success);
-        if (isSuccess)
+        UIManager.Get<UIRoom>().TrySetTask(response.Success);
+        if (response.Success)
         {
             UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
         }
@@ -174,7 +177,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.User.LoginId, response.IsReady, response.State);
+        UIManager.Get<UIRoom>().SetUserReady(response.User.SessionId, response.IsReady, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)
@@ -182,7 +185,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.GameStartNotification;
         if (response.Success)
         {
-            UIManager.Get<UIRoom>().GameStart();
+            UIManager.Get<UIRoom>().GameStart();            
         }
         if ((int)response.FailCode != 0)
         {
@@ -191,5 +194,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
     #endregion
+
 
 }

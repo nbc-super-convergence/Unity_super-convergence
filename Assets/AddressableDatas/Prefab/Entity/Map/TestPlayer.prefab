@@ -45,12 +45,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0aac0b175f6e9a94d8dde8eac483c178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMine: 0
+  diceObject: {fileID: 0}
+  renderer: {fileID: 8795547107113044593}
+  animator: {fileID: 0}
   data:
-    position: {x: 0, y: 0, z: 0}
-    rotY: 0
     keyAmount: 0
     trophyAmount: 0
-    state: 0
   character: {fileID: 7421665981044614305}
 --- !u!1 &7043534076297777611
 GameObject:

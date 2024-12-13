@@ -1,90 +1,106 @@
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
-    //201 : IceMiniGameStartRequest
-    //Send À§Ä¡ : GameManager or BoardManager
-
+    /* 201 */
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
-    {//202
+    {
         var response = gamePacket.IceMiniGameReadyNotification;
+        Debug.Log(response);
 
-        //ReadyUI ¶ç¿ì±â
-        //¸Ê ºÒ·¯¿À±â
-        //Ä«¸Ş¶ó ¼¼ÆÃ?
+        UIManager.Hide<BoardUI>();
+        //ReadyPanel ë„ìš°ê¸°.
+#pragma warning disable CS4014 
+        UIManager.Show<UIMinigameReady>(eGameType.GameIceSlider);
+#pragma warning restore CS4014
 
-        foreach (var p in response.Players)
-        {//¹Ì´Ï ÅäÅ« À§Ä¡ ÃÊ±âÈ­
-            //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(p.PlayerType);
-            //miniToken.transform.position = ToVector3(p.Position);
-            //miniToken.Controller.RotateY(p.Rotation);
-        }
+        //ë°ì´í„° ì„¤ì •, ë§µ ì„¤ì •, BGM ì„¤ì •
+        MinigameManager.Instance.SetMiniGame<GameIceSlider>(response);
+        MinigameManager.Instance.boardCamera.SetActive(false);
     }
 
-    //203 : IceGameReadyRequest
-    //Send À§Ä¡ : UIMinigameReady? UIMiniDesc?
+    /* 202 : IceGameReadyRequest
+     * Send ìœ„ì¹˜ : UIMinigameReady */
 
+    //203
     public void IceGameReadyNotification(GamePacket gamePacket)
-    {//204
+    {
         var response = gamePacket.IceGameReadyNotification;
 
-        //ReadyUI¿Í ¿¬°è
-        //int readyId = response.sessionId;
+        //ReadyUIì™€ ì—°ê³„
+        UIManager.Get<UIMinigameReady>().SetReady(response.SessionId);
     }
 
+    /* 204 */
     public void IceMiniGameStartNotification(GamePacket gamePacket)
-    {//205
-        var response = gamePacket.IceMiniGameStartNotification;
-        
-        //ReadyUI ¼û±â±â
+    {
+        //ReadyUI ìˆ¨ê¸°ê¸°
+        UIManager.Hide<UIMinigameReady>();
+        //GameStart í•¨ìˆ˜ í˜¸ì¶œ
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().GameStart();
     }
 
-    //206 : IcePlayerSyncRequest
-    //Send À§Ä¡ : MiniToken
+    //205 : IcePlayerSyncRequest
+    //Send ìœ„ì¹˜ : MiniToken
 
+    //206
     public void IcePlayerSyncNotification(GamePacket gamePacket)
-    {//207
+    {
         var response = gamePacket.IcePlayerSyncNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
-        //miniToken.transform.position = ToVector3(response.Position);
-        //miniToken.Controller.RotateY(response.Rotation);
-        //miniToken.MiniData.CurState = response.State;
+        MiniToken miniToken = MinigameManager.Instance.GetMiniToken(response.SessionId);
+        miniToken.MiniData.nextPos = ToVector3(response.Position);
+        miniToken.MiniData.rotY = response.Rotation;
+        miniToken.MiniData.CurState = response.State;
     }
 
-    //208 : IcePlayerDamageRequest
-    //Send À§Ä¡ : MapFloor?
+    //207 : IcePlayerDamageRequest
+    //Send ìœ„ì¹˜ : MapGameIceSlider
 
+    //208
     public void IcePlayerDamageNotification(GamePacket gamePacket)
-    {//209
+    {
         var response = gamePacket.IcePlayerDamageNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
-        //ÇØ´ç ÇÃ·¹ÀÌ¾îÀÇ HP 1½ºÅÃ ±ğ±â.
+        //Player ë°ë¯¸ì§€ ì´ë²¤íŠ¸
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().GiveDamage(response.SessionId, 1);
     }
 
+    //209
     public void IcePlayerDeathNotification(GamePacket gamePacket)
-    {//210
+    {
         var response = gamePacket.IcePlayerDeathNotification;
 
-        //MiniToken miniToken = MinigameManager.Instance.GetMiniPlayer(response.SessionId);
-        //TODO : »ç¸Á ·ÎÁ÷
+        //í”Œë ˆì´ì–´ ì‚¬ë§ ì´ë²¤íŠ¸
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().PlayerDeath(response.SessionId);
     }
 
+    //210
     public void IceGameOverNotification(GamePacket gamePacket)
-    {//211
+    {
         var response = gamePacket.IceGameOverNotification;
 
-        //°ÔÀÓ Á¾·á ÀÌº¥Æ® + ÆÇ³Ú
+        /*í•„ìš” ë°ì´í„° íŒŒì‹±*/
+        Dictionary<string, int> rankings = new();
         foreach (var r in response.Ranks)
         {
-            //PlayerId¹Ş¾Æ¼­ Rank Ç¥½Ã.
+            rankings.Add(r.SessionId, r.Rank_);
         }
-
-        //±âÁ¸ ¸Ê »èÁ¦, MiniTokenÀº »èÁ¦x.
+        
+        //UI Minigame Result íŒë„¬ í˜¸ì¶œ
+        MinigameManager.Instance.curMiniGame.GameEnd(rankings, response.EndTime);
+        
+        //ë¯¸ë‹ˆê²Œì„ ë§µ ì‚­ì œ
+        MinigameManager.Instance.boardCamera.SetActive(true);
+        Destroy(MinigameManager.Instance.curMap.gameObject);
     }
 
+    //211
     public void IceMapSyncNotification(GamePacket gamePacket)
-    {//212
-        //var response = gamePacket.IceMapSyncNotification;
-        //¸Ê »çÀÌÁî ÁÙÀÌ±â.
+    {
+        //ë§µ ì‘ì•„ì§€ëŠ” ì´ë²¤íŠ¸
+        MinigameManager.Instance.GetMiniGame<GameIceSlider>().MapChangeEvent();
     }
 }

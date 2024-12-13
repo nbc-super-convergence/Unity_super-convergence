@@ -15,7 +15,11 @@ public class UIMakeRoom : UIBase
 
     public async void OnApplyBtn()
     {
-        //Send Make Room
+        if (RoomNameInput.text.Length > 12 || RoomNameInput.text.Length < 2)
+        {
+            await UIManager.Show<UIError>("ë°© ì´ë¦„ì€ 2ì ì´ìƒ 12ì ì´í•˜ì´ì–´ì•¼ í•©ë‹ˆë‹¤.");
+            return;
+        }
 
         if (SocketManager.Instance.isConnected)
         {
@@ -23,7 +27,7 @@ public class UIMakeRoom : UIBase
 
             packet.CreateRoomRequest = new()
             {
-                SessionId = GameManager.Instance.myInfo.sessionId,
+                SessionId = GameManager.Instance.myInfo.SessionId,
                 RoomName = RoomNameInput.text
             };
 
@@ -34,15 +38,12 @@ public class UIMakeRoom : UIBase
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
-            //await UIManager.Show<UIRoom>();
             UIManager.Hide<UILobby>();
-
             UIManager.Hide<UIMakeRoom>();
         }
     }
     public void TrySetTask(bool isSuccess)
     {
-        bool boolll = sourceTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "¹æ »ı¼º ¼º°ø" : "¹æ »ı¼º ½ÇÆĞ");
+        bool b = sourceTcs.TrySetResult(isSuccess);
     }
 }

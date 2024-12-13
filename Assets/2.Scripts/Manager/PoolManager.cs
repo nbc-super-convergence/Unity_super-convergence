@@ -11,6 +11,8 @@ public class PoolManager : Singleton<PoolManager>
 
     public async void Init()
     {
+        if (isInit) return;
+
         foreach (var prefab in prefabList)
         {
             prefab.data.prefab = await ResourceManager.Instance.LoadAsset<ObjectPoolBase>(prefab.data.rCode, eAddressableType.Prefab);
@@ -27,6 +29,7 @@ public class PoolManager : Singleton<PoolManager>
             }
         }
         isInit = true;
+        isInitialized = true;
     }
 
     public T Spawn<T>(string rcode, params object[] param) where T : ObjectPoolBase
@@ -72,7 +75,8 @@ public class PoolManager : Singleton<PoolManager>
     {
         item.SetActive(false);
         var prefab = prefabList.Find(obj => obj.data.rCode == item.name);
-        item.transform.parent = prefab.data.parent;
+        //item.transform.parent = prefab.data.parent;
+        item.transform.SetParent(prefab.data.parent, false);
         pools[item.name].Enqueue(item);
     }
 

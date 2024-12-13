@@ -10,6 +10,7 @@ public class UIRegister : UIBase
     [SerializeField] private TMP_InputField inputFieldPassword;
     [SerializeField] private TMP_InputField inputFieldPasswordConfirm;
     [SerializeField] private TMP_InputField inputFieldNickname;
+    [SerializeField] private Toggle passwordToggle;
 
     [SerializeField] private Button buttonRegister;
     [SerializeField] private Button buttonBack;
@@ -21,8 +22,10 @@ public class UIRegister : UIBase
 
     public override void Opened(object[] param)
     {
-        base.Opened(param);
         errorMessage.text = "";
+
+        passwordToggle.isOn = false;
+        passwordToggle.onValueChanged.AddListener(ToggleInputFieldPassword);
     }
 
 
@@ -57,12 +60,12 @@ public class UIRegister : UIBase
             bool isSuccess = await registerTcs.Task;
             if (isSuccess)
             {
-                Debug.Log($"°¡ÀÔ¼º°ø ID: {inputID}, Password: {inputPassword}");
+                Debug.Log($"ê°€ì…ì„±ê³µ ID: {inputID}, Password: {inputPassword}");
                 ButtonBack();                
             }
             else
             {
-                //sbError.AppendLine($"°°Àº ¾ÆÀÌµğ°¡ Á¸ÀçÇÕ´Ï´Ù.");
+                //sbError.AppendLine($"ê°™ì€ ì•„ì´ë””ê°€ ì¡´ì¬í•©ë‹ˆë‹¤.");
                 //errorMessage.text = sbError.ToString();
                 //sbError.Clear();
                 //return;
@@ -72,30 +75,34 @@ public class UIRegister : UIBase
 
     private bool IsValidation()
     {
-        // 4±ÛÀÚ ÀÌ»óÀÇ id, pw
-        if (inputFieldID.text.Length < 4)
+        // 4ê¸€ì ì´ìƒì˜ id, pw
+        if (inputFieldID.text.Length < 4 || inputFieldID.text.Length > 12)
         {
-            sbError.AppendLine($"¾ÆÀÌµğ´Â ÃÖ¼Ò 4ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.");
+            sbError.AppendLine($"ì•„ì´ë””ëŠ” 4ì ì´ìƒ, 12ì ì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”.");
+            return false;
+        }        
+        if (inputFieldPassword.text.Length < 4 || inputFieldPassword.text.Length > 16)
+        {
+            sbError.Append($"ë¹„ë°€ë²ˆí˜¸ëŠ” 4ì ì´ìƒ, 16ì ì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”.");
+            return false;
+        }        
+        if(inputFieldPassword.text != inputFieldPasswordConfirm.text)
+        {
+            sbError.Append($"ì…ë ¥í•˜ì‹  ë¹„ë°€ë²ˆí˜¸ì™€ í™•ì¸ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             return false;
         }
-        else if (inputFieldID.text.Length > 15)
+        if(inputFieldNickname.text.Length < 4 || inputFieldNickname.text.Length > 12) 
         {
-            sbError.AppendLine($"¾ÆÀÌµğ´Â ÃÖ´ë 15ÀÚ ÀÌÇÏ·Î ÀÔ·ÂÇÏ¼¼¿ä.");
+            sbError.Append($"ë‹‰ë„¤ì„ì€ 4ì ì´ìƒ, 12ì ì´í•˜ë¡œ ì…ë ¥í•˜ì„¸ìš”.");
             return false;
         }
-        if (inputFieldPassword.text.Length < 4)
-        {
-            sbError.Append($"ºñ¹Ğ¹øÈ£´Â ÃÖ¼Ò 4ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.");
-            return false;
-        }
-
         return true;
     }        
 
     public void TrySetTask(bool isSuccess)
     {
         bool boolll = registerTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "È¸¿ø°¡ÀÔ ¼º°ø" : "È¸¿ø°¡ÀÔ ½ÇÆĞ");        
+        //Debug.Log(boolll ? "íšŒì›ê°€ì… ì„±ê³µ" : "íšŒì›ê°€ì… ì‹¤íŒ¨");        
     }
 
     #region Button
@@ -109,4 +116,21 @@ public class UIRegister : UIBase
         Register();
     }
     #endregion
+
+
+    private void ToggleInputFieldPassword(bool isOn)
+    {
+        if(isOn)
+        {
+            inputFieldPassword.contentType = TMP_InputField.ContentType.Standard;
+            inputFieldPasswordConfirm.contentType = TMP_InputField.ContentType.Standard;
+        }
+        else
+        {
+            inputFieldPassword.contentType = TMP_InputField.ContentType.Password;
+            inputFieldPasswordConfirm.contentType = TMP_InputField.ContentType.Password;
+        }
+        inputFieldPassword.ForceLabelUpdate();
+        inputFieldPasswordConfirm.ForceLabelUpdate();
+    }
 }

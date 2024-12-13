@@ -3,15 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIRoom : UIBase
 {
-    [SerializeField] private bool isHost;
-    public bool IsHost { get { return isHost; } }
     private bool isReady = false;
-    private int readyCount = 0;
 
     [SerializeField] private List<RoomUserSlot> userSlots;
     private List<UserData> users = new();
@@ -21,12 +17,15 @@ public class UIRoom : UIBase
     [SerializeField] private TMP_Text roomName;
     private RoomData roomData;
     private RoomStateType state;
+    [SerializeField] private bool isHost;
+    public bool IsHost { get { return isHost; } }
+    private string currentOwnerId;
 
     [Header("Rule Setting")]
     [SerializeField] private TMP_Dropdown ddMaxTurn;
     private int[] turnOptions = { 10, 15, 20, 25, 30 };
     [Range(0, 4)] public int maxTurnValue = 0;
-    private int maxTurn;
+    private int maxTurn = 10;
 
     [Header("Start Countdown")]
     [SerializeField] private TMP_Text count;
@@ -37,15 +36,58 @@ public class UIRoom : UIBase
     [SerializeField] private Button buttonReady;
     [SerializeField] private Button buttonStart;
 
-    public TaskCompletionSource<bool> readyTcs;
-    public TaskCompletionSource<bool> leaveRoomTcs;
+    private TaskCompletionSource<bool> sourceTcs;
 
-    #region ´ë±â¹æ °ü¸®
+    #region ëŒ€ê¸°ë°© ê´€ë¦¬
     public override void Opened(object[] param)
     {
         roomData = (RoomData)param[0];
+        SetRoomInfo(roomData);
+    }
 
-        Init();
+    public override async void HideDirect()
+    {
+        UIManager.Hide<UIRoom>();
+        await UIManager.Show<UILobby>();
+    }
+
+    public void TrySetTask(bool isSuccess)
+    {
+        bool boolll = sourceTcs.TrySetResult(isSuccess);
+        Debug.Log(boolll ? "ì„±ê³µ" : "ì‹¤íŒ¨");
+    }
+
+    private void Init()
+    {
+        GameManager.Instance.SessionDic.Clear();
+        int num = 0;
+        foreach (var user in roomData.Users)
+        {
+            // TODO:: ì—†ëŠ” ìœ ì €ëŠ” -1ë¡œ ë‚¨ê²Œ... 
+            GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num, num));
+            num += 1;
+        }
+        SetHost();
+        SetDropdown();       
+        // TODO:: í•´ì‰¬ê°™ì€ê±° ì¨ì„œ ê¹”ë”í•˜ê²Œ.
+        if(isHost)
+        {
+            foreach ( var item in userSlots)
+            {
+                if(item.sessionId == roomData.OwnerId)
+                {
+                    item.CheckReadyState(true, currentOwnerId);
+                }
+            }            
+        }
+    }
+    
+    private void SetHost()
+    {
+        currentOwnerId = roomData.OwnerId;
+
+        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.SessionId) ? true : false;
+
         if (isHost)
         {
             buttonStart.gameObject.SetActive(true);
@@ -57,34 +99,28 @@ public class UIRoom : UIBase
             buttonReady.gameObject.SetActive(true);
             buttonStart.gameObject.SetActive(false);
         }
-        SetRoomInfo(roomData);
     }
 
-    public override async void HideDirect()
-    {
-        UIManager.Hide<UIRoom>();
-        await UIManager.Show<UILobby>();
-    }
-
-    private void Init()
-    {
-        isHost = (roomData.OwnerId == GameManager.Instance.myInfo.sessionId) ? true : false;
-
-        SetDropdown();
-        if (isHost) ButtonReady();    // ¹æÀåÀº ÀÚµ¿ ·¹µğÃ³¸®
-    }
-    
+    /// <summary>
+    /// ìœ ì € ë³€ë™ì´ ìˆì„ ë•Œ ì„œë²„ë¡œë¶€í„° RoomData ë°›ì•„ì„œ ëª¨ë“  ì •ë³´ë¥¼ ê°±ì‹ í•¨.
+    /// </summary>
+    /// <param name="data"></param>
     public void SetRoomInfo(RoomData data)
     {
+        ClearUserSlot();
+
         roomData = data;
-        roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
+
+        Init();
+
+        //roomNumber.text = (data.RoomId != null) ? $"No. {data.RoomId}" : "";
         roomName.text = (data.RoomName != null) ? data.RoomName : "";
 
         for (int i = 0; i < data.Users.Count; i++)
         {
-            if (data.Users[i].LoginId == GameManager.Instance.myInfo.userData.LoginId)
-            {
-                AddRoomUser(data.Users[i]);    // TODO::Å¬¶ó¿¡ ÀúÀåÇØµĞ ³»Á¤º¸¸¦ ³Ö±â
+            if (data.Users[i].SessionId == GameManager.Instance.myInfo.SessionId)
+            { 
+                AddRoomUser(GameManager.Instance.myInfo.ToUserData());                
             }
             else
             {
@@ -95,6 +131,8 @@ public class UIRoom : UIBase
         {
             AddRoomUser(GameManager.Instance.myInfo.ToUserData());
         }
+
+        ReadyUsersSync(data);
     }
 
     public void AddRoomUser(UserData userData)
@@ -105,7 +143,7 @@ public class UIRoom : UIBase
             UserData userInfo = users.Count > i ? users[i] : null;
             if(userInfo != null)
             {
-                userSlots[i].SetRoomUser(userInfo);
+                userSlots[i].SetRoomUser(userInfo, i);
             }
             else
             {
@@ -114,112 +152,119 @@ public class UIRoom : UIBase
         }
     }
 
-    public void RemoveRoomUser(string userId)
+    // LeaveRoomNotification
+    public void RemoveRoomUser(string sessionId)
     {
-        // TODO::userÀÇ Ã³¸®¿¡ ¸Â°Ô ¹Ù²Ù±â
         foreach (RoomUserSlot user in userSlots)
         {
-            if (user.loginId == userId)
+            if (user.sessionId == sessionId)
             {
                 user.EmptyRoomUser();
                 break;
             }
         }
 
-        users.RemoveAll(obj => obj.LoginId == userId);
+        users.RemoveAll(obj => obj.SessionId == sessionId);
+        if (sessionId == currentOwnerId)
+        {
+            roomData.OwnerId = users[0].SessionId;
+            SetHost();
+        }
         for (int i = 0; i < userSlots.Count; ++i)
         {
             UserData userInfo = users.Count > i ? users[i] : null;
-            userSlots[i].SetRoomUser(userInfo);
+            userSlots[i].SetRoomUser(userInfo, i);
         }
     }
+
+    private void ClearUserSlot()
+    {
+        foreach(RoomUserSlot user in userSlots)
+        {
+            user.EmptyRoomUser();
+        }
+        users.Clear();
+    }
+
+    private void ReadyUsersSync(RoomData roomData)
+    {        
+        foreach (RoomUserSlot user in userSlots)
+        {           
+            if(roomData.ReadyUsers.Contains(user.sessionId) || roomData.OwnerId == user.sessionId)
+            {
+                user.CheckReadyState(true, roomData.OwnerId);
+            }
+        }
+    }
+
     #endregion
 
-    #region ÁØºñ
+    #region ì¤€ë¹„
     private async void OnClickReadyButton()
     {
         buttonReady.interactable = false;
 
+        // TODO:: ì½”ë“œì••ì¶• ê°€ëŠ¥. but ê°€ë…ì„± ë–¨ì–´ì§ˆê²ƒ ê°™ìŒ.
         if (isReady)
         {
-            bool isSuccess = await CancelReadyAsync();
+            // ì¤€ë¹„ì·¨ì†Œí•˜ê¸°
+            bool isSuccess = await ReadyAsync(false);
             if (isSuccess)
             {
-                //isReady = false; ¼­¹ö¿¡¼­ ¹ŞÀ½
-                UpdateButtonUI("Ready", Color.grey, true);
+                //isReady = false; ì„œë²„ì—ì„œ ë°›ìŒ
+                UpdateButtonUI("ì¤€ë¹„í•˜ê¸°", Color.white);
             }
             else
             {
-                Debug.Log("ÁØºñÃë¼Ò ½ÇÆĞ");
-                buttonReady.interactable = true;
+                Debug.Log("ì¤€ë¹„ì·¨ì†Œ ì‹¤íŒ¨");
             }
         }
         else
         {
-            bool isSuccess = await ReadyAsync();
+            // ì¤€ë¹„í•˜ê¸°
+            bool isSuccess = await ReadyAsync(true);
             if (isSuccess)
             {
                 //isReady = true;
-                UpdateButtonUI("Cancel Ready", Color.green, true);
+                UpdateButtonUI("ì¤€ë¹„ ì·¨ì†Œ", Color.grey);
             }
             else
             {
-                Debug.Log("ÁØºñ¿Ï·á ½ÇÆĞ");
-                buttonReady.interactable = true;
+                Debug.Log("ì¤€ë¹„ì™„ë£Œ ì‹¤íŒ¨");                
             }
         }
+        buttonReady.interactable = true;
     }
-
-    public void SetIsReady(bool isReady)
-    {
-        this.isReady = isReady;
-    }
-
+    
     /// <summary>
     /// C2S_GamePrepareRequest 
     /// S2C_GamePrepareResponse
     /// </summary>
     /// <returns></returns>
-    private async Task<bool> ReadyAsync()
+    private async Task<bool> ReadyAsync(bool isReady)
     {
-        readyTcs = new();
-
         GamePacket packet = new();
         packet.GamePrepareRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId,
-            IsReady = true
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            IsReady = isReady
         };    
+        sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        Debug.Log("¼­¹ö·Î ÁØºñ ¿Ï·á ÆĞÅ¶ Àü¼Û Áß...");
-        bool isSuccess = await readyTcs.Task;
-        Debug.Log("ÁØºñ ¿Ï·á ÆĞÅ¶ Àü¼Û ¼º°ø");
+        bool isSuccess = await sourceTcs.Task;
 
         return isSuccess ? true : false;
     }
 
-    private async Task<bool> CancelReadyAsync()
+    // GamePrepareResponse
+    public void SetIsReady(bool isReady)
     {
-        readyTcs = new();
-
-        // ¼­¹ö¿¡ ÁØºñÃë¼Ò ÆĞÅ¶ º¸³»±â
-        GamePacket packet = new();
-        packet.GamePrepareRequest = new()
-        {
-            SessionId = GameManager.Instance.myInfo.sessionId,
-            IsReady = false
-        };
-        SocketManager.Instance.OnSend(packet);
-
-        Debug.Log("¼­¹ö·Î ÁØºñ Ãë¼Ò ÆĞÅ¶ Àü¼Û Áß...");
-        bool isSuccess = await readyTcs.Task;
-        Debug.Log("ÁØºñ Ãë¼Ò ÆĞÅ¶ Àü¼Û ¼º°ø");
-
-        return isSuccess ? true : false;
+        this.isReady = isReady;
+        SetUserReady(GameManager.Instance.myInfo.SessionId, this.isReady, this.state);
     }
 
-    private void UpdateButtonUI(string buttonText, Color color, bool interactable)
+    private void UpdateButtonUI(string buttonText, Color color)
     {
         var textComponent = buttonReady.GetComponentInChildren<TMPro.TMP_Text>();
         if (textComponent != null)
@@ -232,75 +277,93 @@ public class UIRoom : UIBase
         {
             imageComponent.color = color;
         }
-        buttonReady.interactable = interactable;
     }
 
     /// <summary>
-    /// S2C_GamePrepareNotification ¸¦ ¹ŞÀ» ¶§ È£Ãâ
-    /// ÁØºñ¿Í ÁØºñÃë¼Ò ¸ğµÎ ´ëÀÀ.
+    /// S2C_GamePrepareNotification ë¥¼ ë°›ì„ ë•Œ í˜¸ì¶œ
+    /// ì¤€ë¹„ì™€ ì¤€ë¹„ì·¨ì†Œ ëª¨ë‘ ëŒ€ì‘.
+    /// ì¤€ë¹„í•œ ìœ ì €ì˜ sessionId. sessionIdì˜ ì¤€ë¹„ìƒíƒœ isReady. í˜„ì¬ ë°©ì˜ ìƒíƒœ state.
     /// </summary>
     public void SetUserReady(string sessionId, bool isReady, RoomStateType state)
     {
         bool isError = true;
+        // TODO::ë”•ì…”ë„ˆë¦¬ë‚˜ Hashë¥¼ ì´ìš©.
         foreach(RoomUserSlot user in userSlots)
         {
-            if(user.loginId == sessionId)
+            if(user.sessionId == sessionId)
             {
-                user.CheckReadyState(isReady, isHost);
-                readyCount = isReady ? readyCount++ : readyCount--;
-                this.state = (RoomStateType)state;
-                Debug.Log($"ÇöÀç ´ë±â¹æ »óÅÂ: {this.state}");
-
-                if (readyCount == 4 ? true : false)
-                {
-                    buttonStart.interactable = true;
-                    // TODO::¹öÆ°ÀÌ¹ÌÁö º¯°æ µî ½ÇÇà
-                    Debug.Log("¸ğµç À¯Àú°¡ ÁØºñ ¿Ï·á. ½ÃÀÛ¹öÆ° È°¼ºÈ­");
-                }
-                else
-                {
-                    buttonStart.interactable = false;
-                    Debug.Log("¾ÆÁ÷ ÁØºñµÇÁö ¾ÊÀº À¯Àú°¡ ÀÖ½À´Ï´Ù.");
-                }
+                user.CheckReadyState(isReady, currentOwnerId);                
                 isError = false;
                 break;
             }            
         }
-        if (isError) Debug.LogError($"userSlots¿¡ {sessionId}°¡ ¾ø½À´Ï´Ù.");
+        if (isError) Debug.LogError($"userSlotsì— {sessionId}ê°€ ì—†ìŠµë‹ˆë‹¤.");
+
+        this.state = state;
+        Debug.Log($"í˜„ì¬ ëŒ€ê¸°ë°© ìƒíƒœ: {this.state}");    
+        if(isHost)
+        {
+            if (this.state == RoomStateType.Prepare ? true : false)
+            {
+                buttonStart.interactable = true;
+                Debug.Log("ëª¨ë“  ìœ ì €ê°€ ì¤€ë¹„ ì™„ë£Œ. ì‹œì‘ë²„íŠ¼ í™œì„±í™”");
+            }
+            else
+            {
+                buttonStart.interactable = false;
+                Debug.Log("ì•„ì§ ì¤€ë¹„ë˜ì§€ ì•Šì€ ìœ ì €ê°€ ìˆìŠµë‹ˆë‹¤.");
+            }
+        }
     }
     #endregion
 
-    #region ½ÃÀÛ
+    #region ì‹œì‘
     /// <summary>
     /// C2S_GameStartRequest
-    /// ¹æÀåÀº GameStart ¹öÆ°À» ´­·¯ ¼­¹ö¿¡ °ÔÀÓ½ÃÀÛ ¿äÃ»À» º¸³½´Ù. º¸µå¾ÀÀÌ ·ÎµåµÇ´Â°Ç S2C_GameStartNotification ¾Ë¸²¿¡¼­ ½ÇÇàÇÒ°Å´Ù.
+    /// ë°©ì¥ì€ GameStart ë²„íŠ¼ì„ ëˆŒëŸ¬ ì„œë²„ì— ê²Œì„ì‹œì‘ ìš”ì²­ì„ ë³´ë‚¸ë‹¤. ë³´ë“œì”¬ì´ ë¡œë“œë˜ëŠ”ê±´ S2C_GameStartNotification ì•Œë¦¼ì—ì„œ ì‹¤í–‰í• ê±°ë‹¤.
     /// </summary>
     private void OnClickGameStartButton()
     {
         GamePacket packet = new();
         packet.GameStartRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            Turn = maxTurn,
         };
         SocketManager.Instance.OnSend(packet);
     }
 
     /// <summary>
     /// S2C_GameStartNotification
+    /// GameStartNotificationì€ ë°©ì¥ í¬í•¨ ëª¨ë“  ìœ ì €ê°€ ë°›ìŒ.
     /// </summary>
     public async void GameStart()
     {
         await CountDownAsync(3);
-        await UIManager.Show<UIFadeScreen>("FadeOut");
-        invisibleWall.SetActive(false);
+        //await UIManager.Show<UIFadeScreen>("FadeOut");
+        FadeScreen.Instance.FadeOut(Capsule, 1.5f);        
+        void Capsule()
+        {
+            invisibleWall.SetActive(false);
+            GameManager.isGameStart = true;
+        }
+    }
+    private async Task CountDownAsync(int countNum)
+    {
+        invisibleWall.SetActive(true);
+        count.gameObject.SetActive(true);
 
-        // TODO:: º¸µå¾À ·Îµå
-        SceneManager.LoadScene("BoardScene");
+        while (countNum > 0)
+        {
+            count.text = countNum--.ToString();
+            await Task.Delay(1000);
+        }
+        count.gameObject.SetActive(false);
     }
     #endregion
 
     #region GameSetting
-    // ÃÖ´ë ÅÏ º¯°æÀ» Àû¿ëÇÏ·Á¸é ¾Ë¸² ÆĞÅ¶ÀÌ ÇÊ¿äÇÔ.
+    // ìµœëŒ€ í„´ ë³€ê²½ì„ ì ìš©í•˜ë ¤ë©´ ì•Œë¦¼ íŒ¨í‚·ì´ í•„ìš”í•¨.
     private void SetDropdown()
     {
         if (!isHost)
@@ -324,7 +387,6 @@ public class UIRoom : UIBase
     {
         maxTurn = turnOptions[index];
     }
-
     #endregion           
 
     #region Button
@@ -335,7 +397,7 @@ public class UIRoom : UIBase
     
     public void ButtonStart()
     {
-        Debug.Log($"ÃÖ´ë ÅÏ : {maxTurn}");
+        Debug.Log($"ìµœëŒ€ í„´ : {maxTurn}");
         OnClickGameStartButton();
     }
 
@@ -345,23 +407,23 @@ public class UIRoom : UIBase
     }
     #endregion
 
-    #region À¯Àú ÅğÀå       
+    #region ìœ ì € í‡´ì¥       
 
     // S2C_LeaveRoomResponse  
-    // C2S_LeaveRoomRequest¿¡ ´ëÇÑ ¸®½ºÆù½º    
-    // À¯Àú°¡ ÅğÀå¹öÆ°UI¸¦ ´©¸£¸é
+    // C2S_LeaveRoomRequestì— ëŒ€í•œ ë¦¬ìŠ¤í°ìŠ¤    
+    // ìœ ì €ê°€ í‡´ì¥ë²„íŠ¼UIë¥¼ ëˆ„ë¥´ë©´
     public async void LeaveRoom()
     {
-        leaveRoomTcs = new();
+        sourceTcs = new();
 
         GamePacket packet = new();
         packet.LeaveRoomRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.sessionId
+            SessionId = GameManager.Instance.myInfo.SessionId            
         };
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await leaveRoomTcs.Task;
+        bool isSuccess = await sourceTcs.Task;
 
         if (isSuccess)
         {
@@ -370,23 +432,11 @@ public class UIRoom : UIBase
         }
         else
         {
-            Debug.LogError("¼­¹ö¿Í Åë½Å½ÇÆĞ. ¹æ³ª°¡±â ½ÇÆĞ");
+            Debug.LogError("ì„œë²„ì™€ í†µì‹ ì‹¤íŒ¨. ë°©ë‚˜ê°€ê¸° ì‹¤íŒ¨");
         }
-    }    
+    }
 
     #endregion
 
-    private async Task CountDownAsync(int countNum)
-    {
-        invisibleWall.SetActive(true);
-        count.gameObject.SetActive(true);
-
-        while (countNum > 0)
-        {
-            count.text = countNum--.ToString();
-            await Task.Delay(1000);
-        }
-        count.gameObject.SetActive(false);
-    }
 
 }

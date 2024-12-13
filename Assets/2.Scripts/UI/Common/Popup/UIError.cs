@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+using System;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +22,14 @@ public class UIError : UIBase
 
     public override void Opened(object[] param)
     {
-        SetInfo((GlobalFailCode)param[0]);
+        if (param[0] is GlobalFailCode info)
+        {
+            SetInfo(info);
+        }
+        else if (param[0] is string infoStr)
+        {
+            SetInfo(infoStr);
+        }
         countdownCts = new();
         countdownTask = CountDownAsync(waitSeconds, countdownCts.Token);
     }
@@ -37,7 +43,6 @@ public class UIError : UIBase
             countdownCts = null;
         }
     }
-
 
     private void FixedUpdate()
     {
@@ -68,10 +73,17 @@ public class UIError : UIBase
 
     public void SetInfo(GlobalFailCode errorNum, string titleText = null)
     {
-        sbTitle.Clear().Append(titleText != null ? titleText : "");
+        sbTitle.Clear().Append(titleText ?? "Warning");
         titleTMP.text = sbTitle.ToString();
+        sbInfo.Clear().AppendLine(GameManager.Instance.failCodeDic[(int)errorNum]);
+        infoTMP.text = sbInfo.ToString();
+    }
 
-        sbInfo.Clear().AppendLine( errorNum.ToString() );
+    public void SetInfo(string infoStr, string titleText = null)
+    {
+        sbTitle.Clear().Append(titleText ?? "Info");
+        titleTMP.text = sbTitle.ToString();
+        sbInfo.Clear().AppendLine(infoStr);
         infoTMP.text = sbInfo.ToString();
     }
 

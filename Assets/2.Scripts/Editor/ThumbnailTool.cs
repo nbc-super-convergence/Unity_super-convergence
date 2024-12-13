@@ -4,7 +4,7 @@ using System.IO;
 
 public class ThumbnailTool : EditorWindow
 {
-    private string prefabPath = "Prefabs/MyPrefab"; // Resources 폴더 하위 경로
+    private string prefabPath = "Camera/Blue"; // Resources 폴더 하위 경로
     private RenderTexture renderTexture;
     private Camera thumbnailCamera;
     private GameObject tempInstance;
