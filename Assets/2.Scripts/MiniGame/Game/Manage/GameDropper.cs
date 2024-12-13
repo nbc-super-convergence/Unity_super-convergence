@@ -62,6 +62,8 @@ public class GameDropper : IGame
             miniToken.EnableMiniToken();
 
             Vector3 initPos = GetSlotPosition(p.Slot);
+            gameData.curSlot = p.Slot;
+
             miniToken.transform.localPosition = initPos;
             miniToken.MiniData.nextPos = initPos;
             miniToken.MiniData.rotY = p.Rotation;
