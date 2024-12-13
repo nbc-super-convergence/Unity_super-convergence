@@ -156,30 +156,35 @@ public class GameCourtshipDance : IGame
 
     #region 초기화
 
-    /// <summary>
-    /// 토큰의 위치 지정과 애니메이터 교체를 수행.
-    /// 입력 교체
-    /// </summary>
-    /// <param name="players"></param>
     private void ResetPlayers(List<PlayerInfo> players)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
+        int[] teamSpawnCount = new int[2] { 0, 0 };
         foreach (var p in players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
             miniToken.EnableMiniToken();
             if (true)
+                map.TokenInit(miniToken);
+            if (!isTeamGame)
             {
                 //개인전 세팅. 팀가르기 없이 차례대로 배치하기. 커맨드보드를 4개 생성.
+                //개인전 세팅. 
                 miniToken.transform.position = map.spawnPosition[num].position;
                 miniToken.transform.rotation = map.spawnPosition[num].rotation;
                 map.TokenInit(miniToken);
+                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
             }
             else
             {
                 // 4명이면 2:2 팀전 세팅
+                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
+                int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
 
+                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
+                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
+                teamSpawnCount[teamIndex]++;
             }
             num++;
         }

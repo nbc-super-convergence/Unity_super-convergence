@@ -1,3 +1,4 @@
+using Google.Protobuf.Collections;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -127,9 +128,17 @@ public class UICourtshipDance : UIBase
         end.SetActive(true);
         yield return new WaitForSeconds(2f);
         end.SetActive(false);
-        MinigameManager.Instance.GetMiniToken(teamResults[0].SessionId[0]).MiniData.CurState = State.DanceUp;
-        // 1등은 우승 애니메이션 재생 루프
-        var info = MinigameManager.Instance.GetMiniToken(teamResults[0].SessionId[0]).GetAnimator().GetCurrentAnimatorStateInfo(1);
+        List<MiniToken> winTokens = new();
+        RepeatedField<string> winSessionIds = teamResults[0].SessionId;
+        foreach (var sessionId in winSessionIds)
+        {
+            winTokens.Add(MinigameManager.Instance.GetMiniToken(sessionId));
+        }
+        foreach (var winToken in winTokens)
+        {
+            winToken.MiniData.CurState = State.DanceUp;
+            winToken.GetAnimator().GetCurrentAnimatorStateInfo(1);
+        }
 
         yield return new WaitForSeconds(2f);
 
