@@ -227,6 +227,7 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * force, ForceMode.Impulse);
+        ThrowToServer();
     }
 
     /// <summary>
