@@ -27,7 +27,9 @@ public class UILobby : UIBase
     [Header("Button")]
     [SerializeField] private Button btnRefresh;
 
-    private TaskCompletionSource<bool> sourceTcs;
+    private TaskCompletionSource<bool> lobbyTcs;
+    private TaskCompletionSource<bool> roomTcs;
+    private TaskCompletionSource<bool> userTcs;
     private float elapseTime;
     
     public override void Opened(object[] param)
@@ -68,10 +70,10 @@ public class UILobby : UIBase
             }
         };
 
-        sourceTcs = new();
+        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await sourceTcs.Task;
+        bool isSuccess = await lobbyTcs.Task;
         if(isSuccess)
         {
             nameTxt.text = GameManager.Instance.myInfo.Nickname;
@@ -82,10 +84,27 @@ public class UILobby : UIBase
         }
     }
 
-    public void TrySetTask(bool isSuccess)
+    public enum eTcs
     {
-        bool boolll = sourceTcs.TrySetResult(isSuccess);
-        Debug.Log(boolll ? "성공" : "실패");
+        Default,
+        Lobby,
+        Room,
+        User
+    };
+    public void TrySetTask(bool isSuccess, eTcs type)
+    {
+        switch (type)
+        {
+            case eTcs.Lobby:
+                lobbyTcs.TrySetResult(isSuccess);
+                break;
+            case eTcs.Room:
+                roomTcs.TrySetResult(isSuccess);
+                break;
+            case eTcs.User:
+                userTcs.TrySetResult(isSuccess);
+                break;
+        }
     }
 
     #region 버튼 이벤트
@@ -107,10 +126,10 @@ public class UILobby : UIBase
                 SessionId = GameManager.Instance.myInfo.SessionId
             }
         };
-        sourceTcs = new();
+        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await sourceTcs.Task;
+        bool isSuccess = await lobbyTcs.Task;
         if (isSuccess)
         {
             SocketManager.Instance.isLobby = false;
@@ -167,9 +186,9 @@ public class UILobby : UIBase
                     SessionId = GameManager.Instance.myInfo.SessionId
                 }
             };
-            sourceTcs = new();
+            roomTcs = new();
             SocketManager.Instance.OnSend(roomPacket);
-            return await sourceTcs.Task;
+            return await roomTcs.Task;
         }, maxRetries, timeoutSeconds);
 
         if (!roomSuccess)
@@ -186,9 +205,9 @@ public class UILobby : UIBase
                     SessionId = GameManager.Instance.myInfo.SessionId
                 }
             };
-            sourceTcs = new();
+            userTcs = new();
             SocketManager.Instance.OnSend(userPacket);
-            return await sourceTcs.Task;
+            return await userTcs.Task;
         }, maxRetries, timeoutSeconds);
 
         if (!userSuccess)
@@ -231,10 +250,10 @@ public class UILobby : UIBase
                 RoomId = roomData.RoomId
             }
         };
-        sourceTcs = new();
+        lobbyTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await sourceTcs.Task;
+        bool isSuccess = await lobbyTcs.Task;
         if (isSuccess)
         {
         }
@@ -310,11 +329,6 @@ public class UILobby : UIBase
                 Destroy(userMap[userName].gameObject);
             }
             userMap.Remove(userName);
-        }
-
-        foreach (Transform child in userParent)
-        {
-            Destroy(child.gameObject);
         }
     }
 

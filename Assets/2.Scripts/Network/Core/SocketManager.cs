@@ -73,8 +73,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.LobbyJoinResponse;
         GameManager.Instance.myInfo.SetUserData(response.User);
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
-        if ((int)response.FailCode != 0)
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
+
+        if (response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -84,7 +85,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyLeaveResponse(GamePacket packet)
     {
         var response = packet.LobbyLeaveResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
         if ((int)response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
@@ -95,7 +96,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyUserListResponse(GamePacket packet)
     {
         var response = packet.LobbyUserListResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.User);
         if (response.Success) UIManager.Get<UILobby>().SetUserList(response.UserList);
         if (response.FailCode != 0)
         {
@@ -111,7 +112,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void RoomListResponse(GamePacket packet)
     {
         var response = packet.RoomListResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Room);
         if (response.Success) UIManager.Get<UILobby>().SetRoomList(response.Rooms);
         if ((int)response.FailCode != 0)
         {
@@ -135,7 +136,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
         if (response.Success)
         {
             UIManager.Hide<UILobby>();
