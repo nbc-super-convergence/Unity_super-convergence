@@ -13,7 +13,7 @@ public class Bomb : MonoBehaviour
 
     private float coolTime;
 
-    private void OnEnable()
+    private void Start()
     {
         colors.Clear();
         coolTime = 0.0f;
@@ -24,8 +24,6 @@ public class Bomb : MonoBehaviour
             var c = list[i].data.userInfo.Color;
             colors.Add(c);
         }
-
-        //timer = Random.Range(10f, 15f);
     }
 
     private void Update()
@@ -49,7 +47,7 @@ public class Bomb : MonoBehaviour
         {
             coolTime += Time.deltaTime;
 
-            if(coolTime >= 0.1f)
+            if (coolTime >= 0.1f)
             {
                 coolTime = 0.0f;
 
@@ -57,12 +55,7 @@ public class Bomb : MonoBehaviour
                 {
                     int c = colors[i];
 
-                    if (i == targetIndex || !colors.Contains(c))
-                    {
-                        Debug.Log(c);
-                        continue;
-                    }
-                    Debug.LogWarning(c);
+                    if (i == targetIndex || !colors.Contains(c)) continue;
 
                     Transform t = MinigameManager.Instance.miniTokens[c].transform;
 
@@ -126,9 +119,8 @@ public class Bomb : MonoBehaviour
     public void Explosion(string id)
     {
         MiniToken token = MinigameManager.Instance.GetMiniToken(id);
-        colors.Remove(token.MyColor);
 
-        Debug.LogWarning(token.MyColor);
+        colors.Remove(token.MyColor);
 
         if (MinigameManager.Instance.mySessonId == id)
         {
