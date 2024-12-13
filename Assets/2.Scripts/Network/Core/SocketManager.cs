@@ -5,14 +5,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     //Sample : http://wocjf84.synology.me:8418/ExternalSharing/Sparta_Node6th_Chapter5/src/branch/main/Assets/_Project/Scripts/Manager/SocketManager.cs
 
-    /* ¼ÒÄÏ ¸Å´ÏÀú °¡ÀÌµå
-     * »õ·Î¿î ÇÔ¼ö ¸¸µé ¶§ public void·Î ¸¸µé °Í. (public »çÀ¯ : ¸®ÇÃ·º¼ÇÀÇ Á¤»ó ÀÛµ¿)
-     * ÇÔ¼ö¸í PayloadOneOfCase Enum°ú ¸ÂÃâ °Í.
-     * ÀÎÀÚ´Â GamePacket gamePacket.
+    /* ì†Œì¼“ ë§¤ë‹ˆì € ê°€ì´ë“œ
+     * ìƒˆë¡œìš´ í•¨ìˆ˜ ë§Œë“¤ ë•Œ public voidë¡œ ë§Œë“¤ ê²ƒ. (public ì‚¬ìœ  : ë¦¬í”Œë ‰ì…˜ì˜ ì •ìƒ ì‘ë™)
+     * í•¨ìˆ˜ëª… PayloadOneOfCase Enumê³¼ ë§ì¶œ ê²ƒ.
+     * ì¸ìëŠ” GamePacket gamePacket.
      */
 
     #region Parse Messages
-    //»õ·Î¿î º¤ÅÍ ¼±¾ğ (ÀÓ½Ã·Î)
+    //ìƒˆë¡œìš´ ë²¡í„° ì„ ì–¸ (ì„ì‹œë¡œ)
     public static Vector ToVector(Vector3 other)
     {
         return new Vector
@@ -34,7 +34,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
-    #region °øÅë
+    #region ê³µí†µ
     public void CloseSocketNotification(GamePacket packet)
     {
         var response = packet.CloseSocketNotification;
@@ -42,7 +42,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
     #endregion
 
-    #region ÀÎÁõ ¼­¹ö
+    #region ì¸ì¦ ì„œë²„
     public void RegisterResponse(GamePacket packet)
     {
         var response = packet.RegisterResponse;
@@ -68,13 +68,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     #endregion
 
 
-    #region ·Îºñ ¼­¹ö
+    #region ë¡œë¹„ ì„œë²„
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
         GameManager.Instance.myInfo.SetUserData(response.User);
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
-        if ((int)response.FailCode != 0)
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
+
+        if (response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -84,8 +85,20 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyLeaveResponse(GamePacket packet)
     {
         var response = packet.LobbyLeaveResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
         if ((int)response.FailCode != 0)
+        {
+            UIManager.Show<UIError>(response.FailCode);
+            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+        }
+    }
+
+    public void LobbyUserListResponse(GamePacket packet)
+    {
+        var response = packet.LobbyUserListResponse;
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.User);
+        if (response.Success) UIManager.Get<UILobby>().SetUserList(response.UserList);
+        if (response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -94,12 +107,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #endregion
 
-    #region ·ë ¼­¹ö
+    #region ë£¸ ì„œë²„
 
     public void RoomListResponse(GamePacket packet)
     {
         var response = packet.RoomListResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Room);
         if (response.Success) UIManager.Get<UILobby>().SetRoomList(response.Rooms);
         if ((int)response.FailCode != 0)
         {
@@ -123,7 +136,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomResponse;
-        UIManager.Get<UILobby>().TrySetTask(response.Success);
+        UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
         if (response.Success)
         {
             UIManager.Hide<UILobby>();
