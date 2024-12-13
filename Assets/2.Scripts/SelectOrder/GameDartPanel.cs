@@ -64,6 +64,7 @@ public class GameDartPanel : MonoBehaviour
         GamePacket packet = new();
         packet.DartPannelSyncRequest = new()
         {
+            SessionId = MinigameManager.Instance.mySessonId,
             Location = SocketManager.ToVector(transform.localPosition)
         };
         SocketManager.Instance.OnSend(packet);

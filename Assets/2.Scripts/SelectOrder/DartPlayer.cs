@@ -73,7 +73,10 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
-    public int MyColor { get; private set; }  //내 플레이어 인덱스
+    public int MyColor;  //내 플레이어 인덱스
+
+    //Server
+    public bool IsClient { get; private set; }
 
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
@@ -87,15 +90,14 @@ public class DartPlayer : MonoBehaviour
         //UI만 보내는거 말고 없는것 같다......
         SetAimRange(-20f, 20f);
         SetForceRange(1.5f, 3f);
+
+        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
     }
 
     private void Start()
     {
-        Debug.Log($"{GameManager.Instance.myInfo.Nickname}, " +
-            $"{GameManager.Instance.myInfo.Color}");
-
         //이게 내 유저라면 이벤트 실행
-        if (GameManager.Instance.myInfo.Color.Equals(MyColor))
+        if (IsClient)
         {
             UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
@@ -153,7 +155,7 @@ public class DartPlayer : MonoBehaviour
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
 
-        if (GameManager.Instance.myInfo.Color.Equals(MyColor))
+        if (IsClient)
         {
             orderEvent.OnAimEvent -= SetAim;
             orderEvent.OnShootEvent -= PressKey;
@@ -179,6 +181,7 @@ public class DartPlayer : MonoBehaviour
         GamePacket packet = new();
         packet.DartSyncRequest = new()
         {
+            SessionId = MinigameManager.Instance.mySessonId,
             Angle = SocketManager.ToVector(GetAim)
         };
 

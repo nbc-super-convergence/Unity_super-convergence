@@ -80,12 +80,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
 
         GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
-        if (panel.GetReverse() > 0)
-            panel.moveDirection = Vector3.right;
-        else if (panel.GetReverse() < 0)
-            panel.moveDirection = Vector3.left;
-        else
-            panel.moveDirection = Vector3.zero;
+        if (MinigameManager.Instance.mySessonId.Equals(GameManager.Instance.myInfo.SessionId))
+        {
+            if (panel.GetReverse() > 0)
+                panel.moveDirection = Vector3.right;
+            else if (panel.GetReverse() < 0)
+                panel.moveDirection = Vector3.left;
+            else
+                panel.moveDirection = Vector3.zero;
+        }
     }
 
     public void DartSyncNotification(GamePacket gamePacket)
