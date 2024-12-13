@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class SocketManager_Dart : TCPSocketManagerBase<SocketManager>
+public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     public void DartMiniGameReadyNotification(GamePacket gamePacket)
     {
