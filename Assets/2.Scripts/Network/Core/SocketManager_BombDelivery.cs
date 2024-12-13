@@ -66,10 +66,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.BombGameOverNotification;
 
-        Dictionary<string, int> rankings = new();
+        List<(int Rank, string SessionId)> rankings = new();
         foreach (var r in response.Ranks)
         {
-            rankings.Add(r.SessionId, r.Rank_);
+            rankings.Add((r.Rank_, r.SessionId));
         }
 
         //UI Minigame Result 판넬 호출
