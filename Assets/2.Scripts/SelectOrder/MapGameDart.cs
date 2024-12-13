@@ -13,10 +13,6 @@ public class MapGameDart : MapBase
     private void Awake()
     {
         //각 플레이어의 인덱스 설정 (내가 몇P인지 위해)
-        for (int i = 0; i < DartOrder.Count; i++)
-        {
-            DartOrder[i].SetPlayerIndex(i);
-        }
     }
 
     private void Start()
@@ -30,6 +26,22 @@ public class MapGameDart : MapBase
         {
             //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
         }
+    }
+
+    /// <summary>
+    /// 플레이어 인원만큼 다트에 인덱스 추가
+    /// </summary>
+    /// <param name="playerCnt"></param>
+    public void SetDartPlayers(int playerCnt)
+    {
+        if (playerCnt < DartOrder.Count)
+        {
+            for (int i = 0; i < playerCnt; i++)
+            {
+                DartOrder[i].SetPlayerIndex(i);
+            }
+        }
+        else return;
     }
 
     /// <summary>
