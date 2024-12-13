@@ -89,6 +89,7 @@ public class CommandBoard : MonoBehaviour
         {
             curQueueInfo = queuePool.Dequeue();
 
+            // 팀전의 경우와 개인전의 경우
             if (!isFirst && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
@@ -99,7 +100,7 @@ public class CommandBoard : MonoBehaviour
                 };
                 SocketManager.Instance.OnSend(packet);
             }
-            isFirst = true;
+            isFirst = false;
         }
         else
         {
