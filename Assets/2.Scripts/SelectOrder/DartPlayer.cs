@@ -95,6 +95,11 @@ public class DartPlayer : MonoBehaviour
         SetForceRange(1.5f, 3f);
     }
 
+    private void Start()
+    {
+        UIManager.Get<UIMinigameDart>().ShowForcePower();
+    }
+
     /// <summary>
     /// 각 속성의 최소 최대 결정
     /// </summary>
@@ -143,6 +148,8 @@ public class DartPlayer : MonoBehaviour
 
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
+
+        UIManager.Get<UIMinigameDart>().HideForcePower();
 
         if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
         {
@@ -194,7 +201,10 @@ public class DartPlayer : MonoBehaviour
         if(actionPhase == 1)
         {
             if (!press)
+            {
                 NowShoot();
+                actionPhase = 0;
+            }
         }
     }
 
