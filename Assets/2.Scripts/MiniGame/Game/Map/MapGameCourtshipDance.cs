@@ -1,14 +1,25 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapGameCourtshipDance : MapBase
 {
     public List<Transform> spawnPosition;
-
+    [SerializeField] private GameObject indicator;
+    public Transform mySpawnPos;
     private int danceLayerIndex = -1;
     private int baseLayerIndex = 0;
-
     private Dictionary<int, Transform> prevTranform = new();
+
+    private AudioSource bgm;
+
+    private void Start()
+    {
+        bgm = GetComponent<AudioSource>();
+        //bgm.Play();
+    }
+
+    
 
     public void TokenInit(MiniToken token)
     {
@@ -22,8 +33,7 @@ public class MapGameCourtshipDance : MapBase
         token.GetComponent<Rigidbody>().isKinematic = true;
         token.GetAnimator().SetLayerWeight(baseLayerIndex, 0);
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 1);        
-        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceWait);
-        //token.InputHandler.ChangeActionMap(eActionMap.SimpleInput.ToString());
+        AnimState.ChangePlayerAnimState(token.GetAnimator(), State.DanceWait);        
     }
 
     public void TokenReset(MiniToken token)
@@ -36,6 +46,21 @@ public class MapGameCourtshipDance : MapBase
         token.GetAnimator().SetLayerWeight(danceLayerIndex, 0);
         AnimState.ChangePlayerAnimState(token.GetAnimator(), State.Idle);
         token.InputHandler.DisableSimpleInput();
-        //token.InputHandler.ChangeActionMap(eActionMap.MiniPlayerToken.ToString());
+    }
+
+    public void ShowIndicator()
+    {
+        Vector3 pos = MinigameManager.Instance.GetMyToken().transform.position;
+        StartCoroutine(CoroutineIndicator(pos));
+    }
+
+    private IEnumerator CoroutineIndicator(Vector3 targetPosition)
+    {
+        indicator.transform.position = targetPosition;
+        indicator.gameObject.SetActive(true);
+
+        yield return new WaitUntil(() => UIManager.Get<UICourtshipDance>().myBoard.isFirstInput);
+
+        indicator.gameObject.SetActive(false);
     }
 }

@@ -3,14 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-// 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
     public UICourtshipDance uiCourtship;
     public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
-    //public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
@@ -73,21 +71,6 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            //if (!isTeamGame)
-            //{
-            //    RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
-
-            //    GamePacket packet = new();
-
-            //    packet.DanceTableCreateRequest = new()
-            //    {
-            //        SessionId = GameManager.Instance.myInfo.SessionId,
-            //    };
-            //    packet.DanceTableCreateRequest.DancePools.Add(sp);
-            //    //sourceTcs = new();
-            //    SocketManager.Instance.OnSend(packet);
-            //}
-
             RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
             GamePacket packet = new();
             packet.DanceTableCreateRequest = new()
@@ -106,10 +89,6 @@ public class GameCourtshipDance : IGame
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
     }
 
-    //public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
-    //{
-    //    commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
-    //}
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
         teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
@@ -126,10 +105,12 @@ public class GameCourtshipDance : IGame
         {
             Action action = () =>
             {
-                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);                
-                uiCourtship.StartTimer();
-                uiCourtship.ShowDanceBoard();
+                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
             };
+            uiCourtship.ShowDanceBoard();
+            uiCourtship.StartTimer();
+            var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+            map.ShowIndicator();
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
