@@ -53,7 +53,7 @@ public class ChatBubbleEditor : Editor
         DrawDefaultInspector();
         ChatSizeFitter chatBubble = (ChatSizeFitter)target;
 
-        if (GUILayout.Button("»õ·Î°íÄ§"))
+        if (GUILayout.Button("ìƒˆë¡œê³ ì¹¨"))
         {
             chatBubble.UpdateSpeechBubbleSize();
         }
