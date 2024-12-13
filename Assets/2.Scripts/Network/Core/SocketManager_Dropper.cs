@@ -76,7 +76,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DropLevelEndNotification;
         int[] holes = response.Holes.ToArray();
 
-        //글씨 변경, 2.5초 input 잠금.
         StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
 
         //1초 후 구멍뚫기.
@@ -91,18 +90,18 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DropGameOverNotification;
 
         /*필요 데이터 파싱*/
-        Dictionary<string, int> rankings = new();
+        List<(int Rank, string SessionId)> rankings = new();
         foreach (var r in response.Ranks)
         {
-            rankings.Add(r.SessionId, r.Rank_);
+            rankings.Add((r.Rank_, r.SessionId));
         }
 
         StartCoroutine(DropGameEndDelay(rankings, response.EndTime));
         
     }
-    private IEnumerator DropGameEndDelay(Dictionary<string, int> rankings, long endTime)
+    private IEnumerator DropGameEndDelay(List<(int Rank, string SessionId)> rankings, long endTime)
     {
-        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= endTime - 2000);
+        yield return new WaitUntil(() => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() >= endTime - 6000);
         //UI Minigame Result 판넬 호출
         MinigameManager.Instance.curMiniGame.GameEnd(rankings, endTime);
 
