@@ -10,6 +10,7 @@ public class GameDartPanel : MonoBehaviour
     private float pannelSpeed = 0.3f;   //다트판 이동 속도
     private bool swapDirection = false;
     public bool isMove = true;  //움직이고 있는지
+    public Vector3 moveDirection = Vector3.zero;
 
     private void Awake()
     {
@@ -33,12 +34,38 @@ public class GameDartPanel : MonoBehaviour
             else if (transform.localPosition.x > xPositionLimit)
                 swapDirection = false;
 
-            transform.Translate((swapDirection ? Vector3.right : Vector3.left) * (Time.deltaTime * pannelSpeed));
+            ApplyMove();
+
+            SendServer();
         }
+    }
+
+    private void ApplyMove()
+    {
+        transform.Translate(moveDirection * (Time.deltaTime * pannelSpeed));
+    }
+
+    /// <summary>
+    /// Limit 검사
+    /// </summary>
+    /// <returns>양수면 오른쪽 음수면 왼쪽</returns>
+    public int GetReverse()
+    {
+        if (transform.localPosition.x < -xPositionLimit)
+            return 1;
+        else if (transform.localPosition.x > xPositionLimit)
+            return -1;
+        else
+            return 0;
     }
 
     private void SendServer()
     {
         GamePacket packet = new();
+        packet.DartPannelSyncRequest = new()
+        {
+            Location = SocketManager.ToVector(transform.localPosition)
+        };
+        SocketManager.Instance.OnSend(packet);
     }
 }
