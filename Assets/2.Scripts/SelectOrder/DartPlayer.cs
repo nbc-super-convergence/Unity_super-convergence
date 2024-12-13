@@ -136,6 +136,8 @@ public class DartPlayer : MonoBehaviour
         transform.rotation = Quaternion.Euler(CurAim);
 
         Debug.DrawRay(transform.position, -transform.forward * 2);
+
+        ThrowToServer();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -149,12 +151,11 @@ public class DartPlayer : MonoBehaviour
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
 
-        UIManager.Get<UIMinigameDart>().HideForcePower();
-
         if (GameManager.Instance.myInfo.Color.Equals(MyPlayerIndex))
         {
             orderEvent.OnAimEvent -= SetAim;
             orderEvent.OnShootEvent -= PressKey;
+            UIManager.Get<UIMinigameDart>().HideForcePower();
         }
         ThrowToServer();
     }
@@ -216,6 +217,15 @@ public class DartPlayer : MonoBehaviour
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
         ThrowToServer();
+    }
+
+    /// <summary>
+    /// 상대방이 쐈을때
+    /// </summary>
+    public void AnotherShoot(float force)
+    {
+        rgdby.useGravity = true;
+        rgdby.AddForce(-transform.forward * force, ForceMode.Impulse);
     }
 
     /// <summary>
