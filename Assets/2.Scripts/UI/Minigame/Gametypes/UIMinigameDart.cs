@@ -6,11 +6,6 @@ using UnityEngine.UI;
 public class UIMinigameDart : UIBase
 {
     #region UI 속성
-    [Header("Backgrounds")]
-    [SerializeField] private Image background;
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private Image howTo;
-
     [Header("Force Power")]
     [SerializeField] private Slider forcePower;
 
