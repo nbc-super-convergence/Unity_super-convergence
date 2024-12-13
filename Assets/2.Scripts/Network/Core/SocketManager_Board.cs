@@ -252,11 +252,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         SceneManager.LoadScene(0);
 
-        yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0 && StartCanvas.isSet);
+        //yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0 && StartCanvas.isSet);
 
         yield return UIManager.Show<UIRoom>(response.Room);
     }
-
     #endregion
 
 }
