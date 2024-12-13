@@ -134,6 +134,9 @@ public class GameDart : IGame
     {
         ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        //DartOrder데이터 설정
+        DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
     }
     public void DisableUI()
     {
