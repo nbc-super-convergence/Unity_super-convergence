@@ -32,7 +32,7 @@ public class DartPlayer : MonoBehaviour
             DiceGameData.Angle = SocketManager.ToVector(CurAim);
         }
     }
-    public Vector2 GetAim = Vector2.zero;   //입력 Aim
+    private Vector2 GetAim = Vector2.zero;   //입력 Aim
 
     private float curForce = 2f;
     private float minForce, maxForce;
@@ -92,7 +92,7 @@ public class DartPlayer : MonoBehaviour
         SetForceRange(1.5f, 3f);
 
         IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
-        Debug.Log($"{gameObject.name}, {IsClient}");
+        //Debug.Log($"{gameObject.name}, {IsClient}");
     }
 
     private void Start()
@@ -142,7 +142,7 @@ public class DartPlayer : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(CurAim);
 
-        Debug.DrawRay(transform.position, -transform.forward * 2);
+        //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -162,7 +162,6 @@ public class DartPlayer : MonoBehaviour
             orderEvent.OnShootEvent -= PressKey;
             UIManager.Get<UIMinigameDart>().HideForcePower();
         }
-        ThrowToServer();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -229,17 +228,19 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
-        ThrowToServer();
+        if(IsClient)
+            ThrowToServer();
     }
 
     /// <summary>
-    /// 상대방이 쐈을때
+    /// 쐈다는 신호를 받기
     /// </summary>
-    public void AnotherShoot(float force)
+    /// <param name="data"></param>
+    public void ApplyShoot(DartGameData data)
     {
-        rgdby.useGravity = true;
-        rgdby.AddForce(-transform.forward * force, ForceMode.Impulse);
-        ThrowToServer();
+        CurAim = SocketManager.ToVector3(data.Angle);
+        CurForce = data.Power;
+        NowShoot();
     }
 
     /// <summary>
@@ -264,7 +265,7 @@ public class DartPlayer : MonoBehaviour
     /// <summary>
     /// 해당 데이터를 서버에 전송
     /// </summary>
-    public void ThrowToServer()
+    private void ThrowToServer()
     {
         GamePacket packet = new();
         var data = packet.DartGameThrowRequest = new()

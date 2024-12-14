@@ -42,16 +42,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DartGameThrowNotification;
         Debug.Log(response);
 
-        string myId = GameManager.Instance.myInfo.SessionId;
-        int idx = GameManager.Instance.myInfo.Color;
-        foreach(var dart in response.Result)
+        int userIdx;
+        foreach(var item in GameManager.Instance.SessionDic)
         {
-            if(GameManager.Instance.SessionDic[dart.SessionId].SessionId.Equals(myId))
+            for (int i = 0; i < response.Result.Count; i++)
             {
-                Debug.Log($"{GameManager.Instance.myInfo.Nickname} : 내가 던졌다.");
-                MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[idx].AnotherShoot(dart.Power);
+                if(response.Result[i].SessionId.Equals(item.Key))
+                {
+                    userIdx = i;
+                    Debug.Log(userIdx);
+                    MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx].ApplyShoot(response.Result[i]);
+                }
             }
         }
+
+
     }
 
     public void DartGameOverNotification(GamePacket gamePacket)
@@ -93,10 +98,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         string sessionId = response.SessionId;
         int userIdx = GameManager.Instance.SessionDic[sessionId].Color;
-        //Debug.Log($"{sessionId} {userIdx} {response.Angle}");
+        string nickname = GameManager.Instance.SessionDic[sessionId].Nickname;
+
+        Debug.Log($"{sessionId} {userIdx} {response.Angle} {nickname}");
 
         DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];
 
-        dartUser.CurAim = ToVector3(response.Angle);
+        dartUser.CurAim += ToVector3(response.Angle);
     }
 }
