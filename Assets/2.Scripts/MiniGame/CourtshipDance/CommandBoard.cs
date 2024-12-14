@@ -350,11 +350,14 @@ public class CommandBoard : MonoBehaviour
 
         int replaceColor = GameManager.Instance.SessionDic[replacementSessionId].Color;
 
-        for (int i = 0; i < curCommandQueue.Count; i++) 
+        if (curCommandQueue != null)
         {
-            var b = curCommandQueue.Dequeue();
-            b.ColorChange(replaceColor);
-            curCommandQueue.Enqueue(b);
+            for (int i = 0; i < curCommandQueue.Count; i++)
+            {
+                var b = curCommandQueue.Dequeue();
+                b.ColorChange(replaceColor);
+                curCommandQueue.Enqueue(b);
+            }
         }
 
         Queue<Queue<BubbleInfo>> tempQueuePool = new Queue<Queue<BubbleInfo>>();

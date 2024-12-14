@@ -44,6 +44,8 @@ public class UICourtshipDance : UIBase
             }
             boardDic.Add(team.Key, board);
 
+            board.MakeNextBoard();
+
             if(game.GetMyTeam() == team.Key)
             {
                 myBoard = board;
@@ -57,13 +59,13 @@ public class UICourtshipDance : UIBase
     //}
     
     // 처음 실행용.
-    public void ShowDanceBoard()
-    {
-        foreach( var board in boardDic.Values)
-        {
-            board.MakeNextBoard();
-        }
-    }
+    //public void ShowDanceBoard()
+    //{
+    //    foreach( var board in boardDic.Values)
+    //    {
+    //        board.MakeNextBoard();
+    //    }
+    //}
 
     // 카운트다운이 끝나면 실행하기
     public void StartTimer()
