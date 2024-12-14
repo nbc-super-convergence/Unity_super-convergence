@@ -136,4 +136,23 @@ public class UICourtshipDance : UIBase
         game.GameEnd(rankings, endTime);
     }
     #endregion
+
+    #region 게임 중 Disconnect
+    public void DisconnectNoti(string disconnectedSessionId, string replacementSessionId)
+    {
+        if (!isTeamGame) return;
+
+        if(myBoard.teamSessionIds.Contains(disconnectedSessionId))
+        {
+            // 우리 팀 처리
+            myBoard.ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+        }
+        else
+        {
+            // 남의 팀 처리
+            int disconnectTeam = game.GetPlayerTeam(disconnectedSessionId);
+            boardDic[disconnectTeam].ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+        }
+    }
+    #endregion
 }

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.UI;
 
 public class CommandBoard : MonoBehaviour
@@ -22,6 +21,7 @@ public class CommandBoard : MonoBehaviour
     private bool isClient = false;
     public bool isFirst = true;
     public bool isFirstInput = false;
+    private bool isDisconnected = false;
     private List<MiniToken> tokens = new();
     private MiniToken myToken;
     //private MiniTokenData tokenData;
@@ -33,6 +33,9 @@ public class CommandBoard : MonoBehaviour
     public int round = 0;
     private AudioClip audioClip;
     private TaskCompletionSource<bool> sourceTcs;
+
+    public int tableCompleteCount = 0;
+    public long tableCompleteTime = 0;
 
     public void TrySetTask(bool isSuccess)
     {
@@ -60,7 +63,7 @@ public class CommandBoard : MonoBehaviour
     {
         curCommandQueue = MakeCommandQueue();
         AdjustBackground(curQueueInfo.Count);
-        round++;
+        //round++;
     }
 
     private void AdjustBackground(int bubbleCount)
@@ -90,7 +93,7 @@ public class CommandBoard : MonoBehaviour
             curQueueInfo = queuePool.Dequeue();
 
             // 팀전의 경우와 개인전의 경우
-            if (!isFirst && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
+            if (!isFirst&& !isDisconnected && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
@@ -101,6 +104,8 @@ public class CommandBoard : MonoBehaviour
                 SocketManager.Instance.OnSend(packet);
             }
             isFirst = false;
+            tableCompleteCount++;
+            tableCompleteTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
         else
         {
@@ -119,6 +124,12 @@ public class CommandBoard : MonoBehaviour
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
             myToken.InputHandler.DisableSimpleInput();
+            tableCompleteCount++;
+            tableCompleteTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+        }
+         if(isDisconnected)
+        {
+            isDisconnected = false;
         }
 
         Queue<ArrowBubble> queue = new();
@@ -348,4 +359,39 @@ public class CommandBoard : MonoBehaviour
         }
     }
     #endregion
+
+    public void ChangeInfoPool(string disconnectedSessionId, string replacementSessionId)
+    {
+        if (queuePool == null || teamSessionIds.Contains(disconnectedSessionId) || teamSessionIds.Contains(replacementSessionId))
+            return;
+
+        int replaceColor = GameManager.Instance.SessionDic[replacementSessionId].Color;
+
+        queuePool.Enqueue(curQueueInfo);
+
+        Queue<Queue<BubbleInfo>> tempQueuePool = new Queue<Queue<BubbleInfo>>();
+
+        while (queuePool.Count > 0)
+        {
+            Queue<BubbleInfo> innerQueue = queuePool.Dequeue();
+            Queue<BubbleInfo> tempInnerQueue = new Queue<BubbleInfo>();
+
+            while (innerQueue.Count > 0)
+            {
+                BubbleInfo bubbleInfo = innerQueue.Dequeue();
+                if (bubbleInfo.sessionId == disconnectedSessionId)
+                {
+                    bubbleInfo.SetSessionId(replacementSessionId);
+                    bubbleInfo.SetColor(replaceColor);
+                }
+                tempInnerQueue.Enqueue(bubbleInfo);
+            }
+
+            tempQueuePool.Enqueue(tempInnerQueue);
+        }
+
+        queuePool = tempQueuePool;
+        isDisconnected = true;
+        MakeNextBoard();
+    }
 }
