@@ -6,8 +6,10 @@ public class BoardCanvas : MonoBehaviour
 {
     [SerializeField] private List<Transform> parents = new List<Transform>();
 
-    void Start()
+    async void Start()
     {
         UIManager.SetParents(parents);
+
+        await UIManager.Show<BoardUI>();
     }
 }

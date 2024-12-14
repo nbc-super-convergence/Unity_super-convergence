@@ -14206,7 +14206,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 519d655912ec3464d9915a13e24cd1c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDontDestroyOnLoad: 1
+  isDontDestroyOnLoad: 0
   boardCamera: {fileID: 259411973}
   miniParent: {fileID: 1316574483}
   curMap: {fileID: 0}

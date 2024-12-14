@@ -89,7 +89,8 @@ public class CommandBoard : MonoBehaviour
         {
             curQueueInfo = queuePool.Dequeue();
 
-            if (!isFirst && isClient && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
+            // 팀전의 경우와 개인전의 경우
+            if (!isFirst && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
@@ -99,13 +100,13 @@ public class CommandBoard : MonoBehaviour
                 };
                 SocketManager.Instance.OnSend(packet);
             }
-            isFirst = true;
+            isFirst = false;
         }
         else
         {
             // 완료 로직
             // 완료 효과
-            if (isClient && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
+            if (teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
                 packet.DanceTableCompleteRequest = new()
