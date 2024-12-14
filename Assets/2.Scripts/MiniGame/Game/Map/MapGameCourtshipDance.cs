@@ -61,19 +61,19 @@ public class MapGameCourtshipDance : MapBase
         indicator.gameObject.SetActive(false);
     }
 
-    public void DanceCloseSocketNotification(string a, string b)
+    public void DanceCloseSocketNotification(string disconnectedSessionId, string replacementSessionId)
     {
-        StartCoroutine(CoroutineCloseSocket(a, b));
+        StartCoroutine(CoroutineCloseSocket(disconnectedSessionId, replacementSessionId));
     }
 
-    private IEnumerator CoroutineCloseSocket(string a, string b)
+    private IEnumerator CoroutineCloseSocket(string disconnectedSessionId, string replacementSessionId)
     {
         // 처리되기까지 입력 막아서 오작동 회피
         var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
         yield return new WaitUntil(() => game.isBoardReady);
         var myToken = MinigameManager.Instance.GetMyToken();
         myToken.InputHandler.isEnable = false;
-        UIManager.Get<UICourtshipDance>().DisconnectNoti(a, b);
+        UIManager.Get<UICourtshipDance>().DisconnectNoti(disconnectedSessionId, replacementSessionId);
         myToken.InputHandler.isEnable = true;
     }
 }
