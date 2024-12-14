@@ -43,16 +43,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         Debug.Log(response);
 
         int userIdx;
-        foreach(var item in GameManager.Instance.SessionDic)
+        foreach(var item in response.Result)
         {
-            for (int i = 0; i < response.Result.Count; i++)
+            if(item.SessionId.Equals(MinigameManager.Instance.mySessonId))
             {
-                if(response.Result[i].SessionId.Equals(item.Key))
-                {
-                    userIdx = i;
-                    Debug.Log(userIdx);
-                    MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx].ApplyShoot(response.Result[i]);
-                }
+                Debug.Log($"나다");
             }
         }
 
@@ -102,8 +97,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         Debug.Log($"{sessionId} {userIdx} {response.Angle} {nickname}");
 
-        DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];
-
-        dartUser.CurAim = ToVector3(response.Angle);
+        if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
+        {
+            DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];
+            dartUser.CurAim = ToVector3(response.Angle);
+        }
     }
 }

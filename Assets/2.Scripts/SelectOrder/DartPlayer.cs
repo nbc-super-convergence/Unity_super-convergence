@@ -138,10 +138,10 @@ public class DartPlayer : MonoBehaviour
         if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
+            SendDartSync();
         }
 
-        transform.rotation = Quaternion.Euler(CurAim);
-
+            transform.rotation = Quaternion.Euler(CurAim);
         //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
@@ -178,14 +178,8 @@ public class DartPlayer : MonoBehaviour
     private void SetAim(Vector2 direction)
     {
         GetAim = direction;
-        GamePacket packet = new();
-        packet.DartSyncRequest = new()
-        {
-            SessionId = MinigameManager.Instance.mySessonId,
-            Angle = SocketManager.ToVector(CurAim)
-        };
 
-        SocketManager.Instance.OnSend(packet);
+        
     }
 
     /// <summary>
@@ -228,8 +222,7 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
-        if(IsClient)
-            ThrowToServer();
+        ThrowToServer();
     }
 
     /// <summary>
@@ -262,8 +255,23 @@ public class DartPlayer : MonoBehaviour
 
     }
 
+    #region 서버로 전송
     /// <summary>
-    /// 해당 데이터를 서버에 전송
+    /// 다트 조준 전송
+    /// </summary>
+    private void SendDartSync()
+    {
+        GamePacket packet = new();
+        packet.DartSyncRequest = new()
+        {
+            SessionId = MinigameManager.Instance.mySessonId,
+            Angle = SocketManager.ToVector(CurAim)
+        };
+        SocketManager.Instance.OnSend(packet);
+    }
+
+    /// <summary>
+    /// 다트 발사 전송
     /// </summary>
     private void ThrowToServer()
     {
@@ -278,4 +286,5 @@ public class DartPlayer : MonoBehaviour
         };
         SocketManager.Instance.OnSend(packet);
     }
+    #endregion
 }
