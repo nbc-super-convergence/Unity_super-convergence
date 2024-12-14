@@ -75,7 +75,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     /* 410 */
-    // 타이머가 다 끝나거나 모든 유저가 댄스풀을 다 마쳤을 때.
+    // 타이머가 다 끝나거나 한 유저가 댄스풀을 다 마쳤을 때.
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;

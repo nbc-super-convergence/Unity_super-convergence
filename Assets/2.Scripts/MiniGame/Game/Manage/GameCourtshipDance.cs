@@ -42,10 +42,6 @@ public class GameCourtshipDance : IGame
             }
         }
 
-        if (players.Count == 4)
-        {
-            isTeamGame = true;
-        }
         teamDic = new();
         foreach (var p in players)
         {
@@ -54,6 +50,11 @@ public class GameCourtshipDance : IGame
                 teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
             }
             teamDic[p.TeamNumber].Add(p);
+        }
+
+        if (teamDic[1].Count >= 2)
+        {
+            isTeamGame = true;
         }
 
         // 토큰 배치 및 세팅하기
@@ -83,7 +84,6 @@ public class GameCourtshipDance : IGame
         else
         {
             bool isSuccess = await sourceTcs.Task;
-            // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
         }
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
@@ -157,7 +157,6 @@ public class GameCourtshipDance : IGame
             }
             else
             {
-                // 4명이면 2:2 팀전 세팅
                 int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
                 int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
 

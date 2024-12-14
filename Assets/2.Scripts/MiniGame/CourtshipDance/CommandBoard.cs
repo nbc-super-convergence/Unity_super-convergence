@@ -18,15 +18,12 @@ public class CommandBoard : MonoBehaviour
     private Queue<Queue<BubbleInfo>> queuePool;
     private Queue<BubbleInfo> curQueueInfo;
 
-    private bool isClient = false;
     public bool isFirst = true;
     public bool isFirstInput = false;
     private bool isDisconnected = false;
     private List<MiniToken> tokens = new();
     private MiniToken myToken;
-    //private MiniTokenData tokenData;
     private UICourtshipDance uiCourtshipDance;
-    //public string SessionId { get; private set; }
     public List<string> teamSessionIds = new();
     public int TeamNumber { get; private set; }
     public int numOfbubbles = -1;
@@ -46,10 +43,6 @@ public class CommandBoard : MonoBehaviour
     {
         TeamNumber = teamNumber;
         queuePool = new(pool);
-        if (teamSessionIds.Contains(GameManager.Instance.myInfo.SessionId))
-        {
-            isClient = true;
-        }
         foreach(var item in teamSessionIds)
         {
             tokens.Add(MinigameManager.Instance.GetMiniToken(item));
@@ -63,7 +56,6 @@ public class CommandBoard : MonoBehaviour
     {
         curCommandQueue = MakeCommandQueue();
         AdjustBackground(curQueueInfo.Count);
-        //round++;
     }
 
     private void AdjustBackground(int bubbleCount)
@@ -92,7 +84,7 @@ public class CommandBoard : MonoBehaviour
         {
             curQueueInfo = queuePool.Dequeue();
 
-            // 팀전의 경우와 개인전의 경우
+            // 팀전의 경우 팀의 한명에게서만 리퀘스트를 보내게 함.
             if (!isFirst&& !isDisconnected && teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
@@ -109,8 +101,7 @@ public class CommandBoard : MonoBehaviour
         }
         else
         {
-            // 완료 로직
-            // 완료 효과
+            // 테이블 완료
             if (teamSessionIds[0] == GameManager.Instance.myInfo.SessionId)
             {
                 GamePacket packet = new();
@@ -147,12 +138,9 @@ public class CommandBoard : MonoBehaviour
 
     
 
-
     #region 플레이
-
     public bool isFail = false;
     private Queue<ArrowBubble> successQueue = new();
-
 
     /* 407 C2S_DanceKeyPressRequest*/
     // 본인 커맨드 보드에서만 호출됨.
@@ -173,14 +161,10 @@ public class CommandBoard : MonoBehaviour
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
-
         }
         else
         {
-            //onInputDetected?.Invoke(dir, true);
         }
-
-        
     }
 
     /* 408 */
@@ -223,7 +207,7 @@ public class CommandBoard : MonoBehaviour
         }
     }
     /* 409 */
-    
+    // 싱글모드 잔재
     //private void CheckInput(float rot, string sessionId)
     //{
     //    var target = curQueueInfo.Peek();
@@ -358,7 +342,6 @@ public class CommandBoard : MonoBehaviour
                 break;
         }
     }
-    #endregion
 
     public void ChangeInfoPool(string disconnectedSessionId, string replacementSessionId)
     {
@@ -394,4 +377,5 @@ public class CommandBoard : MonoBehaviour
         isDisconnected = true;
         MakeNextBoard();
     }
+    #endregion
 }
