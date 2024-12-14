@@ -34,7 +34,8 @@ public class CommandBoard : MonoBehaviour
     private AudioClip audioClip;
     private TaskCompletionSource<bool> sourceTcs;
 
-    
+    public int tableCompleteCount = 0;
+    public long tableCompleteTime = 0;
 
     public void TrySetTask(bool isSuccess)
     {
@@ -103,6 +104,8 @@ public class CommandBoard : MonoBehaviour
                 SocketManager.Instance.OnSend(packet);
             }
             isFirst = false;
+            tableCompleteCount++;
+            tableCompleteTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
         else
         {
@@ -121,6 +124,8 @@ public class CommandBoard : MonoBehaviour
             completeText.gameObject.SetActive(true);
             background.gameObject.SetActive(false);
             myToken.InputHandler.DisableSimpleInput();
+            tableCompleteCount++;
+            tableCompleteTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
          if(isDisconnected)
         {
