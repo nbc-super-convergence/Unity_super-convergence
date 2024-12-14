@@ -129,7 +129,7 @@ public class UICourtshipDance : UIBase
 
         yield return new WaitForSeconds(2f);
 
-        game.BeforeGameEnd();
+        game.BeforeGameEnd(winSessionIds);
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 

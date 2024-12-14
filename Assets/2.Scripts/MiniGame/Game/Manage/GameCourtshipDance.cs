@@ -123,12 +123,12 @@ public class GameCourtshipDance : IGame
         }
     }
 
-    public void BeforeGameEnd()
+    public void BeforeGameEnd(RepeatedField<string> winSessionIds)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var p in players)
+        foreach (var sessionId in winSessionIds)
         {
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
             map.TokenReset(miniToken);
         }
     }
