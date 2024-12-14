@@ -268,7 +268,7 @@ public class DartPlayer : MonoBehaviour
         GamePacket packet = new();
         var data = packet.DartGameThrowRequest = new()
         {
-            SessionId = GameManager.Instance.myInfo.SessionId,
+            SessionId = MinigameManager.Instance.mySessonId,
             Distance = MyDistance,
             Angle = SocketManager.ToVector(CurAim),
             Location = SocketManager.ToVector(transform.localPosition),
