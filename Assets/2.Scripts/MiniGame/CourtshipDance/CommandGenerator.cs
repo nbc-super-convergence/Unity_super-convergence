@@ -101,10 +101,10 @@ public class CommandGenerator
         }
         if (colors.Count == 0) return;
 
-        int num = random.Next(0, colors.Count);
         //int index = 0;
         foreach (BubbleInfo b in queue)
         {
+            int num = random.Next(0, colors.Count);
             b.SetColor(colors[num]);
             b.SetSessionId(sessionIds[num]);
             //b.SetColor(colors[index]);
