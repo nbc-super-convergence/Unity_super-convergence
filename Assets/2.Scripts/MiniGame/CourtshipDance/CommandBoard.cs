@@ -345,12 +345,17 @@ public class CommandBoard : MonoBehaviour
 
     public void ChangeInfoPool(string disconnectedSessionId, string replacementSessionId)
     {
-        if (queuePool == null || teamSessionIds.Contains(disconnectedSessionId) || teamSessionIds.Contains(replacementSessionId))
+        if (queuePool == null || !teamSessionIds.Contains(disconnectedSessionId) || !teamSessionIds.Contains(replacementSessionId))
             return;
 
         int replaceColor = GameManager.Instance.SessionDic[replacementSessionId].Color;
 
-        queuePool.Enqueue(curQueueInfo);
+        for (int i = 0; i < curCommandQueue.Count; i++) 
+        {
+            var b = curCommandQueue.Dequeue();
+            b.ColorChange(replaceColor);
+            curCommandQueue.Enqueue(b);
+        }
 
         Queue<Queue<BubbleInfo>> tempQueuePool = new Queue<Queue<BubbleInfo>>();
 
@@ -375,7 +380,7 @@ public class CommandBoard : MonoBehaviour
 
         queuePool = tempQueuePool;
         isDisconnected = true;
-        MakeNextBoard();
+        //MakeNextBoard();
     }
     #endregion
 }

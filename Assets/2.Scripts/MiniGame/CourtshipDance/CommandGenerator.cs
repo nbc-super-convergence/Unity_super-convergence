@@ -1,4 +1,5 @@
 using Google.Protobuf.Collections;
+using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -100,12 +101,15 @@ public class CommandGenerator
         }
         if (colors.Count == 0) return;
 
-        int index = 0;
+        int num = random.Next(0, colors.Count);
+        //int index = 0;
         foreach (BubbleInfo b in queue)
         {
-            b.SetColor(colors[index]);
-            b.SetSessionId(sessionIds[index]);
-            index = (index + 1) % colors.Count;
+            b.SetColor(colors[num]);
+            b.SetSessionId(sessionIds[num]);
+            //b.SetColor(colors[index]);
+            //b.SetSessionId(sessionIds[index]);
+            //index = (index + 1) % colors.Count;
         }
     }
 

@@ -21,18 +21,6 @@ public class InsuDebugger : Singleton<InsuDebugger>
             Debug.Log("디버그 시작");
             StartCoroutine(CourtshipDanceSkipper());   
         }
-        
-
-        if (Input.GetKeyDown(KeyCode.Alpha4) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        {
-            SoundManager.Instance.PlaySFX(sfxWhistle, 10f);
-            SoundManager.Instance.PlaySFX(sfxWatch);
-
-            //UIManager.Get<UICourtshipDance>().Next("Session1");
-            //UIManager.Get<UICourtshipDance>().Next("Session2");
-            //UIManager.Get<UICourtshipDance>().Next("Session3");
-            //UIManager.Get<UICourtshipDance>().Next("Session4");
-        }
     }
 
     private void OpenDance()

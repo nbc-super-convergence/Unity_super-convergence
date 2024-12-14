@@ -13,7 +13,7 @@ public class GameCourtshipDance : IGame
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
-    public bool isTeamGame;
+    public bool isTeamGame = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -24,9 +24,7 @@ public class GameCourtshipDance : IGame
     {
         gameData = new CourtshipDanceData();
         gameData.Init();
-        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMapDance();
+        
         if (param[0] is S2C_DanceMiniGameReadyNotification response)
         {
             foreach (var p in response.Players)
@@ -47,9 +45,16 @@ public class GameCourtshipDance : IGame
         {
             if (!teamDic.ContainsKey(p.TeamNumber))
             {
-                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+                List<PlayerInfo> list = new()
+                {
+                    p
+                };
+                teamDic.Add(p.TeamNumber, list);
             }
-            teamDic[p.TeamNumber].Add(p);
+            else
+            {
+                teamDic[p.TeamNumber].Add(p);
+            }
         }
 
         if (teamDic[1].Count >= 2)
@@ -57,6 +62,9 @@ public class GameCourtshipDance : IGame
             isTeamGame = true;
         }
 
+        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMapDance();
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
