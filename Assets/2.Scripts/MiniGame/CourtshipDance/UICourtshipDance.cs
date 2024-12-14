@@ -59,9 +59,9 @@ public class UICourtshipDance : UIBase
     // 처음 실행용.
     public void ShowDanceBoard()
     {
-        foreach( var item in boardDic.Values)
+        foreach( var board in boardDic.Values)
         {
-            item.MakeNextBoard();
+            board.MakeNextBoard();
         }
     }
 
@@ -129,7 +129,7 @@ public class UICourtshipDance : UIBase
 
         yield return new WaitForSeconds(2f);
 
-        game.BeforeGameEnd();
+        game.BeforeGameEnd(winSessionIds);
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 

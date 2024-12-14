@@ -80,6 +80,20 @@ public class UIRoom : UIBase
                 }
             }            
         }
+
+        if (isHost)
+        {
+            if (this.state == RoomStateType.Prepare ? true : false)
+            {
+                buttonStart.interactable = true;
+                Debug.Log("모든 유저가 준비 완료. 시작버튼 활성화");
+            }
+            else
+            {
+                buttonStart.interactable = false;
+                Debug.Log("아직 준비되지 않은 유저가 있습니다.");
+            }
+        }
     }
     
     private void SetHost()
