@@ -1,5 +1,4 @@
 using Google.Protobuf.Collections;
-using Google.Protobuf.WellKnownTypes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +6,9 @@ using System.Linq;
 public class CommandGenerator
 {
     private CourtshipDanceData gameData;
-
     private int[] rotations = { 0, 90, 180, 270 };
     private Random random = new();
-
     private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;    
-
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
 
     public CommandGenerator()
@@ -101,15 +97,18 @@ public class CommandGenerator
         }
         if (colors.Count == 0) return;
 
-        //int index = 0;
+        //int index = 0;    // 주석은 교대로 진행하는 코드
         foreach (BubbleInfo b in queue)
         {
             int num = random.Next(0, colors.Count);
             b.SetColor(colors[num]);
             b.SetSessionId(sessionIds[num]);
-            //b.SetColor(colors[index]);
+
+            //(시작) 주석은 교대로 진행하는 코드
+            //b.SetColor(colors[index]);    
             //b.SetSessionId(sessionIds[index]);
             //index = (index + 1) % colors.Count;
+            //(끝) 주석은 교대로 진행하는 코드
         }
     }
 
@@ -120,11 +119,7 @@ public class CommandGenerator
         if (SessionDic.TryGetValue(player.SessionId, out UserInfo userInfo))
         {
             color = userInfo.Color;
-        }
-        else
-        {
-            // 게임매니저 세션딕에 찾는 세션Id가 없음.
-        }
+        }        
 
         foreach (BubbleInfo b in queue)
         {
@@ -147,7 +142,6 @@ public class CommandGenerator
         {
             DancePool obj = new()
             {
-                //SessionId = teamDic[pool.Key][0].SessionId, // 팀 첫번째 플레이어의 세션ID
                 TeamNumber = pool.Key,
                 DanceTables = { }
             };

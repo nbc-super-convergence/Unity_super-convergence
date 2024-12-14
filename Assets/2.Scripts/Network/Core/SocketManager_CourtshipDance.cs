@@ -44,7 +44,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.DanceTableNotification;
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetTeamPoolDic(response.DancePools);
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(response.DancePools != null);
-        //UIManager.Get<UICourtshipDance>().ShowDanceBoard();
     }
 
     /* 407 : DanceKeyPressRequest
@@ -58,7 +57,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UICourtshipDance>().myBoard.MyInputResponse(response.Correct, response.State);
         }
-
     }
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
@@ -80,7 +78,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;
-
         MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
@@ -89,8 +86,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceCloseSocketNotification(GamePacket packet)
     {
         var response = packet.DanceCloseSocketNotification;
-
-        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(response.DisconnectedSessionId, response.ReplacementSessionId);
+        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
+            response.DisconnectedSessionId, response.ReplacementSessionId);
     }
 
     /* 412 : DanceTableCompleteRequest
