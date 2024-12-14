@@ -88,7 +88,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceCloseSocketNotification(GamePacket packet)
     {
         var response = packet.DanceCloseSocketNotification;
-        // 개인전은 방치. 팀전은 남은 유저가 입력가능하게 바꾸기.
+        // 처리되기까지 입력 막아서 오작동 회피
+        var myToken = MinigameManager.Instance.GetMyToken();
+        myToken.InputHandler.isEnable = false;
+        UIManager.Get<UICourtshipDance>().DisconnectNoti(response.DisconnectedSessionId, response.ReplacementSessionId);
+        myToken.InputHandler.isEnable = true;
     }
 
     /* 412 : DanceTableCompleteRequest

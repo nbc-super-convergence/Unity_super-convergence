@@ -16,10 +16,7 @@ public class MapGameCourtshipDance : MapBase
     private void Start()
     {
         bgm = GetComponent<AudioSource>();
-        //bgm.Play();
     }
-
-    
 
     public void TokenInit(MiniToken token)
     {
