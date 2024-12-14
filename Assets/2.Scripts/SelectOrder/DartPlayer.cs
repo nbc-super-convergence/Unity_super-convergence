@@ -182,7 +182,7 @@ public class DartPlayer : MonoBehaviour
         packet.DartSyncRequest = new()
         {
             SessionId = MinigameManager.Instance.mySessonId,
-            Angle = SocketManager.ToVector(GetAim)
+            Angle = SocketManager.ToVector(CurAim)
         };
 
         SocketManager.Instance.OnSend(packet);

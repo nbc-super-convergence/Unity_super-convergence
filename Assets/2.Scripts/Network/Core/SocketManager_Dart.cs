@@ -104,6 +104,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];
 
-        dartUser.CurAim += ToVector3(response.Angle);
+        dartUser.CurAim = ToVector3(response.Angle);
     }
 }
