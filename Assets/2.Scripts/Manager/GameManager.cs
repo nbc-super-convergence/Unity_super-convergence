@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -14,7 +15,6 @@ public class GameManager : Singleton<GameManager>
     //0:빨강, 1:노랑, 2:초록, 3:파랑
     public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
     public Dictionary<int, string> failCodeDic;
-
 
     protected override void Awake()
     {
@@ -40,9 +40,6 @@ public class GameManager : Singleton<GameManager>
 
         CSVParser.Instance.Init();
         yield return new WaitUntil(() => CSVParser.Instance.isInitialized);
-
-        FadeScreen.Instance.Init();
-        yield return new WaitUntil(() => FadeScreen.Instance.isInitialized);
 
         PoolManager.Instance.Init();
         yield return new WaitUntil(() => PoolManager.Instance.isInitialized);

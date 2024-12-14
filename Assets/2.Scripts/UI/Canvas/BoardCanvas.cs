@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BoardCanvas : MonoBehaviour
 {
-    [SerializeField] private List<Transform> parents = new List<Transform>();
+    [SerializeField] private List<Transform> parents = new();
 
-    async void Start()
+    private async void Start()
     {
         UIManager.SetParents(parents);
-
         await UIManager.Show<BoardUI>();
+
+        UIManager.SceneChangeTask.SetResult(true);
     }
 }
