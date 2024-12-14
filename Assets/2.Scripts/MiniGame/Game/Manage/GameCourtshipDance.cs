@@ -13,7 +13,7 @@ public class GameCourtshipDance : IGame
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
-    public bool isTeamGame;
+    public bool isTeamGame = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -47,9 +47,16 @@ public class GameCourtshipDance : IGame
         {
             if (!teamDic.ContainsKey(p.TeamNumber))
             {
-                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+                List<PlayerInfo> list = new()
+                {
+                    p
+                };
+                teamDic.Add(p.TeamNumber, list);
             }
-            teamDic[p.TeamNumber].Add(p);
+            else
+            {
+                teamDic[p.TeamNumber].Add(p);
+            }
         }
 
         if (teamDic[1].Count >= 2)
