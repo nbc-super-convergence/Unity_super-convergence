@@ -10,7 +10,6 @@ public class StartCanvas : MonoBehaviour
     public static bool isSet { get; private set; }
     private TaskCompletionSource<bool> showTask;
 
-
     private IEnumerator Start()
     {
         if (!GameManager.Instance.isInitialized)
