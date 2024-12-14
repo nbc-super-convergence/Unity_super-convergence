@@ -92,6 +92,7 @@ public class DartPlayer : MonoBehaviour
         SetForceRange(1.5f, 3f);
 
         IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
+        Debug.Log($"{gameObject.name}, {IsClient}");
     }
 
     private void Start()

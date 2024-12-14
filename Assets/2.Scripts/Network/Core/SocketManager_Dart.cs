@@ -77,13 +77,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.DartPannelSyncNotification;
 
-        GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+        //GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+        //panel.moveDirection = ToVector3(response.Location);
+        //Debug.Log($"{panel.moveDirection} {response.Location}");
+        //if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
+        //{
+        //}
 
-        panel.moveDirection = ToVector3(response.Location);
-        Debug.Log($"{panel.moveDirection} {response.Location}");
-        if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
-        {
-        }
+        MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
     }
 
     public void DartSyncNotification(GamePacket gamePacket)

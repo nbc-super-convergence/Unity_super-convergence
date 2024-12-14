@@ -87,6 +87,12 @@ public class GameDart : IGame
         }
     }
 
+    public void PannelMoveEvent()
+    {
+        Debug.Log("움직인다");
+        DartPannel.MoveEvent();
+    }
+
     private void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
     {
         playerCount = players.Count;

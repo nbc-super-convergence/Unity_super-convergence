@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,20 +24,18 @@ public class GameDartPanel : MonoBehaviour
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
-    private void FixedUpdate()
+    public void MoveEvent()
     {
-        if (isMove)
+        if(isMove)
         {
             //다트판 이동하기 (세로 한쪽만 던지면 시시하니까)
             //좌우로 왔다갔다 하게
             if (transform.localPosition.x < -xPositionLimit)
-                swapDirection = true;
+                moveDirection = Vector3.right;
             else if (transform.localPosition.x > xPositionLimit)
-                swapDirection = false;
+                moveDirection = Vector3.left;
 
             ApplyMove();
-
-            SendServer();
         }
     }
 
@@ -59,14 +58,21 @@ public class GameDartPanel : MonoBehaviour
             return 0;
     }
 
-    private void SendServer()
+    private IEnumerator SendServer()
     {
-        GamePacket packet = new();
-        packet.DartPannelSyncRequest = new()
+        while (isMove)
         {
-            SessionId = MinigameManager.Instance.mySessonId,
-            Location = SocketManager.ToVector(transform.localPosition)
-        };
-        SocketManager.Instance.OnSend(packet);
+            GamePacket packet = new();
+            {
+                packet.DartPannelSyncRequest = new()
+                {
+                    SessionId = MinigameManager.Instance.mySessonId,
+                    Location = SocketManager.ToVector(transform.localPosition)
+                };
+                Debug.Log(packet.DartPannelSyncNotification.Location);
+            }
+            SocketManager.Instance.OnSend(packet);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 }
