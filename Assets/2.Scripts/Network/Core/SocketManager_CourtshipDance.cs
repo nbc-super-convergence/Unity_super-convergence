@@ -38,12 +38,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     /* 405 : DanceTableCreateRequest
      * Send 위치 : GameCourtshipDance */
 
-    /* 406 */
+    /* 406  : 404보다 먼저 옴*/
     public void DanceTableNotification(GamePacket packet)
     {
         var response = packet.DanceTableNotification;
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetTeamPoolDic(response.DancePools);
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(true);
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(response.DancePools != null);
     }
 
     /* 407 : DanceKeyPressRequest
@@ -57,7 +57,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UICourtshipDance>().myBoard.MyInputResponse(response.Correct, response.State);
         }
-
     }
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
@@ -79,7 +78,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;
-
         MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
@@ -88,11 +86,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceCloseSocketNotification(GamePacket packet)
     {
         var response = packet.DanceCloseSocketNotification;
-        // 처리되기까지 입력 막아서 오작동 회피
-        var myToken = MinigameManager.Instance.GetMyToken();
-        myToken.InputHandler.isEnable = false;
-        UIManager.Get<UICourtshipDance>().DisconnectNoti(response.DisconnectedSessionId, response.ReplacementSessionId);
-        myToken.InputHandler.isEnable = true;
+        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
+            response.DisconnectedSessionId, response.ReplacementSessionId);
     }
 
     /* 412 : DanceTableCompleteRequest

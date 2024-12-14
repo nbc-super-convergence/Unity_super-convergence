@@ -14,6 +14,7 @@ public class GameCourtshipDance : IGame
     private TaskCompletionSource<bool> sourceTcs;
 
     public bool isTeamGame = false;
+    public bool isBoardReady = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -24,7 +25,7 @@ public class GameCourtshipDance : IGame
     {
         gameData = new CourtshipDanceData();
         gameData.Init();
-        
+
         if (param[0] is S2C_DanceMiniGameReadyNotification response)
         {
             foreach (var p in response.Players)
@@ -89,18 +90,17 @@ public class GameCourtshipDance : IGame
             packet.DanceTableCreateRequest.DancePools.Add(sp);
             SocketManager.Instance.OnSend(packet);
         }
-        else
-        {
-            bool isSuccess = await sourceTcs.Task;
-        }
+        
+        bool isSuccess = await sourceTcs.Task;
+        isBoardReady = isSuccess;
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
-        uiCourtship.ShowDanceBoard();
+
     }
 
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
+        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);        
     }
 
     public void TrySetTask(bool isSuccess)
@@ -177,6 +177,7 @@ public class GameCourtshipDance : IGame
         }
     }
     #endregion
+       
 
 
     public int GetMyTeam()
