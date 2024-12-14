@@ -95,6 +95,7 @@ public class GameCourtshipDance : IGame
         }
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
+        uiCourtship.ShowDanceBoard();
     }
 
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
@@ -115,7 +116,7 @@ public class GameCourtshipDance : IGame
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
             };
-            uiCourtship.ShowDanceBoard();
+            //uiCourtship.ShowDanceBoard();
             uiCourtship.StartTimer();
             var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
             map.ShowIndicator();

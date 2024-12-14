@@ -59,9 +59,9 @@ public class UICourtshipDance : UIBase
     // 처음 실행용.
     public void ShowDanceBoard()
     {
-        foreach( var item in boardDic.Values)
+        foreach( var board in boardDic.Values)
         {
-            item.MakeNextBoard();
+            board.MakeNextBoard();
         }
     }
 
