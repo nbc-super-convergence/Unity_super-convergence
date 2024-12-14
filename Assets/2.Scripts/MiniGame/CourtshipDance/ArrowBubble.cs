@@ -39,9 +39,26 @@ public class ArrowBubble : ObjectPoolBase
         this.arrow.rotation = Quaternion.Euler(0, 0, info.Rotation);
     }
 
-    public void ColorChange(Color backColor)
+    public void ColorChange(int backColor)
     {
-        background.color = backColor;
+        switch (backColor)
+        {
+            case 0:
+                this.background.color = Color.red;
+                break;
+            case 1:
+                this.background.color = Color.yellow;
+                break;
+            case 2:
+                this.background.color = Color.green;
+                break;
+            case 3:
+                this.background.color = Color.blue;
+                break;
+            default:
+                this.background.color = Color.gray;
+                break;
+        }
     }
 
     public void PlayEffect()

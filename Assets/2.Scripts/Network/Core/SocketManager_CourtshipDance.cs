@@ -6,11 +6,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.DanceMiniGameReadyNotification;
         UIManager.Hide<BoardUI>();
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
+        MinigameManager.Instance.boardCamera.SetActive(false);
 #pragma warning disable CS4014
         UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
 #pragma warning restore CS4014
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
-        MinigameManager.Instance.boardCamera.SetActive(false);
     }
 
     /* 402 : DanceReadyRequest
