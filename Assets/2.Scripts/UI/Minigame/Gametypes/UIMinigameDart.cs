@@ -6,11 +6,6 @@ using UnityEngine.UI;
 public class UIMinigameDart : UIBase
 {
     #region UI 속성
-    [Header("Backgrounds")]
-    [SerializeField] private Image background;
-    [SerializeField] private TextMeshProUGUI title;
-    [SerializeField] private Image howTo;
-
     [Header("Force Power")]
     [SerializeField] private Slider forcePower;
 
@@ -37,16 +32,25 @@ public class UIMinigameDart : UIBase
         }
     }
 
+    #region Force 메서드
     public void SetForceLimit(float min, float max)
     {
         forcePower.minValue = min;
         forcePower.maxValue = max;
     }
-
     public void ChangeForcePower(float f)
     {
         forcePower.value = f;
     }
+    public void ShowForcePower()
+    {
+        forcePower.gameObject.SetActive(true);
+    }
+    public void HideForcePower()
+    {
+        forcePower.gameObject.SetActive(false);
+    }
+    #endregion
 
     #region Result 메서드
     public void SetNickname(string name)
@@ -81,15 +85,22 @@ public class UIMinigameDart : UIBase
     }
     #endregion
 
+    private void PlyaerLeftEvent(int color)
+    {
+
+    }
+
     //Todo : 내 차례가 되면 힘조절 UI 활성
 
     public override void Opened(object[] param)
     {
+        GameManager.OnPlayerLeft += PlyaerLeftEvent;
+
         HashSet<int> usedColors = new HashSet<int>();
         foreach(var dic in GameManager.Instance.SessionDic)
         {
             int color = dic.Value.Color;
-            
+            usedColors.Add(color);
         }
         for (int i = 0; i < resultImage.Length; i++)
         {
@@ -101,6 +112,6 @@ public class UIMinigameDart : UIBase
     }
     public override void Closed(object[] param)
     {
-
+        GameManager.OnPlayerLeft -= PlyaerLeftEvent;
     }
 }
