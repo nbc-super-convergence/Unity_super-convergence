@@ -33,7 +33,6 @@ public class RoomUserSlot : MonoBehaviour
         }
         else
         {
-            icons[1].SetActive(true); //준비중 아이콘
             isReady = false;
         }
 
