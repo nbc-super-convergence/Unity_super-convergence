@@ -229,7 +229,7 @@ public static partial class ProtocolReflection {
           "EhYKBWFuZ2xlGAMgASgLMgcuVmVjdG9yEhkKCGxvY2F0aW9uGAQgASgLMgcu",
           "VmVjdG9yEg0KBXBvd2VyGAUgASgCIjYKIVMyQ19EYXJ0TWluaUdhbWVTdGFy",
           "dE5vdGlmaWNhdGlvbhIRCglzdGFydFRpbWUYASABKAMiPgodUzJDX0RhcnRH",
-          "YW1lVGhyb3dOb3RpZmljYXRpb24SHQoGcmVzdWx0GAEgAygLMg0uRGFydEdh",
+          "YW1lVGhyb3dOb3RpZmljYXRpb24SHQoGcmVzdWx0GAEgASgLMg0uRGFydEdh",
           "bWVEYXRhIp8BChxTMkNfRGFydEdhbWVPdmVyTm90aWZpY2F0aW9uEjEKBXJh",
           "bmtzGAEgAygLMiIuUzJDX0RhcnRHYW1lT3Zlck5vdGlmaWNhdGlvbi5SYW5r",
           "Eg8KB2VuZFRpbWUYAiABKAMaOwoEUmFuaxIRCglzZXNzaW9uSWQYASABKAkS",
@@ -20602,7 +20602,7 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public S2C_DartGameThrowNotification(S2C_DartGameThrowNotification other) : this() {
-    result_ = other.result_.Clone();
+    result_ = other.result_ != null ? other.result_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -20613,12 +20613,13 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
 
   /// <summary>Field number for the "result" field.</summary>
   public const int ResultFieldNumber = 1;
-  private static readonly pb::FieldCodec<global::DartGameData> _repeated_result_codec
-      = pb::FieldCodec.ForMessage(10, global::DartGameData.Parser);
-  private readonly pbc::RepeatedField<global::DartGameData> result_ = new pbc::RepeatedField<global::DartGameData>();
+  private global::DartGameData result_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<global::DartGameData> Result {
+  public global::DartGameData Result {
     get { return result_; }
+    set {
+      result_ = value;
+    }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -20634,14 +20635,14 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if(!result_.Equals(other.result_)) return false;
+    if (!object.Equals(Result, other.Result)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    hash ^= result_.GetHashCode();
+    if (result_ != null) hash ^= Result.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -20655,7 +20656,10 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    result_.WriteTo(output, _repeated_result_codec);
+    if (result_ != null) {
+      output.WriteRawTag(10);
+      output.WriteMessage(Result);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -20664,7 +20668,9 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    size += result_.CalculateSize(_repeated_result_codec);
+    if (result_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Result);
+    }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
     }
@@ -20676,7 +20682,12 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
     if (other == null) {
       return;
     }
-    result_.Add(other.result_);
+    if (other.result_ != null) {
+      if (result_ == null) {
+        Result = new global::DartGameData();
+      }
+      Result.MergeFrom(other.Result);
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -20689,7 +20700,10 @@ public sealed partial class S2C_DartGameThrowNotification : pb::IMessage<S2C_Dar
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          result_.AddEntriesFrom(input, _repeated_result_codec);
+          if (result_ == null) {
+            Result = new global::DartGameData();
+          }
+          input.ReadMessage(Result);
           break;
         }
       }
