@@ -28,7 +28,6 @@ public class UIRoom : UIBase
 
     private TaskCompletionSource<bool> roomTcs;
 
-    
     public override void Opened(object[] param)
     {
         foreach (var slot in userSlots)
@@ -75,31 +74,7 @@ public class UIRoom : UIBase
         /*버튼 상태 초기화*/
         InitActiveBtn();
 
-        /*준비된 유저 HashSet*/
-        HashSet<string> readyUserId = new HashSet<string>();
-        readyUserId.UnionWith(data.ReadyUsers);
-
-        /*유저 슬롯 세팅*/
-        for (int i = 0; i < data.Users.Count; i++)
-        {
-            if (IsHost)
-            {
-                userSlots[i].AddUserSlot(data.Users[i], true);
-            }
-            else
-            {
-                userSlots[i].AddUserSlot(data.Users[i], false);
-                
-                if (readyUserId.Contains(data.Users[i].SessionId))
-                {
-                    userSlots[i].ReadyUserSlot(true);
-                }
-                else
-                {
-                    userSlots[i].ReadyUserSlot(false);
-                }
-            }
-        }
+        UpdateUserSlots();
     }
 
     public async void LeaveRoom()
@@ -125,39 +100,48 @@ public class UIRoom : UIBase
     #region Other Room Join / Leave
     public void OnRoomMemberChange(RoomData data, bool isJoin)
     {
-        string memberId = "";
-        int memberIdx = -1;
         HashSet<string>  prevSessionIDs = new HashSet<string>(roomData.Users.Select(user => user.SessionId));
         HashSet<string> curSessionIDs = new HashSet<string>(data.Users.Select(user => user.SessionId));
+
+        roomData = data;
 
         if (isJoin)
         {
             ResetSessionDics(data.Users);
-            memberId = curSessionIDs.Except(prevSessionIDs).ToList()[0];
-            memberIdx = GameManager.Instance.SessionDic[memberId].Color;
+            string memberId = curSessionIDs.Except(prevSessionIDs).ToList()[0];
+            int memberIdx = GameManager.Instance.SessionDic[memberId].Color;
 
-            userSlots[memberIdx].AddUserSlot(data.Users[memberIdx],
-                memberId == data.OwnerId);
+            userSlots[memberIdx].AddUserSlot(roomData.Users[memberIdx],
+                memberId == roomData.OwnerId);
             userSlots[memberIdx].ReadyUserSlot(false);
         }
         else
         {
-            memberId = prevSessionIDs.Except(curSessionIDs).ToList()[0];
-            memberIdx = GameManager.Instance.SessionDic[memberId].Color;
-            ResetSessionDics(data.Users);
+            string memberId = prevSessionIDs.Except(curSessionIDs).ToList()[0];
+            int memberIdx = GameManager.Instance.SessionDic[memberId].Color;
 
-            userSlots[memberIdx].RemoveUserSlot();
+            for (int i = memberIdx; i < userSlots.Count; i++)
+            {
+                userSlots[i].RemoveUserSlot();
+            }
+            ResetSessionDics(roomData.Users);
+
+            if (IsHost) InitActiveBtn(); //Host = StartBtn 활성화
+
+            UpdateUserSlots(memberIdx);
         }
-
-        /*방 정보 업데이트*/
-        roomData = data;
     }
     #endregion
     
     #region Ready Event
     public void SetUserReady(bool isReady, string sessionId = null, RoomStateType roomState = 0)
     {
-        sessionId ??= GameManager.Instance.myInfo.SessionId;
+        if (sessionId == null)
+        {
+            sessionId = GameManager.Instance.myInfo.SessionId;
+            ToggleReadyBtn(isReady);
+        }
+
         int readyIdx = GameManager.Instance.SessionDic[sessionId].Color;
         userSlots[readyIdx].ReadyUserSlot(isReady);
 
@@ -179,9 +163,6 @@ public class UIRoom : UIBase
     #region Game Start Event
     public async void GameStart()
     {
-        //myInfo Color, Order 초기화.
-        GameManager.Instance.SetMyInfo(GameManager.Instance.SessionDic[GameManager.Instance.myInfo.SessionId]); 
-
         roomUI.blocksRaycasts = true;
         await CountDownAsync(3);
         
@@ -195,8 +176,9 @@ public class UIRoom : UIBase
         Sequence sequence = DOTween.Sequence();
         for (int i = countNum; i > 0; i--)
         {
-            sequence.AppendCallback(() => countDownTxt.text = i.ToString());
-            sequence.AppendInterval(1f); 
+            int currentNum = i;
+            sequence.AppendCallback(() => countDownTxt.text = currentNum.ToString());
+            sequence.AppendInterval(1f);
         }
         sequence.OnComplete(() => countDownTxt.gameObject.SetActive(false));
         await sequence.AsyncWaitForCompletion();
@@ -225,7 +207,7 @@ public class UIRoom : UIBase
     public async void OnReadyBtn()
     {
         readyBtn.interactable = false;
-
+        Debug.Log(userSlots[GameManager.Instance.myInfo.Color].isReady);
         if (IsClientReady && await ReadyAsync(false))
         {
             readyBtn.gameObject.SetActive(true);
@@ -264,6 +246,12 @@ public class UIRoom : UIBase
         }
     }
 
+    private void ToggleReadyBtn(bool isReady)
+    {
+        readyBtn.gameObject.SetActive(!isReady);
+        cancelReadyBtn.gameObject.SetActive(isReady);
+    }
+
     private void ResetSessionDics(RepeatedField<UserData> Users)
     {
         GameManager.Instance.SessionDic.Clear();
@@ -271,7 +259,41 @@ public class UIRoom : UIBase
         foreach (var user in Users)
         {
             GameManager.Instance.SessionDic.Add(user.SessionId, new UserInfo(user.SessionId, user.Nickname, num, num));
+
+            if (GameManager.Instance.myInfo.SessionId == user.SessionId)
+            {
+                GameManager.Instance.SetMyInfo(GameManager.Instance.SessionDic[GameManager.Instance.myInfo.SessionId]);
+            }
             num++;
+        }
+    }
+
+    private void UpdateUserSlots(int idx = 0)
+    {
+        /*준비된 유저 HashSet*/
+        HashSet<string> readyUserId = new HashSet<string>();
+        readyUserId.UnionWith(roomData.ReadyUsers);
+
+        /*유저 슬롯 세팅*/
+        for (int i = idx; i < roomData.Users.Count; i++)
+        {
+            if (roomData.Users[i].SessionId == roomData.OwnerId)
+            {
+                userSlots[i].AddUserSlot(roomData.Users[i], true);
+            }
+            else
+            {
+                userSlots[i].AddUserSlot(roomData.Users[i], false);
+
+                if (readyUserId.Contains(roomData.Users[i].SessionId))
+                {
+                    userSlots[i].ReadyUserSlot(true);
+                }
+                else
+                {
+                    userSlots[i].ReadyUserSlot(false);
+                }
+            }
         }
     }
 
@@ -288,9 +310,7 @@ public class UIRoom : UIBase
         roomTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        bool isSuccess = await roomTcs.Task;
-
-        return isSuccess ? true : false;
+        return await roomTcs.Task;
     }
     #endregion
 }
