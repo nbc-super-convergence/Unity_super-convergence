@@ -11,6 +11,7 @@ public class UIError : UIBase
     [SerializeField] private TMP_Text infoTMP;
     [SerializeField] private TMP_Text closeCountTMP;
     [SerializeField] private GameObject Count;
+    [SerializeField] private ChatSizeFitter chatSizeFitter;
 
     [SerializeField] private int waitSeconds;
 
@@ -19,6 +20,8 @@ public class UIError : UIBase
 
     private Task countdownTask;
     private CancellationTokenSource countdownCts;
+
+    
 
     public override void Opened(object[] param)
     {
@@ -30,6 +33,8 @@ public class UIError : UIBase
         {
             SetInfo(infoStr);
         }
+        chatSizeFitter.UpdateSpeechBubbleSize();
+
         countdownCts = new();
         countdownTask = CountDownAsync(waitSeconds, countdownCts.Token);
     }

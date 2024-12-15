@@ -19,30 +19,13 @@ public class UICourtshipDance : UIBase
 
     public CommandBoard myBoard;
 
+
     public override void Opened(object[] param)
     {
         gameData = param[0] as CourtshipDanceData;
         game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
         isTeamGame = game.isTeamGame;
     }
-
-    //public async void MakeCommandBoard(List<PlayerInfo> players)
-    //{
-    //    for (int i = 0; i < players.Count; ++i)
-    //    {
-    //        // 프리팹 생성.
-    //        var board = Instantiate(await ResourceManager.Instance.LoadAsset<CommandBoard>("CommandBoard", eAddressableType.Prefab), spawnPosition[i]);
-    //        board.transform.localPosition = Vector3.zero;
-    //        if(game.commandPoolDic.TryGetValue(players[i].SessionId, out Queue<Queue<BubbleInfo>> pool))
-    //        {
-    //            board.SetSessionId(players[i].SessionId);
-    //            board.SetTeamId(players[i].TeamNumber);
-    //            board.SetPool(pool);
-    //            board.Init();
-    //        }
-    //        boardDic.Add(players[i].SessionId, board);
-    //    }
-    //}
 
     public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
     {
@@ -61,6 +44,8 @@ public class UICourtshipDance : UIBase
             }
             boardDic.Add(team.Key, board);
 
+            board.MakeNextBoard();
+
             if(game.GetMyTeam() == team.Key)
             {
                 myBoard = board;
@@ -68,18 +53,19 @@ public class UICourtshipDance : UIBase
         }
     }
 
-    public void Next(int teamNumber)
-    {
-        boardDic[teamNumber].MakeNextBoard();
-    }
+    //public void Next(int teamNumber)
+    //{
+    //    boardDic[teamNumber].MakeNextBoard();
+    //}
     
-    public void ShowDanceBoard()
-    {
-        foreach( var item in boardDic.Values)
-        {
-            item.MakeNextBoard();
-        }
-    }
+    // 처음 실행용.
+    //public void ShowDanceBoard()
+    //{
+    //    foreach( var board in boardDic.Values)
+    //    {
+    //        board.MakeNextBoard();
+    //    }
+    //}
 
     // 카운트다운이 끝나면 실행하기
     public void StartTimer()
@@ -112,18 +98,21 @@ public class UICourtshipDance : UIBase
                 return a.EndTime.CompareTo(b.EndTime);
         });
 
-        /*필요 데이터 파싱*/   // 세션Id, 등수
-        Dictionary<string, int> rankings = new();
-        for (int i = 0; i < teamResults.Count; ++i)
+        List<(int Rank, string SessionId)> rankings = new();
+        int rank = 1;
+        foreach (var teamResult in teamResults)
         {
-            int rank = i + 1;
-            rankings.Add(teamResults[i].SessionId[0], rank);
+            for (int i = 0; i < teamResult.SessionId.Count; ++i)
+            {
+                rankings.Add((rank, teamResult.SessionId[i]));
+            }
+            rank++;
         }
 
-        StartCoroutine(GameOverText(teamResults, rankings, response.EndTime));
+        StartCoroutine(GameOverText(teamResults, rankings, response.EndTime + 7000));
     }
 
-    public IEnumerator GameOverText(List<TeamResult> teamResults, Dictionary<string, int> rankings, long endTime)
+    public IEnumerator GameOverText(List<TeamResult> teamResults, List<(int Rank, string SessionId)> rankings, long endTime)
     {
         end.SetActive(true);
         yield return new WaitForSeconds(2f);
@@ -142,11 +131,30 @@ public class UICourtshipDance : UIBase
 
         yield return new WaitForSeconds(2f);
 
-        game.BeforeGameEnd();
+        game.BeforeGameEnd(winSessionIds);
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
         game.GameEnd(rankings, endTime);
+    }
+    #endregion
+
+    #region 게임 중 Disconnect
+    public void DisconnectNoti(string disconnectedSessionId, string replacementSessionId)
+    {
+        if (!isTeamGame) return;
+
+        if(myBoard.teamSessionIds.Contains(disconnectedSessionId))
+        {
+            // 우리 팀 처리
+            myBoard.ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+        }
+        else
+        {
+            // 남의 팀 처리
+            int disconnectTeam = game.GetPlayerTeam(disconnectedSessionId);
+            boardDic[disconnectTeam].ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+        }
     }
     #endregion
 }

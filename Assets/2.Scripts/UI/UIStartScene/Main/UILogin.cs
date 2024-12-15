@@ -56,6 +56,10 @@ public class UILogin : UIBase
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
+            IDInput.text = "";
+            PasswardInput.text = "";
+            IDInput.ForceLabelUpdate();
+            PasswardInput.ForceLabelUpdate();
             await UIManager.Show<UILobby>();
         }
     }

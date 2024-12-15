@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -21,16 +22,14 @@ public enum eUIPosition
 public class UIManager : Singleton<UIManager>
 {
     private List<Transform> parents;
-    private List<UIBase> uiList = new List<UIBase>();
+    private List<UIBase> uiList = new();
 
-    [SerializeField] private Canvas loadingCanvas;
-    [SerializeField] private GameObject prefabLoadingScreen;
-    private GameObject loadingScreen;
+    public UILoading LoadingScreen;
+    public static TaskCompletionSource<bool> SceneChangeTask;
 
     //GameManager해서 호출함으로써 Manager간 초기화 서순 지키기.
-    public async void Init()
-    {
-        await Show<UILogin>();
+    public void Init()
+    {    
         isInitialized = true;
     }
 
@@ -44,34 +43,22 @@ public class UIManager : Singleton<UIManager>
     /// <returns>T 반환</returns>
     public async static Task<T> Show<T>(params object[] param) where T : UIBase
     {
-        UIManager.Instance.uiList.RemoveAll(obj => obj == null);
+        Instance.uiList.RemoveAll(obj => obj == null);
 
-        if (UIManager.Instance.loadingScreen == null)
-        {
-            Transform targetCanvas = Instance.loadingCanvas.transform;
-            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
-            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
-        }
-        else
-        {
-            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
-            UIManager.Instance.loadingScreen.SetActive(true);
-        }
-
-        var ui = Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
+        UIBase ui = Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
 
         if (ui == null)
         {
             var prefab = await ResourceManager.Instance.LoadAsset<T>(typeof(T).ToString(), eAddressableType.UI);
             ui = Instantiate(prefab, Instance.parents[(int)prefab.uiPosition]);
-            ui.name = ui.name.Replace("(Clone)", "");
 
+            ui.name = ui.name.Replace("(Clone)", "");
             Instance.uiList.Add(ui);
         }
         ui.gameObject.SetActive(ui.isActiveInCreated);
         ui.opened?.Invoke(param);
         ui.isActiveInCreated = true;
-        UIManager.Instance.loadingScreen.SetActive(false);
+
         return (T)ui;
     }
 
@@ -118,35 +105,9 @@ public class UIManager : Singleton<UIManager>
         return Instance.uiList.Exists(obj => obj.name == typeof(T).ToString());
     }
 
-    public static void LoadBoardScene()
+    public static IEnumerator LoadBoardScene()
     {
-        if (UIManager.Instance.loadingScreen == null)
-        {
-            Transform targetCanvas = Instance.loadingCanvas.transform;
-            UIManager.Instance.loadingScreen = Instantiate(UIManager.Instance.prefabLoadingScreen, targetCanvas);
-            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
-        }
-        else
-        {
-            UIManager.Instance.loadingScreen.transform.SetAsLastSibling();
-            UIManager.Instance.loadingScreen.SetActive(true);
-        }
-        //AsyncOperation asyncOper = SceneManager.LoadSceneAsync(2);
-        //asyncOper.allowSceneActivation = true;
-
-        //if (asyncOper.isDone)
-        //{
-        //    UIManager.Instance.loadingScreen.SetActive(false);
-        //    asyncOper.allowSceneActivation = true;
-
-        //}
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(2);
-
-
-        if(SceneManager.sceneCount <= 2)
-        //if (SceneManager.GetSceneAt(2) != null)
-        {
-            UIManager.Instance.loadingScreen.SetActive(false);
-        }
     }
 }

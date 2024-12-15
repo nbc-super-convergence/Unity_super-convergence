@@ -136,7 +136,6 @@ public class BoardManager : Singleton<BoardManager>
         }
         camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
 
-        await UIManager.Show<BoardUI>();
         #region Old
         //for (int i = 0; i < count; i++)
         //{

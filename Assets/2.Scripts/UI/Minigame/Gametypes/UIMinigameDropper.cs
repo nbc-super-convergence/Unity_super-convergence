@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.UI;
 
 public class UIMinigameDropper : UIBase
@@ -21,6 +20,10 @@ public class UIMinigameDropper : UIBase
 
     private GameDropperData gameData;
     private Coroutine StunCoroutine;
+    private Sequence readySequence;
+    private Sequence startSequence;
+    private Tweener textTween;
+    private Tweener lightTween;
 
     public override void Opened(object[] param)
     {
@@ -67,7 +70,7 @@ public class UIMinigameDropper : UIBase
     {
         DisableBtnInput(); //input 비활성화
 
-        Sequence readySequence = DOTween.Sequence();
+        readySequence = DOTween.Sequence();
 
         /*"Ready?" 연출*/
         StartCountTxt.gameObject.SetActive(true);
@@ -84,7 +87,7 @@ public class UIMinigameDropper : UIBase
         });
         yield return readySequence.WaitForCompletion();
 
-        Sequence startSequence = DOTween.Sequence();
+        startSequence = DOTween.Sequence();
         startSequence.Append(StartCountTxt.transform.DORotate(new(0, 0, 0), 0.5f, RotateMode.FastBeyond360));
         startSequence.Append(StartCountTxt.DOFade(0f, 0.5f));
         startSequence.OnComplete(() =>
@@ -203,9 +206,6 @@ public class UIMinigameDropper : UIBase
     #endregion
 
     #region Deco
-    private Tweener textTween;
-    private Tweener lightTween;
-
     private void DescEffect(bool isFall)
     {
         textTween?.Kill();
@@ -255,6 +255,12 @@ public class UIMinigameDropper : UIBase
             ).SetEase(Ease.Linear) 
              .SetLoops(-1, LoopType.Restart); 
         }
+    }
+
+    public void KillLightDotween()
+    {
+        textTween.Kill();
+        lightTween.Kill();
     }
     #endregion
 }

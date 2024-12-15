@@ -6,11 +6,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.DanceMiniGameReadyNotification;
         UIManager.Hide<BoardUI>();
+        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
+        MinigameManager.Instance.boardCamera.SetActive(false);
 #pragma warning disable CS4014
         UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
 #pragma warning restore CS4014
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
-        MinigameManager.Instance.boardCamera.SetActive(false);
     }
 
     /* 402 : DanceReadyRequest
@@ -38,12 +38,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     /* 405 : DanceTableCreateRequest
      * Send 위치 : GameCourtshipDance */
 
-    /* 406 */
+    /* 406  : 404보다 먼저 옴*/
     public void DanceTableNotification(GamePacket packet)
     {
         var response = packet.DanceTableNotification;
         MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetTeamPoolDic(response.DancePools);
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(true);
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(response.DancePools != null);
     }
 
     /* 407 : DanceKeyPressRequest
@@ -57,29 +57,27 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UICourtshipDance>().myBoard.MyInputResponse(response.Correct, response.State);
         }
-
     }
-
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
-    {
+    {        
         var response = packet.DanceKeyPressNotification;
-        if(response.TeamNumber != UIManager.Get<UICourtshipDance>().myBoard.TeamNumber)
+        var ui = UIManager.Get<UICourtshipDance>();
+        if (response.TeamNumber != ui.myBoard.TeamNumber)
         {
-            UIManager.Get<UICourtshipDance>().boardDic[response.TeamNumber].OtherBoardNoti(response.TeamNumber, response.Correct, response.State);
+            ui.boardDic[response.TeamNumber].OtherBoardNoti(response.TeamNumber, response.Correct, response.State);
         }
         else
         {
-            UIManager.Get<UICourtshipDance>().myBoard.MyTeamNotification(response.Correct, response.State);
+            ui.myBoard.MyTeamNotification(response.Correct, response.State);
         }
     }
 
     /* 410 */
-    // 타이머가 다 끝나거나 모든 유저가 댄스풀을 다 마쳤을 때.
+    // 타이머가 다 끝나거나 한 유저가 댄스풀을 다 마쳤을 때.
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;
-
         MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
@@ -88,7 +86,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceCloseSocketNotification(GamePacket packet)
     {
         var response = packet.DanceCloseSocketNotification;
-        // 개인전은 방치. 팀전은 남은 유저가 입력가능하게 바꾸기.
+        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
+            response.DisconnectedSessionId, response.ReplacementSessionId);
     }
 
     /* 412 : DanceTableCompleteRequest

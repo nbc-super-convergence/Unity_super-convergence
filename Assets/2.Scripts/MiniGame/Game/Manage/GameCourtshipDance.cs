@@ -3,19 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-// 이 클래스는 미니게임매니저에 올라가게 됨.
 public class GameCourtshipDance : IGame
 {
     public UICourtshipDance uiCourtship;
     public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
-    //public Dictionary<string, Queue<Queue<BubbleInfo>>> commandPoolDic;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
-    public bool isTeamGame;
+    public bool isTeamGame = false;
+    public bool isBoardReady = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -26,9 +25,7 @@ public class GameCourtshipDance : IGame
     {
         gameData = new CourtshipDanceData();
         gameData.Init();
-        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMapDance();
+
         if (param[0] is S2C_DanceMiniGameReadyNotification response)
         {
             foreach (var p in response.Players)
@@ -44,20 +41,31 @@ public class GameCourtshipDance : IGame
             }
         }
 
-        if (players.Count == 4)
-        {
-            isTeamGame = true;
-        }
         teamDic = new();
         foreach (var p in players)
         {
             if (!teamDic.ContainsKey(p.TeamNumber))
             {
-                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+                List<PlayerInfo> list = new()
+                {
+                    p
+                };
+                teamDic.Add(p.TeamNumber, list);
             }
-            teamDic[p.TeamNumber].Add(p);
+            else
+            {
+                teamDic[p.TeamNumber].Add(p);
+            }
         }
 
+        if (teamDic[1].Count >= 2)
+        {
+            isTeamGame = true;
+        }
+
+        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMapDance();
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
@@ -73,21 +81,6 @@ public class GameCourtshipDance : IGame
         sourceTcs = new();
         if (commandGenerator != null)
         {
-            //if (!isTeamGame)
-            //{
-            //    RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(commandPoolDic);
-
-            //    GamePacket packet = new();
-
-            //    packet.DanceTableCreateRequest = new()
-            //    {
-            //        SessionId = GameManager.Instance.myInfo.SessionId,
-            //    };
-            //    packet.DanceTableCreateRequest.DancePools.Add(sp);
-            //    //sourceTcs = new();
-            //    SocketManager.Instance.OnSend(packet);
-            //}
-
             RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
             GamePacket packet = new();
             packet.DanceTableCreateRequest = new()
@@ -97,22 +90,17 @@ public class GameCourtshipDance : IGame
             packet.DanceTableCreateRequest.DancePools.Add(sp);
             SocketManager.Instance.OnSend(packet);
         }
-        else
-        {
-            bool isSuccess = await sourceTcs.Task;
-            // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
-        }
+        
+        bool isSuccess = await sourceTcs.Task;
+        isBoardReady = isSuccess;
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
+
     }
 
-    //public void SetCommandPoolDic(RepeatedField<DancePool> dancePools)
-    //{
-    //    commandPoolDic = CommandGenerator.ConvertToPlayerPoolDic(dancePools);
-    //}
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
+        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);        
     }
 
     public void TrySetTask(bool isSuccess)
@@ -126,32 +114,34 @@ public class GameCourtshipDance : IGame
         {
             Action action = () =>
             {
-                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);                
-                uiCourtship.StartTimer();
-                uiCourtship.ShowDanceBoard();
+                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
             };
+            //uiCourtship.ShowDanceBoard();
+            uiCourtship.StartTimer();
+            var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+            map.ShowIndicator();
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
 
-    public void BeforeGameEnd()
+    public void BeforeGameEnd(RepeatedField<string> winSessionIds)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var p in players)
+        foreach (var sessionId in winSessionIds)
         {
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
             map.TokenReset(miniToken);
         }
     }
 
-    public async void GameEnd(Dictionary<string, int> ranks, long boardTime)
+    public async void GameEnd(List<(int Rank, string SessionId)> ranks, long boardTime)
     {
         foreach (var mini in MinigameManager.Instance.miniTokens)
         {
             mini.gameObject.SetActive(false);
         }
         UIManager.Hide<UICourtshipDance>();
-        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 2500);
+        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
     }
 
     #region 초기화
@@ -176,7 +166,6 @@ public class GameCourtshipDance : IGame
             }
             else
             {
-                // 4명이면 2:2 팀전 세팅
                 int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
                 int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
 
@@ -188,6 +177,7 @@ public class GameCourtshipDance : IGame
         }
     }
     #endregion
+       
 
 
     public int GetMyTeam()
