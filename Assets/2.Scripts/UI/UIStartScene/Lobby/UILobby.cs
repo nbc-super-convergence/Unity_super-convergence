@@ -72,24 +72,21 @@ public class UILobby : UIBase
                 SessionId = GameManager.Instance.myInfo.SessionId
             }
         };
+        lobbyTcs = new();
 
         SocketManager.Instance.OnSend(packet);
+        bool isSuccess = await lobbyTcs.Task;
 
-        bool isSuccess = await RetryWithTimeout(async () =>
-        {
-            lobbyTcs = new();
-            SocketManager.Instance.OnSend(packet);
-            return await lobbyTcs.Task;
-        }, maxRetries, timeoutSeconds);
-
-        if(!isSuccess)
+        if (!isSuccess)
         {
             Debug.LogError($"UILobby lobbyTcs : {isSuccess}");
             OnBtnLogout();
         }
-
-        nameTxt.text = GameManager.Instance.myInfo.Nickname;
-        fitter.UpdateSpeechBubbleSize();
+        else
+        {
+            nameTxt.text = GameManager.Instance.myInfo.Nickname;
+            fitter.UpdateSpeechBubbleSize();
+        }
     }
 
     public enum eTcs

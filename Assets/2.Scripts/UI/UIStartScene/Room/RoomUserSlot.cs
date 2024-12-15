@@ -1,68 +1,62 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RoomUserSlot : MonoBehaviour
 {
-    private TMP_Text nickNameTMP;
-    private Image userImage;    
-    [SerializeField] private GameObject objReady;
-    [SerializeField] private TMP_Text hostOrParticipant;
+    [SerializeField] private TextMeshProUGUI nickNameTxt;
+    [SerializeField] RectTransform userImg;
+    [SerializeField] private GameObject[] icons;
 
-    public bool isReady = false;
+    public bool isReady;
+    public UserData userData;
 
-    public string sessionId; 
-
-    private void Awake()
+    public void InitUserSlot()
     {
-        nickNameTMP = GetComponentInChildren<TMP_Text>();
-        userImage = GetComponentInChildren<Image>();
-    }
-    
-    public void SetRoomUser(UserData userData, int i)
-    {
-        if (userData == null || userData.Nickname == null || userData.Nickname == "")
+        userImg.anchoredPosition = new Vector3(0, -550, 0);
+        nickNameTxt.text = "";
+        foreach (var icon in icons)
         {
-            nickNameTMP.text = "EMPTY";
-            return;
-        }        
+            icon.SetActive(false);
+        }
+    }
+
+    public void AddUserSlot(UserData data, bool isOwner)
+    {
+        userData = data;
+        nickNameTxt.text = data.Nickname;
+
+        if (isOwner)
+        {
+            icons[0].SetActive(true); //방장 아이콘
+            isReady = true;
+        }
         else
         {
-            nickNameTMP.text = userData.Nickname;
+            icons[1].SetActive(true); //준비중 아이콘
+            isReady = false;
         }
-        this.sessionId = userData.SessionId;
-        //SetImage(i);
-        userImage.enabled = true;
+
+        userImg.DOAnchorPos(new Vector3(0, -110, 0), 1f)
+            .SetEase(Ease.OutBack);
     }
 
-    public void SetImage(int color)
+    public void ReadyUserSlot(bool flag)
     {
-        switch (color)
+        isReady = flag;
+        icons[1].SetActive(!isReady); //준비중 아이콘
+        icons[2].SetActive(isReady); //준비됨 아이콘
+    }
+
+    public void RemoveUserSlot()
+    {
+        nickNameTxt.text = "";
+        foreach (var icon in icons)
         {
-            case 0: userImage.color = Color.red; break;
-            case 1: userImage.color = Color.yellow; break;
-            case 2: userImage.color = Color.blue; break;
-            case 3: userImage.color = Color.green; break;
-            default: userImage.color = Color.grey; break;
+            icon.SetActive(false);
         }
-    }
 
-    public void CheckReadyState(bool isReady, string ownerId = null)
-    {
-        if (ownerId != null)
-        {
-            hostOrParticipant.text = (sessionId == ownerId) ? "����" : "�غ�Ϸ�";
-        }
-        this.isReady = isReady;
-        objReady.SetActive(this.isReady ? true : false);
+        userImg.DOAnchorPos(new Vector3(0, -550, 0), 1f)
+            .SetEase(Ease.InBack);
     }
-
-    public void EmptyRoomUser()
-    {
-        userImage.enabled = false;
-        nickNameTMP.text = "EMPTY";
-        objReady.SetActive(false);
-        sessionId = "";
-    }
-
 }
