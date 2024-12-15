@@ -48,17 +48,15 @@ public class MapGameCourtshipDance : MapBase
     public void ShowIndicator()
     {
         Vector3 pos = MinigameManager.Instance.GetMyToken().transform.position;
-        StartCoroutine(CoroutineIndicator(pos));
+        CoroutineIndicator(pos);
     }
 
-    private IEnumerator CoroutineIndicator(Vector3 targetPosition)
+    private void CoroutineIndicator(Vector3 targetPosition)
     {
         indicator.transform.position = targetPosition;
         indicator.gameObject.SetActive(true);
-
-        yield return new WaitUntil(() => UIManager.Get<UICourtshipDance>().myBoard.isFirstInput);
-
-        indicator.gameObject.SetActive(false);
+        //yield return new WaitUntil(() => UIManager.Get<UICourtshipDance>().myBoard.isFirstInput);
+        //indicator.gameObject.SetActive(false);
     }
 
     public void DanceCloseSocketNotification(string disconnectedSessionId, string replacementSessionId)

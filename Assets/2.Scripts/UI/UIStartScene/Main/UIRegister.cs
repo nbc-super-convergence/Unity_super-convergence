@@ -12,35 +12,31 @@ public class UIRegister : UIBase
     [SerializeField] private TMP_InputField inputFieldNickname;
     [SerializeField] private Toggle passwordToggle;
 
-    [SerializeField] private Button buttonRegister;
-    [SerializeField] private Button buttonBack;
-
-    [SerializeField] private TMP_Text errorMessage;
-    private StringBuilder sbError = new();
+    [SerializeField] private Button registerBtn;
+    [SerializeField] private Button backBtn;
 
     private TaskCompletionSource<bool> registerTcs;
 
     public override void Opened(object[] param)
     {
-        errorMessage.text = "";
-
         passwordToggle.isOn = false;
         passwordToggle.onValueChanged.AddListener(ToggleInputFieldPassword);
+    }
+
+    private void FixedUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape)) { OnBackBtn(); }
     }
 
 
     private async void Register()
     {
         if (!IsValidation())
-        {
-            errorMessage.text = sbError.ToString();
-            sbError.Clear();
+        {            
             return;
         }
         else
         {
-            errorMessage.text = sbError.ToString();
-
             string inputID = inputFieldID.text;
             string inputPassword = inputFieldPassword.text;
             string inputPasswordConfirm = inputFieldPasswordConfirm.text;
@@ -61,57 +57,53 @@ public class UIRegister : UIBase
             if (isSuccess)
             {
                 Debug.Log($"가입성공 ID: {inputID}, Password: {inputPassword}");
-                ButtonBack();                
+                OnBackBtn();                
             }
             else
             {
-                //sbError.AppendLine($"같은 아이디가 존재합니다.");
-                //errorMessage.text = sbError.ToString();
-                //sbError.Clear();
-                //return;
             }
         }
     }
 
     private bool IsValidation()
     {
-        // 4글자 이상의 id, pw
+#pragma warning disable CS4014
+        if (inputFieldNickname.text.Length < 2 || inputFieldNickname.text.Length > 10)
+        {
+            UIManager.Show<UIError>("닉네임은 2자 이상, 10자 이하로 입력하세요.");
+            return false;
+        }
         if (inputFieldID.text.Length < 4 || inputFieldID.text.Length > 12)
         {
-            sbError.AppendLine($"아이디는 4자 이상, 12자 이하로 입력하세요.");
+            UIManager.Show<UIError>("아이디는 4자 이상, 12자 이하로 입력하세요.");
             return false;
         }        
         if (inputFieldPassword.text.Length < 4 || inputFieldPassword.text.Length > 16)
         {
-            sbError.Append($"비밀번호는 4자 이상, 16자 이하로 입력하세요.");
+            UIManager.Show<UIError>("비밀번호는 4자 이상, 16자 이하로 입력하세요.");
             return false;
         }        
         if(inputFieldPassword.text != inputFieldPasswordConfirm.text)
         {
-            sbError.Append($"입력하신 비밀번호와 확인이 일치하지 않습니다.");
+            UIManager.Show<UIError>("입력하신 비밀번호와 확인이 일치하지 않습니다.");
             return false;
-        }
-        if(inputFieldNickname.text.Length < 4 || inputFieldNickname.text.Length > 12) 
-        {
-            sbError.Append($"닉네임은 4자 이상, 12자 이하로 입력하세요.");
-            return false;
-        }
+        }        
         return true;
-    }        
+#pragma warning restore CS4014
+    }
 
     public void TrySetTask(bool isSuccess)
     {
-        bool boolll = registerTcs.TrySetResult(isSuccess);
-        //Debug.Log(boolll ? "회원가입 성공" : "회원가입 실패");        
+        bool b = registerTcs.TrySetResult(isSuccess);
     }
 
     #region Button
-    public void ButtonBack()
+    public void OnBackBtn()
     {
         UIManager.Hide<UIRegister>();
     }
 
-    public void ButtonRegister()
+    public void OnRegisterBtn()
     {
         Register();
     }
