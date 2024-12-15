@@ -13,7 +13,8 @@ public class GameCourtshipDance : IGame
     private List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
-    public bool isTeamGame;
+    public bool isTeamGame = false;
+    public bool isBoardReady = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -24,9 +25,7 @@ public class GameCourtshipDance : IGame
     {
         gameData = new CourtshipDanceData();
         gameData.Init();
-        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMapDance();
+
         if (param[0] is S2C_DanceMiniGameReadyNotification response)
         {
             foreach (var p in response.Players)
@@ -42,20 +41,31 @@ public class GameCourtshipDance : IGame
             }
         }
 
-        if (players.Count == 4)
-        {
-            isTeamGame = true;
-        }
         teamDic = new();
         foreach (var p in players)
         {
             if (!teamDic.ContainsKey(p.TeamNumber))
             {
-                teamDic.Add(p.TeamNumber, new List<PlayerInfo>());
+                List<PlayerInfo> list = new()
+                {
+                    p
+                };
+                teamDic.Add(p.TeamNumber, list);
             }
-            teamDic[p.TeamNumber].Add(p);
+            else
+            {
+                teamDic[p.TeamNumber].Add(p);
+            }
         }
 
+        if (teamDic[1].Count >= 2)
+        {
+            isTeamGame = true;
+        }
+
+        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
+        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMapDance();
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
@@ -80,18 +90,17 @@ public class GameCourtshipDance : IGame
             packet.DanceTableCreateRequest.DancePools.Add(sp);
             SocketManager.Instance.OnSend(packet);
         }
-        else
-        {
-            bool isSuccess = await sourceTcs.Task;
-            // TODO:: 이쯤에 로딩 완료 표시하는 기능 넣기.
-        }
+        
+        bool isSuccess = await sourceTcs.Task;
+        isBoardReady = isSuccess;
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
+
     }
 
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
+        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);        
     }
 
     public void TrySetTask(bool isSuccess)
@@ -107,7 +116,7 @@ public class GameCourtshipDance : IGame
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
             };
-            uiCourtship.ShowDanceBoard();
+            //uiCourtship.ShowDanceBoard();
             uiCourtship.StartTimer();
             var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
             map.ShowIndicator();
@@ -115,12 +124,12 @@ public class GameCourtshipDance : IGame
         }
     }
 
-    public void BeforeGameEnd()
+    public void BeforeGameEnd(RepeatedField<string> winSessionIds)
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var p in players)
+        foreach (var sessionId in winSessionIds)
         {
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
             map.TokenReset(miniToken);
         }
     }
@@ -157,7 +166,6 @@ public class GameCourtshipDance : IGame
             }
             else
             {
-                // 4명이면 2:2 팀전 세팅
                 int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
                 int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
 
@@ -169,6 +177,7 @@ public class GameCourtshipDance : IGame
         }
     }
     #endregion
+       
 
 
     public int GetMyTeam()

@@ -16,10 +16,7 @@ public class MapGameCourtshipDance : MapBase
     private void Start()
     {
         bgm = GetComponent<AudioSource>();
-        //bgm.Play();
     }
-
-    
 
     public void TokenInit(MiniToken token)
     {
@@ -62,5 +59,21 @@ public class MapGameCourtshipDance : MapBase
         yield return new WaitUntil(() => UIManager.Get<UICourtshipDance>().myBoard.isFirstInput);
 
         indicator.gameObject.SetActive(false);
+    }
+
+    public void DanceCloseSocketNotification(string disconnectedSessionId, string replacementSessionId)
+    {
+        StartCoroutine(CoroutineCloseSocket(disconnectedSessionId, replacementSessionId));
+    }
+
+    private IEnumerator CoroutineCloseSocket(string disconnectedSessionId, string replacementSessionId)
+    {
+        // 처리되기까지 입력 막아서 오작동 회피
+        var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
+        yield return new WaitUntil(() => game.isBoardReady);
+        var myToken = MinigameManager.Instance.GetMyToken();
+        myToken.InputHandler.isEnable = false;
+        UIManager.Get<UICourtshipDance>().DisconnectNoti(disconnectedSessionId, replacementSessionId);
+        myToken.InputHandler.isEnable = true;
     }
 }
