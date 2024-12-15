@@ -178,8 +178,6 @@ public class DartPlayer : MonoBehaviour
     private void SetAim(Vector2 direction)
     {
         GetAim = direction;
-
-        
     }
 
     /// <summary>

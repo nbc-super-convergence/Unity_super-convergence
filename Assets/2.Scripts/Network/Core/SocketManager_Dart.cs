@@ -38,7 +38,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = gamePacket.DartGameThrowNotification;
         Debug.Log(response.Result);
 
-
+        int userIdx = GameManager.Instance.SessionDic[response.Result.SessionId].Color;
+        MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx].ApplyShoot(response.Result);
     }
 
     public void DartGameOverNotification(GamePacket gamePacket)
