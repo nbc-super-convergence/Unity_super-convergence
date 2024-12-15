@@ -131,6 +131,7 @@ public class BoardManager : Singleton<BoardManager>
             handle.gameObject.name = key;
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
+            isInitialized = true;
 
             playerTokenHandlers.Add(handle);
         }
@@ -373,7 +374,7 @@ public class BoardManager : Singleton<BoardManager>
 
             //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
-        Debug.Log("결과창 생성");
+        
         await UIManager.Show<BoardResultUI>();
     }
 
