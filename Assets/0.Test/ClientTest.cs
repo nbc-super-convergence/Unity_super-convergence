@@ -17,7 +17,7 @@ public partial class ClientTest : Singleton<ClientTest>
         GameManager.Instance.AddNewPlayer("Session3", "Player3", 2, 2);
         GameManager.Instance.AddNewPlayer("Session4", "Player4", 3, 3);
 
-        GameManager.Instance.myInfo = GameManager.Instance.SessionDic["Session1"];
+        //GameManager.Instance.myInfo = GameManager.Instance.SessionDic["Session1"];
     }
 
     private IEnumerator BoardSkipper()
@@ -28,12 +28,12 @@ public partial class ClientTest : Singleton<ClientTest>
             if (Input.GetKey(KeyCode.CapsLock) &&
             Input.GetKeyDown(KeyCode.B))
             {
-                //ÀÓÀÇÀÇ SessionDic ¼³Á¤
+                //ì„ì˜ì˜ SessionDic ì„¤ì •
                 InitSessionDic();
 
-                //±âÅ¸ ÃÊ±âÈ­ (ÇÊ¿äÇÏ´Ù¸é)
+                //ê¸°íƒ€ ì´ˆê¸°í™” (í•„ìš”í•˜ë‹¤ë©´)
 
-                //BoardScene ÁøÀÔ
+                //BoardScene ì§„ì…
                 GameManager.isGameStart = true;
             }
             yield return null;
