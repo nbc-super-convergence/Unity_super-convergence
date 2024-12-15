@@ -737,7 +737,7 @@ syntax = "proto3";
 
     // 미니게임 - 던지기 알림 
     message S2C_DartGameThrowNotification {
-        repeated DartGameData result = 1;
+        DartGameData result = 1;
     }
 
     // 미니게임 종료 

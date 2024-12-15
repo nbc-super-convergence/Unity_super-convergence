@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class GameDart : IGame
 {
+    private GameDartData gameData;
     private UIMinigameDart ingameUI;
 
     //다트판
@@ -107,7 +108,9 @@ public class GameDart : IGame
     #region IGame
     public async void Init(params object[] param)
     {
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDart>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.curMap =
+            await ResourceManager.Instance.LoadAsset<MapGameDart>
+            ($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
         MinigameManager.Instance.MakeMap<MapGameDart>();
 
         //DartOrder데이터 설정
@@ -117,6 +120,7 @@ public class GameDart : IGame
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
+            MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
         }
         else
         {
@@ -126,12 +130,20 @@ public class GameDart : IGame
 
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>();
+        ingameUI = await UIManager.Show<UIMinigameDart>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     public void DisableUI()
     {
-
+        UIManager.Hide<UIMinigameDart>();
     }
     #endregion
+}
+
+public class GameDartData : IGameData
+{
+    public void Init()
+    {
+
+    }
 }
