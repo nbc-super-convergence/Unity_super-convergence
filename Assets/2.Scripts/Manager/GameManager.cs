@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
@@ -10,7 +9,7 @@ public class GameManager : Singleton<GameManager>
     public static bool isGameStart; //BoardScene으로 넘어갈 때???
     public static Action<int> OnPlayerLeft; //색깔 전달
 
-    public UserInfo myInfo = new();
+    public UserInfo myInfo { get; private set; } = new();
 
     //0:빨강, 1:노랑, 2:초록, 3:파랑
     public Dictionary<string, UserInfo> SessionDic { get; private set; } = new();
@@ -25,7 +24,6 @@ public class GameManager : Singleton<GameManager>
     public void InitApp()
     {
         StartCoroutine(InitManagers());
-        
     }
 
     private IEnumerator InitManagers()
@@ -53,6 +51,11 @@ public class GameManager : Singleton<GameManager>
     }
 
     #region SessionDic
+    public void SetMyInfo(UserInfo info)
+    {
+        myInfo = info;
+    }
+
     public void AddNewPlayer(string sessionId, string nickname, int color, int order)
     {
         SessionDic.Add(sessionId, new UserInfo(sessionId, nickname, color, order));
