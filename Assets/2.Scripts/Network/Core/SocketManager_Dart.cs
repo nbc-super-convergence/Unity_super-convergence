@@ -10,7 +10,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         UIManager.Hide<BoardUI>();
 #pragma warning disable CS4014 
-        UIManager.Show<UIMinigameDart>(eGameType.GameDart);
+        UIManager.Show<UIMinigameReady>(eGameType.GameDart);
 #pragma warning restore CS4014
 
         MinigameManager.Instance.SetMiniGame<GameDart>(response);
@@ -20,8 +20,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DartGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartGameReadyNotification;
-        Debug.Log(response);
-
         UIManager.Get<UIMinigameReady>().SetReady(response.SessionId);
     }
 
@@ -33,23 +31,12 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Hide<UIMinigameReady>();
         //GameStart 함수 호출
         MinigameManager.Instance.GetMiniGame<GameDart>().GameStart();
-
-        Debug.Log(gamePacket.DartMiniGameStartNotification);
     }
 
     public void DartGameThrowNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartGameThrowNotification;
-        Debug.Log(response);
-
-        int userIdx;
-        foreach(var item in response.Result)
-        {
-            if(item.SessionId.Equals(MinigameManager.Instance.mySessonId))
-            {
-                Debug.Log($"나다");
-            }
-        }
+        Debug.Log(response.Result);
 
 
     }
