@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class MapGameDart : MapBase
 {
@@ -9,24 +8,6 @@ public class MapGameDart : MapBase
     public List<DartPlayer> DartOrder;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
-
-    private void Awake()
-    {
-        //각 플레이어의 인덱스 설정 (내가 몇P인지 위해)
-    }
-
-    private void Start()
-    {
-        BeginSelectOrder();
-    }
-
-    private void Update()
-    {
-        if (nowPlayer < DartOrder.Count)
-        {
-            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-        }
-    }
 
     /// <summary>
     /// 플레이어 인원만큼 다트에 인덱스 추가
@@ -47,7 +28,7 @@ public class MapGameDart : MapBase
     /// <summary>
     /// 지금부터 시작
     /// </summary>
-    private void BeginSelectOrder()
+    public void BeginSelectOrder()
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
     }
