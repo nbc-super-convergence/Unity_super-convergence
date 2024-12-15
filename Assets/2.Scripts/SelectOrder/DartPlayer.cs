@@ -62,7 +62,7 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
-    private int myRank = 0;
+    private int myRank = 0; 
     public int MyRank 
     {
         get => myRank;

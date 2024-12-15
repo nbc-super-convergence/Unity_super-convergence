@@ -71,8 +71,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         //if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
         //{
         //}
-        
-        MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
+        if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
+        {   //내 차례가 아니면 서버에서 위치값 받기
+            MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
+        }
     }
 
     public void DartSyncNotification(GamePacket gamePacket)
@@ -81,9 +83,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         string sessionId = response.SessionId;
         int userIdx = GameManager.Instance.SessionDic[sessionId].Color;
-        string nickname = GameManager.Instance.SessionDic[sessionId].Nickname;
 
-        Debug.Log($"{sessionId} {userIdx} {response.Angle} {nickname}");
+        Debug.Log($"{sessionId} {userIdx} {response.Angle}");
+
+        MinigameManager.Instance.GetMap<MapGameDart>().DartPanel.SetClient(sessionId);
 
         if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
         {

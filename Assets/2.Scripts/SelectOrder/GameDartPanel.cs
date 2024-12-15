@@ -12,6 +12,7 @@ public class GameDartPanel : MonoBehaviour
     private bool swapDirection = false;
     public bool isMove = true;  //움직이고 있는지
     public Vector3 moveDirection = Vector3.zero;
+    private bool imClient;  //내 차례면 이 클라이언트에서 움직이게
 
     private void Awake()
     {
@@ -36,8 +37,13 @@ public class GameDartPanel : MonoBehaviour
                 moveDirection = Vector3.left;
 
             ApplyMove();
-            SendServer();
+            if(imClient) SendServer();
         }
+    }
+
+    public void SetClient(string sessionId)
+    {
+        imClient = MinigameManager.Instance.mySessonId.Equals(sessionId);
     }
 
     private void ApplyMove()
