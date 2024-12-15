@@ -100,7 +100,7 @@ public class DartPlayer : MonoBehaviour
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
-            UIManager.Get<UIMinigameDart>().ShowForcePower();
+            //UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
         }

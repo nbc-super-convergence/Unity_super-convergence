@@ -36,6 +36,7 @@ public class GameDartPanel : MonoBehaviour
                 moveDirection = Vector3.left;
 
             ApplyMove();
+            SendServer();
         }
     }
 
@@ -58,21 +59,17 @@ public class GameDartPanel : MonoBehaviour
             return 0;
     }
 
-    private IEnumerator SendServer()
+    private void SendServer()
     {
-        while (isMove)
+        GamePacket packet = new();
         {
-            GamePacket packet = new();
+            packet.DartPannelSyncRequest = new()
             {
-                packet.DartPannelSyncRequest = new()
-                {
-                    SessionId = MinigameManager.Instance.mySessonId,
-                    Location = SocketManager.ToVector(transform.localPosition)
-                };
-                Debug.Log(packet.DartPannelSyncNotification.Location);
-            }
-            SocketManager.Instance.OnSend(packet);
-            yield return new WaitForSeconds(0.1f);
+                SessionId = MinigameManager.Instance.mySessonId,
+                Location = SocketManager.ToVector(transform.localPosition)
+            };
+            Debug.Log(packet.DartPannelSyncNotification.Location);
         }
+        SocketManager.Instance.OnSend(packet);
     }
 }
