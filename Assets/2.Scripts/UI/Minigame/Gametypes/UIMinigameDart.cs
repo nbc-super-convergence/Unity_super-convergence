@@ -85,15 +85,22 @@ public class UIMinigameDart : UIBase
     }
     #endregion
 
+    private void PlyaerLeftEvent(int color)
+    {
+
+    }
+
     //Todo : 내 차례가 되면 힘조절 UI 활성
 
     public override void Opened(object[] param)
     {
+        GameManager.OnPlayerLeft += PlyaerLeftEvent;
+
         HashSet<int> usedColors = new HashSet<int>();
         foreach(var dic in GameManager.Instance.SessionDic)
         {
             int color = dic.Value.Color;
-            
+            usedColors.Add(color);
         }
         for (int i = 0; i < resultImage.Length; i++)
         {
@@ -105,6 +112,6 @@ public class UIMinigameDart : UIBase
     }
     public override void Closed(object[] param)
     {
-
+        GameManager.OnPlayerLeft -= PlyaerLeftEvent;
     }
 }
