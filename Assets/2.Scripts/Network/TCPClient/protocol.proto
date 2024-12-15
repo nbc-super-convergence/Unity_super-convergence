@@ -753,7 +753,7 @@ syntax = "proto3";
 
     // 미니게임 - 던지기 알림 
     message S2C_DartGameThrowNotification {
-        repeated DartGameData result = 1;
+        DartGameData result = 1;
     }
 
     // 미니게임 종료 
@@ -766,6 +766,28 @@ syntax = "proto3";
             int32 rank = 2; 
             int32 totalPoint = 3;
         }
+    }
+
+    // 다트판 싱크 패킷
+    message C2S_DartPannelSyncRequest {
+        string sessionId = 1;
+        Vector location = 2;
+    }
+
+    message S2C_DartPannelSyncNotification {
+    string sessionId = 1;
+        Vector location = 2;
+    }
+
+    // 다트 싱크 패킷 
+    message C2S_DartSyncRequest {
+        string sessionId = 1;
+        Vector angle = 2;
+    }
+
+    message S2C_DartSyncNotification {
+    string sessionId = 1;
+        Vector angle = 2;
     }
 
 // 게임패킷
@@ -903,5 +925,9 @@ syntax = "proto3";
             C2S_DartGameThrowRequest dartGameThrowRequest = 605;
             S2C_DartGameThrowNotification dartGameThrowNotification = 606;
             S2C_DartGameOverNotification dartGameOverNotification = 607;
+            C2S_DartPannelSyncRequest dartPannelSyncRequest = 608;
+            S2C_DartPannelSyncNotification dartPannelSyncNotification = 609;
+            C2S_DartSyncRequest dartSyncRequest = 610;
+            S2C_DartSyncNotification dartSyncNotification = 611;
         }
     }

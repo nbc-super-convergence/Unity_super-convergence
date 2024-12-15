@@ -1,15 +1,17 @@
+using Google.Protobuf.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameDart : IGame
 {
+    private GameDartData gameData;
     private UIMinigameDart ingameUI;
 
     //다트판
-    public GameDartPanel DartPannel;
+    private GameDartPanel DartPannel;
 
     //다트그룹
-    public List<DartPlayer> DartOrder;
+    private List<DartPlayer> DartOrder;
 
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
@@ -30,28 +32,7 @@ public class GameDart : IGame
     private int curRound = 0;   //현재 라운드
     private int maxRound = 3;   //최대 라운드
 
-    /// <summary>
-    ///  기본 설정 세팅
-    /// </summary>
-    private void SettingData()
-    {
-    }
-
-    private void Update()
-    {
-        if (nowPlayer < DartOrder.Count)
-        {
-            //내 다트를 받으면 해당 다트의 속성들을 UI에 적용
-        }
-    }
-
-    /// <summary>
-    /// 던졌으면 UI 감추기
-    /// </summary>
-    public void HideDartUI()
-    {
-
-    }
+    private int playerCount;    //현재 플레이어 참여 인원
 
     /// <summary>
     /// 다음 차례
@@ -60,14 +41,14 @@ public class GameDart : IGame
     {
 
         nowPlayer++;
-        if (nowPlayer < DartOrder.Count)    //최대 인원보다 초과되지 않게
+        if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
-            Debug.Log("다음 사람");
+            //Debug.Log("다음 사람");
             DartOrder[nowPlayer].gameObject.SetActive(true);
         }
         else
         {
-            Debug.Log("결과");
+            //Debug.Log("결과");
             DartPannel.isMove = false;  //판은 멈춰라
             DistanceRank();
         }
@@ -77,7 +58,7 @@ public class GameDart : IGame
 
     //중심과 가까운 다트가 우선순위
     public void DistanceRank()
-    {
+    {   
         int rank = 1;
 
         List<DartPlayer> dartOrder = MinigameManager.Instance.GetMiniGame<GameDart>().DartOrder;
@@ -105,39 +86,64 @@ public class GameDart : IGame
                 }
             }
         }
-
-        MinigameManager.Instance.GetMiniGame<GameDart>().FinishSelectOrder();
     }
 
-    /// <summary>
-    /// 각 플레이어의 순서와 점수를 부여
-    /// </summary>
-    public void FinishSelectOrder()
+    public void PannelMoveEvent()
     {
-
+        Debug.Log("움직인다");
+        DartPannel.MoveEvent();
     }
 
-    #region IGame
-    public async void Init(params object[] param)
+    private void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
     {
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameDart>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMap<MapGameDart>();
-        SettingData();
+        playerCount = players.Count;
+        MinigameManager.Instance.GetMap<MapGameDart>().SetDartPlayers(playerCount);
 
-        if(param.Length > 0 && param[0] is S2C_DiceGameNotification response)
+        foreach(var p in players)
         {
 
         }
     }
 
+    #region IGame
+    public async void Init(params object[] param)
+    {
+        MinigameManager.Instance.curMap =
+            await ResourceManager.Instance.LoadAsset<MapGameDart>
+            ($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+        MinigameManager.Instance.MakeMap<MapGameDart>();
+
+        //DartOrder데이터 설정
+        DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
+        DartPannel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+
+        if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
+        {
+            SettingDart(response.Players);
+            MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
+        }
+        else
+        {
+            Debug.LogError("param parsing error : startPlayers");
+        }
+    }
+
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>();
+        ingameUI = await UIManager.Show<UIMinigameDart>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
     }
     public void DisableUI()
     {
-
+        UIManager.Hide<UIMinigameDart>();
     }
     #endregion
+}
+
+public class GameDartData : IGameData
+{
+    public void Init()
+    {
+
+    }
 }
