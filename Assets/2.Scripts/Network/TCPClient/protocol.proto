@@ -240,10 +240,11 @@ syntax = "proto3";
 
     message  S2C_PurchaseTileResponse {
         bool success = 1;
-        int32 tile = 2;
-        BoardPlayerData playerInfo = 3; 
-        int32 purchaseGold = 4;
-        GlobalFailCode failCode = 5;
+        bool isPurchased = 2;
+        int32 tile = 3;
+        BoardPlayerData playerInfo = 4; 
+        int32 purchaseGold = 5;
+        GlobalFailCode failCode = 6;
     }
 
     message  S2C_PurchaseTileNotification {
@@ -255,6 +256,13 @@ syntax = "proto3";
 
     message S2C_GameEndNotification {
         repeated Rank rank = 1;
+    
+        message Rank {
+            string sessionId = 1;
+            int32 rank = 2; 
+            int32 tileCount = 3;
+            int32 gold = 4;
+        }
     }
 
     message C2S_BackToTheRoomRequest {
@@ -340,7 +348,10 @@ syntax = "proto3";
     message S2C_TurnEndNotification{
         
     }
-    
+
+    message S2C_BoardGoldSyncNotification {
+        repeated BoardPlayerData playersInfo = 1;
+    }
 
 
 //LOBBY
@@ -856,6 +867,7 @@ syntax = "proto3";
                 S2C_DiceGameNotification diceGameNotification = 79;
                 C2S_TurnEndRequest turnEndRequest = 80;
                 S2C_TurnEndNotification turnEndNotification = 81; 
+                S2C_BoardGoldSyncNotification boardGoldSyncNotification = 82;
 
                 // Post Game (91-100)
                 C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
