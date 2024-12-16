@@ -103,28 +103,9 @@ public class DartPlayer : MonoBehaviour
         {
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
+            UIManager.Get<UIMinigameDart>().ShowForcePower();
         }
     }
-
-    #region SetProperties
-    /// <summary>
-    /// 각 속성의 최소 최대 결정
-    /// </summary>
-    public void SetAimRange(float min, float max)
-    {
-        minAim = min;
-        maxAim = max;
-    }
-    public void SetForceRange(float min, float max)
-    {
-        minForce = min;
-        maxForce = max;
-    }
-    public void SetPlayerIndex(int idx)
-    {
-        MyColor = idx;
-    }
-    #endregion
 
     private void FixedUpdate()
     {
@@ -161,7 +142,7 @@ public class DartPlayer : MonoBehaviour
         {
             orderEvent.OnAimEvent -= SetAim;
             orderEvent.OnShootEvent -= PressKey;
-            //UIManager.Get<UIMinigameDart>().HideForcePower();
+            UIManager.Get<UIMinigameDart>().HideForcePower();
         }
     }
 
@@ -174,6 +155,27 @@ public class DartPlayer : MonoBehaviour
     }
     #endregion
 
+    #region SetProperties
+    /// <summary>
+    /// 각 속성의 최소 최대 결정
+    /// </summary>
+    public void SetAimRange(float min, float max)
+    {
+        minAim = min;
+        maxAim = max;
+    }
+    public void SetForceRange(float min, float max)
+    {
+        minForce = min;
+        maxForce = max;
+    }
+    public void SetPlayerIndex(int idx)
+    {
+        MyColor = idx;
+    }
+    #endregion
+
+    #region 각도 메서드
     /// <summary>
     /// 각도 적용
     /// </summary>
@@ -190,7 +192,9 @@ public class DartPlayer : MonoBehaviour
     {
         GetAim = direction;
     }
+    #endregion
 
+    #region 발사 메서드
     /// <summary>
     /// 힘 조절
     /// </summary>
@@ -245,6 +249,7 @@ public class DartPlayer : MonoBehaviour
         CurForce = data.Power;
         NowShoot();
     }
+    #endregion
 
     /// <summary>
     /// 다트 빗나감

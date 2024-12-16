@@ -38,7 +38,6 @@ public class GameDart : IGame
     /// </summary>
     public void NextDart()
     {
-
         nowPlayer++;
         if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
