@@ -118,13 +118,27 @@ public class BoardManager : Singleton<BoardManager>
         var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
         dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
         dice.gameObject.SetActive(false);
-
+        List<Vector3> pos = new List<Vector3>()
+            {
+                new Vector3(1, 0, 1),
+                new Vector3(1, 0, -1),
+                new Vector3(-1, 0, -1),
+                new Vector3(-1, 0, 1),
+            };
+        
         foreach (string key in ids)
         {
             var dict = GameManager.Instance.SessionDic;
             var info = dict[key];
 
-            BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+            BoardTokenHandler handle = 
+                Instantiate
+                (
+                    TestPlayerPrefab, 
+                    startNode.transform.position + pos[playerTokenHandlers.Count], 
+                    Quaternion.identity
+                ).GetComponent<BoardTokenHandler>();
+
             handle.Init(info);
             //handle.data.userInfo = info;
             handle.SetColor(info.Color);
@@ -287,6 +301,24 @@ public class BoardManager : Singleton<BoardManager>
         };
 
         SocketManager.Instance.OnSend(packet);
+    }
+
+    public void ExitPlayer(string sessionId)
+    {
+        var p = GetToken(sessionId);
+        int i = playerTokenHandlers.IndexOf(p);
+        var n = playerTokenHandlers[(i + 1) % playerTokenHandlers.Count];
+
+        if (i == playerIndex) NextTurn();
+
+
+        playerTokenHandlers.Remove(p);
+        UIManager.Get<BoardUI>().ExitPlayer(i);
+
+        playerIndex = playerTokenHandlers.IndexOf(n);
+
+        Destroy(p.gameObject);
+
     }
 
     //public void PurChaseNode(int node,int playerIndex)

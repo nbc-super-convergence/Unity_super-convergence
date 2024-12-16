@@ -37,7 +37,7 @@ public class BoardUI : UIBase
     {
         base.Closed(param);
 
-        ExitPlayer();
+        //ExitPlayer();
     }
 
     public void Refresh()
@@ -45,21 +45,23 @@ public class BoardUI : UIBase
         OnRefresh?.Invoke();
     }
 
-    private void ExitPlayer()
+    public void ExitPlayer(int i)
     {
-        if(SceneManager.GetActiveScene().buildIndex == 2)
-        {
-            var list = BoardManager.Instance.playerTokenHandlers;
+        //if(SceneManager.GetActiveScene().buildIndex == 2)
+        //{
+        //    var list = BoardManager.Instance.playerTokenHandlers;
 
-            for (int i = 0; i < list.Count; i++)
-            {
-                if (list[i].data.userInfo.Order == -1)
-                {
-                    tokens[i].SetActive(false);
-                    tokens[i].ExitPlayer();
-                }
-            }
-        }
+        //    for (int i = 0; i < list.Count; i++)
+        //    {
+        //        if (list[i].data.userInfo.Order == -1)
+        //        {
+        //            tokens[i].SetActive(false);
+        //            tokens[i].ExitPlayer();
+        //        }
+        //    }
+        //}
+
+        tokens[i].SetActive(false);
     }
 
     public void ShowMyTurn(bool isShow)
