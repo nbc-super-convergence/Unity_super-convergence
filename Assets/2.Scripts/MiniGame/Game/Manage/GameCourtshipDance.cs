@@ -96,7 +96,7 @@ public class GameCourtshipDance : IGame
         isBoardReady = isSuccess;
 
         uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
-
+        SoundManager.Instance.PlayBGM(BGMType.Dance);
     }
 
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
