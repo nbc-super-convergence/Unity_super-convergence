@@ -31,6 +31,8 @@ public class UIRoom : UIBase
     public override void Opened(object[] param)
     {
         SoundManager.Instance.PlayBGM(BGMType.Room);
+        roomUI.blocksRaycasts = false;
+        roomUI.interactable = true;
 
         foreach (var slot in userSlots)
         {
@@ -166,6 +168,7 @@ public class UIRoom : UIBase
     public async void GameStart()
     {
         roomUI.blocksRaycasts = true;
+        roomUI.interactable = false;
         await CountDownAsync(3);
         
         UIManager.SceneChangeTask = new();
