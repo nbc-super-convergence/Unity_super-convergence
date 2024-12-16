@@ -162,7 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 2
 --- !u!114 &2645148477201630496
 MonoBehaviour:
@@ -277,7 +276,7 @@ Transform:
   m_GameObject: {fileID: 4243239605345812087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -1.2, y: 0.25, z: 2.07}
+  m_LocalPosition: {x: -1.2, y: 0.25, z: 3.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -754,7 +753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 3
 --- !u!114 &6514973013519690379
 MonoBehaviour:
@@ -896,7 +894,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 1
 --- !u!114 &5189453259755136390
 MonoBehaviour:
@@ -1040,7 +1037,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 0
 --- !u!114 &5694422111203393032
 MonoBehaviour:
