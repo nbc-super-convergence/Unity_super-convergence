@@ -5,6 +5,7 @@ public class AreaNode : BaseNode, IPurchase
 {
     private StringBuilder owner = new StringBuilder("");
     private int saleAmount = 10;
+
     //매수금은 판매액의 2배
     //벌금은 판매액의 반
 
@@ -43,7 +44,7 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            if (player.data.coin >= saleAmount)
+            else if (player.data.coin >= saleAmount)
                 await UIManager.Show<PurchaseNodeUI>(purchase);
             else
                 BoardManager.Instance.TurnEnd();
@@ -51,8 +52,11 @@ public class AreaNode : BaseNode, IPurchase
         else
             Cancle();
     }
-    private void Penalty(BoardTokenData p)
+    private async void Penalty(BoardTokenData p)
     {
+        IPurchase purchase = this;
+        await UIManager.Show<PenaltyUI>(saleAmount >> 1,purchase,p);
+
         GamePacket packet = new();
 
         packet.TilePenaltyRequest = new()
@@ -62,6 +66,7 @@ public class AreaNode : BaseNode, IPurchase
         };
 
         SocketManager.Instance.OnSend(packet);
+
 
         p.coin = Mathf.Max(p.coin - saleAmount, 0);
     }

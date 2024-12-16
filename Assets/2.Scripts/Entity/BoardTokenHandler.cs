@@ -97,6 +97,7 @@ public class BoardTokenHandler : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 isReady = false;
+                UIManager.Get<BoardUI>().ShowMyTurn(isReady);
 
                 GamePacket packet = new();
                 packet.RollDiceRequest = new()
@@ -248,7 +249,8 @@ public class BoardTokenHandler : MonoBehaviour
         if (!isMine) return;
 
         isReady = true;
-        diceObject.gameObject.SetActive(true);
+        diceObject.gameObject.SetActive(isReady);
+        UIManager.Get<BoardUI>().ShowMyTurn(isReady);
     }
 
     public void ReceivePosition(Vector3 position,float rotY)

@@ -8,6 +8,7 @@ public class BoardUI : UIBase
 {
     [SerializeField] private List<BoardTokenUI> tokens;
     public event Action OnRefresh;
+    public GameObject myTurnUI;
 
     private IEnumerator Start()
     {
@@ -28,7 +29,8 @@ public class BoardUI : UIBase
     public override void Opened(object[] param)
     {
         base.Opened(param);
-        Refresh();
+        SoundManager.Instance.PlayBGM(BGMType.BoardScene);
+        //Refresh();
     }
 
     public override void Closed(object[] param)
@@ -58,5 +60,15 @@ public class BoardUI : UIBase
                 }
             }
         }
+    }
+
+    public void ShowMyTurn(bool isShow)
+    {
+        myTurnUI.SetActive(isShow);
+    }
+
+    public BoardTokenUI GetPlayerUI(int i)
+    {
+        return tokens[i];
     }
 }
