@@ -9,7 +9,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using static GamePacket;  //Protocol.cs (ÀÚµ¿»ı¼º)
+using static GamePacket;  //Protocol.cs (ìë™ìƒì„±)
 
 public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBase<T>
 {
@@ -24,9 +24,9 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     [SerializeField] private string ip;
     [SerializeField] private int port;
 
-    /// <summary> ÀÌÀü¿¡ ¼ö½ÅÇÑ µ¥ÀÌÅÍ </summary>
+    /// <summary> ì´ì „ì— ìˆ˜ì‹ í•œ ë°ì´í„° </summary>
     private byte[] remainBuffer = Array.Empty<byte>();
-    /// <summary> »õ·Î ¼ö½ÅÇÑ µ¥ÀÌÅÍ: 1Ã»Å©. </summary>
+    /// <summary> ìƒˆë¡œ ìˆ˜ì‹ í•œ ë°ì´í„°: 1ì²­í¬. </summary>
     private byte[] recvBuffer = new byte[1024];
 
     private bool isPacketInit = false;
@@ -47,7 +47,7 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     public bool isLobby = false;
 
     /// <summary>
-    /// ÆÄ±«½Ã (µû·Î ÆÄ±« ÇÏÁö ¾Ê´Â´Ù¸é ¾Û Á¾·á ½Ã) ¼ÒÄÏ ¿¬°á ÇØÁ¦
+    /// íŒŒê´´ì‹œ (ë”°ë¡œ íŒŒê´´ í•˜ì§€ ì•ŠëŠ”ë‹¤ë©´ ì•± ì¢…ë£Œ ì‹œ) ì†Œì¼“ ì—°ê²° í•´ì œ
     /// </summary>
     private void OnDestroy()
     {
@@ -55,35 +55,35 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// ip, port ÃÊ±âÈ­ ÈÄ ÆĞÅ¶ Ã³¸® ¸Ş¼Òµå µî·Ï
+    /// ip, port ì´ˆê¸°í™” í›„ íŒ¨í‚· ì²˜ë¦¬ ë©”ì†Œë“œ ë“±ë¡
     /// </summary>
     public void Init()
-    {//TODO: StartSceneÀÇ ½ÃÀÛ ¹öÆ° ´©¸¦ ¶§ È£Ãâ.
+    {//TODO: StartSceneì˜ ì‹œì‘ ë²„íŠ¼ ëˆ„ë¥¼ ë•Œ í˜¸ì¶œ.
         InitPackets();
         Connect();
         isInitialized = true;
     }
 
     /// <summary>
-    /// °¢ PacketÀÇ Header¿¡ ¸Â´Â receiveDic ¸¸µé±â.
+    /// ê° Packetì˜ Headerì— ë§ëŠ” receiveDic ë§Œë“¤ê¸°.
     /// </summary>
     private void InitPackets()
     {
         if (isPacketInit) return;
 
-        //Header Arr : ¼­¹ö¿Í ±³È¯ÇÒ ¸ğµç ÆĞÅ¶ Á¾·ù.
+        //Header Arr : ì„œë²„ì™€ êµí™˜í•  ëª¨ë“  íŒ¨í‚· ì¢…ë¥˜.
         string[] headers = Enum.GetNames(typeof(PayloadOneofCase));
 
-        //receiveDic {Key:Header Value:Action<GamePacket>} »ı¼º.
+        //receiveDic {Key:Header Value:Action<GamePacket>} ìƒì„±.
         foreach (string header in headers)
         {
             //Key
             PayloadOneofCase keyHeader = (PayloadOneofCase)Enum.Parse(typeof(PayloadOneofCase), header);
 
-            //ActionÀÌ È£ÃâÇÒ ÇÔ¼ö : SocketManager¿¡ Á¤ÀÇ.
+            //Actionì´ í˜¸ì¶œí•  í•¨ìˆ˜ : SocketManagerì— ì •ì˜.
             MethodInfo method = GetType().GetMethod(header);
             if (method != null)
-            {//Value : ¾×¼Ç Á¤ÀÇ ¹× Dictionary µî·Ï.
+            {//Value : ì•¡ì…˜ ì •ì˜ ë° Dictionary ë“±ë¡.
                 Action<GamePacket> action = (Action<GamePacket>)Delegate.CreateDelegate(typeof(Action<GamePacket>), this, method);
                 receiveDic.Add(keyHeader, action);
             }
@@ -92,28 +92,28 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// µî·ÏµÈ ip, port·Î ¼ÒÄÏ ¿¬°á
+    /// ë“±ë¡ëœ ip, portë¡œ ì†Œì¼“ ì—°ê²°
     /// </summary>
     private async void Connect(UnityAction callback = null)
     {
-        IPEndPoint endPoint; //ipÁÖ¼Ò + Æ÷Æ®¹øÈ£
+        IPEndPoint endPoint; //ipì£¼ì†Œ + í¬íŠ¸ë²ˆí˜¸
         if (IPAddress.TryParse(ip, out IPAddress ipAddress))
         {
-            //¼­¹ö ÁÖ¼Ò·Î IPEndPoint »ı¼º
+            //ì„œë²„ ì£¼ì†Œë¡œ IPEndPoint ìƒì„±
             endPoint = new IPEndPoint(ipAddress, port);
         }
         else
         {
-            //ip°¡ À¯È¿ÇÏÁö ¾Ê´Ù¸é ·ÎÄÃ È£½ºÆ® ÁÖ¼Ò·Î IPEndPoint »ı¼º
+            //ipê°€ ìœ íš¨í•˜ì§€ ì•Šë‹¤ë©´ ë¡œì»¬ í˜¸ìŠ¤íŠ¸ ì£¼ì†Œë¡œ IPEndPoint ìƒì„±
             endPoint = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
         }
         Debug.Log("Tcp Ip : " + ipAddress.MapToIPv4().ToString() + ", Port : " + port);
         
-        //Socket »ı¼º
+        //Socket ìƒì„±
         socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
         try
         {
-            //¼­¹ö¿Í ¿¬°á ½Ãµµ
+            //ì„œë²„ì™€ ì—°ê²° ì‹œë„
             await socket.ConnectAsync(endPoint);
             isConnected = socket.Connected;
 
@@ -131,7 +131,7 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// ¼­¹ö·Î ÆĞÅ¶À» º¸³¾ ¶§ È£Ãâ.
+    /// ì„œë²„ë¡œ íŒ¨í‚·ì„ ë³´ë‚¼ ë•Œ í˜¸ì¶œ.
     /// </summary>
     /// <param name="gamePacket"></param>
     public void OnSend(GamePacket gamePacket)
@@ -143,7 +143,7 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// ¼­¹ö·ÎºÎÅÍ µ¥ÀÌÅÍ¸¦ ¹Ş±â.
+    /// ì„œë²„ë¡œë¶€í„° ë°ì´í„°ë¥¼ ë°›ê¸°.
     /// </summary>
     private async void OnReceive()
     {
@@ -153,14 +153,14 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
             {
                 try
                 {
-                    //»õ·Î¿î µ¥ÀÌÅÍ¸¦ ¹Ş±â Àü±îÁö ´ë±â.
+                    //ìƒˆë¡œìš´ ë°ì´í„°ë¥¼ ë°›ê¸° ì „ê¹Œì§€ ëŒ€ê¸°.
                     int recvByteLength = await socket.ReceiveAsync(recvBuffer, SocketFlags.None); 
                     if (!isConnected)
                     {
                         Debug.LogWarning("Socket is disconnected");
                         break;
                     }
-                    if (recvByteLength <= 0) continue; //µ¥ÀÌÅÍ ¼ö½ÅµÇÁö ¾ÊÀ½.
+                    if (recvByteLength <= 0) continue; //ë°ì´í„° ìˆ˜ì‹ ë˜ì§€ ì•ŠìŒ.
 
                     //fullBuffer = remainBuffer + recvBuffer.
                     byte[] fullBuffer = new byte[remainBuffer.Length + recvByteLength];
@@ -170,38 +170,38 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
                     int processedLength = 0;
                     while (processedLength < fullBuffer.Length)
                     {
-                        //ÆĞÅ¶À¯Çü(2) + ¹öÀü±æÀÌ(1) + ½ÃÄö½º¹øÈ£(4) + ÆäÀÌ·Îµå ±æÀÌ(4)
+                        //íŒ¨í‚·ìœ í˜•(2) + ë²„ì „ê¸¸ì´(1) + ì‹œí€€ìŠ¤ë²ˆí˜¸(4) + í˜ì´ë¡œë“œ ê¸¸ì´(4)
                         if (fullBuffer.Length - processedLength < 11) break;
 
-                        /*µ¥ÀÌÅÍ ÀĞ±â*/
+                        /*ë°ì´í„° ì½ê¸°*/
                         using var stream = new MemoryStream(fullBuffer, processedLength, fullBuffer.Length - processedLength);
                         using var reader = new BinaryReader(stream);
 
-                        /*ÆĞÅ¶ À¯Çü ÀĞ±â*/ 
+                        /*íŒ¨í‚· ìœ í˜• ì½ê¸°*/ 
                         byte[] typeBytes = reader.ReadBytes(2);
-                        Array.Reverse(typeBytes); //ºò ¿£µğ¾ğ(³×Æ®¿öÅ©) -> ¸®Æ² ¿£µğ¾ğ(PC)
+                        Array.Reverse(typeBytes); //ë¹… ì—”ë””ì–¸(ë„¤íŠ¸ì›Œí¬) -> ë¦¬í‹€ ì—”ë””ì–¸(PC)
                         PayloadOneofCase type = (PayloadOneofCase)BitConverter.ToInt16(typeBytes);
                         //Debug.Log($"PacketType:{type}");
 
-                        /*¹öÀü ÀĞ±â*/
+                        /*ë²„ì „ ì½ê¸°*/
                         byte versionLength = reader.ReadByte();
-                        if (fullBuffer.Length - processedLength < 11 + versionLength) break; //¹öÀü Á¤º¸ ±æÀÌ À¯È¿¼º °Ë»ç
+                        if (fullBuffer.Length - processedLength < 11 + versionLength) break; //ë²„ì „ ì •ë³´ ê¸¸ì´ ìœ íš¨ì„± ê²€ì‚¬
                         byte[] versionBytes = reader.ReadBytes(versionLength);
                         string version = BitConverter.ToString(versionBytes);
 
-                        /*½ÃÄö½º ¹øÈ£: ÆĞÅ¶ ¼ø¼­ ÃßÀû¿ë.*/
+                        /*ì‹œí€€ìŠ¤ ë²ˆí˜¸: íŒ¨í‚· ìˆœì„œ ì¶”ì ìš©.*/
                         byte[] sequenceBytes = reader.ReadBytes(4);
                         Array.Reverse(sequenceBytes);
                         int sequence = BitConverter.ToInt32(sequenceBytes);
 
-                        /*ÆäÀÌ·Îµå*/
+                        /*í˜ì´ë¡œë“œ*/
                         byte[] payloadLengthBytes = reader.ReadBytes(4);
                         Array.Reverse(payloadLengthBytes);
                         int payloadLength = BitConverter.ToInt32(payloadLengthBytes);
-                        if (fullBuffer.Length - processedLength < 11 + versionLength + payloadLength) break; //¹«È¿
+                        if (fullBuffer.Length - processedLength < 11 + versionLength + payloadLength) break; //ë¬´íš¨
                         byte[] payloadBytes = reader.ReadBytes(payloadLength);
                         
-                        /*ÆĞÅ¶ »ı¼º ¹× Å¥¿¡ ÀúÀå*/
+                        /*íŒ¨í‚· ìƒì„± ë° íì— ì €ì¥*/
                         int totalLength = 11 + versionLength + payloadLength;
                         Packet packet = new Packet(type, version, sequence, payloadBytes);
                         receiveQueue.Enqueue(packet);
@@ -212,7 +212,7 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
                         processedLength += totalLength;
                     }
 
-                    /*³²Àº µ¥ÀÌÅÍ: ´ÙÀ½ ¼ö½Å¿¡ ÀÌ¾î¼­ Ã³¸®.*/
+                    /*ë‚¨ì€ ë°ì´í„°: ë‹¤ìŒ ìˆ˜ì‹ ì— ì´ì–´ì„œ ì²˜ë¦¬.*/
                     int remainLength = fullBuffer.Length - processedLength;
                     if (remainLength > 0)
                     {
@@ -229,20 +229,20 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
             }
             if (socket != null && socket.Connected)
             {
-                Debug.Log("¼ÒÄÏ ¸®½Ãºê ¸ØÃã ´Ù½Ã ½ÃÀÛ");
+                Debug.Log("ì†Œì¼“ ë¦¬ì‹œë¸Œ ë©ˆì¶¤ ë‹¤ì‹œ ì‹œì‘");
                 OnReceive();
             }
         }
     }
 
     /// <summary>
-    /// sendQueue¿¡ µ¥ÀÌÅÍ°¡ ÀÖÀ» ½Ã ¼ÒÄÏ¿¡ Àü¼Û
+    /// sendQueueì— ë°ì´í„°ê°€ ìˆì„ ì‹œ ì†Œì¼“ì— ì „ì†¡
     /// </summary>
     private IEnumerator OnSendQueue()
     {
         while (true)
         {
-            //Queue¿¡ ÆĞÅ¶ÀÌ µé¾î¿À±â±îÁö ´ë±â
+            //Queueì— íŒ¨í‚·ì´ ë“¤ì–´ì˜¤ê¸°ê¹Œì§€ ëŒ€ê¸°
             yield return new WaitUntil(() => sendQueue.Count > 0); 
             
             Packet packet = sendQueue.Dequeue();
@@ -254,20 +254,20 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// receiveQueue¿¡ µ¥ÀÌÅÍ°¡ ÀÖÀ» ½Ã ÆĞÅ¶ Å¸ÀÔ¿¡ µû¶ó ÀÌº¥Æ® È£Ãâ
+    /// receiveQueueì— ë°ì´í„°ê°€ ìˆì„ ì‹œ íŒ¨í‚· íƒ€ì…ì— ë”°ë¼ ì´ë²¤íŠ¸ í˜¸ì¶œ
     /// </summary>
     private IEnumerator OnReceiveQueue()
     {
         while (true)
         {
-            //Queue¿¡ ÆĞÅ¶ÀÌ µé¾î¿À±â±îÁö ´ë±â
+            //Queueì— íŒ¨í‚·ì´ ë“¤ì–´ì˜¤ê¸°ê¹Œì§€ ëŒ€ê¸°
             yield return new WaitUntil(() => receiveQueue.Count > 0);
 
             try
             {
                 var packet = receiveQueue.Dequeue();
-                Debug.Log("Receive Packet : " + packet.type.ToString()); //header Ãâ·Â.
-                receiveDic[packet.type].Invoke(packet.gamePacket); //ÀÌº¥Æ® È£Ãâ
+                Debug.Log("Receive Packet : " + packet.type.ToString()); //header ì¶œë ¥.
+                receiveDic[packet.type].Invoke(packet.gamePacket); //ì´ë²¤íŠ¸ í˜¸ì¶œ
             }
             catch (Exception e)
             {
@@ -289,9 +289,9 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
     }
 
     /// <summary>
-    /// ¼­¹ö¿ÍÀÇ ¿¬°á ÇØÁ¦
+    /// ì„œë²„ì™€ì˜ ì—°ê²° í•´ì œ
     /// </summary>
-    /// <param name="isReconnect">Àç¿¬°á ¿©ºÎ</param>
+    /// <param name="isReconnect">ì¬ì—°ê²° ì—¬ë¶€</param>
     public void Disconnect(bool isReconnect = false)
     {
         StopAllCoroutines();
@@ -299,10 +299,10 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
         {
             isConnected = false;
 
-            // ¼­¹ö¿¡ ¿¬°á ÇØÁ¦ ¾Ë¸² ÆĞÅ¶ »ı¼º
+            // ì„œë²„ì— ì—°ê²° í•´ì œ ì•Œë¦¼ íŒ¨í‚· ìƒì„±
             //GamePacket packet = new() { LoginRequest = new() };
-            //OnSend(packet); // ¼­¹ö¿¡ ¿¬°á ÇØÁ¦ ¿äÃ»
-            socket.Disconnect(isReconnect); //¼ÒÄÏ ¿¬°á ÇØÁ¦
+            //OnSend(packet); // ì„œë²„ì— ì—°ê²° í•´ì œ ìš”ì²­
+            socket.Disconnect(isReconnect); //ì†Œì¼“ ì—°ê²° í•´ì œ
 
             if (isReconnect)
             {
@@ -312,12 +312,12 @@ public class TCPSocketManagerBase<T> : Singleton<T> where T : TCPSocketManagerBa
             {
                 if (SceneManager.GetActiveScene().name != "StartScene")
                 {
-                    //TODO: StartScene ·Îµù ½Ã Áö¿¬ÀÌ ¹ß»ıÇÑ´Ù¸é ºñµ¿±â·Î ¹Ù²Ü °Í.
+                    //TODO: StartScene ë¡œë”© ì‹œ ì§€ì—°ì´ ë°œìƒí•œë‹¤ë©´ ë¹„ë™ê¸°ë¡œ ë°”ê¿€ ê²ƒ.
                     SceneManager.LoadScene("StartScene");
                 }
                 else
                 {
-                    //TODO: ·Îºñ, ·ë UI ²ô±â.
+                    //TODO: ë¡œë¹„, ë£¸ UI ë„ê¸°.
                 }
             }
         }
