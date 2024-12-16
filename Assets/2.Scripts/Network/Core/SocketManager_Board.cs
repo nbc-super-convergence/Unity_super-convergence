@@ -15,7 +15,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             var p = response.PlayersInfo[i];
             var data = BoardManager.Instance.GetToken(p.SessionId).data;
-
             data.coin = p.Gold;
         }
 
@@ -79,7 +78,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         float rotY = response.Rotation;
 
         var token = BoardManager.Instance.GetToken(response.SessionId);
-        token.ReceivePosition(pos, rotY);
+        token?.ReceivePosition(pos, rotY);
 
         Debug.Log("MovePlayerBoardNotification");
     }
@@ -270,7 +269,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
 
         await UIManager.Show<BoardResultUI>();
-
         //게임종료 필요
         //BoardManager.Instance.GameOver();
     }
