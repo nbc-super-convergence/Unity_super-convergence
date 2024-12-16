@@ -1,32 +1,28 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UISetting : UIBase
 {
-    [SerializeField]
-    private Button[] buttons;
-    
+    [SerializeField] Slider BGMSlider;
+    [SerializeField] Slider SFXSlider;
 
-    private void Start()
+    private void OnEnable()
     {
-        InitBtn();
-    }
-        
-    private void InitBtn()
-    {
-        buttons[0].onClick.AddListener(Back);
-        buttons[1].onClick.AddListener(Apply);
+        BGMSlider.onValueChanged.AddListener(ONBGMChange);
+        BGMSlider.onValueChanged.AddListener(ONSFXChange);
     }
 
-    private void Back()
+    public void OnBackBtn()
     {
         UIManager.Hide<UISetting>();
     }
 
-    private void Apply()
+    private void ONBGMChange(float value)
     {
-        Debug.Log($"Apply is Not Ready");
+        SoundManager.Instance.SetBGMAudioMixerValue(value);
     }
-
+    private void ONSFXChange(float value)
+    {
+        SoundManager.Instance.SetSFXAudioMixerValue(value);
+    }
 }

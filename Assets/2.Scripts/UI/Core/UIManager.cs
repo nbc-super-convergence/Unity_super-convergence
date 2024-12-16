@@ -27,6 +27,22 @@ public class UIManager : Singleton<UIManager>
     public UILoading LoadingScreen;
     public static TaskCompletionSource<bool> SceneChangeTask;
 
+    private void Update()
+    {
+        if (isInitialized)
+        {
+            if (!(IsOpened<UIError>() && IsOpened<UISetting>()))
+            {
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+#pragma warning disable CS4014
+                    Show<UISetting>();
+#pragma warning restore CS4014
+                }
+            }
+        }
+    }
+
     //GameManager해서 호출함으로써 Manager간 초기화 서순 지키기.
     public void Init()
     {    
