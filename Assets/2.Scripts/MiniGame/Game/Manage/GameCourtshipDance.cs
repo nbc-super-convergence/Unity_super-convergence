@@ -15,6 +15,7 @@ public class GameCourtshipDance : IGame
 
     public bool isTeamGame = false;
     public bool isBoardReady = false;
+    public bool isGameOver = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
