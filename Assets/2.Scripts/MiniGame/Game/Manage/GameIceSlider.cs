@@ -34,7 +34,7 @@ public class GameIceSlider : IGame
     #region 초기화
     private void SetBGM()
     {
-
+        SoundManager.Instance.PlayBGM(BGMType.Ice);
     }
 
     private void ResetPlayers(RepeatedField<S2C_IceMiniGameReadyNotification.Types.startPlayers> players)

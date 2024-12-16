@@ -1,37 +1,36 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+using TMPro;
+using UnityEngine;
 
 public class UIKick : UIBase
 {
-    [SerializeField] private Button buttonKick;
-    [SerializeField] private GameObject overlay;
-    public string targetPlayerId;
+    [SerializeField] private TextMeshProUGUI warnUI;
+    [SerializeField] private ChatSizeFitter warnBox;
+    private int kickIdx;
 
     public override void Opened(object[] param)
     {
-        overlay.SetActive(true);
-    }
-    public override void Closed(object[] param)
-    {
-        overlay.SetActive(false);
-    }
+        if (param.Length == 2)
+        {
+            if (param[0] is int idx)
+            {
+                kickIdx = idx;
+            }
 
-    public void SetPosition(float x, float y)
-    {
-        transform.position = new Vector3(x, y);
-    }
-
-    public void SetPlayerId(string playerId)
-    {
-        this.targetPlayerId = playerId;
+            if (param[1] is string nickname)
+            {
+                warnUI.text = $"{nickname}님을\n퇴장시키겠습니까?";
+            }
+        }
     }
 
-    public void Kick()
+    public void OnYesBtn()
     {
-        // 서버에 강퇴를 요청.
-        // 패킷전송
+        UIManager.Get<UIRoom>().KickUser(kickIdx);
+        UIManager.Hide<UIKick>();
+    }
 
-        Debug.Log($"PlayerId {targetPlayerId}을/를 서버에 추방요청함.");
+    public void OnNOBtn()
+    {
         UIManager.Hide<UIKick>();
     }
 }

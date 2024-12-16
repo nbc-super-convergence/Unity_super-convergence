@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SettingBtn : MonoBehaviour
 {
-    //Inspector: ¼³Á¤ ¹öÆ°
+    //Inspector: ì„¤ì • ë²„íŠ¼
     public async void OnBtnSetting()
     {
         await UIManager.Show<UISetting>();

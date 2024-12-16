@@ -73,8 +73,7 @@ public class UICourtshipDance : UIBase
         timeText.gameObject.SetActive(true);
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
-
-
+   
     #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)
     {        
@@ -108,7 +107,7 @@ public class UICourtshipDance : UIBase
             }
             rank++;
         }
-
+        timeText.gameObject.SetActive(false);
         StartCoroutine(GameOverText(teamResults, rankings, response.EndTime + 7000));
     }
 
@@ -148,12 +147,14 @@ public class UICourtshipDance : UIBase
         {
             // 우리 팀 처리
             myBoard.ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+            myBoard.teamSessionIds.Remove(disconnectedSessionId);
         }
         else
         {
             // 남의 팀 처리
             int disconnectTeam = game.GetPlayerTeam(disconnectedSessionId);
             boardDic[disconnectTeam].ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+            boardDic[disconnectTeam].teamSessionIds.Remove(disconnectedSessionId);
         }
     }
     #endregion
