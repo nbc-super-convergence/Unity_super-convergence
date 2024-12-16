@@ -409,7 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 3
+  uiPosition: 2
   buttonKick: {fileID: 9121159026025051884}
   overlay: {fileID: 2282905960183660501}
   targetPlayerId: 0

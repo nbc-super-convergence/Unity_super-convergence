@@ -594,7 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 2
+  uiPosition: 1
 --- !u!1 &2174422847025601042
 GameObject:
   m_ObjectHideFlags: 0

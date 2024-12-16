@@ -1380,7 +1380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 2
+  uiPosition: 1
   userSlots:
   - {fileID: 2185802562414305213}
   - {fileID: 9204088495803857511}
