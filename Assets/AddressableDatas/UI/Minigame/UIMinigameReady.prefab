@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<\uC870\uC791\uD0A4><size=40>\n\uC774\uB3D9 : W, A, S, D or \uD654\uC0B4\uD45C\n</size>"
+  m_text: "<\uC870\uC791\uD0A4><size=40>\n W, A, S, D or \uBC29\uD5A5\uD0A4\n</size>"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cb37e2afeb582ff459f9b1974a4e7584, type: 2}
   m_sharedMaterial: {fileID: 5849564353121276917, guid: cb37e2afeb582ff459f9b1974a4e7584,

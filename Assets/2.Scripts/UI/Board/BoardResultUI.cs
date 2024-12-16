@@ -40,6 +40,8 @@ public class BoardResultUI : UIBase
             g.gameObject.SetActive(false);
             result.Add(g);
         }
+
+        StartCoroutine(GameEnd());
     }
 
     private IEnumerator GameEnd()
