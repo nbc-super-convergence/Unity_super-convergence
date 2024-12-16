@@ -26,11 +26,11 @@ public class BoardTokenUI : UIBase
         coin.text = data.coin.ToString();
     }
 
-    public void Event(int coin,bool isMinus)
+    public void Event(int coin)
     {
         eventUI.text = "";
 
-        if (!isMinus) eventUI.text = "+";
+        if (coin >= 0) eventUI.text = "+";
 
         eventUI.text += coin.ToString();
         StartCoroutine(OnEvent());
