@@ -37,6 +37,8 @@ public class UILobby : UIBase
 
     public override void Opened(object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Lobby);
+
         if (!SocketManager.Instance.isLobby)
         {
             LobbyJoinRequest();
@@ -72,24 +74,21 @@ public class UILobby : UIBase
                 SessionId = GameManager.Instance.myInfo.SessionId
             }
         };
+        lobbyTcs = new();
 
         SocketManager.Instance.OnSend(packet);
+        bool isSuccess = await lobbyTcs.Task;
 
-        bool isSuccess = await RetryWithTimeout(async () =>
-        {
-            lobbyTcs = new();
-            SocketManager.Instance.OnSend(packet);
-            return await lobbyTcs.Task;
-        }, maxRetries, timeoutSeconds);
-
-        if(!isSuccess)
+        if (!isSuccess)
         {
             Debug.LogError($"UILobby lobbyTcs : {isSuccess}");
             OnBtnLogout();
         }
-
-        nameTxt.text = GameManager.Instance.myInfo.Nickname;
-        fitter.UpdateSpeechBubbleSize();
+        else
+        {
+            nameTxt.text = GameManager.Instance.myInfo.Nickname;
+            fitter.UpdateSpeechBubbleSize();
+        }
     }
 
     public enum eTcs
@@ -142,6 +141,10 @@ public class UILobby : UIBase
         {
             SocketManager.Instance.isLobby = false;
             UIManager.Hide<UILobby>();
+
+#pragma warning disable CS4014
+            UIManager.Show<UILogin>();
+#pragma warning restore CS4014
         }
         else
         {
@@ -181,68 +184,35 @@ public class UILobby : UIBase
     {
         btnRefresh.interactable = false;
 
-        
-        bool roomSuccess = false, userSuccess = false;
-
-        roomSuccess = await RetryWithTimeout(async () =>
+        GamePacket roomPacket = new()
         {
-            GamePacket roomPacket = new()
+            RoomListRequest = new()
             {
-                RoomListRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId
-                }
-            };
-            roomTcs = new();
-            SocketManager.Instance.OnSend(roomPacket);
-            return await roomTcs.Task;
-        }, maxRetries, timeoutSeconds);
-
-        if (!roomSuccess)
+                SessionId = GameManager.Instance.myInfo.SessionId
+            }
+        };
+        roomTcs = new();
+        SocketManager.Instance.OnSend(roomPacket);
+        if (!await roomTcs.Task)
         {
             await UIManager.Show<UIError>("방 목록을 새로고침할 수 없습니다.");
         }
 
-        userSuccess = await RetryWithTimeout(async () =>
+        GamePacket userPacket = new()
         {
-            GamePacket userPacket = new()
+            LobbyUserListRequest = new()
             {
-                LobbyUserListRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId
-                }
-            };
-            userTcs = new();
-            SocketManager.Instance.OnSend(userPacket);
-            return await userTcs.Task;
-        }, maxRetries, timeoutSeconds);
-
-        if (!userSuccess)
+                SessionId = GameManager.Instance.myInfo.SessionId
+            }
+        };
+        userTcs = new();
+        SocketManager.Instance.OnSend(userPacket);
+        if (!await userTcs.Task)
         {
             await UIManager.Show<UIError>("사용자 목록을 새로고침할 수 없습니다.");
         }
 
         btnRefresh.interactable = true;
-    }
-
-    private async Task<bool> RetryWithTimeout(Func<Task<bool>> action, int maxRetries, float timeoutSeconds)
-    {
-        for (int attempt = 1; attempt <= maxRetries; attempt++)
-        {
-            var timeoutTask = Task.Delay((int)(timeoutSeconds * 1000)); // 타임아웃
-            var actionTask = action(); // 요청 작업
-
-            var completedTask = await Task.WhenAny(actionTask, timeoutTask);
-
-            if (completedTask == actionTask && await actionTask)
-            {
-                return true;
-            }
-
-            Debug.LogWarning($"Attempt {attempt} failed. Retrying...");
-        }
-
-        return false;
     }
 
     // 방 참가

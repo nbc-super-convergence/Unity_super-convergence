@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 0
-  uiPosition: 1
+  uiPosition: 0
   tokens:
   - {fileID: 2139334906286328608}
   - {fileID: 6694815951790514822}

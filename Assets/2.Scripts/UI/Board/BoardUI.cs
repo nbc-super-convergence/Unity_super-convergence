@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,8 +9,10 @@ public class BoardUI : UIBase
     [SerializeField] private List<BoardTokenUI> tokens;
     public event Action OnRefresh;
 
-    private void Start()
+    private IEnumerator Start()
     {
+        yield return new WaitUntil(() => BoardManager.Instance.isInitialized);
+
         var list = BoardManager.Instance.playerTokenHandlers;
 
         for (int i = 0; i < list.Count; i++)
@@ -18,13 +21,13 @@ public class BoardUI : UIBase
             tokens[i].SetPlayer(data);
             tokens[i].SetActive(true);
         }
+
+        Refresh();
     }
 
     public override void Opened(object[] param)
     {
         base.Opened(param);
-
-
         Refresh();
     }
 

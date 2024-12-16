@@ -55,12 +55,11 @@ public class Bomb : MonoBehaviour
                 {
                     int c = colors[i];
 
-                    if (i == targetIndex || !colors.Contains(c)) continue;
+                    if (c == targetIndex || !colors.Contains(c)) continue;
 
                     Transform t = MinigameManager.Instance.miniTokens[c].transform;
 
                     float d = Vector3.Distance(target.position, t.position);
-
                     if (1.5f > d) ChangeTarget(c);
                 }
             }

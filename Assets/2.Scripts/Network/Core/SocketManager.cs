@@ -72,7 +72,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LobbyJoinResponse(GamePacket packet)
     {
         var response = packet.LobbyJoinResponse;
-        GameManager.Instance.myInfo.SetUserData(response.User);
+        GameManager.Instance.myInfo.SetNickname(response.User.Nickname);
         UIManager.Get<UILobby>().TrySetTask(response.Success, UILobby.eTcs.Lobby);
 
         if (response.FailCode != 0)
@@ -108,7 +108,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     #endregion
 
     #region 룸 서버
-
     public void RoomListResponse(GamePacket packet)
     {
         var response = packet.RoomListResponse;
@@ -126,10 +125,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         var response = packet.CreateRoomResponse;
         UIManager.Get<UIMakeRoom>().TrySetTask(response.Success);
         UIManager.Show<UIRoom>(response.Room);
-        if ((int)response.FailCode != 0)
+        if (response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+            Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
 
@@ -142,7 +141,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             UIManager.Hide<UILobby>();
             UIManager.Show<UIRoom>(response.Room);
         }
-        if ((int)response.FailCode != 0)
+        else 
         {
             UIManager.Show<UIError>(response.FailCode);
             Debug.LogError($"FailCode : {response.FailCode.ToString()}");
@@ -152,24 +151,25 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomNotification;
-        UIManager.Get<UIRoom>().SetRoomInfo(response.Room);
+        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, true);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomResponse;
         UIManager.Get<UIRoom>().TrySetTask(response.Success);        
-        if ((int)response.FailCode != 0)
+
+        if (response.FailCode != 0)
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+            Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
 
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().SetRoomInfo(response.Room);
+        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, false);
     }
 
     public void GamePrepareResponse(GamePacket packet)
@@ -178,19 +178,19 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         UIManager.Get<UIRoom>().TrySetTask(response.Success);
         if (response.Success)
         {
-            UIManager.Get<UIRoom>().SetIsReady(response.IsReady);
+            UIManager.Get<UIRoom>().SetUserReady(response.IsReady);
         }
-        if ((int)response.FailCode != 0)
+        else
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+            Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
 
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.User.SessionId, response.IsReady, response.State);
+        UIManager.Get<UIRoom>().SetUserReady(response.IsReady, response.User.SessionId, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)
@@ -200,13 +200,37 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             UIManager.Get<UIRoom>().GameStart();            
         }
-        if ((int)response.FailCode != 0)
+        else
         {
             UIManager.Show<UIError>(response.FailCode);
-            Debug.LogError($"FailCode : {response.FailCode.ToString()}");
+            Debug.LogError($"FailCode : {response.FailCode}");
         }
     }
+    
+    public void RoomKickRequest(GamePacket packet)
+    {
+
+    }
+
+    public void RoomKickResponse(GamePacket packet)
+    {
+        var response = packet.RoomKickResponse;
+
+        if (response.Success)
+        {
+            //해당 플레이어 UI 없애기.
+            RoomData roomData = response.Room;
+        }
+        else
+        {
+            UIManager.Show<UIError>(response.FailCode);
+        }
+    }
+
+    public void roomKickNotification(GamePacket packet)
+    {
+        var response = packet.RoomKickNotification;
+        RoomData roomData = response.Room;
+    }
     #endregion
-
-
 }

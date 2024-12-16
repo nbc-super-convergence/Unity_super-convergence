@@ -131,12 +131,12 @@ public class BoardManager : Singleton<BoardManager>
             handle.gameObject.name = key;
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
+            isInitialized = true;
 
             playerTokenHandlers.Add(handle);
         }
         camera.Follow = camera.LookAt = playerTokenHandlers[playerIndex].transform;
 
-        await UIManager.Show<BoardUI>();
         #region Old
         //for (int i = 0; i < count; i++)
         //{
@@ -374,7 +374,7 @@ public class BoardManager : Singleton<BoardManager>
 
             //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
         });
-        Debug.Log("결과창 생성");
+        
         await UIManager.Show<BoardResultUI>();
     }
 
