@@ -6,11 +6,14 @@ public interface IBoardNode
     public Transform transform { get; }
 
     bool TryGetNode(out Transform node);
+
+    public List<Transform> GetList();
+    public void LineUp();
 }
 
 public interface IAction
 {
-    //Ä­¿¡ µµÂøÇßÀ»‹š ÀÛµ¿ÇÏ´Â ¾×¼Ç
+    //ì¹¸ì— ë„ì°©í–ˆì„ë–„ ì‘ë™í•˜ëŠ” ì•¡ì…˜
     void Action();
 }
 
