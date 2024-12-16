@@ -303,14 +303,19 @@ public class BoardManager : Singleton<BoardManager>
         SocketManager.Instance.OnSend(packet);
     }
 
-    public void ExitPlayer(string sessionId)
+    public void ExitPlayer(string id)
     {
-        var p = GetToken(sessionId);
+        var p = GetToken(id);
         int i = playerTokenHandlers.IndexOf(p);
         var n = playerTokenHandlers[(i + 1) % playerTokenHandlers.Count];
 
         if (i == playerIndex) NextTurn();
 
+        int c = GameManager.Instance.SessionDic[id].Color;
+
+        for(int j = 0; j < areaNodes.Count; j++)
+            if (areaNodes[j].ownerColor == c)
+                areaNodes[j].ClearArea();
 
         playerTokenHandlers.Remove(p);
         UIManager.Get<BoardUI>().ExitPlayer(i);
