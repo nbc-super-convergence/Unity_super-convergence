@@ -81,6 +81,7 @@ public class DartPlayer : MonoBehaviour
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
+    #region 유니티 기본함수
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
@@ -95,12 +96,11 @@ public class DartPlayer : MonoBehaviour
         //Debug.Log($"{gameObject.name}, {IsClient}");
     }
 
-    private void Start()
+    private void OnEnable()
     {
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
-            //UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
         }
@@ -138,11 +138,12 @@ public class DartPlayer : MonoBehaviour
         if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
-            SendDartSync();
+            if (IsClient)
+            {
+                SendDartSync();
+            }
         }
-
-            transform.rotation = Quaternion.Euler(CurAim);
-        //Debug.DrawRay(transform.position, -transform.forward * 2);
+        ApplyAim();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -160,7 +161,7 @@ public class DartPlayer : MonoBehaviour
         {
             orderEvent.OnAimEvent -= SetAim;
             orderEvent.OnShootEvent -= PressKey;
-            UIManager.Get<UIMinigameDart>().HideForcePower();
+            //UIManager.Get<UIMinigameDart>().HideForcePower();
         }
     }
 
@@ -170,6 +171,16 @@ public class DartPlayer : MonoBehaviour
         MissDart();
 
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
+    }
+    #endregion
+
+    /// <summary>
+    /// 각도 적용
+    /// </summary>
+    private void ApplyAim()
+    {
+        transform.rotation = Quaternion.Euler(CurAim);
+        //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     /// <summary>
@@ -220,7 +231,8 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
-        ThrowToServer();
+        if(IsClient)
+            ThrowToServer();
     }
 
     /// <summary>

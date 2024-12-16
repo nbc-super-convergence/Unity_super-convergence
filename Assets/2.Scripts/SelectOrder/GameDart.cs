@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameDart : IGame
 {
-    private GameDartData gameData;
     private UIMinigameDart ingameUI;
 
     //다트판
@@ -120,7 +119,6 @@ public class GameDart : IGame
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
-            MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
         }
         else
         {
@@ -130,20 +128,14 @@ public class GameDart : IGame
 
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>(gameData);
+        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
     }
     public void DisableUI()
     {
         UIManager.Hide<UIMinigameDart>();
     }
     #endregion
-}
-
-public class GameDartData : IGameData
-{
-    public void Init()
-    {
-
-    }
 }
