@@ -32,11 +32,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            //TODO : 주석해제 필수
-            //player.GetDice(dice);
+            player.GetDice(dice);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
-            player.GetDice(2);
             Debug.Log("RollDiceResponse");
         }
         else
