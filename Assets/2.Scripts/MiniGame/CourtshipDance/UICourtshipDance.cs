@@ -130,7 +130,7 @@ public class UICourtshipDance : UIBase
 
         yield return new WaitForSeconds(2f);
 
-        game.BeforeGameEnd(winSessionIds);
+        game.BeforeGameEnd();
         Destroy(MinigameManager.Instance.curMap.gameObject);
         MinigameManager.Instance.boardCamera.SetActive(true);
 
@@ -156,6 +156,7 @@ public class UICourtshipDance : UIBase
             boardDic[disconnectTeam].ChangeInfoPool(disconnectedSessionId, replacementSessionId);
             boardDic[disconnectTeam].teamSessionIds.Remove(disconnectedSessionId);
         }
+        game.RemovePlayers(disconnectedSessionId);
     }
     #endregion
 }

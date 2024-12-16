@@ -10,7 +10,7 @@ public class GameCourtshipDance : IGame
 
     private CommandGenerator commandGenerator;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
-    private List<PlayerInfo> players = new();   
+    public List<PlayerInfo> players = new();   
     private TaskCompletionSource<bool> sourceTcs;
 
     public bool isTeamGame = false;
@@ -125,13 +125,13 @@ public class GameCourtshipDance : IGame
         }
     }
 
-    public void BeforeGameEnd(RepeatedField<string> winSessionIds)
+    public void BeforeGameEnd()
     {
         var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var sessionId in winSessionIds)
+        foreach (var player in players)
         {
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
-            map.TokenReset(miniToken);
+            var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
+            map.TokenReset(token);
         }
     }
 
@@ -213,6 +213,18 @@ public class GameCourtshipDance : IGame
             }
         }
         return null;
+    }
+
+    public void RemovePlayers(string disconnectedSessionId)
+    {
+        foreach (var p in players)
+        {
+            if(p.SessionId == disconnectedSessionId)
+            {
+                players.Remove(p);
+                break;
+            }
+        }
     }
 
     public void DisableUI()
