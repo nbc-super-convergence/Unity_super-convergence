@@ -1132,7 +1132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 1
+  uiPosition: 2
   inputFieldID: {fileID: 534849159635113667}
   inputFieldPassword: {fileID: 4104745663036006118}
   inputFieldPasswordConfirm: {fileID: 4678513568579927154}

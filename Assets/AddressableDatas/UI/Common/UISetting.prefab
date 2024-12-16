@@ -513,15 +513,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 6454699279917553184}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 997d6a6ca6380aa4b8b12c63317f41ae, type: 3}
+  m_Script: {fileID: 11500000, guid: 5cd0f93d2e6a44348a3f64cdf9873acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isActiveInCreated: 1
   isDestroyAtClosed: 1
-  uiPosition: 1
-  buttons:
-  - {fileID: 585063588405545851}
-  - {fileID: 1908642868420971338}
+  uiPosition: 3
+  buttons: []
 --- !u!1 &6511325922684920672
 GameObject:
   m_ObjectHideFlags: 0

@@ -465,7 +465,7 @@ syntax = "proto3";
     message C2S_RoomKickRequest {
         string sessionId = 1;
         string targetSessionId = 2;
-        }
+    }
 
     message S2C_RoomKickResponse {
         bool success = 1;
@@ -475,6 +475,7 @@ syntax = "proto3";
         
     message S2C_RoomKickNotification {
         RoomData room = 1;
+        string targetSessionId = 2;
     }
 
 //ICE
