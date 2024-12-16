@@ -15,12 +15,13 @@ public class UILogin : UIBase
     private StringBuilder sbError = new();
 
     private TaskCompletionSource<bool> sourceTcs;
-    
 
-    private void Start()
+    public override void Opened(object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Login);
         versionTxt.text = "current version : " + Application.version;
     }
+
 
     #region Button
     //Inspector: 회원가입 판넬 키기
@@ -60,7 +61,9 @@ public class UILogin : UIBase
             PasswardInput.text = "";
             IDInput.ForceLabelUpdate();
             PasswardInput.ForceLabelUpdate();
+
             await UIManager.Show<UILobby>();
+            UIManager.Hide<UILogin>();
         }
     }
 
