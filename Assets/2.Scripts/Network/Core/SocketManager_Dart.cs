@@ -86,8 +86,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         Debug.Log($"{sessionId} {userIdx} {response.Angle}");
 
-        MinigameManager.Instance.GetMap<MapGameDart>().DartPanel.SetClient(sessionId);
-
         if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
         {
             DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];

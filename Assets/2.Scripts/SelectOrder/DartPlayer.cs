@@ -81,6 +81,7 @@ public class DartPlayer : MonoBehaviour
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
+    #region 유니티 기본함수
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
@@ -95,36 +96,16 @@ public class DartPlayer : MonoBehaviour
         //Debug.Log($"{gameObject.name}, {IsClient}");
     }
 
-    private void Start()
+    private void OnEnable()
     {
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
-            //UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
+            UIManager.Get<UIMinigameDart>().ShowForcePower();
         }
     }
-
-    #region SetProperties
-    /// <summary>
-    /// 각 속성의 최소 최대 결정
-    /// </summary>
-    public void SetAimRange(float min, float max)
-    {
-        minAim = min;
-        maxAim = max;
-    }
-    public void SetForceRange(float min, float max)
-    {
-        minForce = min;
-        maxForce = max;
-    }
-    public void SetPlayerIndex(int idx)
-    {
-        MyColor = idx;
-    }
-    #endregion
 
     private void FixedUpdate()
     {
@@ -138,11 +119,12 @@ public class DartPlayer : MonoBehaviour
         if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
-            SendDartSync();
+            if (IsClient)
+            {
+                SendDartSync();
+            }
         }
-
-            transform.rotation = Quaternion.Euler(CurAim);
-        //Debug.DrawRay(transform.position, -transform.forward * 2);
+        ApplyAim();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -171,6 +153,37 @@ public class DartPlayer : MonoBehaviour
 
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
+    #endregion
+
+    #region SetProperties
+    /// <summary>
+    /// 각 속성의 최소 최대 결정
+    /// </summary>
+    public void SetAimRange(float min, float max)
+    {
+        minAim = min;
+        maxAim = max;
+    }
+    public void SetForceRange(float min, float max)
+    {
+        minForce = min;
+        maxForce = max;
+    }
+    public void SetPlayerIndex(int idx)
+    {
+        MyColor = idx;
+    }
+    #endregion
+
+    #region 각도 메서드
+    /// <summary>
+    /// 각도 적용
+    /// </summary>
+    private void ApplyAim()
+    {
+        transform.rotation = Quaternion.Euler(CurAim);
+        //Debug.DrawRay(transform.position, -transform.forward * 2);
+    }
 
     /// <summary>
     /// 각도 조절
@@ -179,7 +192,9 @@ public class DartPlayer : MonoBehaviour
     {
         GetAim = direction;
     }
+    #endregion
 
+    #region 발사 메서드
     /// <summary>
     /// 힘 조절
     /// </summary>
@@ -220,7 +235,8 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
-        ThrowToServer();
+        if(IsClient)
+            ThrowToServer();
     }
 
     /// <summary>
@@ -233,6 +249,7 @@ public class DartPlayer : MonoBehaviour
         CurForce = data.Power;
         NowShoot();
     }
+    #endregion
 
     /// <summary>
     /// 다트 빗나감
