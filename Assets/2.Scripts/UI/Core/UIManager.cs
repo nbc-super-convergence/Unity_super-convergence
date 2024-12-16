@@ -109,7 +109,10 @@ public class UIManager : Singleton<UIManager>
     /// <returns>UI 스크립트</returns>
     public static T Get<T>() where T : UIBase
     {
-        Debug.LogWarning($"UIManager GET : {typeof(T).Name}");
+        string type = typeof(T).Name;
+        if (type == nameof(UILogin)) 
+            Debug.LogWarning($"UIManager GET : UILogin");
+
         Instance.uiList.RemoveAll(obj => obj == null);
         return (T)Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
     }
