@@ -195,7 +195,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.IsReady, response.User.SessionId, response.State);
+
+        UIManager.Get<UIRoom>()?.SetUserReady(response.IsReady, response.User.SessionId, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)
