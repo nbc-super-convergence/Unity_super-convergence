@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable CS4014
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -38,6 +39,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void CloseSocketNotification(GamePacket packet)
     {
         var response = packet.CloseSocketNotification;
+
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+            BoardManager.Instance.ExitPlayer(response.SessionId);
+
         GameManager.Instance.DeleteSessionId(response.SessionId);
     }
     #endregion
