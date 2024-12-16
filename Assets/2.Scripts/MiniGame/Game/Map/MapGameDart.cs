@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 public class MapGameDart : MapBase
 {
-    public GameDartPanel DartPanel { get; private set; }
+    public GameDartPanel DartPanel;
 
     //다트그룹
     public List<DartPlayer> DartOrder;
