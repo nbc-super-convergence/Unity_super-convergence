@@ -121,7 +121,7 @@ public class AreaNode : BaseNode, IPurchase
         if(owner.Equals(""))
             return $"{saleAmount}의 코인을 지불하여 해당 칸을 구매 할 수 있습니다.";
         else
-            return $"{saleAmount}의 코인을 지불하여 해당 칸을 인수 할 수 있습니다.";
+            return $"{saleAmount * 1.5f}의 코인을 지불하여 해당 칸을 인수 할 수 있습니다.";
     }
 
     public void ClearArea()
