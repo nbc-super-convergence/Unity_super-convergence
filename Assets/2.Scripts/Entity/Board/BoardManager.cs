@@ -70,7 +70,6 @@ public class BoardManager : Singleton<BoardManager>
     //private List<IGameResult> bonus;
     public bool isMIniPlay { get; private set; }
 
-
     public BoardTokenHandler GetToken(string sessionID)
     {
         string id = sessionID;
@@ -169,7 +168,7 @@ public class BoardManager : Singleton<BoardManager>
         #endregion
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
-        Curplayer.Ready();
+        StartCoroutine(Curplayer.Ready());
     }
 
     //테스트용
@@ -222,6 +221,9 @@ public class BoardManager : Singleton<BoardManager>
             //}
             //else
             //{
+
+            
+
             GamePacket packet = new();
 
             packet.TurnEndRequest = new()
@@ -251,6 +253,11 @@ public class BoardManager : Singleton<BoardManager>
     }
     public void NextTurn()
     {
+        var col = Physics.OverlapSphere(Curplayer.transform.position, 0.1f, 1 << 8);
+
+        if (col.Length > 0 && col[0].TryGetComponent(out IBoardNode node))
+            node.GetList().Add(Curplayer.transform);
+
         isMIniPlay = false;
 
         int count = playerTokenHandlers.Count;
@@ -260,7 +267,7 @@ public class BoardManager : Singleton<BoardManager>
         camera.Follow = camera.LookAt = t;
         dice.SetDicePosition(t);
 
-        Curplayer.Ready();
+        StartCoroutine(Curplayer.Ready());
     }
 
     //public void SetTrophyNode()
