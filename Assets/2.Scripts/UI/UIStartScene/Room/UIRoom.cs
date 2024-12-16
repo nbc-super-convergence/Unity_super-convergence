@@ -30,6 +30,8 @@ public class UIRoom : UIBase
 
     public override void Opened(object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Room);
+
         foreach (var slot in userSlots)
         {
             slot.InitUserSlot();
