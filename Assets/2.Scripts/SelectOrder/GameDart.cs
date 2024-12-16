@@ -33,6 +33,8 @@ public class GameDart : IGame
 
     private int playerCount;    //현재 플레이어 참여 인원
 
+    List<string> playerInfo = new List<string>();   //플레이어의 닉네임들
+
     /// <summary>
     /// 다음 차례
     /// </summary>
@@ -104,9 +106,8 @@ public class GameDart : IGame
 
         foreach(var p in players)
         {
-            int color = GameManager.Instance.SessionDic[p.SessionId].Color;
             string nickname = GameManager.Instance.SessionDic[p.SessionId].Nickname;
-            UIManager.Get<UIMinigameDart>().SetNickname(color, nickname);
+            playerInfo.Add(nickname);
         }
     }
 
@@ -138,6 +139,10 @@ public class GameDart : IGame
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
 
         MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
+        for (int i = 0; i < playerInfo.Count; i++)
+        {
+            UIManager.Get<UIMinigameDart>().SetNickname(i, playerInfo[i]);
+        }
     }
     public void DisableUI()
     {

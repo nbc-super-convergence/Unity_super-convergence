@@ -51,20 +51,6 @@ public class GameDartPanel : MonoBehaviour
         transform.Translate(moveDirection * (Time.deltaTime * pannelSpeed));
     }
 
-    /// <summary>
-    /// Limit 검사
-    /// </summary>
-    /// <returns>양수면 오른쪽 음수면 왼쪽</returns>
-    public int GetReverse()
-    {
-        if (transform.localPosition.x < -xPositionLimit)
-            return 1;
-        else if (transform.localPosition.x > xPositionLimit)
-            return -1;
-        else
-            return 0;
-    }
-
     private void SendServer()
     {
         GamePacket packet = new();

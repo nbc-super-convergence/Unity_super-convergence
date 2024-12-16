@@ -65,14 +65,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.DartPannelSyncNotification;
 
-        //GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
-        //panel.moveDirection = ToVector3(response.Location);
-        //Debug.Log($"{panel.moveDirection} {response.Location}");
-        //if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
-        //{
-        //}
+        GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+        panel.moveDirection = ToVector3(response.Location);
+        Debug.Log($"{panel.moveDirection} {response.Location}");
         if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
-        {   //내 차례가 아니면 서버에서 위치값 받기
+        {
             MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
         }
     }
