@@ -78,6 +78,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().isGameOver = true;
         MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
@@ -85,7 +86,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     /* 411 */
     public void DanceCloseSocketNotification(GamePacket packet)
     {
+        if (MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().isGameOver == true) return;
         var response = packet.DanceCloseSocketNotification;
+
         MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
             response.DisconnectedSessionId, response.ReplacementSessionId);
     }
