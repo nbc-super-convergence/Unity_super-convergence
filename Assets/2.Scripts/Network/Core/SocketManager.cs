@@ -218,8 +218,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-            //해당 플레이어 UI 없애기.
             RoomData roomData = response.Room;
+            UIManager.Get<UIRoom>().OnKickEvent(false, roomData);
         }
         else
         {
@@ -227,10 +227,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-    public void roomKickNotification(GamePacket packet)
+    public void RoomKickNotification(GamePacket packet)
     {
         var response = packet.RoomKickNotification;
+
         RoomData roomData = response.Room;
+        bool isKicked = GameManager.Instance.myInfo.SessionId == response.TargetSessionId;
+        UIManager.Get<UIRoom>().OnKickEvent(isKicked, roomData);
     }
     #endregion
 }
