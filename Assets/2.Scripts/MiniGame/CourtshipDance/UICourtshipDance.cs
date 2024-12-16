@@ -73,8 +73,7 @@ public class UICourtshipDance : UIBase
         timeText.gameObject.SetActive(true);
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
-
-
+   
     #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)
     {        
@@ -108,7 +107,7 @@ public class UICourtshipDance : UIBase
             }
             rank++;
         }
-
+        timeText.gameObject.SetActive(false);
         StartCoroutine(GameOverText(teamResults, rankings, response.EndTime + 7000));
     }
 
