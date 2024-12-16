@@ -11,12 +11,6 @@ public class MapGameCourtshipDance : MapBase
     private int baseLayerIndex = 0;
     private Dictionary<int, Transform> prevTranform = new();
 
-    private AudioSource bgm;
-
-    private void Start()
-    {
-        bgm = GetComponent<AudioSource>();
-    }
 
     public void TokenInit(MiniToken token)
     {

@@ -8,6 +8,7 @@ public class GameBombDelivery : IGame
 
     public void GameStart(params object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Bomb);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
         bomb.gameObject.SetActive(true);
     }
