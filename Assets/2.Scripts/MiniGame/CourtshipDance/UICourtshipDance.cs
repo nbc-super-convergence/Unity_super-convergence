@@ -147,12 +147,14 @@ public class UICourtshipDance : UIBase
         {
             // 우리 팀 처리
             myBoard.ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+            myBoard.teamSessionIds.Remove(disconnectedSessionId);
         }
         else
         {
             // 남의 팀 처리
             int disconnectTeam = game.GetPlayerTeam(disconnectedSessionId);
             boardDic[disconnectTeam].ChangeInfoPool(disconnectedSessionId, replacementSessionId);
+            boardDic[disconnectTeam].teamSessionIds.Remove(disconnectedSessionId);
         }
     }
     #endregion
