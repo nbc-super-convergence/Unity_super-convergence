@@ -156,7 +156,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomNotification;
-        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, true);
+        UIManager.Get<UIRoom>()?.OnRoomMemberChange(response.Room, true);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
@@ -174,7 +174,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, false);
+        UIManager.Get<UIRoom>()?.OnRoomMemberChange(response.Room, false);
     }
 
     public void GamePrepareResponse(GamePacket packet)
