@@ -213,11 +213,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
     
-    public void RoomKickRequest(GamePacket packet)
-    {
-
-    }
-
     public void RoomKickResponse(GamePacket packet)
     {
         var response = packet.RoomKickResponse;
@@ -239,7 +234,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         RoomData roomData = response.Room;
         bool isKicked = GameManager.Instance.myInfo.SessionId == response.TargetSessionId;
-        UIManager.Get<UIRoom>().OnKickEvent(isKicked, roomData);
+        UIManager.Get<UIRoom>()?.OnKickEvent(isKicked, roomData);
     }
     #endregion
 }
