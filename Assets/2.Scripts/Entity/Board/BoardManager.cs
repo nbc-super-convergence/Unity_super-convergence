@@ -120,7 +120,7 @@ public class BoardManager : Singleton<BoardManager>
         dice.gameObject.SetActive(false);
         List<Vector3> pos = new List<Vector3>()
             {
-                new Vector3(1, 0, 1),
+                Vector3.zero,
                 new Vector3(1, 0, -1),
                 new Vector3(-1, 0, -1),
                 new Vector3(-1, 0, 1),
