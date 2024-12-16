@@ -103,7 +103,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             data.coin = playerinfo.Gold;
 
             BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
-            UIManager.Get<BoardUI>().GetPlayerUI(j).Event(response.PurchaseGold,true);
+            UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -125,7 +125,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         data.coin = response.PlayerInfo.Gold;
 
         BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
-        UIManager.Get<BoardUI>().GetPlayerUI(j).Event(response.PurchaseGold,true);
+        UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
         UIManager.Get<BoardUI>().Refresh();
     }
     #endregion
@@ -204,7 +204,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
 
                 if(penalty != 0)
-                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty,penalty < 0);
+                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
                 //data.trophyAmount = playerinfos[i].Trophy;
             }
             UIManager.Get<PenaltyUI>().SetTax(Mathf.Abs(penalty));
@@ -234,7 +234,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             int j = GameManager.Instance.SessionDic[id].Color;
 
             if (penalty != 0)
-                UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty, penalty < 0);
+                UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
             //data.trophyAmount = playerinfos[i].Trophy;
         }
 
