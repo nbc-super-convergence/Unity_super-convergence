@@ -20,6 +20,9 @@ public class ViewNextNode : Editor
 
         foreach (Transform transform in list)
             Handles.DrawAAPolyLine(5f, p, transform.position);
+
+        Handles.color = Color.blue;
+        Handles.DrawAAPolyLine(5f,p,b.lineUp.position);
     }
 }
 #endif
