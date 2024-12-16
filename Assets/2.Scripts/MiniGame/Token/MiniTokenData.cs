@@ -4,7 +4,7 @@ using UnityEngine;
 [Serializable]
 public class MiniTokenData
 {
-    private readonly Animator animator;
+    [SerializeField] private Animator animator;
 
     #region common : 모든 게임에서 사용
     public int tokenColor;
