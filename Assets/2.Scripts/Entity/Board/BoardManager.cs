@@ -353,30 +353,30 @@ public class BoardManager : Singleton<BoardManager>
     //    }
     //}
 
-    public async void GameOver()
-    {
-        //게임종료시 레크리에이션, 추가 트로피 증정
-        //foreach (var result in bonus)
-        //{
-        //    List<int> list = result.Result();
+    //public async void GameOver()
+    //{
+    //    //게임종료시 레크리에이션, 추가 트로피 증정
+    //    //foreach (var result in bonus)
+    //    //{
+    //    //    List<int> list = result.Result();
 
-        //    foreach (int i in list)
-        //        playerTokenHandlers[i].data.trophyAmount += 1;
-        //}
+    //    //    foreach (int i in list)
+    //    //        playerTokenHandlers[i].data.trophyAmount += 1;
+    //    //}
 
-        //순위별로 인덱스 변경
-        UIManager.Hide<BoardUI>();
+    //    //순위별로 인덱스 변경
+    //    //UIManager.Hide<BoardUI>();
 
-        playerTokenHandlers.Sort((a,b) => 
-        {
-            //if(a.data.trophyAmount == b.data.trophyAmount)
-            return b.data.coin.CompareTo(a.data.coin);
+    //    //playerTokenHandlers.Sort((a,b) => 
+    //    //{
+    //    //    //if(a.data.trophyAmount == b.data.trophyAmount)
+    //    //    return b.data.coin.CompareTo(a.data.coin);
 
-            //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
-        });
+    //    //    //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+    //    //});
         
-        await UIManager.Show<BoardResultUI>();
-    }
+    //    //await UIManager.Show<BoardResultUI>();
+    //}
 
     //순서 변경 없음으로 인한 주석처리
     //private void SeqeunceUpdate()

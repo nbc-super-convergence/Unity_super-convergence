@@ -7,6 +7,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     #region 보드
 
+    public void BoardGoldSyncNotification(GamePacket packet)
+    {
+        var response = packet.BoardGoldSyncNotification;
+
+        for (int i = 0; i < response.PlayersInfo.Count; i++)
+        {
+            var p = response.PlayersInfo[i];
+            var data = BoardManager.Instance.GetToken(p.SessionId).data;
+
+            data.coin = p.Gold;
+        }
+
+        UIManager.Get<BoardUI>().Refresh();
+    }
+
     #region 주사위
     public void RollDiceResponse(GamePacket packet)
     {
@@ -80,15 +95,17 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-            int i = response.Tile;
-
             var playerinfo = response.PlayerInfo;
             string id = playerinfo.SessionId;
+
+            int i = response.Tile;
+            int j = GameManager.Instance.SessionDic[id].Color;
 
             var data = BoardManager.Instance.GetToken(id).data;
             data.coin = playerinfo.Gold;
 
             BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+            UIManager.Get<BoardUI>().GetPlayerUI(j).Event(response.PurchaseGold,true);
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -104,10 +121,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         string id = response.SessionId;
 
         int i = response.Tile;
+        int j = GameManager.Instance.SessionDic[id].Color;
+
         var data = BoardManager.Instance.GetToken(id).data;
         data.coin = response.PlayerInfo.Gold;
 
         BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+        UIManager.Get<BoardUI>().GetPlayerUI(j).Event(response.PurchaseGold,true);
         UIManager.Get<BoardUI>().Refresh();
     }
     #endregion
@@ -171,14 +191,25 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             var playerinfos = response.PlayersInfo.ToList();
 
-            for(int i = 0; i < playerinfos.Count; i++)
+            int penalty = int.MaxValue;
+
+            for (int i = 0; i < playerinfos.Count; i++)
             {
                 string id = playerinfos[i].SessionId;
 
                 var data = BoardManager.Instance.GetToken(id).data;
+
+                penalty = Mathf.Min(playerinfos[i].Gold - data.coin,penalty);
                 data.coin = playerinfos[i].Gold;
+
+                int j = GameManager.Instance.SessionDic[id].Color;
+
+
+                if(penalty != 0)
+                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty,penalty < 0);
                 //data.trophyAmount = playerinfos[i].Trophy;
             }
+            UIManager.Get<PenaltyUI>().SetTax(Mathf.Abs(penalty));
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -198,7 +229,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             string id = playerinfos[i].SessionId;
 
             var data = BoardManager.Instance.GetToken(id).data;
+
+            int penalty = playerinfos[i].Gold - data.coin;
             data.coin = playerinfos[i].Gold;
+
+            int j = GameManager.Instance.SessionDic[id].Color;
+
+            if (penalty != 0)
+                UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty, penalty < 0);
             //data.trophyAmount = playerinfos[i].Trophy;
         }
 
@@ -221,12 +259,22 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #region 게임종료
 
-    public void GameEndNotification(GamePacket packet)
+    public async void GameEndNotification(GamePacket packet)
     {
         var response = packet.GameEndNotification;
+        UIManager.Hide<BoardUI>();
+
+        for (int i = 0; i < response.Rank.Count; i++)
+        {
+            var p = response.Rank[i];
+            var data = BoardManager.Instance.GetToken(p.SessionId).data;
+            data.coin = p.Gold;
+        }
+
+        await UIManager.Show<BoardResultUI>();
 
         //게임종료 필요
-        BoardManager.Instance.GameOver();
+        //BoardManager.Instance.GameOver();
     }
 
     public void BackToTheRoomResponse(GamePacket packet)
