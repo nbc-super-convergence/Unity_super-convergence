@@ -32,7 +32,7 @@ public class DartPlayer : MonoBehaviour
             DiceGameData.Angle = SocketManager.ToVector(CurAim);
         }
     }
-    public Vector2 GetAim = Vector2.zero;   //입력 Aim
+    private Vector2 GetAim = Vector2.zero;   //입력 Aim
 
     private float curForce = 2f;
     private float minForce, maxForce;
@@ -73,6 +73,11 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
+    public int MyColor;  //내 플레이어 인덱스
+
+    //Server
+    public bool IsClient { get; private set; }
+
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
@@ -81,15 +86,27 @@ public class DartPlayer : MonoBehaviour
         rgdby = GetComponent<Rigidbody>();
         orderEvent = GetComponent<GameDartEvent>();
 
-        orderEvent.OnAimEvent += SetAim;
-        orderEvent.OnShootEvent += PressKey;
-
         //이걸 Data클래스에서 받지 말고 그냥 여기서 설정하도록 할까?
         //UI만 보내는거 말고 없는것 같다......
         SetAimRange(-20f, 20f);
         SetForceRange(1.5f, 3f);
+
+        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
+        //Debug.Log($"{gameObject.name}, {IsClient}");
     }
 
+    private void Start()
+    {
+        //이게 내 유저라면 이벤트 실행
+        if (IsClient)
+        {
+            //UIManager.Get<UIMinigameDart>().ShowForcePower();
+            orderEvent.OnAimEvent += SetAim;
+            orderEvent.OnShootEvent += PressKey;
+        }
+    }
+
+    #region SetProperties
     /// <summary>
     /// 각 속성의 최소 최대 결정
     /// </summary>
@@ -103,6 +120,11 @@ public class DartPlayer : MonoBehaviour
         minForce = min;
         maxForce = max;
     }
+    public void SetPlayerIndex(int idx)
+    {
+        MyColor = idx;
+    }
+    #endregion
 
     private void FixedUpdate()
     {
@@ -116,11 +138,11 @@ public class DartPlayer : MonoBehaviour
         if (GetAim != Vector2.zero)
         {
             CurAim += new Vector3(GetAim.y, GetAim.x);
+            SendDartSync();
         }
 
-        transform.rotation = Quaternion.Euler(CurAim);
-
-        Debug.DrawRay(transform.position, -transform.forward * 2);
+            transform.rotation = Quaternion.Euler(CurAim);
+        //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -134,9 +156,12 @@ public class DartPlayer : MonoBehaviour
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
 
-        orderEvent.OnAimEvent -= SetAim;
-        orderEvent.OnShootEvent -= PressKey;
-        ThrowToServer();
+        if (IsClient)
+        {
+            orderEvent.OnAimEvent -= SetAim;
+            orderEvent.OnShootEvent -= PressKey;
+            UIManager.Get<UIMinigameDart>().HideForcePower();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -181,7 +206,10 @@ public class DartPlayer : MonoBehaviour
         if(actionPhase == 1)
         {
             if (!press)
+            {
                 NowShoot();
+                actionPhase = 0;
+            }
         }
     }
 
@@ -193,6 +221,17 @@ public class DartPlayer : MonoBehaviour
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
         ThrowToServer();
+    }
+
+    /// <summary>
+    /// 쐈다는 신호를 받기
+    /// </summary>
+    /// <param name="data"></param>
+    public void ApplyShoot(DartGameData data)
+    {
+        CurAim = SocketManager.ToVector3(data.Angle);
+        CurForce = data.Power;
+        NowShoot();
     }
 
     /// <summary>
@@ -214,16 +253,30 @@ public class DartPlayer : MonoBehaviour
 
     }
 
+    #region 서버로 전송
     /// <summary>
-    /// 해당 데이터를 서버에 전송
+    /// 다트 조준 전송
     /// </summary>
-    public void ThrowToServer()
+    private void SendDartSync()
+    {
+        GamePacket packet = new();
+        packet.DartSyncRequest = new()
+        {
+            SessionId = MinigameManager.Instance.mySessonId,
+            Angle = SocketManager.ToVector(CurAim)
+        };
+        SocketManager.Instance.OnSend(packet);
+    }
+
+    /// <summary>
+    /// 다트 발사 전송
+    /// </summary>
+    private void ThrowToServer()
     {
         GamePacket packet = new();
         var data = packet.DartGameThrowRequest = new()
         {
-            //SessionId = GameManager.Instance.myInfo.SessionId
-            SessionId = gameObject.name,
+            SessionId = MinigameManager.Instance.mySessonId,
             Distance = MyDistance,
             Angle = SocketManager.ToVector(CurAim),
             Location = SocketManager.ToVector(transform.localPosition),
@@ -231,4 +284,5 @@ public class DartPlayer : MonoBehaviour
         };
         SocketManager.Instance.OnSend(packet);
     }
+    #endregion
 }

@@ -240,10 +240,11 @@ syntax = "proto3";
 
     message  S2C_PurchaseTileResponse {
         bool success = 1;
-        int32 tile = 2;
-        BoardPlayerData playerInfo = 3; 
-        int32 purchaseGold = 4;
-        GlobalFailCode failCode = 5;
+        bool isPurchased = 2;
+        int32 tile = 3;
+        BoardPlayerData playerInfo = 4; 
+        int32 purchaseGold = 5;
+        GlobalFailCode failCode = 6;
     }
 
     message  S2C_PurchaseTileNotification {
@@ -255,6 +256,13 @@ syntax = "proto3";
 
     message S2C_GameEndNotification {
         repeated Rank rank = 1;
+    
+        message Rank {
+            string sessionId = 1;
+            int32 rank = 2; 
+            int32 tileCount = 3;
+            int32 gold = 4;
+        }
     }
 
     message C2S_BackToTheRoomRequest {
@@ -340,7 +348,10 @@ syntax = "proto3";
     message S2C_TurnEndNotification{
         
     }
-    
+
+    message S2C_BoardGoldSyncNotification {
+        repeated BoardPlayerData playersInfo = 1;
+    }
 
 
 //LOBBY
@@ -753,7 +764,7 @@ syntax = "proto3";
 
     // 미니게임 - 던지기 알림 
     message S2C_DartGameThrowNotification {
-        repeated DartGameData result = 1;
+        DartGameData result = 1;
     }
 
     // 미니게임 종료 
@@ -766,6 +777,28 @@ syntax = "proto3";
             int32 rank = 2; 
             int32 totalPoint = 3;
         }
+    }
+
+    // 다트판 싱크 패킷
+    message C2S_DartPannelSyncRequest {
+        string sessionId = 1;
+        Vector location = 2;
+    }
+
+    message S2C_DartPannelSyncNotification {
+    string sessionId = 1;
+        Vector location = 2;
+    }
+
+    // 다트 싱크 패킷 
+    message C2S_DartSyncRequest {
+        string sessionId = 1;
+        Vector angle = 2;
+    }
+
+    message S2C_DartSyncNotification {
+    string sessionId = 1;
+        Vector angle = 2;
     }
 
 // 게임패킷
@@ -834,6 +867,7 @@ syntax = "proto3";
                 S2C_DiceGameNotification diceGameNotification = 79;
                 C2S_TurnEndRequest turnEndRequest = 80;
                 S2C_TurnEndNotification turnEndNotification = 81; 
+                S2C_BoardGoldSyncNotification boardGoldSyncNotification = 82;
 
                 // Post Game (91-100)
                 C2S_BackToTheRoomRequest backToTheRoomRequest = 91;
@@ -903,5 +937,9 @@ syntax = "proto3";
             C2S_DartGameThrowRequest dartGameThrowRequest = 605;
             S2C_DartGameThrowNotification dartGameThrowNotification = 606;
             S2C_DartGameOverNotification dartGameOverNotification = 607;
+            C2S_DartPannelSyncRequest dartPannelSyncRequest = 608;
+            S2C_DartPannelSyncNotification dartPannelSyncNotification = 609;
+            C2S_DartSyncRequest dartSyncRequest = 610;
+            S2C_DartSyncNotification dartSyncNotification = 611;
         }
     }
