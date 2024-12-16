@@ -29,7 +29,7 @@ public class GameDart : IGame
     }   //빗나간 랭크
 
     private int curRound = 0;   //현재 라운드
-    private int maxRound = 3;   //최대 라운드
+    private int maxRound = 9;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
 
@@ -38,17 +38,22 @@ public class GameDart : IGame
     /// </summary>
     public void NextDart()
     {
+        UIManager.Get<UIMinigameDart>().SetFinish(nowPlayer);
         nowPlayer++;
+
         if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
             //Debug.Log("다음 사람");
             DartOrder[nowPlayer].gameObject.SetActive(true);
+            UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
         else
         {
             //Debug.Log("결과");
-            DartPannel.isMove = false;  //판은 멈춰라
-            DistanceRank();
+            //DartPannel.isMove = false;  //판은 멈춰라
+            curRound++;
+
+            //DistanceRank();
         }
     }
 
@@ -99,7 +104,9 @@ public class GameDart : IGame
 
         foreach(var p in players)
         {
-
+            int color = GameManager.Instance.SessionDic[p.SessionId].Color;
+            string nickname = GameManager.Instance.SessionDic[p.SessionId].Nickname;
+            UIManager.Get<UIMinigameDart>().SetNickname(color, nickname);
         }
     }
 

@@ -53,9 +53,10 @@ public class UIMinigameDart : UIBase
     #endregion
 
     #region Result 메서드
-    public void SetNickname(string name)
+    public void SetNickname(int idx, string name)
     {
         nickname = name;
+        SetReady(idx);
     }
     public void SetReady(int idx)
     {
