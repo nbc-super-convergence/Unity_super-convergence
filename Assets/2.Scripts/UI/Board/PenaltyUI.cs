@@ -2,8 +2,6 @@ using UnityEngine;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using System;
-using System.Linq;
 using System.Text;
 
 public class PenaltyUI : UIBase
@@ -19,7 +17,7 @@ public class PenaltyUI : UIBase
         base.Awake();
 
         for(int i = 0; i < 2; i++)
-            messages[i] = new StringBuilder("");
+            messages.Add(new StringBuilder(""));
     }
 
     public override void Opened(object[] param)
@@ -43,12 +41,12 @@ public class PenaltyUI : UIBase
         MessageUpdate();
 
         SetActive(true);
-        StartCoroutine(PenaltyEvent(tax == penalty));
+        StartCoroutine(PenaltyEvent(tax < penalty));
     }
 
-    private IEnumerator PenaltyEvent(bool isEqual)
+    private IEnumerator PenaltyEvent(bool isGreater)
     {
-        int count = isEqual ? 2 : 1;
+        int count = isGreater ? 2 : 1;
 
         for (int i = 0; i < count; i++)
         {
@@ -58,7 +56,7 @@ public class PenaltyUI : UIBase
 
         UIManager.Hide<PenaltyUI>();
 
-        if (data.coin >= penalty) Purchase();
+        if (data.coin >= (penalty * 1.5f)) Purchase();
         else BoardManager.Instance.TurnEnd();
     }
 

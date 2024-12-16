@@ -54,6 +54,9 @@ public class AreaNode : BaseNode, IPurchase
     }
     private async void Penalty(BoardTokenData p)
     {
+        IPurchase purchase = this;
+        await UIManager.Show<PenaltyUI>(saleAmount >> 1,purchase,p);
+
         GamePacket packet = new();
 
         packet.TilePenaltyRequest = new()
@@ -64,8 +67,6 @@ public class AreaNode : BaseNode, IPurchase
 
         SocketManager.Instance.OnSend(packet);
 
-        IPurchase purchase = this;
-        await UIManager.Show<PenaltyUI>(saleAmount,purchase,p);
 
         p.coin = Mathf.Max(p.coin - saleAmount, 0);
     }
