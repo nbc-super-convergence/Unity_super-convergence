@@ -85,6 +85,7 @@ public class UIManager : Singleton<UIManager>
     /// <param name="param">원하는 모든 형태의 변수 전달 가능</param>
     public static void Hide<T>(params object[] param) where T : UIBase
     {
+        Instance.uiList.RemoveAll(obj => obj == null);
         var ui = Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
         if (ui != null)
         {
@@ -108,6 +109,7 @@ public class UIManager : Singleton<UIManager>
     /// <returns>UI 스크립트</returns>
     public static T Get<T>() where T : UIBase
     {
+        Instance.uiList.RemoveAll(obj => obj == null);
         return (T)Instance.uiList.Find(obj => obj.name == typeof(T).ToString());
     }
 
@@ -118,6 +120,7 @@ public class UIManager : Singleton<UIManager>
     /// <returns></returns>
     public static bool IsOpened<T>() where T : UIBase
     {
+        Instance.uiList.RemoveAll(obj => obj == null);
         return Instance.uiList.Exists(obj => obj.name == typeof(T).ToString());
     }
 
