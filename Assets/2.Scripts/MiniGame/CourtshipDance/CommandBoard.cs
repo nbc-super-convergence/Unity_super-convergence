@@ -270,7 +270,6 @@ public class CommandBoard : MonoBehaviour
 
     public IEnumerator FailInput()
     {
-        // 토큰 효과 재생
         isFail = true;
         failImage.gameObject.SetActive(true);
         SetAudioClip(State.DanceFail);
@@ -282,7 +281,7 @@ public class CommandBoard : MonoBehaviour
         }
 
         SoundManager.Instance.PlaySFX(audioClip);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.6f);  // TODO:: 경직시간 CourtshipDanceData에서 관리하기.
 
         isFail = false;
         failImage.gameObject.SetActive(false);
@@ -383,7 +382,6 @@ public class CommandBoard : MonoBehaviour
 
         queuePool = tempQueuePool;
         isDisconnected = true;
-        //MakeNextBoard();
     }
     #endregion
 }
