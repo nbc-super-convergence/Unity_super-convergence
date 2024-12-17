@@ -31,7 +31,7 @@ public class GameIceSlider : IGame
 
         foreach (var miniToken in MinigameManager.Instance.miniTokens)
         {
-            miniToken.Controller.ToggleFreezePos(true); 
+ ddd            miniToken.Controller.ToggleFreezePos(true); 
         }
     }
     #endregion
@@ -47,6 +47,8 @@ public class GameIceSlider : IGame
         foreach (var p in players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            if (miniToken == null) continue;
+
             miniToken.EnableMiniToken();
             miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
