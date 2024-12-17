@@ -27,13 +27,27 @@ public class SoundManager : Singleton<SoundManager>
     private Tween fadeTween;
     private int sfxCount = 0;
 
-    private readonly string volumeMaster = "volumeMaster";
-    private readonly string volumeBGM = "volumeBGM";
-    private readonly string volumeSFX = "volumeSFX";
+    private const string volumeMaster = "volumeMaster";
+    private const string volumeBGM = "volumeBGM";
+    private const string volumeSFX = "volumeSFX";
+
+    public readonly string BGM_PREFS_KEY = "BGMVolume";
+    public readonly string SFX_PREFS_KEY = "SFXVolume";
 
     protected override void Awake()
     {
         base.Awake();
+
+        
+    }
+
+    private void Start()
+    {
+        float bgmVolume = PlayerPrefs.GetFloat(BGM_PREFS_KEY, 1f);
+        SetBGMAudioMixerValue(bgmVolume);
+
+        float sfxVolume = PlayerPrefs.GetFloat(SFX_PREFS_KEY, 1f);
+        SetSFXAudioMixerValue(sfxVolume);
     }
 
     #region 메인
