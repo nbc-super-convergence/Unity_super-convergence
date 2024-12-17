@@ -90,7 +90,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTileResponse;
 
-        if (response.Success)
+        if (response.Success && response.IsPurchased)
         {
             var playerinfo = response.PlayerInfo;
             string id = playerinfo.SessionId;
@@ -102,6 +102,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             data.coin = playerinfo.Gold;
 
             BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
             UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
             UIManager.Get<BoardUI>().Refresh();
         }
@@ -124,6 +125,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         data.coin = response.PlayerInfo.Gold;
 
         BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
         UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
         UIManager.Get<BoardUI>().Refresh();
     }
@@ -201,11 +203,11 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
                 int j = GameManager.Instance.SessionDic[id].Color;
 
-
                 if(penalty != 0)
                     UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
                 //data.trophyAmount = playerinfos[i].Trophy;
             }
+
             UIManager.Get<PenaltyUI>().SetTax(Mathf.Abs(penalty));
             UIManager.Get<BoardUI>().Refresh();
         }
