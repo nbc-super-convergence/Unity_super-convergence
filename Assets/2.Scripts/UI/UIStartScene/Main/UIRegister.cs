@@ -21,6 +21,9 @@ public class UIRegister : UIBase
     {
         passwordToggle.isOn = false;
         passwordToggle.onValueChanged.AddListener(ToggleInputFieldPassword);
+        inputFieldPassword.onValueChanged.AddListener(OnPasswordInputChanged);
+        inputFieldPasswordConfirm.onValueChanged.AddListener(OnPasswordConfirmChanged);
+
     }
 
     private void FixedUpdate()
@@ -109,6 +112,15 @@ public class UIRegister : UIBase
     }
     #endregion
 
+    private void OnPasswordInputChanged(string value)
+    {
+        inputFieldPassword.text = Utils.FilterToASCII(value);
+    }
+
+    private void OnPasswordConfirmChanged(string value)
+    {
+        inputFieldPasswordConfirm.text = Utils.FilterToASCII(value);
+    }
 
     private void ToggleInputFieldPassword(bool isOn)
     {

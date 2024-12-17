@@ -2,7 +2,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class UILogin : UIBase
 {
@@ -10,6 +10,7 @@ public class UILogin : UIBase
 
     [SerializeField] private TMP_InputField IDInput;
     [SerializeField] private TMP_InputField PasswardInput;
+    private string realInput = "";
 
     [SerializeField] private TextMeshProUGUI versionTxt;
     private StringBuilder sbError = new();
@@ -20,17 +21,22 @@ public class UILogin : UIBase
     {
         SoundManager.Instance.PlayBGM(BGMType.Login);
         versionTxt.text = "current version : " + Application.version;
+
+        PasswardInput.onValueChanged.AddListener(OnPasswordInputChanged);
+    }
+
+    public override void Closed(object[] param)
+    {
+        PasswardInput.onValueChanged.RemoveListener(OnPasswordInputChanged);
     }
 
 
     #region Button
-    //Inspector: 회원가입 판넬 키기
     public async void OnRegisterBtn()
     {
         await UIManager.Show<UIRegister>();
     }
 
-    //Inspector: 로그인 후 로비로 들어가기
     public async void OnLoginBtn()
     {
         if (!IsValidation())
@@ -40,7 +46,7 @@ public class UILogin : UIBase
             return;
         }
 
-        ////Send: 서버로 ID PW.
+        //Send: 서버로 ID PW.
         string id = IDInput.text;
         string passward = PasswardInput.text;
 
@@ -53,14 +59,14 @@ public class UILogin : UIBase
         sourceTcs = new();
         SocketManager.Instance.OnSend(packet);
 
-        ////Receive: 서버로부터 로그인 유효성 검사.
+        //Receive: 서버로부터 로그인 유효성 검사.
         bool isSuccess = await sourceTcs.Task;
         if (isSuccess)
         {
-            IDInput.text = "";
-            PasswardInput.text = "";
-            IDInput.ForceLabelUpdate();
-            PasswardInput.ForceLabelUpdate();
+            //IDInput.text = "";
+            //PasswardInput.text = "";
+            //IDInput.ForceLabelUpdate();
+            //PasswardInput.ForceLabelUpdate();
 
             await UIManager.Show<UILobby>();
             UIManager.Hide<UILogin>();
@@ -74,7 +80,6 @@ public class UILogin : UIBase
         }
     }    
 
-    //Inspector: 게임종료 판넬 키기
     public async void OnQuitBtn()
     {
         await UIManager.Show<UIQuit>();
@@ -96,28 +101,8 @@ public class UILogin : UIBase
         return true;
     }
 
-    #region Test Zone
-    private bool IsSceneInBuild(string sceneName)
+    private void OnPasswordInputChanged(string value)
     {
-        int sceneCount = SceneManager.sceneCountInBuildSettings;
-        for (int i = 0; i < sceneCount; i++)
-        {
-            string path = SceneUtility.GetScenePathByBuildIndex(i);
-            string sceneNameInBuild = System.IO.Path.GetFileNameWithoutExtension(path);
-            if (sceneNameInBuild == sceneName)
-            {
-                return true;
-            }
-        }
-        Debug.Assert(false, $"Scene {sceneName} does not exist in the [Scenes In Build]. Pleas Check [Build Setting...]");
-        return false;
+        PasswardInput.text = Utils.FilterToASCII(value);
     }
-
-    private void SendPacketIceJoinRequest()
-    {
-        GamePacket packet = new();
-        //packet.IceJoinRequest = new();
-        SocketManager.Instance.OnSend(packet);
-    }
-    #endregion
 }
