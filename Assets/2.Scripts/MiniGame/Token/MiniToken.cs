@@ -204,7 +204,7 @@ public class MiniToken : MonoBehaviour
         isEnabled = false;
         rb.velocity = Vector3.zero; //움직임 멈춤
         MiniData.CurState = State.Die; //사망 애니메이션 재생
-        StartCoroutine(DisableDelay());
+        if(gameObject.activeSelf) StartCoroutine(DisableDelay());
     }
 
     private IEnumerator DisableDelay()
