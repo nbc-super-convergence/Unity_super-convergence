@@ -60,7 +60,7 @@ public class Bomb : MonoBehaviour
                     Transform t = MinigameManager.Instance.miniTokens[c].transform;
 
                     float d = Vector3.Distance(target.position, t.position);
-                    if (1.5f > d) ChangeTarget(c);
+                    if (1f > d) ChangeTarget(c);
                 }
             }
         }
