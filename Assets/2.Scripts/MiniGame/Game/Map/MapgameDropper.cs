@@ -26,7 +26,7 @@ public class MapGameDropper : MapBase
 
     private void OnDestroy()
     {
-        UIManager.Get<UIMinigameDropper>().KillLightDotween();
+        UIManager.Get<UIMinigameDropper>()?.KillLightDotween();
     }
 
     private IEnumerator StartGame()

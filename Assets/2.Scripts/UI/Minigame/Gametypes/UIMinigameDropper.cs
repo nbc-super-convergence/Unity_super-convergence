@@ -64,6 +64,7 @@ public class UIMinigameDropper : UIBase
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
         descTxt.transform.parent.gameObject.SetActive(false);
+        KillLightDotween();
     }
 
     private IEnumerator StartCountDown(long startdelay)
@@ -186,7 +187,8 @@ public class UIMinigameDropper : UIBase
     {
         foreach (Button btn in directionBtns)
         {
-            btn.interactable = true;
+            if (btn != null)
+                btn.interactable = true;
         }
     }
     private void DisableBtnInput()
