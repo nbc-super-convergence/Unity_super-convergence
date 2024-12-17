@@ -109,8 +109,8 @@ public class UIRoom : UIBase
     #region Other Room Join / Leave
     public void OnRoomMemberChange(RoomData data, bool isJoin)
     {
-        HashSet<string>  prevSessionIDs = new HashSet<string>(roomData.Users.Select(user => user.SessionId));
-        HashSet<string> curSessionIDs = new HashSet<string>(data.Users.Select(user => user.SessionId));
+        HashSet<string>  prevSessionIDs = new(roomData.Users.Select(user => user.SessionId));
+        HashSet<string> curSessionIDs = new(data.Users.Select(user => user.SessionId));
 
         roomData = data;
 
@@ -123,6 +123,8 @@ public class UIRoom : UIBase
             userSlots[memberIdx].AddUserSlot(roomData.Users[memberIdx],
                 memberId == roomData.OwnerId);
             userSlots[memberIdx].ReadyUserSlot(false);
+
+            Debug.LogWarning(data.State);
         }
         else
         {
@@ -138,6 +140,8 @@ public class UIRoom : UIBase
             if (IsHost) InitActiveBtn(); //Host = StartBtn 활성화
 
             UpdateUserSlots(memberIdx);
+
+            Debug.Log(data.State);
         }
     }
 
