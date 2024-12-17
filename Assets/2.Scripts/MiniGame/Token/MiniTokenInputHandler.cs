@@ -86,45 +86,7 @@ public class MiniTokenInputHandler : IDisposable
         }
 
         playerInput.Enable();
-    }
-
-    
-    // 현재 활성화된 액션맵을 Disable하고 매개변수의 액션맵을 Enable하는 기능.
-    public void ChangeActionMap(string newActionMapName)
-    {
-        prevEnableMap.Clear();           
-
-        // 액션맵 교체 전 활성화 되어있던 액션맵을 기억해두기.
-        if (playerInput.MiniPlayerToken.enabled)
-        {
-            prevEnableMap.Add(playerInput.MiniPlayerToken);
-        }
-        if (playerInput.SimpleInput.enabled)
-        {
-            prevEnableMap.Add(playerInput.SimpleInput);
-        }
-
-        // 모든 액션맵 비활성화
-        foreach (InputActionMap actionMap in prevEnableMap)
-        {
-            actionMap.Disable();
-        }
-
-        var newActionMap = playerInput.asset.FindActionMap(newActionMapName);
-        if (newActionMap != null)
-        {
-            newActionMap.Enable();
-            Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
-            Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
-        }
-        else
-        {
-            foreach ( InputActionMap actionMap in prevEnableMap)
-            {
-                actionMap.Enable();
-            }
-        }
-    }
+    }       
 
     #region WASD 이동
     private void OnMove(InputAction.CallbackContext context)
