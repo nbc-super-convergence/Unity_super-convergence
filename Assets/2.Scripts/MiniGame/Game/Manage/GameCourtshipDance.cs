@@ -116,8 +116,8 @@ public class GameCourtshipDance : IGame
             Action action = () =>
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
+                uiCourtship.ShowTimer();
             };
-            //uiCourtship.ShowDanceBoard();
             uiCourtship.StartTimer();
             var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
             map.ShowIndicator();
