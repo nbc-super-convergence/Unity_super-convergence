@@ -75,8 +75,7 @@ public class AreaNode : BaseNode, IPurchase
 
         SocketManager.Instance.OnSend(packet);
 
-
-        p.coin = Mathf.Max(p.coin - saleAmount, 0);
+        //p.coin = Mathf.Max(p.coin - saleAmount, 0);
     }
 
     public void Purchase()
