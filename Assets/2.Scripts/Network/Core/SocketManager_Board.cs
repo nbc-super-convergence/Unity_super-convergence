@@ -273,13 +273,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         //BoardManager.Instance.GameOver();
     }
 
+    private Coroutine defenseCoroutine;
     public void BackToTheRoomResponse(GamePacket packet)
     {
         var response = packet.BackToTheRoomResponse;
 
         if (response.Success)
         {
-            StartCoroutine(ReturnStartScene(response));
+            defenseCoroutine ??= StartCoroutine(ReturnStartScene(response));
         }
         else
         {
@@ -299,6 +300,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0);
 
         yield return UIManager.Show<UIRoom>(response.Room);
+
+        defenseCoroutine = null;
     }
 
     #endregion
