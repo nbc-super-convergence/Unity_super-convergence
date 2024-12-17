@@ -28,6 +28,12 @@ public class GameIceSlider : IGame
     {
         ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        foreach (var miniToken in MinigameManager.Instance.miniTokens)
+        {
+            if (miniToken.gameObject.activeSelf)
+                miniToken.Controller.ToggleFreezePos(false); 
+        }
     }
     #endregion
 
@@ -42,12 +48,14 @@ public class GameIceSlider : IGame
         foreach (var p in players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            
             miniToken.EnableMiniToken();
             miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.rotY = p.Rotation;
 
             miniToken.MiniData.PlayerSpeed = 15f;
+            miniToken.Controller.ToggleFreezePos(true);
         }
     }
     #endregion
@@ -55,9 +63,12 @@ public class GameIceSlider : IGame
     #region 인게임 이벤트
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
-        int idx = GameManager.Instance.SessionDic[sessionId].Color;
-        gameData.playerHps[idx] -= dmg;
-        ingameUI.ChangeHPUI();
+        if (MinigameManager.Instance.miniTokens[GameManager.Instance.SessionDic[sessionId].Color].gameObject.activeSelf)
+        {
+            int idx = GameManager.Instance.SessionDic[sessionId].Color;
+            gameData.playerHps[idx] -= dmg;
+            ingameUI = UIManager.Get<UIMinigameIce>();
+        }
     }
 
     public void PlayerDeath(string sessionId)
