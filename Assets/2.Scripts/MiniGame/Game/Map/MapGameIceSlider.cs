@@ -63,8 +63,8 @@ public class MapGameIceSlider : MapBase
         float targetHeight = phase switch
         {
             1 => -0.6f,
-            2 => -0.2f,
-            3 => 0f,
+            2 => -0.4f,
+            3 => -0.2f,
             4 => 1f,
             _ => 1f,
         };

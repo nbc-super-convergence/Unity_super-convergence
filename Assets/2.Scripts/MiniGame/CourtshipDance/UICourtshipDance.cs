@@ -53,27 +53,17 @@ public class UICourtshipDance : UIBase
         }
     }
 
-    //public void Next(int teamNumber)
-    //{
-    //    boardDic[teamNumber].MakeNextBoard();
-    //}
-    
-    // 처음 실행용.
-    //public void ShowDanceBoard()
-    //{
-    //    foreach( var board in boardDic.Values)
-    //    {
-    //        board.MakeNextBoard();
-    //    }
-    //}
-
     // 카운트다운이 끝나면 실행하기
     public void StartTimer()
     {
-        timeText.gameObject.SetActive(true);
         StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
     }
-   
+
+    public void ShowTimer()
+    {
+        timeText.gameObject.SetActive(true);
+    }
+
     #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)
     {        
