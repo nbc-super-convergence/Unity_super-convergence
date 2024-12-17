@@ -31,7 +31,8 @@ public class GameIceSlider : IGame
 
         foreach (var miniToken in MinigameManager.Instance.miniTokens)
         {
-            miniToken.Controller.ToggleFreezePos(true); 
+            if (miniToken.gameObject.activeSelf)
+                miniToken.Controller.ToggleFreezePos(false); 
         }
     }
     #endregion
