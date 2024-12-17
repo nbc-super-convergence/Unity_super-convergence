@@ -102,9 +102,10 @@ public class MinigameManager : Singleton<MinigameManager>
         curMap = instantiatedMap.GetComponent<T>();
     }
 
-    public void MakeMapDance()
+    public async Task MakeMapDance()
     {
         GameObject instantiatedMap = Instantiate(curMap.gameObject, miniParent);
+        await Task.Yield();
         curMap = instantiatedMap.GetComponent<MapGameCourtshipDance>();
     }
     #endregion

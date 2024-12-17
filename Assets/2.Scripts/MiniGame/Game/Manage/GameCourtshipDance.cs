@@ -66,7 +66,7 @@ public class GameCourtshipDance : IGame
 
         uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
         MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMapDance();
+        await MinigameManager.Instance.MakeMapDance();
         // 토큰 배치 및 세팅하기
         ResetPlayers(players);
 
