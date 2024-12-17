@@ -123,8 +123,6 @@ public class UIRoom : UIBase
             userSlots[memberIdx].AddUserSlot(roomData.Users[memberIdx],
                 memberId == roomData.OwnerId);
             userSlots[memberIdx].ReadyUserSlot(false);
-
-            Debug.LogWarning(data.State);
         }
         else
         {
@@ -137,12 +135,10 @@ public class UIRoom : UIBase
             }
             ResetSessionDics(roomData.Users);
 
-            if (IsHost) InitActiveBtn(); //Host = StartBtn 활성화
-
             UpdateUserSlots(memberIdx);
-
-            Debug.Log(data.State);
         }
+
+        if (IsHost) InitActiveBtn();
     }
 
     public void OnKickEvent(bool isKicked, RoomData data)
