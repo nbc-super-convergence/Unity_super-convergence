@@ -71,7 +71,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     //309
-    public void DropLevelEndNotification(GamePacket gamePacket)
+    public async void DropLevelEndNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DropLevelEndNotification;
         int[] holes = response.Holes.ToArray();
@@ -79,9 +79,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         StartCoroutine(UIManager.Get<UIMinigameDropper>().MovableTime());
 
         //1초 후 구멍뚫기.
-        StartCoroutine(MinigameManager.Instance.GetMap<MapGameDropper>().NextLevelEvent(holes));
-        
-        
+        var map = await MinigameManager.Instance.GetMap<MapGameDropper>();
+        StartCoroutine(map.NextLevelEvent(holes));
     }
 
     //310

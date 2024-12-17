@@ -94,10 +94,11 @@ public class GameDart : IGame
         DartPannel.MoveEvent();
     }
 
-    private void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
+    private async void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
     {
         playerCount = players.Count;
-        MinigameManager.Instance.GetMap<MapGameDart>().SetDartPlayers(playerCount);
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        map.SetDartPlayers(playerCount);
 
         foreach(var p in players)
         {
@@ -114,13 +115,14 @@ public class GameDart : IGame
         MinigameManager.Instance.MakeMap<MapGameDart>();
 
         //DartOrder데이터 설정
-        DartOrder = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder;
-        DartPannel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        DartOrder = map.DartOrder;
+        DartPannel = map.DartPanel;
 
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
-            MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
+            map.BeginSelectOrder();
         }
         else
         {

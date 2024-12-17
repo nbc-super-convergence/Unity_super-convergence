@@ -33,13 +33,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         MinigameManager.Instance.GetMiniGame<GameDart>().GameStart();
     }
 
-    public void DartGameThrowNotification(GamePacket gamePacket)
+    public async void DartGameThrowNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartGameThrowNotification;
         Debug.Log(response.Result);
 
         int userIdx = GameManager.Instance.SessionDic[response.Result.SessionId].Color;
-        MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx].ApplyShoot(response.Result);
+
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        map.DartOrder[userIdx].ApplyShoot(response.Result);
     }
 
     public void DartGameOverNotification(GamePacket gamePacket)
@@ -75,7 +77,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
     }
 
-    public void DartSyncNotification(GamePacket gamePacket)
+    public async void DartSyncNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartSyncNotification;
 
@@ -87,7 +89,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
         {
-            DartPlayer dartUser = MinigameManager.Instance.GetMap<MapGameDart>().DartOrder[userIdx];
+            var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+            DartPlayer dartUser = map.DartOrder[userIdx];
             dartUser.CurAim = ToVector3(response.Angle);
         }
     }

@@ -65,8 +65,19 @@ public class UIMinigameDropper : UIBase
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
         descTxt.transform.parent.gameObject.SetActive(false);
-        KillLightDotween();
+        KillDotween();
     }
+
+    private void OnDisable()
+    {
+        KillDotween();
+    }
+
+    private void OnDestroy()
+    {
+        KillDotween();
+    }
+
 
     private IEnumerator StartCountDown(long startdelay)
     {
@@ -214,6 +225,8 @@ public class UIMinigameDropper : UIBase
         textTween?.Kill();
         lightTween?.Kill();
 
+        if (descTxt == null || spotLight == null) return;
+
         if (isFall)
         {
             //text dotween
@@ -260,10 +273,13 @@ public class UIMinigameDropper : UIBase
         }
     }
 
-    public void KillLightDotween()
+    public void KillDotween()
     {
-        textTween.Kill();
-        lightTween.Kill();
+        if (textTween != null && textTween.active) textTween.Kill();
+        if (lightTween != null && lightTween.active) lightTween.Kill();
+
+        textTween = null;
+        lightTween = null;
     }
     #endregion
 }
