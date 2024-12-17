@@ -31,7 +31,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            player.GetDice(dice);
+            player.GetDice(1);//dice);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
             Debug.Log("RollDiceResponse");
@@ -90,20 +90,42 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTileResponse;
 
-        if (response.Success && response.IsPurchased)
+        if (response.Success)
         {
-            var playerinfo = response.PlayerInfo;
-            string id = playerinfo.SessionId;
+            if (!response.IsPurchased) return;
 
-            int i = response.Tile;
-            int j = GameManager.Instance.SessionDic[id].Color;
+            var playerinfo = response.PlayersInfo;
+            int t = response.Tile;
 
-            var data = BoardManager.Instance.GetToken(id).data;
-            data.coin = playerinfo.Gold;
+            for (int i = 0; i < playerinfo.Count; i++)
+            {
+                string id = playerinfo[i].SessionId;
+                int c = GameManager.Instance.SessionDic[id].Color;
 
-            BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+                var data = BoardManager.Instance.GetToken(id).data;
 
-            UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
+                if(data.coin > playerinfo[i].Gold)
+                {
+                    UIManager.Get<BoardUI>().GetPlayerUI(c).Event(-response.PurchaseGold);
+                    BoardManager.Instance.areaNodes[t].SetArea(id, response.PurchaseGold);
+                }
+                else if(data.coin < playerinfo[i].Gold)
+                    UIManager.Get<BoardUI>().GetPlayerUI(c).Event(response.PurchaseGold);
+
+                data.coin = playerinfo[i].Gold;
+            }
+
+            //string id = playerinfo.SessionId;
+
+            //int i = response.Tile;
+            //int j = GameManager.Instance.SessionDic[id].Color;
+
+            //var data = BoardManager.Instance.GetToken(id).data;
+            //data.coin = playerinfo.Gold;
+
+            //BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
+            //UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -116,17 +138,36 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTileNotification;
 
-        string id = response.SessionId;
+        var playerinfo = response.PlayersInfo;
+        int t = response.Tile;
 
-        int i = response.Tile;
-        int j = GameManager.Instance.SessionDic[id].Color;
+        for(int i = 0; i < playerinfo.Count; i++)
+        {
+            string id = playerinfo[i].SessionId;
+            int c = GameManager.Instance.SessionDic[id].Color;
 
-        var data = BoardManager.Instance.GetToken(id).data;
-        data.coin = response.PlayerInfo.Gold;
+            var data = BoardManager.Instance.GetToken(id).data;
 
-        BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+            if (data.coin > playerinfo[i].Gold)
+            {
+                UIManager.Get<BoardUI>().GetPlayerUI(c).Event(-response.PurchaseGold);
+                BoardManager.Instance.areaNodes[t].SetArea(id, response.PurchaseGold);
+            }
+            else if (data.coin < playerinfo[i].Gold)
+                UIManager.Get<BoardUI>().GetPlayerUI(c).Event(response.PurchaseGold);
 
-        UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
+            data.coin = playerinfo[i].Gold;
+        }
+        //string id = response.SessionId;
+        //int i = response.Tile;
+        //int j = GameManager.Instance.SessionDic[id].Color;
+
+        //var data = BoardManager.Instance.GetToken(id).data;
+        //data.coin = response.PlayerInfo.Gold;
+
+        //BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
+        //UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
         UIManager.Get<BoardUI>().Refresh();
     }
     #endregion
@@ -196,7 +237,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             {
                 string id = playerinfos[i].SessionId;
 
-                var data = BoardManager.Instance.GetToken(id).data;
+                var data = BoardManager.Instance.playerTokenHandlers[i].data;
 
                 penalty = Mathf.Min(playerinfos[i].Gold - data.coin,penalty);
                 data.coin = playerinfos[i].Gold;

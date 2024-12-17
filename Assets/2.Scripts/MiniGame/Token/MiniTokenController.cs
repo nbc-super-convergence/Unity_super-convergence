@@ -3,7 +3,7 @@ using UnityEngine;
 public enum eMoveType
 {
     Server,
-    AddForce,
+    Ice,
     Velocity,
     Dropper
 }
@@ -38,12 +38,12 @@ public class MiniTokenController
                     transform.localPosition = miniData.nextPos;
                 }
                 break;
-            case eMoveType.AddForce:
+            case eMoveType.Ice:
                 Vector3 force = new(miniData.wasdVector.x, 0, miniData.wasdVector.y);
                 rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
             case eMoveType.Velocity:
-                rb.velocity = new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y) * (miniData.PlayerSpeed * 0.5f);
+                rb.velocity = (new Vector3(miniData.wasdVector.x, 0, miniData.wasdVector.y)).normalized * (miniData.PlayerSpeed * 0.5f);
                 break;
             case eMoveType.Dropper:
                 distance = Vector2.Distance(
@@ -73,5 +73,17 @@ public class MiniTokenController
     public void RotateToken(float rotY)
     {
         transform.rotation = Quaternion.Euler(0f, rotY, 0f);
+    }
+
+    public void ToggleFreezePos(bool freeze)
+    {
+        if (freeze)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 }

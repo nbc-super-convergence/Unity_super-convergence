@@ -201,7 +201,7 @@ public class BoardManager : Singleton<BoardManager>
 
     public void TurnEnd()
     {
-        if(Curplayer.IsTurnEnd())
+        if(curPlayerIndex.Equals(GameManager.Instance.myInfo.Color) && Curplayer.IsTurnEnd())
         {
 
             //if(playerIndex + 1 == playerTokenHandlers.Count)
@@ -327,12 +327,12 @@ public class BoardManager : Singleton<BoardManager>
                 areaNodes[j].ClearArea();
 
         playerTokenHandlers.Remove(p);
-        UIManager.Get<BoardUI>().ExitPlayer(i);
+        UIManager.Get<BoardUI>().ExitPlayer(c);
 
         playerIndex = playerTokenHandlers.IndexOf(n);
+        Debug.Log(playerIndex);
 
         Destroy(p.gameObject);
-
     }
 
     //public void PurChaseNode(int node,int playerIndex)

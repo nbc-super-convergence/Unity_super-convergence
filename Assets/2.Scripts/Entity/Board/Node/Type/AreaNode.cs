@@ -108,11 +108,11 @@ public class AreaNode : BaseNode, IPurchase
 
     public void SetArea(string id,int sale)
     {
-        if (!owner.Equals(""))
-        {
-            int c = GameManager.Instance.SessionDic[id].Color;
-            UIManager.Get<BoardUI>().GetPlayerUI(c).Event((int)(saleAmount * 1.5f));
-        }
+        //if (!owner.Equals(""))
+        //{
+        //    int c = GameManager.Instance.SessionDic[id].Color;
+        //    UIManager.Get<BoardUI>().GetPlayerUI(c).Event((int)(saleAmount * 1.5f));
+        //}
 
         this.owner.Clear();
         this.owner.Append(id);
