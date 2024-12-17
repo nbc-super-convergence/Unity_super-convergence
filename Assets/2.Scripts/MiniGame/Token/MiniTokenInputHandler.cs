@@ -136,11 +136,8 @@ public class MiniTokenInputHandler : IDisposable
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
-        if (!(MinigameManager.gameType == eGameType.GameIceSlider))
-        {
-            miniData.wasdVector = Vector2.zero;
-            miniData.CurState = State.Idle;
-        }
+        miniData.wasdVector = Vector2.zero;
+        miniData.CurState = State.Idle;
     }
     #endregion
 
