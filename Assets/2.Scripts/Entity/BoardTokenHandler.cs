@@ -89,26 +89,26 @@ public class BoardTokenHandler : MonoBehaviour
 
         #region 주사위 굴림
 
-        if (isReady)
-        {
-            int rand = UnityEngine.Random.Range(0, 6);
-            diceObject.ShowDice(rand);
+        //if (isReady)
+        //{
+        //    int rand = UnityEngine.Random.Range(0, 6);
+        //    diceObject.ShowDice(rand);
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isReady = false;
-                UIManager.Get<BoardUI>().ShowMyTurn(isReady);
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        isReady = false;
+        //        UIManager.Get<BoardUI>().ShowMyTurn(isReady);
 
-                GamePacket packet = new();
-                packet.RollDiceRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId
-                };
-                SocketManager.Instance.OnSend(packet);
+        //        GamePacket packet = new();
+        //        packet.RollDiceRequest = new()
+        //        {
+        //            SessionId = GameManager.Instance.myInfo.SessionId
+        //        };
+        //        SocketManager.Instance.OnSend(packet);
 
-                curNode.GetList().Remove(transform);
-            }
-        }
+        //        curNode.GetList().Remove(transform);
+        //    }
+        //}
 
         #endregion
 
@@ -268,6 +268,35 @@ public class BoardTokenHandler : MonoBehaviour
         yield return new WaitUntil(() => UIManager.IsOpened<BoardUI>());
 
         UIManager.Get<BoardUI>().ShowMyTurn(isReady);
+
+        StartCoroutine(DiceReady());
+    }
+
+    private IEnumerator DiceReady()
+    {
+        while(true)
+        {
+            int rand = UnityEngine.Random.Range(0, 6);
+            diceObject.ShowDice(rand);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isReady = false;
+                UIManager.Get<BoardUI>().ShowMyTurn(isReady);
+
+                GamePacket packet = new();
+                packet.RollDiceRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
+                SocketManager.Instance.OnSend(packet);
+
+                curNode.GetList().Remove(transform);
+                break;
+            }
+
+            yield return null;
+        }
     }
 
     public void ReceivePosition(Vector3 position,float rotY)

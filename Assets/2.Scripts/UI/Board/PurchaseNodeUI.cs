@@ -24,6 +24,7 @@ public class PurchaseNodeUI : UIBase
     //구매 기능
     public void Accept()
     {
+        Active(false);
         //임시 주석
         //if (p.data.keyAmount > requireAmount)
         //{
@@ -32,7 +33,6 @@ public class PurchaseNodeUI : UIBase
         //}
         //else Cancle();
         //Cancle();
-        Active(false);
         UIManager.Hide<PurchaseNodeUI>();
     }
 
