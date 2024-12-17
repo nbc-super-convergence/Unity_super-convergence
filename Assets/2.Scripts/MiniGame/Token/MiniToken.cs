@@ -38,12 +38,6 @@ public class MiniToken : MonoBehaviour
         {
             switch (MinigameManager.gameType)
             {
-                case eGameType.GameIceSlider:
-                    //Controller.MoveToken(eMoveType.Server);
-                    break;
-                case eGameType.GameBombDelivery:
-                    Controller.MoveToken(eMoveType.Server);
-                    break;
                 case eGameType.GameDropper:
                     Controller.MoveToken(eMoveType.Dropper);
                     break;
