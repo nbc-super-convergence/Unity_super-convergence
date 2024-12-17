@@ -72,11 +72,11 @@ public class UIRoom : UIBase
         roomData = data;
         roomName.text = data.RoomName;
         
-        /*Dictionary 초기화*/
-        ResetSessionDics(data.Users);
-
         /*버튼 상태 초기화*/
         InitActiveBtn();
+
+        /*Dictionary 초기화*/
+        ResetSessionDics(data.Users);
 
         UpdateUserSlots();
     }
