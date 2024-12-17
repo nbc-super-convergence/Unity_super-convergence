@@ -97,7 +97,13 @@ public class GameDropper : IGame
 
     public void DisableUI()
     {
-        UIManager.Hide<UIMinigameDropper>();    
+        UIManager.Hide<UIMinigameDropper>();
+
+        var tokens = MinigameManager.Instance.miniTokens;
+
+        for (int i = 0; i < 4; i++)
+            tokens[i].MiniData.PlayerSpeed = 15;
+
     }
     #endregion
 

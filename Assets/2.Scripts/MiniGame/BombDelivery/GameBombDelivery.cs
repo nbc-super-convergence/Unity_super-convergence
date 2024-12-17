@@ -15,6 +15,13 @@ public class GameBombDelivery : IGame
 
     public async void Init(params object[] param)
     {
+        //var tokens = MinigameManager.Instance.miniTokens;
+
+        //for (int i = 0; i < 4; i++)
+        //    tokens[i].MiniData.PlayerSpeed = 15;
+
+        ResetSpeed();
+
         var prefab = await ResourceManager.Instance.LoadAsset<Bomb>("bomb", eAddressableType.Prefab);
         bomb = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
         bomb.gameObject.SetActive(false);
@@ -64,10 +71,12 @@ public class GameBombDelivery : IGame
 
     public void GameOver()
     {
-        var tokens = MinigameManager.Instance.miniTokens;
+        //var tokens = MinigameManager.Instance.miniTokens;
 
-        for(int i = 0; i < 4; i++)
-            tokens[i].MiniData.PlayerSpeed = 15;
+        //for(int i = 0; i < 4; i++)
+        //    tokens[i].MiniData.PlayerSpeed = 15;
+
+        ResetSpeed();
 
         Object.Destroy(bomb.gameObject);
         Object.Destroy(MinigameManager.Instance.curMap.gameObject);
@@ -76,5 +85,13 @@ public class GameBombDelivery : IGame
     public void DisableUI()
     {
         
+    }
+
+    private void ResetSpeed()
+    {
+        var tokens = MinigameManager.Instance.miniTokens;
+
+        for (int i = 0; i < 4; i++)
+            tokens[i].MiniData.PlayerSpeed = 15;
     }
 }
