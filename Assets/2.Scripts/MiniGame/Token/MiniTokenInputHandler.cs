@@ -1,20 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MiniTokenInputHandler
+public class MiniTokenInputHandler : IDisposable
 {
     private PlayerInput playerInput;
     private MiniTokenData miniData;
 
     private List<InputActionMap> prevEnableMap = new List<InputActionMap>();
     public bool isEnable = true;
+    public bool isDisposed = false;
 
     public MiniTokenInputHandler(MiniTokenData data)
     {
         playerInput = new PlayerInput();
         miniData = data;
+    }
+
+    public void Dispose()
+    {
+        if (isDisposed) return;
+
+        if (playerInput != null)
+        {
+            playerInput.Dispose();
+            playerInput = null;
+        }
+
+        miniData = null;
+
+        isDisposed = true;
     }
 
     public void EnablePlayerInput()
