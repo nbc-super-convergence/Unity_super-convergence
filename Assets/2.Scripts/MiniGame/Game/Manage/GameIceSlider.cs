@@ -63,12 +63,9 @@ public class GameIceSlider : IGame
     #region 인게임 이벤트
     public void GiveDamage(string sessionId, int dmg, bool isMe = false)
     {
-        if (MinigameManager.Instance.miniTokens[GameManager.Instance.SessionDic[sessionId].Color].gameObject.activeSelf)
-        {
-            int idx = GameManager.Instance.SessionDic[sessionId].Color;
-            gameData.playerHps[idx] -= dmg;
-            ingameUI = UIManager.Get<UIMinigameIce>();
-        }
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
+        gameData.playerHps[idx] -= dmg;
+        ingameUI = UIManager.Get<UIMinigameIce>();
     }
 
     public void PlayerDeath(string sessionId)
