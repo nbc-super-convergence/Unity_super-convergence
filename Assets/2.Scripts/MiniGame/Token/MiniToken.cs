@@ -82,6 +82,24 @@ public class MiniToken : MonoBehaviour
             Controller.RotateToken(MiniData.rotY);
         }
     }
+
+    private void OnDestroy()
+    {
+        if (InputHandler != null)
+        {
+            InputHandler.Dispose();
+            InputHandler = null; 
+        }
+
+        Controller = null;
+        MiniData = null;
+        
+        if (PauseInput != null)
+        {
+            StopCoroutine(PauseInput);
+            PauseInput = null;
+        }
+    }
     #endregion
 
     public void PausePlayerInput(float pauseTime)
