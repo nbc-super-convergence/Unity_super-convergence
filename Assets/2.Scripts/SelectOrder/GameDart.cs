@@ -93,12 +93,6 @@ public class GameDart : IGame
         }
     }
 
-    public void PannelMoveEvent()
-    {
-        Debug.Log("움직인다");
-        DartPannel.MoveEvent();
-    }
-
     private void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
     {
         playerCount = players.Count;
@@ -143,6 +137,8 @@ public class GameDart : IGame
         {
             UIManager.Get<UIMinigameDart>().SetNickname(i, playerInfo[i]);
         }
+
+        MinigameManager.Instance.GetMap<MapGameDart>().MovePanel();
     }
     public void DisableUI()
     {

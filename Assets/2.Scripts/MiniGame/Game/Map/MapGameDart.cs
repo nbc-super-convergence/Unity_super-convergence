@@ -33,6 +33,10 @@ public class MapGameDart : MapBase
         DartOrder[nowPlayer].gameObject.SetActive(true);
     }
 
+    public void MovePanel()
+    {
+        StartCoroutine(DartPanel.MoveCoroutine());
+    }
     public void StopPanel()
     {
         DartPanel.isMove = false;
