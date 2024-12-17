@@ -138,7 +138,19 @@ public class UIRoom : UIBase
             UpdateUserSlots(memberIdx);
         }
 
-        if (IsHost) InitActiveBtn();
+        if (IsHost) 
+        { 
+            InitActiveBtn();
+
+            if (roomData.State == RoomStateType.Prepare)
+            {
+                StartBtn.interactable = true;
+            }
+            else
+            {
+                StartBtn.interactable = false;
+            }
+        }
     }
 
     public void OnKickEvent(bool isKicked, RoomData data)
