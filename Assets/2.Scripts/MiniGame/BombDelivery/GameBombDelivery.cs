@@ -51,7 +51,6 @@ public class GameBombDelivery : IGame
             token.transform.localPosition = SocketManager.ToVector3(players[i].Position);
             token.MiniData.nextPos = SocketManager.ToVector3(players[i].Position);
             token.MiniData.rotY = players[i].Rotation;
-            Debug.Log(players[i].Position);
         }
         SetTarget(players[0].BombSessionId);
         bomb.gameObject.SetActive(false);

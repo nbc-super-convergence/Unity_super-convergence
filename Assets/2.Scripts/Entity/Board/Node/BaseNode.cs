@@ -107,8 +107,6 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
 
         for (int i = 0; i < players.Count; i++)
             players[i].position = new Vector3(pos.x,0,pos.z);
-
-        Debug.Log(players.Count);
     }
 
     public List<Transform> GetList()

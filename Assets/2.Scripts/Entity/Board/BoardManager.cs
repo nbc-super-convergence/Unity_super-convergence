@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System;
 using Cinemachine;
@@ -48,7 +49,7 @@ public class BoardManager : Singleton<BoardManager>
     public Transform startNode;
 
     // 테스트 플레이어 프리펩
-    public GameObject TestPlayerPrefab;
+    public GameObject tokenPrefab;
 
     //플레이어 리스트
     public List<BoardTokenHandler> playerTokenHandlers = new();
@@ -61,6 +62,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
     public Dice dice { get; private set; }
+    private bool isMiniPlaying;
 
 #pragma warning disable
     public CinemachineVirtualCamera camera;
@@ -68,7 +70,6 @@ public class BoardManager : Singleton<BoardManager>
 #pragma warning restore
 
     //private List<IGameResult> bonus;
-    public bool isMIniPlay { get; private set; }
 
     public BoardTokenHandler GetToken(string sessionID)
     {
@@ -113,6 +114,7 @@ public class BoardManager : Singleton<BoardManager>
 
     private async void Init()
     {
+        isMiniPlaying = false;
         var ids = GameManager.Instance.SessionDic.Keys;
         var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
         dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
@@ -125,6 +127,8 @@ public class BoardManager : Singleton<BoardManager>
                 new Vector3(-1, 0, 1),
             };
         
+
+
         foreach (string key in ids)
         {
             var dict = GameManager.Instance.SessionDic;
@@ -133,7 +137,7 @@ public class BoardManager : Singleton<BoardManager>
             BoardTokenHandler handle = 
                 Instantiate
                 (
-                    TestPlayerPrefab, 
+                    tokenPrefab, 
                     startNode.transform.position + pos[playerTokenHandlers.Count], 
                     Quaternion.identity
                 ).GetComponent<BoardTokenHandler>();
@@ -168,7 +172,8 @@ public class BoardManager : Singleton<BoardManager>
         #endregion
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
-        StartCoroutine(Curplayer.Ready());
+        //StartCoroutine(Curplayer.Ready());
+        ReadyCheck();
     }
 
     //테스트용
@@ -201,7 +206,7 @@ public class BoardManager : Singleton<BoardManager>
 
     public void TurnEnd()
     {
-        if(curPlayerIndex.Equals(GameManager.Instance.myInfo.Color) && Curplayer.IsTurnEnd())
+        if(Curplayer.IsTurnEnd())
         {
 
             //if(playerIndex + 1 == playerTokenHandlers.Count)
@@ -258,8 +263,6 @@ public class BoardManager : Singleton<BoardManager>
         if (col.Length > 0 && col[0].TryGetComponent(out IBoardNode node))
             node.GetList().Add(Curplayer.transform);
 
-        isMIniPlay = false;
-
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
 
@@ -269,7 +272,8 @@ public class BoardManager : Singleton<BoardManager>
         camera.Follow = camera.LookAt = t;
         dice.SetDicePosition(t);
 
-        StartCoroutine(Curplayer.Ready());
+        //StartCoroutine(Curplayer.Ready());
+        ReadyCheck();
     }
 
     //public void SetTrophyNode()
@@ -298,9 +302,9 @@ public class BoardManager : Singleton<BoardManager>
     //    #endregion
     //}
 
-    public void StartMinigame()
+    public IEnumerator StartMinigame()
     {
-        isMIniPlay = true;
+        isMiniPlaying = true;
 
         GamePacket packet = new();
 
@@ -310,6 +314,10 @@ public class BoardManager : Singleton<BoardManager>
         };
 
         SocketManager.Instance.OnSend(packet);
+
+        yield return new WaitUntil(() => UIManager.IsOpened<UIMinigameReady>());
+
+        TurnEnd();
     }
 
     public void ExitPlayer(string id)
@@ -318,7 +326,8 @@ public class BoardManager : Singleton<BoardManager>
         int i = playerTokenHandlers.IndexOf(p);
         var n = playerTokenHandlers[(i + 1) % playerTokenHandlers.Count];
 
-        if (i == playerIndex) NextTurn(false);
+        if (i == playerIndex)
+            NextTurn(false);
 
         int c = GameManager.Instance.SessionDic[id].Color;
 
@@ -330,10 +339,18 @@ public class BoardManager : Singleton<BoardManager>
         UIManager.Get<BoardUI>().ExitPlayer(c);
 
         playerIndex = playerTokenHandlers.IndexOf(n);
-        Debug.Log(playerIndex);
 
         Destroy(p.gameObject);
     }
+
+    public void ReadyCheck()
+    {
+        if(!isMiniPlaying) 
+            StartCoroutine(Curplayer.Ready());
+    }
+
+    public void MiniGameEnd() => isMiniPlaying = false;
+
 
     //public void PurChaseNode(int node,int playerIndex)
     //{
@@ -344,7 +361,7 @@ public class BoardManager : Singleton<BoardManager>
     //{
     //    bonus = new();
     //    List<int> num = new();
-        
+
     //    for(int i = 0; i < 3;)
     //    {
     //        int rand = UnityEngine.Random.Range(0, 13);
@@ -420,7 +437,7 @@ public class BoardManager : Singleton<BoardManager>
 
     //    //    //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
     //    //});
-        
+
     //    //await UIManager.Show<BoardResultUI>();
     //}
 
