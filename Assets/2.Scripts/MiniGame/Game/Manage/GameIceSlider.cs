@@ -62,6 +62,10 @@ public class GameIceSlider : IGame
 
     public void PlayerDeath(string sessionId)
     {
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
+        gameData.playerHps[idx] = 0;
+        ingameUI.ChangeHPUI();
+
         MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
         if (sessionId == MinigameManager.Instance.mySessonId)
         {
