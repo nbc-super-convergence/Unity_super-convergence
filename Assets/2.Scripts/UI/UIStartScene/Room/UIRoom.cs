@@ -79,6 +79,11 @@ public class UIRoom : UIBase
         ResetSessionDics(data.Users);
 
         UpdateUserSlots();
+
+        if (roomData.State == RoomStateType.Prepare)
+        {
+            StartBtn.interactable = true;
+        }
     }
 
     public async void LeaveRoom()
