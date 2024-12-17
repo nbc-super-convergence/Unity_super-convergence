@@ -236,13 +236,13 @@ public class MiniToken : MonoBehaviour
 
         while (elapsedTime < moveDuration)
         {
-            transform.position = Vector3.Lerp(startPosition, MiniData.nextPos, elapsedTime / moveDuration);
+            transform.localPosition = Vector3.Lerp(startPosition, MiniData.nextPos, elapsedTime / moveDuration);
             elapsedTime += Time.deltaTime;
 
             yield return null;
         }
 
-        transform.position = MiniData.nextPos;
+        transform.localPosition = MiniData.nextPos;
         ServerMoveCoroutine = null;
     }
 }
