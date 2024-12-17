@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -38,13 +39,10 @@ public class MiniToken : MonoBehaviour
             switch (MinigameManager.gameType)
             {
                 case eGameType.GameIceSlider:
-                    Controller.MoveToken(eMoveType.Server);
+                    //Controller.MoveToken(eMoveType.Server);
                     break;
                 case eGameType.GameBombDelivery:
                     Controller.MoveToken(eMoveType.Server);
-                    break;
-                case eGameType.GameCourtshipDance:
-                    // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
                     break;
                 case eGameType.GameDropper:
                     Controller.MoveToken(eMoveType.Dropper);
@@ -65,7 +63,7 @@ public class MiniToken : MonoBehaviour
                 switch (MinigameManager.gameType)
                 {
                     case eGameType.GameIceSlider:
-                        Controller.MoveToken(eMoveType.AddForce);
+                        Controller.MoveToken(eMoveType.Ice);
                         break;
                     case eGameType.GameBombDelivery:
                         Controller.MoveToken(eMoveType.Velocity);
@@ -74,7 +72,7 @@ public class MiniToken : MonoBehaviour
                         Controller.MoveToken(eMoveType.Dropper);
                         break;
                     case eGameType.GameDart:
-                        Controller.MoveToken(eMoveType.AddForce);
+                        Controller.MoveToken(eMoveType.Ice);
                         break;
                 }
             }
@@ -227,5 +225,24 @@ public class MiniToken : MonoBehaviour
 
         InputHandler.EnablePlayerInput();
         isStun = false;
+    }
+
+    private readonly float moveDuration = 0.1f;
+    public Coroutine ServerMoveCoroutine;
+    public IEnumerator ServerMove()
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.localPosition;
+
+        while (elapsedTime < moveDuration)
+        {
+            transform.position = Vector3.Lerp(startPosition, MiniData.nextPos, elapsedTime / moveDuration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.position = MiniData.nextPos;
+        ServerMoveCoroutine = null;
     }
 }

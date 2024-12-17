@@ -3,7 +3,7 @@ using UnityEngine;
 public enum eMoveType
 {
     Server,
-    AddForce,
+    Ice,
     Velocity,
     Dropper
 }
@@ -38,7 +38,7 @@ public class MiniTokenController
                     transform.localPosition = miniData.nextPos;
                 }
                 break;
-            case eMoveType.AddForce:
+            case eMoveType.Ice:
                 Vector3 force = new(miniData.wasdVector.x, 0, miniData.wasdVector.y);
                 rb.AddForce(force * miniData.PlayerSpeed, ForceMode.Force);
                 break;
