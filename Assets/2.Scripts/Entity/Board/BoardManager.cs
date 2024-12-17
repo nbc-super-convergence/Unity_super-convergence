@@ -251,7 +251,7 @@ public class BoardManager : Singleton<BoardManager>
             #endregion
         }
     }
-    public void NextTurn()
+    public void NextTurn(bool isUpdate = true)
     {
         var col = Physics.OverlapSphere(Curplayer.transform.position, 0.1f, 1 << 8);
 
@@ -263,7 +263,7 @@ public class BoardManager : Singleton<BoardManager>
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
 
-        if (playerIndex == 0) UIManager.Get<BoardUI>().UpdateTurn();
+        if(isUpdate) UIManager.Get<BoardUI>().UpdateTurn();
 
         Transform t = playerTokenHandlers[playerIndex].transform;
         camera.Follow = camera.LookAt = t;
@@ -318,7 +318,7 @@ public class BoardManager : Singleton<BoardManager>
         int i = playerTokenHandlers.IndexOf(p);
         var n = playerTokenHandlers[(i + 1) % playerTokenHandlers.Count];
 
-        if (i == playerIndex) NextTurn();
+        if (i == playerIndex) NextTurn(false);
 
         int c = GameManager.Instance.SessionDic[id].Color;
 
