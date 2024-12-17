@@ -74,4 +74,16 @@ public class MiniTokenController
     {
         transform.rotation = Quaternion.Euler(0f, rotY, 0f);
     }
+
+    public void ToggleFreezePos(bool freeze)
+    {
+        if (freeze)
+        {
+            rb.constraints = RigidbodyConstraints.FreezePosition | RigidbodyConstraints.FreezeRotation;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.FreezeRotation;
+        }
+    }
 }

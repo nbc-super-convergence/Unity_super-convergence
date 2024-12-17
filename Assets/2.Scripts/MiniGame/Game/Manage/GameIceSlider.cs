@@ -28,6 +28,11 @@ public class GameIceSlider : IGame
     {
         ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        foreach (var miniToken in MinigameManager.Instance.miniTokens)
+        {
+            miniToken.Controller.ToggleFreezePos(true); 
+        }
     }
     #endregion
 
@@ -48,6 +53,7 @@ public class GameIceSlider : IGame
             miniToken.MiniData.rotY = p.Rotation;
 
             miniToken.MiniData.PlayerSpeed = 15f;
+            miniToken.Controller.ToggleFreezePos(true);
         }
     }
     #endregion
