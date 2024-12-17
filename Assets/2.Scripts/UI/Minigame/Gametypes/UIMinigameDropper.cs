@@ -64,8 +64,8 @@ public class UIMinigameDropper : UIBase
     public override void Closed(object[] param)
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
-        descTxt.transform.parent.gameObject.SetActive(false);
         KillDotween();
+        descTxt.transform.parent.gameObject.SetActive(false);
     }
 
     private void OnDisable()
