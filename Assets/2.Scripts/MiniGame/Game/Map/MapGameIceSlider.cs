@@ -65,7 +65,7 @@ public class MapGameIceSlider : MapBase
             1 => -0.6f,
             2 => -0.2f,
             3 => 0f,
-            4 => 0.06f,
+            4 => 1f,
             _ => 1f,
         };
         Vector3 targetPos = new Vector3(7.7247f, targetHeight, -4.7213f);
