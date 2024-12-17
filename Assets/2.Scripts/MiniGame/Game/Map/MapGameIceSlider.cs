@@ -16,7 +16,7 @@ public class MapGameIceSlider : MapBase
             switch (type)
             {
                 case eCollisionType.Bounce:
-                    // Ãæµ¹ ¹æÇâ °è»ê
+                    // ì¶©ëŒ ë°©í–¥ ê³„ì‚°
                     Vector3 collisionNormal = collision.contacts[0].normal;
                     Vector3 bounceDirection = -collisionNormal.normalized;
 
@@ -63,9 +63,10 @@ public class MapGameIceSlider : MapBase
         float targetHeight = phase switch
         {
             1 => -0.6f,
-            2 => -0.4f,
-            3 => -0.2f,
-            _ => 0f
+            2 => -0.2f,
+            3 => 0f,
+            4 => 0.06f,
+            _ => 1f,
         };
         Vector3 targetPos = new Vector3(7.7247f, targetHeight, -4.7213f);
         
