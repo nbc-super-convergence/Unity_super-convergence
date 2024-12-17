@@ -41,7 +41,7 @@ public class PenaltyUI : UIBase
         MessageUpdate();
 
         SetActive(true);
-        StartCoroutine(PenaltyEvent(tax < penalty));
+        StartCoroutine(PenaltyEvent(data.coin < penalty));
     }
 
     private IEnumerator PenaltyEvent(bool isGreater)
