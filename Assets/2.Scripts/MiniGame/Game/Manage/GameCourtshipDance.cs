@@ -119,15 +119,15 @@ public class GameCourtshipDance : IGame
             };
             //uiCourtship.ShowDanceBoard();
             uiCourtship.StartTimer();
-            var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+            var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
             map.ShowIndicator();
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
 
-    public void BeforeGameEnd()
+    public async void BeforeGameEnd()
     {
-        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         foreach (var player in players)
         {
             var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
@@ -147,9 +147,9 @@ public class GameCourtshipDance : IGame
 
     #region 초기화
 
-    private void ResetPlayers(List<PlayerInfo> players)
+    private async void ResetPlayers(List<PlayerInfo> players)
     {
-        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
         int[] teamSpawnCount = new int[2] { 0, 0 };
         foreach (var p in players)

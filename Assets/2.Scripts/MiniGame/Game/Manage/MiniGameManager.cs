@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public enum eGameType
@@ -68,8 +69,14 @@ public class MinigameManager : Singleton<MinigameManager>
     /// <summary>
     /// curMap T로 변환
     /// </summary>
-    public T GetMap<T>() where T : MapBase
+    public async Task<T> GetMap<T>() where T : MapBase
     {
+        // curMap이 null이면 반복적으로 검사하며 대기
+        while (curMap == null)
+        {
+            await Task.Yield(); // 다음 프레임까지 비동기적으로 대기
+        }
+
         return (T)curMap;
     }
     #endregion

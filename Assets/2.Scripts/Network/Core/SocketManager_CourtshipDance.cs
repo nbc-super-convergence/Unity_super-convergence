@@ -84,12 +84,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     }
 
     /* 411 */
-    public void DanceCloseSocketNotification(GamePacket packet)
+    public async void DanceCloseSocketNotification(GamePacket packet)
     {
         if (MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().isGameOver == true) return;
         var response = packet.DanceCloseSocketNotification;
 
-        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
+        MapGameCourtshipDance map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        map.DanceCloseSocketNotification(
             response.DisconnectedSessionId, response.ReplacementSessionId);
     }
 

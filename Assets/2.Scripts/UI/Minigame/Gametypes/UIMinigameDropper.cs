@@ -25,7 +25,7 @@ public class UIMinigameDropper : UIBase
     private Tweener textTween;
     private Tweener lightTween;
 
-    public override void Opened(object[] param)
+    public override async void Opened(object[] param)
     {
         GameManager.OnPlayerLeft += PlayerLeftEvent;
 
@@ -57,7 +57,8 @@ public class UIMinigameDropper : UIBase
             return;
         }
 
-        spotLight = MinigameManager.Instance.GetMap<MapGameDropper>().spotLight;
+        var map = await MinigameManager.Instance.GetMap<MapGameDropper>();
+        spotLight = map.spotLight;
     }
 
     public override void Closed(object[] param)

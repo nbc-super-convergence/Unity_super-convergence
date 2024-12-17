@@ -74,11 +74,11 @@ public class GameIceSlider : IGame
         token.DisableMiniToken();
     }
 
-    public void MapChangeEvent()
+    public async void MapChangeEvent()
     {
         gameData.phase++; //맵 변경 단계
-        MinigameManager.Instance.GetMap<MapGameIceSlider>()
-            .MapDecreaseEvent(gameData.phase);
+        var map = await MinigameManager.Instance.GetMap<MapGameIceSlider>();
+        map.MapDecreaseEvent(gameData.phase);
     }
     #endregion
 
