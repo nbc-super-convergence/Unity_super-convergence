@@ -84,6 +84,6 @@ public class BoardUI : UIBase
 
     public void UpdateTurn()
     {
-        turnText.text = $"<size= 75> {++turn} </size> / 10";
+        turnText.text = $"<size= 75> {++turn} </size> / 40";
     }
 }
