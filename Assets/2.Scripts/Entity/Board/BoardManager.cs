@@ -263,6 +263,8 @@ public class BoardManager : Singleton<BoardManager>
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
 
+        if (playerIndex == 0) UIManager.Get<BoardUI>().UpdateTurn();
+
         Transform t = playerTokenHandlers[playerIndex].transform;
         camera.Follow = camera.LookAt = t;
         dice.SetDicePosition(t);

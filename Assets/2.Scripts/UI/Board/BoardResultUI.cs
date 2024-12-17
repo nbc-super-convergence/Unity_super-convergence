@@ -17,6 +17,12 @@ public class BoardResultUI : UIBase
     public override void Opened(object[] param)
     {
         timer = 15f;
+
+        int length = MinigameManager.Instance.miniTokens.Length;
+
+        for(int i = 0; i < length; i++)
+            MinigameManager.Instance.miniTokens[i].DisableMiniToken();
+
         //base.Opened(param);
         //result = (List<IGameResult>)param[0];
 

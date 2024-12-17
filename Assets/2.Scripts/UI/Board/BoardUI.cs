@@ -1,17 +1,24 @@
+
 using System;
 using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class BoardUI : UIBase
 {
     [SerializeField] private List<BoardTokenUI> tokens;
     public event Action OnRefresh;
     public GameObject myTurnUI;
+    public TMP_Text turnText;
+
+    private int turn;
 
     private IEnumerator Start()
     {
+        turn = 0;
+
         yield return new WaitUntil(() => BoardManager.Instance.isInitialized);
 
         var list = BoardManager.Instance.playerTokenHandlers;
@@ -24,6 +31,7 @@ public class BoardUI : UIBase
         }
 
         Refresh();
+        UpdateTurn();
     }
 
     public override void Opened(object[] param)
@@ -72,5 +80,10 @@ public class BoardUI : UIBase
     public BoardTokenUI GetPlayerUI(int i)
     {
         return tokens[i];
+    }
+
+    public void UpdateTurn()
+    {
+        turnText.text = $"<size= 75> {++turn} </size> / 10";
     }
 }
