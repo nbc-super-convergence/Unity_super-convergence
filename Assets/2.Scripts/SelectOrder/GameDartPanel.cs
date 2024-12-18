@@ -20,18 +20,18 @@ public class GameDartPanel : MonoBehaviour
     }
 
     private void OnCollisionEnter(Collision collision)
-    {
-        //다음 차례
+    {   //다음 차례
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
     public void MoveEvent(Vector pos)
     {
-        Vector3 location = SocketManager.ToVector3(pos);
-
-        transform.localPosition = location;
+        transform.localPosition = SocketManager.ToVector3(pos);
     }
 
+    /// <summary>
+    /// 실시간으로 판넬 움직이기
+    /// </summary>
     public IEnumerator MoveCoroutine()
     {
         while(isMove)
@@ -49,7 +49,7 @@ public class GameDartPanel : MonoBehaviour
             }
             else
             {
-                StopCoroutine(MoveCoroutine());
+                //StopCoroutine(MoveCoroutine());
             }
         }
     }
@@ -64,6 +64,9 @@ public class GameDartPanel : MonoBehaviour
         transform.Translate(moveDirection * (Time.deltaTime * pannelSpeed));
     }
 
+    /// <summary>
+    /// 서버로 전송
+    /// </summary>
     private void SendServer()
     {
         GamePacket packet = new();
@@ -73,7 +76,6 @@ public class GameDartPanel : MonoBehaviour
                 SessionId = MinigameManager.Instance.mySessonId,
                 Location = SocketManager.ToVector(transform.localPosition)
             };
-            Debug.Log(packet.DartPannelSyncNotification.Location);
         }
         SocketManager.Instance.OnSend(packet);
     }

@@ -51,11 +51,28 @@ public class GameDart : IGame
         }
         else
         {
-            //Debug.Log("결과");
-            //DartPannel.isMove = false;  //판은 멈춰라
-            curRound++;
+            NextRound();
 
             //DistanceRank();
+        }
+    }
+
+    /// <summary>
+    /// 다음 라운드
+    /// </summary>
+    private void NextRound()
+    {
+        curRound++;
+
+        for (int i = 0; i < playerCount; i++)
+            UIManager.Get<UIMinigameDart>().SetReady(i);
+
+        if(curRound > maxRound)
+        {
+            DartPannel.isMove = false;  //판은 멈춰라
+
+            //결과
+            //GameOverNotification
         }
     }
 

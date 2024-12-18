@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,6 +9,9 @@ public class UIMinigameDart : UIBase
     #region UI 속성
     [Header("Force Power")]
     [SerializeField] private Slider forcePower;
+
+    [Header("Round")]
+    [SerializeField] private TextMeshProUGUI roundTxt;
 
     [Header("Result")]
     [SerializeField] private Image[] resultImage;
@@ -86,9 +90,14 @@ public class UIMinigameDart : UIBase
     }
     #endregion
 
+    public void SetRound(int round)
+    {
+        roundTxt.text = $"Round : {round}"; 
+    }
+
     private void PlyaerLeftEvent(int color)
     {
-
+        //이걸 어떤 용도로 구현?
     }
 
     //Todo : 내 차례가 되면 힘조절 UI 활성
