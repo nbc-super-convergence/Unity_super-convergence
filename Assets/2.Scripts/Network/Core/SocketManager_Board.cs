@@ -31,7 +31,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            player.GetDice(1);
+            player.GetDice(dice);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
             Debug.Log("RollDiceResponse");
