@@ -155,13 +155,14 @@ public class GameDart : IGame
         ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
 
-        MinigameManager.Instance.GetMap<MapGameDart>().BeginSelectOrder();
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        map.BeginSelectOrder();
         for (int i = 0; i < playerInfo.Count; i++)
         {
             UIManager.Get<UIMinigameDart>().SetNickname(i, playerInfo[i]);
         }
 
-        MinigameManager.Instance.GetMap<MapGameDart>().MovePanel();
+        map.MovePanel();
     }
     public void DisableUI()
     {

@@ -63,7 +63,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         Destroy(MinigameManager.Instance.curMap.gameObject);
     }
 
-    public void DartPannelSyncNotification(GamePacket gamePacket)
+    public async void DartPannelSyncNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartPannelSyncNotification;
 
@@ -71,7 +71,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         //GameDartPanel panel = ClientTest.Instance.Panel;
         //panel.MoveEvent(response.Location);
-        GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        GameDartPanel panel = map.DartPanel;
         if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
         {
             panel.MoveEvent(response.Location);
