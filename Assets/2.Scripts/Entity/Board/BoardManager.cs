@@ -349,7 +349,7 @@ public class BoardManager : Singleton<BoardManager>
             StartCoroutine(Curplayer.Ready());
     }
 
-    public void MiniGameEnd() => isMiniPlaying = false;
+    public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
 
 
     //public void PurChaseNode(int node,int playerIndex)

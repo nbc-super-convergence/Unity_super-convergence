@@ -99,7 +99,7 @@ public class UIMinigameResult : UIBase
 
         await UIManager.Show<BoardUI>();
 
-        BoardManager.Instance.MiniGameEnd();
+        BoardManager.Instance.SetMiniGamePlaying(false);
         BoardManager.Instance.ReadyCheck();
     }
 
