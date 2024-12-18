@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MapGameDart : MapBase
 {
@@ -6,6 +7,7 @@ public class MapGameDart : MapBase
 
     //다트그룹
     public List<DartPlayer> DartOrder;
+    public Transform PlayerDarts;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
 
@@ -32,11 +34,7 @@ public class MapGameDart : MapBase
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
         UIManager.Get<UIMinigameDart>().SetRound(1);
-    }
-
-    public void MovePanel()
-    {
-        StartCoroutine(DartPanel.MoveCoroutine());
+        UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
     }
     public void StopPanel()
     {
