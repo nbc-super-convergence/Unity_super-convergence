@@ -51,7 +51,7 @@ public class GameDropper : IGame
     #region 초기화
     private void SetBGM()
     {
-
+        SoundManager.Instance.PlayBGM(BGMType.Dropper);
     }
 
     private void ResetPlayers(RepeatedField<S2C_DropMiniGameReadyNotification.Types.startPlayers> players)
@@ -97,7 +97,13 @@ public class GameDropper : IGame
 
     public void DisableUI()
     {
-        UIManager.Hide<UIMinigameDropper>();    
+        UIManager.Hide<UIMinigameDropper>();
+
+        var tokens = MinigameManager.Instance.miniTokens;
+
+        for (int i = 0; i < 4; i++)
+            tokens[i].MiniData.PlayerSpeed = 15;
+
     }
     #endregion
 

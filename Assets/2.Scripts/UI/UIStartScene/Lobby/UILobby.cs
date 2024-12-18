@@ -37,6 +37,8 @@ public class UILobby : UIBase
 
     public override void Opened(object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Lobby);
+
         if (!SocketManager.Instance.isLobby)
         {
             LobbyJoinRequest();
@@ -139,6 +141,10 @@ public class UILobby : UIBase
         {
             SocketManager.Instance.isLobby = false;
             UIManager.Hide<UILobby>();
+
+#pragma warning disable CS4014
+            UIManager.Show<UILogin>();
+#pragma warning restore CS4014
         }
         else
         {
@@ -177,9 +183,6 @@ public class UILobby : UIBase
     public async void OnBtnRefresh()
     {
         btnRefresh.interactable = false;
-
-        
-        bool roomSuccess = false, userSuccess = false;
 
         GamePacket roomPacket = new()
         {

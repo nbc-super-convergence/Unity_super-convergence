@@ -1,32 +1,42 @@
-
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UISetting : UIBase
 {
-    [SerializeField]
-    private Button[] buttons;
-    
+    [SerializeField] Slider BGMSlider;
+    [SerializeField] Slider SFXSlider;
 
-    private void Start()
+    private void OnEnable()
     {
-        InitBtn();
-    }
-        
-    private void InitBtn()
-    {
-        buttons[0].onClick.AddListener(Back);
-        buttons[1].onClick.AddListener(Apply);
+        BGMSlider.value = PlayerPrefs.GetFloat(SoundManager.Instance.BGM_PREFS_KEY, 1f);
+        SFXSlider.value = PlayerPrefs.GetFloat(SoundManager.Instance.SFX_PREFS_KEY, 1f);
+
+        BGMSlider.onValueChanged.AddListener(ONBGMChange);
+        SFXSlider.onValueChanged.AddListener(ONSFXChange);
     }
 
-    private void Back()
+    private void OnDisable()
+    {
+        BGMSlider.onValueChanged.RemoveListener(ONBGMChange);
+        SFXSlider.onValueChanged.RemoveListener(ONSFXChange);
+    }
+
+    public void OnBackBtn()
     {
         UIManager.Hide<UISetting>();
     }
 
-    private void Apply()
+    private void ONBGMChange(float value)
     {
-        Debug.Log($"Apply is Not Ready");
+        SoundManager.Instance.SetBGMAudioMixerValue(value);
+        PlayerPrefs.SetFloat(SoundManager.Instance.BGM_PREFS_KEY, value);
+        PlayerPrefs.Save();
     }
 
+    private void ONSFXChange(float value)
+    {
+        SoundManager.Instance.SetSFXAudioMixerValue(value);
+        PlayerPrefs.SetFloat(SoundManager.Instance.SFX_PREFS_KEY, value); 
+        PlayerPrefs.Save();
+    }
 }

@@ -7,6 +7,20 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     #region 보드
 
+    public void BoardGoldSyncNotification(GamePacket packet)
+    {
+        var response = packet.BoardGoldSyncNotification;
+
+        for (int i = 0; i < response.PlayersInfo.Count; i++)
+        {
+            var p = response.PlayersInfo[i];
+            var data = BoardManager.Instance.GetToken(p.SessionId).data;
+            data.coin = p.Gold;
+        }
+
+        UIManager.Get<BoardUI>().Refresh();
+    }
+
     #region 주사위
     public void RollDiceResponse(GamePacket packet)
     {
@@ -17,11 +31,9 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             var player = BoardManager.Instance.Curplayer;
             int dice = response.DiceResult;
 
-            //TODO : 주석해제 필수
-            //player.GetDice(dice);
+            player.GetDice(1);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
-            player.GetDice(2);
             Debug.Log("RollDiceResponse");
         }
         else
@@ -66,7 +78,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         float rotY = response.Rotation;
 
         var token = BoardManager.Instance.GetToken(response.SessionId);
-        token.ReceivePosition(pos, rotY);
+        token?.ReceivePosition(pos, rotY);
 
         Debug.Log("MovePlayerBoardNotification");
     }
@@ -80,15 +92,40 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         if (response.Success)
         {
-            int i = response.Tile;
+            if (!response.IsPurchased) return;
 
-            var playerinfo = response.PlayerInfo;
-            string id = playerinfo.SessionId;
+            var playerinfo = response.PlayersInfo;
+            int t = response.Tile;
 
-            var data = BoardManager.Instance.GetToken(id).data;
-            data.coin = playerinfo.Gold;
+            for (int i = 0; i < playerinfo.Count; i++)
+            {
+                string id = playerinfo[i].SessionId;
+                int c = GameManager.Instance.SessionDic[id].Color;
 
-            BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+                var data = BoardManager.Instance.GetToken(id).data;
+
+                if(data.coin > playerinfo[i].Gold)
+                {
+                    UIManager.Get<BoardUI>().GetPlayerUI(c).Event(-response.PurchaseGold);
+                    BoardManager.Instance.areaNodes[t].SetArea(id, response.PurchaseGold);
+                }
+                else if(data.coin < playerinfo[i].Gold)
+                    UIManager.Get<BoardUI>().GetPlayerUI(c).Event(response.PurchaseGold);
+
+                data.coin = playerinfo[i].Gold;
+            }
+
+            //string id = playerinfo.SessionId;
+
+            //int i = response.Tile;
+            //int j = GameManager.Instance.SessionDic[id].Color;
+
+            //var data = BoardManager.Instance.GetToken(id).data;
+            //data.coin = playerinfo.Gold;
+
+            //BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
+            //UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -101,13 +138,36 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = packet.PurchaseTileNotification;
 
-        string id = response.SessionId;
+        var playerinfo = response.PlayersInfo;
+        int t = response.Tile;
 
-        int i = response.Tile;
-        var data = BoardManager.Instance.GetToken(id).data;
-        data.coin = response.PlayerInfo.Gold;
+        for(int i = 0; i < playerinfo.Count; i++)
+        {
+            string id = playerinfo[i].SessionId;
+            int c = GameManager.Instance.SessionDic[id].Color;
 
-        BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+            var data = BoardManager.Instance.GetToken(id).data;
+
+            if (data.coin > playerinfo[i].Gold)
+            {
+                UIManager.Get<BoardUI>().GetPlayerUI(c).Event(-response.PurchaseGold);
+                BoardManager.Instance.areaNodes[t].SetArea(id, response.PurchaseGold);
+            }
+            else if (data.coin < playerinfo[i].Gold)
+                UIManager.Get<BoardUI>().GetPlayerUI(c).Event(response.PurchaseGold);
+
+            data.coin = playerinfo[i].Gold;
+        }
+        //string id = response.SessionId;
+        //int i = response.Tile;
+        //int j = GameManager.Instance.SessionDic[id].Color;
+
+        //var data = BoardManager.Instance.GetToken(id).data;
+        //data.coin = response.PlayerInfo.Gold;
+
+        //BoardManager.Instance.areaNodes[i].SetArea(id,response.PurchaseGold);
+
+        //UIManager.Get<BoardUI>().GetPlayerUI(j).Event(-response.PurchaseGold);
         UIManager.Get<BoardUI>().Refresh();
     }
     #endregion
@@ -171,14 +231,25 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         {
             var playerinfos = response.PlayersInfo.ToList();
 
-            for(int i = 0; i < playerinfos.Count; i++)
+            int penalty = int.MaxValue;
+
+            for (int i = 0; i < playerinfos.Count; i++)
             {
                 string id = playerinfos[i].SessionId;
 
-                var data = BoardManager.Instance.GetToken(id).data;
+                var data = BoardManager.Instance.playerTokenHandlers[i].data;
+
+                penalty = Mathf.Min(playerinfos[i].Gold - data.coin,penalty);
                 data.coin = playerinfos[i].Gold;
+
+                int j = GameManager.Instance.SessionDic[id].Color;
+
+                if(penalty != 0)
+                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
                 //data.trophyAmount = playerinfos[i].Trophy;
             }
+
+            UIManager.Get<PenaltyUI>().SetTax(Mathf.Abs(penalty));
             UIManager.Get<BoardUI>().Refresh();
         }
         else
@@ -198,7 +269,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             string id = playerinfos[i].SessionId;
 
             var data = BoardManager.Instance.GetToken(id).data;
+
+            int penalty = playerinfos[i].Gold - data.coin;
             data.coin = playerinfos[i].Gold;
+
+            int j = GameManager.Instance.SessionDic[id].Color;
+
+            if (penalty != 0)
+                UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
             //data.trophyAmount = playerinfos[i].Trophy;
         }
 
@@ -221,21 +299,31 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     #region 게임종료
 
-    public void GameEndNotification(GamePacket packet)
+    public async void GameEndNotification(GamePacket packet)
     {
         var response = packet.GameEndNotification;
+        UIManager.Hide<BoardUI>();
 
+        for (int i = 0; i < response.Rank.Count; i++)
+        {
+            var p = response.Rank[i];
+            var data = BoardManager.Instance.GetToken(p.SessionId).data;
+            data.coin = p.Gold;
+        }
+
+        await UIManager.Show<BoardResultUI>();
         //게임종료 필요
-        BoardManager.Instance.GameOver();
+        //BoardManager.Instance.GameOver();
     }
 
+    private Coroutine defenseCoroutine;
     public void BackToTheRoomResponse(GamePacket packet)
     {
         var response = packet.BackToTheRoomResponse;
 
         if (response.Success)
         {
-            StartCoroutine(ReturnStartScene(response));
+            defenseCoroutine ??= StartCoroutine(ReturnStartScene(response));
         }
         else
         {
@@ -255,6 +343,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         yield return new WaitUntil(() => SceneManager.GetActiveScene().buildIndex == 0);
 
         yield return UIManager.Show<UIRoom>(response.Room);
+
+        defenseCoroutine = null;
     }
 
     #endregion

@@ -75,7 +75,7 @@ public class BoardTokenHandler : MonoBehaviour
 
         if (!isMine)
         {
-            if(transform.position != nextPositon)
+            if (transform.position != nextPositon)
             {
                 float d = Vector3.Distance(transform.position, nextPositon);
                 transform.position = Vector3.MoveTowards(transform.position, nextPositon, Time.deltaTime * d * 30);
@@ -89,23 +89,26 @@ public class BoardTokenHandler : MonoBehaviour
 
         #region 주사위 굴림
 
-        if (isReady)
-        {
-            int rand = UnityEngine.Random.Range(0, 6);
-            diceObject.ShowDice(rand);
+        //if (isReady)
+        //{
+        //    int rand = UnityEngine.Random.Range(0, 6);
+        //    diceObject.ShowDice(rand);
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                isReady = false;
+        //    if (Input.GetKeyDown(KeyCode.Space))
+        //    {
+        //        isReady = false;
+        //        UIManager.Get<BoardUI>().ShowMyTurn(isReady);
 
-                GamePacket packet = new();
-                packet.RollDiceRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId
-                };
-                SocketManager.Instance.OnSend(packet);
-            }
-        }
+        //        GamePacket packet = new();
+        //        packet.RollDiceRequest = new()
+        //        {
+        //            SessionId = GameManager.Instance.myInfo.SessionId
+        //        };
+        //        SocketManager.Instance.OnSend(packet);
+
+        //        curNode.GetList().Remove(transform);
+        //    }
+        //}
 
         #endregion
 
@@ -142,16 +145,19 @@ public class BoardTokenHandler : MonoBehaviour
 
             if (syncTime >= 0.1f)
             {
-                GamePacket packet = new();
+                //GamePacket packet = new();
 
-                packet.MovePlayerBoardRequest = new()
-                {
-                    SessionId = GameManager.Instance.myInfo.SessionId,
-                    TargetPoint = SocketManager.ToVector(transform.position),
-                    Rotation = character.transform.eulerAngles.y
-                };
+                //packet.MovePlayerBoardRequest = new()
+                //{
+                //    SessionId = GameManager.Instance.myInfo.SessionId,
+                //    TargetPoint = SocketManager.ToVector(transform.position),
+                //    Rotation = character.transform.eulerAngles.y
+                //};
 
-                SocketManager.Instance.OnSend(packet);
+                //SocketManager.Instance.OnSend(packet);
+
+                SendMove();
+
                 Debug.Log("MovePlayerBoardRequest");
 
                 syncTime = 0.0f;
@@ -188,12 +194,12 @@ public class BoardTokenHandler : MonoBehaviour
         if(num == 0 && queue.Count > 0)
         {
             Action action = queue.Peek().GetComponent<IAction>().Action;
-
+            curNode.LineUp();
             StartCoroutine(ArrivePlayer(action, curNode.transform));
         }
         else
         {
-            for (int i = 0; i < num; i++,dice--)
+            for (int i = 0; i < num; i++,--dice)
             {
                 if (curNode.TryGetNode(out Transform node))
                 {
@@ -202,7 +208,7 @@ public class BoardTokenHandler : MonoBehaviour
                     if (i == (num - 1))
                     {
                         Action action = curNode.transform.GetComponent<IAction>().Action;
-
+                        curNode.LineUp();
                         StartCoroutine(ArrivePlayer(action, curNode.transform));
                     }
                 }
@@ -231,7 +237,6 @@ public class BoardTokenHandler : MonoBehaviour
 
     protected IEnumerator ArrivePlayer(Action action,Transform t)
     {
-
         while (true)
         {
             if (transform.position.Equals(t.position))
@@ -243,12 +248,55 @@ public class BoardTokenHandler : MonoBehaviour
         action?.Invoke();
     }
 
-    public void Ready()
+
+    public IEnumerator Ready()
     {
-        if (!isMine) return;
+        var col = Physics.OverlapSphere(transform.position, 0.1f, 1 << 8);
+
+        if (col.Length > 0 && col[0].TryGetComponent(out IBoardNode node))
+            node.GetList().Remove(transform);
+
+        if (!isMine) yield break;
 
         isReady = true;
-        diceObject.gameObject.SetActive(true);
+
+        transform.position = curNode.transform.position;
+        SendMove();
+
+        diceObject.gameObject.SetActive(isReady);
+
+        yield return new WaitUntil(() => UIManager.IsOpened<BoardUI>());
+
+        UIManager.Get<BoardUI>().ShowMyTurn(isReady);
+
+        StartCoroutine(DiceReady());
+    }
+
+    private IEnumerator DiceReady()
+    {
+        while(true)
+        {
+            int rand = UnityEngine.Random.Range(0, 6);
+            diceObject.ShowDice(rand);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                isReady = false;
+                UIManager.Get<BoardUI>().ShowMyTurn(isReady);
+
+                GamePacket packet = new();
+                packet.RollDiceRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId
+                };
+                SocketManager.Instance.OnSend(packet);
+
+                curNode.GetList().Remove(transform);
+                break;
+            }
+
+            yield return null;
+        }
     }
 
     public void ReceivePosition(Vector3 position,float rotY)
@@ -265,5 +313,19 @@ public class BoardTokenHandler : MonoBehaviour
     public void SetAnimation(bool isRun)
     {
         animator.SetBool(runhash,isRun);
+    }
+
+    private void SendMove()
+    {
+        GamePacket packet = new();
+
+        packet.MovePlayerBoardRequest = new()
+        {
+            SessionId = GameManager.Instance.myInfo.SessionId,
+            TargetPoint = SocketManager.ToVector(transform.position),
+            Rotation = character.transform.eulerAngles.y
+        };
+
+        SocketManager.Instance.OnSend(packet);
     }
 }

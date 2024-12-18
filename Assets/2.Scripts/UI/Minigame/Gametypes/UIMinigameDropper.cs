@@ -25,7 +25,7 @@ public class UIMinigameDropper : UIBase
     private Tweener textTween;
     private Tweener lightTween;
 
-    public override void Opened(object[] param)
+    public override async void Opened(object[] param)
     {
         GameManager.OnPlayerLeft += PlayerLeftEvent;
 
@@ -57,14 +57,27 @@ public class UIMinigameDropper : UIBase
             return;
         }
 
-        spotLight = MinigameManager.Instance.GetMap<MapGameDropper>().spotLight;
+        var map = await MinigameManager.Instance.GetMap<MapGameDropper>();
+        spotLight = map.spotLight;
     }
 
     public override void Closed(object[] param)
     {
         GameManager.OnPlayerLeft -= PlayerLeftEvent;
+        KillDotween();
         descTxt.transform.parent.gameObject.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+        KillDotween();
+    }
+
+    private void OnDestroy()
+    {
+        KillDotween();
+    }
+
 
     private IEnumerator StartCountDown(long startdelay)
     {
@@ -186,7 +199,8 @@ public class UIMinigameDropper : UIBase
     {
         foreach (Button btn in directionBtns)
         {
-            btn.interactable = true;
+            if (btn != null)
+                btn.interactable = true;
         }
     }
     private void DisableBtnInput()
@@ -210,6 +224,8 @@ public class UIMinigameDropper : UIBase
     {
         textTween?.Kill();
         lightTween?.Kill();
+
+        if (descTxt == null || spotLight == null) return;
 
         if (isFall)
         {
@@ -257,10 +273,13 @@ public class UIMinigameDropper : UIBase
         }
     }
 
-    public void KillLightDotween()
+    public void KillDotween()
     {
-        textTween.Kill();
-        lightTween.Kill();
+        if (textTween != null && textTween.active) textTween.Kill();
+        if (lightTween != null && lightTween.active) lightTween.Kill();
+
+        textTween = null;
+        lightTween = null;
     }
     #endregion
 }

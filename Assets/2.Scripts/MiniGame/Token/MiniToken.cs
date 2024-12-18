@@ -1,4 +1,6 @@
 using System.Collections;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class MiniToken : MonoBehaviour
@@ -20,6 +22,7 @@ public class MiniToken : MonoBehaviour
     private bool isEnabled = false;
     public bool isStun { get; private set; }
     Coroutine PauseInput = null;
+    Coroutine SendMoveCoroutine = null;
 
     #region Unity Messages
     private void Awake()
@@ -37,15 +40,6 @@ public class MiniToken : MonoBehaviour
         {
             switch (MinigameManager.gameType)
             {
-                case eGameType.GameIceSlider:
-                    Controller.MoveToken(eMoveType.Server);
-                    break;
-                case eGameType.GameBombDelivery:
-                    Controller.MoveToken(eMoveType.Server);
-                    break;
-                case eGameType.GameCourtshipDance:
-                    // 서버에서 토큰 무브에 관련된 정보를 받을 필요는 없음.   // TODO::나중에 봐서 이부분 지워도되면 지우기.
-                    break;
                 case eGameType.GameDropper:
                     Controller.MoveToken(eMoveType.Dropper);
                     break;
@@ -65,7 +59,7 @@ public class MiniToken : MonoBehaviour
                 switch (MinigameManager.gameType)
                 {
                     case eGameType.GameIceSlider:
-                        Controller.MoveToken(eMoveType.AddForce);
+                        Controller.MoveToken(eMoveType.Ice);
                         break;
                     case eGameType.GameBombDelivery:
                         Controller.MoveToken(eMoveType.Velocity);
@@ -74,12 +68,30 @@ public class MiniToken : MonoBehaviour
                         Controller.MoveToken(eMoveType.Dropper);
                         break;
                     case eGameType.GameDart:
-                        Controller.MoveToken(eMoveType.AddForce);
+                        Controller.MoveToken(eMoveType.Ice);
                         break;
                 }
             }
 
             Controller.RotateToken(MiniData.rotY);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        if (InputHandler != null)
+        {
+            InputHandler.Dispose();
+            InputHandler = null; 
+        }
+
+        Controller = null;
+        MiniData = null;
+        
+        if (PauseInput != null)
+        {
+            StopCoroutine(PauseInput);
+            PauseInput = null;
         }
     }
     #endregion
@@ -99,13 +111,16 @@ public class MiniToken : MonoBehaviour
         if (IsClient)
         {//방어코드
             InputHandler.EnablePlayerInput();
-            StartCoroutine(SendClientMove());
+            SendMoveCoroutine = StartCoroutine(SendClientMove());
         }
     }
 
     private IEnumerator SendClientMove()
     {
         Vector3 curPos = transform.localPosition, lastPos = transform.localPosition;
+
+        if (MiniData.CurState == State.Die) yield break;
+
         while (true)
         {
             curPos = transform.localPosition;
@@ -178,6 +193,12 @@ public class MiniToken : MonoBehaviour
 
     public void DisableMyToken()
     {
+        if (SendMoveCoroutine != null)
+        {
+            StopCoroutine(SendMoveCoroutine);
+            SendMoveCoroutine = null;
+        }
+
         InputHandler.DisablePlayerInput();
     }
 
@@ -186,7 +207,7 @@ public class MiniToken : MonoBehaviour
         isEnabled = false;
         rb.velocity = Vector3.zero; //움직임 멈춤
         MiniData.CurState = State.Die; //사망 애니메이션 재생
-        StartCoroutine(DisableDelay());
+        if(gameObject.activeSelf) StartCoroutine(DisableDelay());
     }
 
     private IEnumerator DisableDelay()
@@ -209,5 +230,24 @@ public class MiniToken : MonoBehaviour
 
         InputHandler.EnablePlayerInput();
         isStun = false;
+    }
+
+    private readonly float moveDuration = 0.1f;
+    public Coroutine ServerMoveCoroutine;
+    public IEnumerator ServerMove()
+    {
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.localPosition;
+
+        while (elapsedTime < moveDuration)
+        {
+            transform.localPosition = Vector3.Lerp(startPosition, MiniData.nextPos, elapsedTime / moveDuration);
+            elapsedTime += Time.deltaTime;
+
+            yield return null;
+        }
+
+        transform.localPosition = MiniData.nextPos;
+        ServerMoveCoroutine = null;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System;
 using Cinemachine;
@@ -48,7 +49,7 @@ public class BoardManager : Singleton<BoardManager>
     public Transform startNode;
 
     // 테스트 플레이어 프리펩
-    public GameObject TestPlayerPrefab;
+    public GameObject tokenPrefab;
 
     //플레이어 리스트
     public List<BoardTokenHandler> playerTokenHandlers = new();
@@ -61,6 +62,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
     public Dice dice { get; private set; }
+    private bool isMiniPlaying;
 
 #pragma warning disable
     public CinemachineVirtualCamera camera;
@@ -68,8 +70,6 @@ public class BoardManager : Singleton<BoardManager>
 #pragma warning restore
 
     //private List<IGameResult> bonus;
-    public bool isMIniPlay { get; private set; }
-
 
     public BoardTokenHandler GetToken(string sessionID)
     {
@@ -114,23 +114,41 @@ public class BoardManager : Singleton<BoardManager>
 
     private async void Init()
     {
+        isMiniPlaying = false;
         var ids = GameManager.Instance.SessionDic.Keys;
         var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
         dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
         dice.gameObject.SetActive(false);
+        List<Vector3> pos = new List<Vector3>()
+            {
+                Vector3.zero,
+                new Vector3(1, 0, -1),
+                new Vector3(-1, 0, -1),
+                new Vector3(-1, 0, 1),
+            };
+        
+
 
         foreach (string key in ids)
         {
             var dict = GameManager.Instance.SessionDic;
             var info = dict[key];
 
-            BoardTokenHandler handle = Instantiate(TestPlayerPrefab, startNode.transform.position, Quaternion.identity).GetComponent<BoardTokenHandler>();
+            BoardTokenHandler handle = 
+                Instantiate
+                (
+                    tokenPrefab, 
+                    startNode.transform.position + pos[playerTokenHandlers.Count], 
+                    Quaternion.identity
+                ).GetComponent<BoardTokenHandler>();
+
             handle.Init(info);
             //handle.data.userInfo = info;
             handle.SetColor(info.Color);
             handle.gameObject.name = key;
 
             if (key == GameManager.Instance.myInfo.SessionId) handle.isMine = true;
+            isInitialized = true;
 
             playerTokenHandlers.Add(handle);
         }
@@ -154,7 +172,8 @@ public class BoardManager : Singleton<BoardManager>
         #endregion
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
-        Curplayer.Ready();
+        //StartCoroutine(Curplayer.Ready());
+        ReadyCheck();
     }
 
     //테스트용
@@ -207,6 +226,9 @@ public class BoardManager : Singleton<BoardManager>
             //}
             //else
             //{
+
+            
+
             GamePacket packet = new();
 
             packet.TurnEndRequest = new()
@@ -234,18 +256,24 @@ public class BoardManager : Singleton<BoardManager>
             #endregion
         }
     }
-    public void NextTurn()
+    public void NextTurn(bool isUpdate = true)
     {
-        isMIniPlay = false;
+        var col = Physics.OverlapSphere(Curplayer.transform.position, 0.1f, 1 << 8);
+
+        if (col.Length > 0 && col[0].TryGetComponent(out IBoardNode node))
+            node.GetList().Add(Curplayer.transform);
 
         int count = playerTokenHandlers.Count;
         playerIndex = (playerIndex + 1) % count;
+
+        if(isUpdate) UIManager.Get<BoardUI>().UpdateTurn();
 
         Transform t = playerTokenHandlers[playerIndex].transform;
         camera.Follow = camera.LookAt = t;
         dice.SetDicePosition(t);
 
-        Curplayer.Ready();
+        //StartCoroutine(Curplayer.Ready());
+        ReadyCheck();
     }
 
     //public void SetTrophyNode()
@@ -274,9 +302,9 @@ public class BoardManager : Singleton<BoardManager>
     //    #endregion
     //}
 
-    public void StartMinigame()
+    public IEnumerator StartMinigame()
     {
-        isMIniPlay = true;
+        isMiniPlaying = true;
 
         GamePacket packet = new();
 
@@ -286,7 +314,43 @@ public class BoardManager : Singleton<BoardManager>
         };
 
         SocketManager.Instance.OnSend(packet);
+
+        yield return new WaitUntil(() => UIManager.IsOpened<UIMinigameReady>());
+
+        TurnEnd();
     }
+
+    public void ExitPlayer(string id)
+    {
+        var p = GetToken(id);
+        int i = playerTokenHandlers.IndexOf(p);
+        var n = playerTokenHandlers[(i + 1) % playerTokenHandlers.Count];
+
+        if (i == playerIndex)
+            NextTurn(false);
+
+        int c = GameManager.Instance.SessionDic[id].Color;
+
+        for(int j = 0; j < areaNodes.Count; j++)
+            if (areaNodes[j].ownerColor == c)
+                areaNodes[j].ClearArea();
+
+        playerTokenHandlers.Remove(p);
+        UIManager.Get<BoardUI>().ExitPlayer(c);
+
+        playerIndex = playerTokenHandlers.IndexOf(n);
+
+        Destroy(p.gameObject);
+    }
+
+    public void ReadyCheck()
+    {
+        if(!isMiniPlaying) 
+            StartCoroutine(Curplayer.Ready());
+    }
+
+    public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
+
 
     //public void PurChaseNode(int node,int playerIndex)
     //{
@@ -297,7 +361,7 @@ public class BoardManager : Singleton<BoardManager>
     //{
     //    bonus = new();
     //    List<int> num = new();
-        
+
     //    for(int i = 0; i < 3;)
     //    {
     //        int rand = UnityEngine.Random.Range(0, 13);
@@ -352,30 +416,30 @@ public class BoardManager : Singleton<BoardManager>
     //    }
     //}
 
-    public async void GameOver()
-    {
-        //게임종료시 레크리에이션, 추가 트로피 증정
-        //foreach (var result in bonus)
-        //{
-        //    List<int> list = result.Result();
+    //public async void GameOver()
+    //{
+    //    //게임종료시 레크리에이션, 추가 트로피 증정
+    //    //foreach (var result in bonus)
+    //    //{
+    //    //    List<int> list = result.Result();
 
-        //    foreach (int i in list)
-        //        playerTokenHandlers[i].data.trophyAmount += 1;
-        //}
+    //    //    foreach (int i in list)
+    //    //        playerTokenHandlers[i].data.trophyAmount += 1;
+    //    //}
 
-        //순위별로 인덱스 변경
-        UIManager.Hide<BoardUI>();
+    //    //순위별로 인덱스 변경
+    //    //UIManager.Hide<BoardUI>();
 
-        playerTokenHandlers.Sort((a,b) => 
-        {
-            //if(a.data.trophyAmount == b.data.trophyAmount)
-            return b.data.coin.CompareTo(a.data.coin);
+    //    //playerTokenHandlers.Sort((a,b) => 
+    //    //{
+    //    //    //if(a.data.trophyAmount == b.data.trophyAmount)
+    //    //    return b.data.coin.CompareTo(a.data.coin);
 
-            //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
-        });
-        Debug.Log("결과창 생성");
-        await UIManager.Show<BoardResultUI>();
-    }
+    //    //    //return b.data.trophyAmount.CompareTo(a.data.trophyAmount);
+    //    //});
+
+    //    //await UIManager.Show<BoardResultUI>();
+    //}
 
     //순서 변경 없음으로 인한 주석처리
     //private void SeqeunceUpdate()

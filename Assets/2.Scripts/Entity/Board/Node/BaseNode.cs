@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,9 +9,15 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
 
     private List<GameObject> arrows;
 
+
+    public Transform lineUp;
+
+    private List<Transform> players = new();
+
     private void Awake()
     {
         //GameObject g = await ResourceManager.Instance.LoadAsset<GameObject>("arrow", eAddressableType.Prefab);
+        players = new();
 
         if (nodes.Count > 1)
             StartCoroutine(Test());
@@ -94,5 +99,18 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
     protected virtual bool IsStopCondition()
     {
         return nodes.Count > 1;
+    }
+
+    public void LineUp()
+    {
+         Vector3 pos = lineUp.position;
+
+        for (int i = 0; i < players.Count; i++)
+            players[i].position = new Vector3(pos.x,0,pos.z);
+    }
+
+    public List<Transform> GetList()
+    {
+        return players;
     }
 }

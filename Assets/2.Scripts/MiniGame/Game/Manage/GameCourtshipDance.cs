@@ -5,16 +5,19 @@ using System.Threading.Tasks;
 
 public class GameCourtshipDance : IGame
 {
+    public bool isInitialized = false;
+
     public UICourtshipDance uiCourtship;
     public CourtshipDanceData gameData;
 
     private CommandGenerator commandGenerator;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
-    private List<PlayerInfo> players = new();   
+    public List<PlayerInfo> players = new();
     private TaskCompletionSource<bool> sourceTcs;
 
     public bool isTeamGame = false;
     public bool isBoardReady = false;
+    public bool isGameOver = false;
     public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
@@ -23,89 +26,124 @@ public class GameCourtshipDance : IGame
 
     public async void Init(params object[] param)
     {
-        gameData = new CourtshipDanceData();
-        gameData.Init();
+        await Initialize(param);
+    }
 
-        if (param[0] is S2C_DanceMiniGameReadyNotification response)
+    public async Task Initialize(params object[] param)
+    {
+        try
         {
-            foreach (var p in response.Players)
+            sourceTcs = new();
+            gameData = new CourtshipDanceData();
+            gameData.Init();
+
+            if (param[0] is S2C_DanceMiniGameReadyNotification response)
             {
-                this.players.Add(p);
+                foreach (var p in response.Players)
+                {
+                    this.players.Add(p);
+                }
             }
-        }
-        else if (param[0] is RepeatedField<PlayerInfo> players)
-        {
+            else if (param[0] is RepeatedField<PlayerInfo> players)
+            {
+                foreach (var p in players)
+                {
+                    this.players.Add(p);
+                }
+            }
+
+            teamDic = new();
             foreach (var p in players)
             {
-                this.players.Add(p);
-            }
-        }
-
-        teamDic = new();
-        foreach (var p in players)
-        {
-            if (!teamDic.ContainsKey(p.TeamNumber))
-            {
-                List<PlayerInfo> list = new()
+                if (!teamDic.ContainsKey(p.TeamNumber))
+                {
+                    List<PlayerInfo> list = new()
                 {
                     p
                 };
-                teamDic.Add(p.TeamNumber, list);
+                    teamDic.Add(p.TeamNumber, list);
+                }
+                else
+                {
+                    teamDic[p.TeamNumber].Add(p);
+                }
             }
-            else
+
+            if (teamDic[1].Count >= 2)
             {
-                teamDic[p.TeamNumber].Add(p);
+                isTeamGame = true;
             }
-        }
 
-        if (teamDic[1].Count >= 2)
-        {
-            isTeamGame = true;
-        }
+            uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
+            MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+            await MinigameManager.Instance.MakeMapDance();
+            // 토큰 배치 및 세팅하기
+            ResetPlayers(players);
 
-        uiCourtship = await UIManager.Show<UICourtshipDance>(gameData);
-        MinigameManager.Instance.curMap = await ResourceManager.Instance.LoadAsset<MapGameCourtshipDance>($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
-        MinigameManager.Instance.MakeMapDance();
-        // 토큰 배치 및 세팅하기
-        ResetPlayers(players);
-
-        if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
-        {
-            commandGenerator = new CommandGenerator();
-            commandGenerator.InitTeamGame(teamDic);
-            teamPoolDic = commandGenerator.GetTeamPoolDic();
-        }
-
-        // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
-        /* 405 */
-        sourceTcs = new();
-        if (commandGenerator != null)
-        {
-            RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
-            GamePacket packet = new();
-            packet.DanceTableCreateRequest = new()
+            if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
             {
-                SessionId = GameManager.Instance.myInfo.SessionId,
-            };
-            packet.DanceTableCreateRequest.DancePools.Add(sp);
-            SocketManager.Instance.OnSend(packet);
+                commandGenerator = new CommandGenerator();
+                commandGenerator.InitTeamGame(teamDic);
+                teamPoolDic = commandGenerator.GetTeamPoolDic();
+            }
+
+            // 커맨드보드 제작과 전송완료대기 리퀘스트 패킷, 그 응답,알림 패킷
+            /* 405 */
+            if (commandGenerator != null)
+            {
+                RepeatedField<DancePool> sp = CommandGenerator.ConvertToDancePools(teamPoolDic, teamDic);
+                GamePacket packet = new();
+                packet.DanceTableCreateRequest = new()
+                {
+                    SessionId = GameManager.Instance.myInfo.SessionId,
+                };
+                packet.DanceTableCreateRequest.DancePools.Add(sp);
+                SocketManager.Instance.OnSend(packet);
+            }
+
+            bool isSuccess = await Task.WhenAny(sourceTcs.Task, Task.Delay(60000)) == sourceTcs.Task ? await sourceTcs.Task : false;
+            if (!isSuccess)
+            {
+                UnityEngine.Debug.LogAssertion("Timeout : DanceTableNotification ");
+                // TODO :: 끄는거 말고 어떤 처리를 하는게 더 좋을지...?
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                UnityEngine.Application.Quit();
+#endif
+            }
+            isBoardReady = isSuccess;
+
+            uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
+            SoundManager.Instance.PlayBGM(BGMType.Dance);
+            isInitialized = true;
         }
-        
-        bool isSuccess = await sourceTcs.Task;
-        isBoardReady = isSuccess;
-
-        uiCourtship.MakeCommandBoard(teamDic, teamPoolDic);
-
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError($"Error in Init: {ex.Message}");
+        }
     }
 
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
-        teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);        
-    }
-
-    public void TrySetTask(bool isSuccess)
-    {
-        bool b = sourceTcs.TrySetResult(isSuccess);
+        try
+        {
+            teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
+            if (teamPoolDic != null)
+            {
+                sourceTcs.TrySetResult(true);
+            }
+            else
+            {
+                UnityEngine.Debug.LogAssertion("teamPoolDic is null !!");
+                sourceTcs.TrySetResult(false);
+            }
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError($"Error in SetTeamPoolDic: {ex.Message}");
+            sourceTcs.TrySetException(ex);
+        }
     }
 
     public async void GameStart(params object[] param)
@@ -115,22 +153,25 @@ public class GameCourtshipDance : IGame
             Action action = () =>
             {
                 MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
+                uiCourtship.ShowTimer();
             };
-            //uiCourtship.ShowDanceBoard();
             uiCourtship.StartTimer();
-            var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+            var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
             map.ShowIndicator();
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
 
-    public void BeforeGameEnd(RepeatedField<string> winSessionIds)
+    public async void BeforeGameEnd()
     {
-        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var sessionId in winSessionIds)
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        foreach (var player in players)
         {
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(sessionId);
-            map.TokenReset(miniToken);
+            var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
+            if(token != null)
+            {
+                map.TokenReset(token);
+            }
         }
     }
 
@@ -146,9 +187,9 @@ public class GameCourtshipDance : IGame
 
     #region 초기화
 
-    private void ResetPlayers(List<PlayerInfo> players)
+    private async void ResetPlayers(List<PlayerInfo> players)
     {
-        var map = MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         int num = 0;
         int[] teamSpawnCount = new int[2] { 0, 0 };
         foreach (var p in players)
@@ -212,6 +253,18 @@ public class GameCourtshipDance : IGame
             }
         }
         return null;
+    }
+
+    public void RemovePlayers(string disconnectedSessionId)
+    {
+        foreach (var p in players)
+        {
+            if(p.SessionId == disconnectedSessionId)
+            {
+                players.Remove(p);
+                break;
+            }
+        }
     }
 
     public void DisableUI()

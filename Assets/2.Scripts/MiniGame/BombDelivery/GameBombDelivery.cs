@@ -8,12 +8,20 @@ public class GameBombDelivery : IGame
 
     public void GameStart(params object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Bomb);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
         bomb.gameObject.SetActive(true);
     }
 
     public async void Init(params object[] param)
     {
+        //var tokens = MinigameManager.Instance.miniTokens;
+
+        //for (int i = 0; i < 4; i++)
+        //    tokens[i].MiniData.PlayerSpeed = 15;
+
+        ResetSpeed();
+
         var prefab = await ResourceManager.Instance.LoadAsset<Bomb>("bomb", eAddressableType.Prefab);
         bomb = Object.Instantiate(prefab, Vector3.zero, Quaternion.identity);
         bomb.gameObject.SetActive(false);
@@ -43,7 +51,6 @@ public class GameBombDelivery : IGame
             token.transform.localPosition = SocketManager.ToVector3(players[i].Position);
             token.MiniData.nextPos = SocketManager.ToVector3(players[i].Position);
             token.MiniData.rotY = players[i].Rotation;
-            Debug.Log(players[i].Position);
         }
         SetTarget(players[0].BombSessionId);
         bomb.gameObject.SetActive(false);
@@ -63,10 +70,12 @@ public class GameBombDelivery : IGame
 
     public void GameOver()
     {
-        var tokens = MinigameManager.Instance.miniTokens;
+        //var tokens = MinigameManager.Instance.miniTokens;
 
-        for(int i = 0; i < 4; i++)
-            tokens[i].MiniData.PlayerSpeed = 15;
+        //for(int i = 0; i < 4; i++)
+        //    tokens[i].MiniData.PlayerSpeed = 15;
+
+        ResetSpeed();
 
         Object.Destroy(bomb.gameObject);
         Object.Destroy(MinigameManager.Instance.curMap.gameObject);
@@ -75,5 +84,13 @@ public class GameBombDelivery : IGame
     public void DisableUI()
     {
         
+    }
+
+    private void ResetSpeed()
+    {
+        var tokens = MinigameManager.Instance.miniTokens;
+
+        for (int i = 0; i < 4; i++)
+            tokens[i].MiniData.PlayerSpeed = 15;
     }
 }

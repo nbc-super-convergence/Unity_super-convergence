@@ -4,7 +4,11 @@ using UnityEngine;
 public class AreaNode : BaseNode, IPurchase
 {
     private StringBuilder owner = new StringBuilder("");
+    private Material baseMat;
     private int saleAmount = 10;
+    private int index;
+    public int ownerColor { get; private set; }
+
     //매수금은 판매액의 2배
     //벌금은 판매액의 반
 
@@ -12,6 +16,11 @@ public class AreaNode : BaseNode, IPurchase
 
     string IPurchase.message => GetMessage();
 
+    private void Start()
+    {
+        baseMat = plane.sharedMaterial;
+        index = BoardManager.Instance.areaNodes.IndexOf(this);
+    }
 
     public async override void Action()
     {
@@ -43,7 +52,7 @@ public class AreaNode : BaseNode, IPurchase
         {
             if (o != "") Penalty(player.data);
 
-            if (player.data.coin >= saleAmount)
+            else if (player.data.coin >= saleAmount)
                 await UIManager.Show<PurchaseNodeUI>(purchase);
             else
                 BoardManager.Instance.TurnEnd();
@@ -51,17 +60,22 @@ public class AreaNode : BaseNode, IPurchase
         else
             Cancle();
     }
-    private void Penalty(BoardTokenData p)
+    private async void Penalty(BoardTokenData p)
     {
+        IPurchase purchase = this;
+        await UIManager.Show<PenaltyUI>(saleAmount >> 1,purchase,p);
+
         GamePacket packet = new();
 
         packet.TilePenaltyRequest = new()
         {
             SessionId = GameManager.Instance.myInfo.SessionId,
-            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+            Tile = index
         };
 
         SocketManager.Instance.OnSend(packet);
+
+        //p.coin = Mathf.Max(p.coin - saleAmount, 0);
     }
 
     public void Purchase()
@@ -72,7 +86,7 @@ public class AreaNode : BaseNode, IPurchase
         packet.PurchaseTileRequest = new()
         {
             SessionId = id,
-            Tile = BoardManager.Instance.areaNodes.IndexOf(this)
+            Tile = index
         };
 
         SocketManager.Instance.OnSend(packet);
@@ -94,11 +108,16 @@ public class AreaNode : BaseNode, IPurchase
 
     public void SetArea(string id,int sale)
     {
+        //if (!owner.Equals(""))
+        //{
+        //    int c = GameManager.Instance.SessionDic[id].Color;
+        //    UIManager.Get<BoardUI>().GetPlayerUI(c).Event((int)(saleAmount * 1.5f));
+        //}
+
         this.owner.Clear();
         this.owner.Append(id);
-        int i = GameManager.Instance.SessionDic[id].Color;
+        int i = ownerColor = GameManager.Instance.SessionDic[id].Color;
         plane.material = BoardManager.Instance.materials[i];
-
         this.saleAmount = sale;
     }
 
@@ -107,6 +126,13 @@ public class AreaNode : BaseNode, IPurchase
         if(owner.Equals(""))
             return $"{saleAmount}의 코인을 지불하여 해당 칸을 구매 할 수 있습니다.";
         else
-            return $"{saleAmount}의 코인을 지불하여 해당 칸을 인수 할 수 있습니다.";
+            return $"{(int)(saleAmount * 1.5f)}의 코인을 지불하여 해당 칸을 인수 할 수 있습니다.";
+    }
+
+    public void ClearArea()
+    {
+        owner.Clear();
+        plane.material = baseMat;
+        saleAmount = 10;
     }
 }

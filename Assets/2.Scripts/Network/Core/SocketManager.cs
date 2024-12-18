@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #pragma warning disable CS4014
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
@@ -38,6 +39,10 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void CloseSocketNotification(GamePacket packet)
     {
         var response = packet.CloseSocketNotification;
+
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+            BoardManager.Instance.ExitPlayer(response.SessionId);
+
         GameManager.Instance.DeleteSessionId(response.SessionId);
     }
     #endregion
@@ -151,7 +156,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void JoinRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.JoinRoomNotification;
-        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, true);
+        UIManager.Get<UIRoom>()?.OnRoomMemberChange(response.Room, true);
     }
 
     public void LeaveRoomResponse(GamePacket gamePacket)
@@ -169,7 +174,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void LeaveRoomNotification(GamePacket gamePacket)
     {
         var response = gamePacket.LeaveRoomNotification;
-        UIManager.Get<UIRoom>().OnRoomMemberChange(response.Room, false);
+        UIManager.Get<UIRoom>()?.OnRoomMemberChange(response.Room, false);
     }
 
     public void GamePrepareResponse(GamePacket packet)
@@ -190,7 +195,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void GamePrepareNotification(GamePacket packet)
     {
         var response = packet.GamePrepareNotification;
-        UIManager.Get<UIRoom>().SetUserReady(response.IsReady, response.User.SessionId, response.State);
+
+        UIManager.Get<UIRoom>()?.SetUserReady(response.IsReady, response.User.SessionId, response.State);
     }
 
     public void GameStartNotification(GamePacket packet)
@@ -207,19 +213,14 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
     
-    public void RoomKickRequest(GamePacket packet)
-    {
-
-    }
-
     public void RoomKickResponse(GamePacket packet)
     {
         var response = packet.RoomKickResponse;
 
         if (response.Success)
         {
-            //해당 플레이어 UI 없애기.
             RoomData roomData = response.Room;
+            UIManager.Get<UIRoom>().OnKickEvent(false, roomData);
         }
         else
         {
@@ -227,10 +228,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         }
     }
 
-    public void roomKickNotification(GamePacket packet)
+    public void RoomKickNotification(GamePacket packet)
     {
         var response = packet.RoomKickNotification;
+
         RoomData roomData = response.Room;
+        bool isKicked = GameManager.Instance.myInfo.SessionId == response.TargetSessionId;
+        UIManager.Get<UIRoom>()?.OnKickEvent(isKicked, roomData);
     }
     #endregion
 }

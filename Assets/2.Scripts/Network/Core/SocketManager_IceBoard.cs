@@ -8,8 +8,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void IceMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.IceMiniGameReadyNotification;
-        Debug.Log(response);
-
+        
         UIManager.Hide<BoardUI>();
         //ReadyPanel 띄우기.
 #pragma warning disable CS4014 
@@ -54,6 +53,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         miniToken.MiniData.nextPos = ToVector3(response.Position);
         miniToken.MiniData.rotY = response.Rotation;
         miniToken.MiniData.CurState = response.State;
+
+        if (miniToken.ServerMoveCoroutine != null)
+        {
+            StopCoroutine(miniToken.ServerMoveCoroutine);
+        }
+
+        miniToken.ServerMoveCoroutine = StartCoroutine(miniToken.ServerMove());
     }
 
     //207 : IcePlayerDamageRequest

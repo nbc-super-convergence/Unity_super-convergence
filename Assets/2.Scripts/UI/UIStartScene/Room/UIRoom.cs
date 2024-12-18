@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class UIRoom : UIBase
 {
     [SerializeField] private List<RoomUserSlot> userSlots;
+    [SerializeField] private Button[] kickUsers;
     
     [Header("Room Info")]
     [SerializeField] private CanvasGroup roomUI;
@@ -30,6 +31,9 @@ public class UIRoom : UIBase
 
     public override void Opened(object[] param)
     {
+        SoundManager.Instance.PlayBGM(BGMType.Room);
+        roomUI.blocksRaycasts = true;
+
         foreach (var slot in userSlots)
         {
             slot.InitUserSlot();
@@ -68,13 +72,18 @@ public class UIRoom : UIBase
         roomData = data;
         roomName.text = data.RoomName;
         
-        /*Dictionary 초기화*/
-        ResetSessionDics(data.Users);
-
         /*버튼 상태 초기화*/
         InitActiveBtn();
 
+        /*Dictionary 초기화*/
+        ResetSessionDics(data.Users);
+
         UpdateUserSlots();
+
+        if (roomData.State == RoomStateType.Prepare)
+        {
+            StartBtn.interactable = true;
+        }
     }
 
     public async void LeaveRoom()
@@ -100,8 +109,8 @@ public class UIRoom : UIBase
     #region Other Room Join / Leave
     public void OnRoomMemberChange(RoomData data, bool isJoin)
     {
-        HashSet<string>  prevSessionIDs = new HashSet<string>(roomData.Users.Select(user => user.SessionId));
-        HashSet<string> curSessionIDs = new HashSet<string>(data.Users.Select(user => user.SessionId));
+        HashSet<string>  prevSessionIDs = new(roomData.Users.Select(user => user.SessionId));
+        HashSet<string> curSessionIDs = new(data.Users.Select(user => user.SessionId));
 
         roomData = data;
 
@@ -126,9 +135,37 @@ public class UIRoom : UIBase
             }
             ResetSessionDics(roomData.Users);
 
-            if (IsHost) InitActiveBtn(); //Host = StartBtn 활성화
-
             UpdateUserSlots(memberIdx);
+        }
+
+        if (IsHost) 
+        { 
+            InitActiveBtn();
+
+            if (roomData.State == RoomStateType.Prepare)
+            {
+                StartBtn.interactable = true;
+            }
+            else
+            {
+                StartBtn.interactable = false;
+            }
+        }
+    }
+
+    public void OnKickEvent(bool isKicked, RoomData data)
+    {
+        if (isKicked)
+        {
+#pragma warning disable CS4014
+            UIManager.Show<UIError>("방장에 의해 추방당했습니다.\n로비로 돌아갑니다...");
+            UIManager.Hide<UIRoom>();
+            UIManager.Show<UILobby>();
+#pragma warning restore CS4014
+        }
+        else
+        {
+            OnRoomMemberChange(data, false); //kick = 나가기 처리.
         }
     }
     #endregion
@@ -163,7 +200,7 @@ public class UIRoom : UIBase
     #region Game Start Event
     public async void GameStart()
     {
-        roomUI.blocksRaycasts = true;
+        roomUI.blocksRaycasts = false;
         await CountDownAsync(3);
         
         UIManager.SceneChangeTask = new();
@@ -221,16 +258,26 @@ public class UIRoom : UIBase
 
         readyBtn.interactable = true;
     }
-    #endregion
 
-    #region 보조 함수
-    public void TrySetTask(bool isSuccess)
+    public void OnKickBtn(int idx)
     {
-        roomTcs.TrySetResult(isSuccess);
+        if (!(1 <= idx && idx <= 3))
+        {
+            return;
+        }
+
+#pragma warning disable CS4014
+        UIManager.Show<UIKick>(idx, userSlots[idx].userData.Nickname);
+#pragma warning restore CS4014
     }
 
     private void InitActiveBtn()
     {
+        foreach (var item in kickUsers)
+        {
+            item.interactable = false;
+        }
+
         if (IsHost)
         {
             StartBtn.gameObject.SetActive(true);
@@ -251,6 +298,13 @@ public class UIRoom : UIBase
         readyBtn.gameObject.SetActive(!isReady);
         cancelReadyBtn.gameObject.SetActive(isReady);
     }
+    #endregion
+
+    #region 보조 함수
+    public void TrySetTask(bool isSuccess)
+    {
+        roomTcs.TrySetResult(isSuccess);
+    }
 
     private void ResetSessionDics(RepeatedField<UserData> Users)
     {
@@ -265,6 +319,14 @@ public class UIRoom : UIBase
                 GameManager.Instance.SetMyInfo(GameManager.Instance.SessionDic[GameManager.Instance.myInfo.SessionId]);
             }
             num++;
+        }
+
+        if (IsHost)
+        {
+            for (int i = 0; i < Users.Count - 1; i++)
+            {
+                kickUsers[i].interactable = true;
+            }
         }
     }
 
@@ -295,6 +357,20 @@ public class UIRoom : UIBase
                 }
             }
         }
+    }
+
+    public void KickUser(int idx)
+    {
+        GamePacket gamePacket = new()
+        {
+            RoomKickRequest = new()
+            {
+                SessionId = GameManager.Instance.myInfo.SessionId,
+                TargetSessionId = userSlots[idx].userData.SessionId,
+            }
+        };
+        roomTcs = new();
+        SocketManager.Instance.OnSend(gamePacket);
     }
 
     private async Task<bool> ReadyAsync(bool isReady)

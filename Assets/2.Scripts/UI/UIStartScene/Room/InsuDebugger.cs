@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static S2C_IceMiniGameReadyNotification.Types;
 
 #if UNITY_EDITOR
 public class InsuDebugger : Singleton<InsuDebugger>
@@ -14,12 +15,20 @@ public class InsuDebugger : Singleton<InsuDebugger>
 
     private void FixedUpdate()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
-        { OpenDance(); }
+        if (Input.GetKeyDown(KeyCode.Keypad0) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            Debug.Log("디버그 시작");
+            StartCoroutine(IceSkipper());
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad1) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
+        {
+            Debug.Log("대기방 시작");
+            UIManager.Get<UIRoom>().GameStart();
+        }
         if (Input.GetKeyDown(KeyCode.Alpha9) && Input.GetKey(KeyCode.LeftControl) && Input.GetKey(KeyCode.LeftAlt))
         {
             Debug.Log("디버그 시작");
-            StartCoroutine(CourtshipDanceSkipper());   
+            StartCoroutine(CourtshipDanceSkipper());
         }
     }
 
@@ -141,5 +150,63 @@ public class InsuDebugger : Singleton<InsuDebugger>
         }
     }
 
+    private IEnumerator IceSkipper()
+    {
+        while (true)
+        {
+
+            if (Input.GetKey(KeyCode.CapsLock) && Input.GetKeyDown(KeyCode.C))
+            {
+                string[] Ids = new string[2];
+                int num = 0;
+                foreach (var item in GameManager.Instance.SessionDic)
+                {
+                    Ids[num] = item.Key;
+                    num++;
+                }
+
+                GamePacket packet = new()
+                {
+                    IceMiniGameReadyNotification = new()
+                    {
+                        Players =
+                        {                            
+                            new startPlayers
+                            {
+                                SessionId = Ids[0],
+                                Position = new Vector { X = -4, Y = 0.2f, Z = 4 },
+                                Rotation = 135
+                            },
+                            new startPlayers
+                            {
+                                SessionId = Ids[1],
+                                Position = new Vector { X = 4, Y = 0.2f, Z = 4 },
+                                Rotation = -135
+                            },                            
+                        }
+                    }
+                };
+
+                SocketManager.Instance.IceMiniGameReadyNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+
+        while (true)
+        {
+            if (Input.GetKey(KeyCode.CapsLock) && Input.GetKeyDown(KeyCode.V))
+            {
+                GamePacket packet = new()
+                {
+                    IceMiniGameStartNotification = new()
+                };
+                SocketManager.Instance.IceMiniGameStartNotification(packet);
+                break;
+            }
+            yield return null;
+        }
+    }
 }
+
 #endif

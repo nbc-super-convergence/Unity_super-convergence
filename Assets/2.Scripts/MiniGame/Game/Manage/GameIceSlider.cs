@@ -28,13 +28,19 @@ public class GameIceSlider : IGame
     {
         ingameUI = await UIManager.Show<UIMinigameIce>(gameData);
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        foreach (var miniToken in MinigameManager.Instance.miniTokens)
+        {
+            if (miniToken.gameObject.activeSelf)
+                miniToken.Controller.ToggleFreezePos(false); 
+        }
     }
     #endregion
 
     #region 초기화
     private void SetBGM()
     {
-
+        SoundManager.Instance.PlayBGM(BGMType.Ice);
     }
 
     private void ResetPlayers(RepeatedField<S2C_IceMiniGameReadyNotification.Types.startPlayers> players)
@@ -42,12 +48,15 @@ public class GameIceSlider : IGame
         foreach (var p in players)
         {//미니 토큰 위치 초기화
             MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            
             miniToken.EnableMiniToken();
             miniToken.transform.localPosition = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.rotY = p.Rotation;
 
+            miniToken.MiniData.CurState = State.Idle;
             miniToken.MiniData.PlayerSpeed = 15f;
+            miniToken.Controller.ToggleFreezePos(true);
         }
     }
     #endregion
@@ -57,11 +66,15 @@ public class GameIceSlider : IGame
     {
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
         gameData.playerHps[idx] -= dmg;
-        ingameUI.ChangeHPUI();
+        ingameUI?.ChangeHPUI();
     }
 
     public void PlayerDeath(string sessionId)
     {
+        int idx = GameManager.Instance.SessionDic[sessionId].Color;
+        gameData.playerHps[idx] = 0;
+        ingameUI.ChangeHPUI();
+
         MiniToken token = MinigameManager.Instance.GetMiniToken(sessionId);
         if (sessionId == MinigameManager.Instance.mySessonId)
         {
@@ -70,11 +83,11 @@ public class GameIceSlider : IGame
         token.DisableMiniToken();
     }
 
-    public void MapChangeEvent()
+    public async void MapChangeEvent()
     {
         gameData.phase++; //맵 변경 단계
-        MinigameManager.Instance.GetMap<MapGameIceSlider>()
-            .MapDecreaseEvent(gameData.phase);
+        var map = await MinigameManager.Instance.GetMap<MapGameIceSlider>();
+        map.MapDecreaseEvent(gameData.phase);
     }
     #endregion
 

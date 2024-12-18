@@ -4,11 +4,11 @@ using UnityEngine;
 [Serializable]
 public class MiniTokenData
 {
-    private readonly Animator animator;
+    [SerializeField] private Animator animator;
 
     #region common : 모든 게임에서 사용
     public int tokenColor;
-    private State curState;
+    private State curState = 0;
     public State CurState
     {
         get => curState;

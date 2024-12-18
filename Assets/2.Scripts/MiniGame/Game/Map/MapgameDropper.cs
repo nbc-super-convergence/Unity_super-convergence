@@ -18,6 +18,8 @@ public class MapGameDropper : MapBase
     private GameDropperData gameData;
     private int prevPhase;
 
+    private Tween camaeraTween;
+
     private void Start()
     {
         gameData = MinigameManager.Instance.GetMiniGame<GameDropper>().gameData;
@@ -26,7 +28,8 @@ public class MapGameDropper : MapBase
 
     private void OnDestroy()
     {
-        UIManager.Get<UIMinigameDropper>().KillLightDotween();
+        UIManager.Get<UIMinigameDropper>()?.KillDotween();
+        camaeraTween.Kill();
     }
 
     private IEnumerator StartGame()
@@ -61,7 +64,7 @@ public class MapGameDropper : MapBase
         Vector3 curPos = gameCamera.transform.position;
         Vector3 nextPos = new (curPos.x, curPos.y - 10, curPos.z);
 
-        gameCamera.transform.DOMove(nextPos, cameraMoveTime)
+        camaeraTween = gameCamera.transform.DOMove(nextPos, cameraMoveTime)
        .SetEase(Ease.InOutBack);
 
         yield return new WaitForSeconds(cameraMoveTime);

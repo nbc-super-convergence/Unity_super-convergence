@@ -1,16 +1,31 @@
 
+using System.Collections;
+using UnityEngine;
+
 public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 {
     /* 401 */
     public void DanceMiniGameReadyNotification(GamePacket packet)
     {
         var response = packet.DanceMiniGameReadyNotification;
-        UIManager.Hide<BoardUI>();
-        MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
-        MinigameManager.Instance.boardCamera.SetActive(false);
+        UIManager.SceneChangeTask = new();
+        UIManager.Instance.LoadingScreen.OnLoadingEvent(UIManager.SceneChangeTask);
+        StartCoroutine(CouroutineGameReady());
+
+        IEnumerator CouroutineGameReady()
+        {
+            UIManager.Hide<BoardUI>();
+            MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
+            var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
+            yield return new WaitUntil(() => game.isInitialized);
+            
+            MinigameManager.Instance.boardCamera.SetActive(false);
 #pragma warning disable CS4014
-        UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
+            UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
+            yield return new WaitForSeconds(1f);
 #pragma warning restore CS4014
+            UIManager.SceneChangeTask.SetResult(true);
+        }
     }
 
     /* 402 : DanceReadyRequest
@@ -42,8 +57,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceTableNotification(GamePacket packet)
     {
         var response = packet.DanceTableNotification;
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().SetTeamPoolDic(response.DancePools);
-        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().TrySetTask(response.DancePools != null);
+        var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
+        game.SetTeamPoolDic(response.DancePools);
     }
 
     /* 407 : DanceKeyPressRequest
@@ -78,15 +93,19 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceGameOverNotification(GamePacket packet)
     {
         var response = packet.DanceGameOverNotification;
+        MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().isGameOver = true;
         MinigameManager.Instance.GetMyToken().InputHandler.DisableSimpleInput();
         UIManager.Get<UICourtshipDance>().GameOver(response);
     }
 
     /* 411 */
-    public void DanceCloseSocketNotification(GamePacket packet)
+    public async void DanceCloseSocketNotification(GamePacket packet)
     {
+        if (MinigameManager.Instance.GetMiniGame<GameCourtshipDance>().isGameOver == true) return;
         var response = packet.DanceCloseSocketNotification;
-        MinigameManager.Instance.GetMap<MapGameCourtshipDance>().DanceCloseSocketNotification(
+
+        MapGameCourtshipDance map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        map.DanceCloseSocketNotification(
             response.DisconnectedSessionId, response.ReplacementSessionId);
     }
 
