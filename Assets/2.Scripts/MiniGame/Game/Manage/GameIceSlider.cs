@@ -54,6 +54,7 @@ public class GameIceSlider : IGame
             miniToken.MiniData.nextPos = SocketManager.ToVector3(p.Position);
             miniToken.MiniData.rotY = p.Rotation;
 
+            miniToken.MiniData.CurState = State.Idle;
             miniToken.MiniData.PlayerSpeed = 15f;
             miniToken.Controller.ToggleFreezePos(true);
         }
