@@ -250,6 +250,7 @@ MonoBehaviour:
   - {fileID: 618492240407348854}
   - {fileID: 1456507541303351940}
   - {fileID: 8519787329038370472}
+  PlayerDarts: {fileID: 3282114998953417439}
 --- !u!1 &4243239605345812087
 GameObject:
   m_ObjectHideFlags: 0
@@ -1260,7 +1261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMove: 1
-  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!4 &4241309454975411409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4041765378854372, guid: d31d5e07362494e468582cf3e3d08eaf,
