@@ -118,6 +118,9 @@ public class MiniToken : MonoBehaviour
     private IEnumerator SendClientMove()
     {
         Vector3 curPos = transform.localPosition, lastPos = transform.localPosition;
+
+        if (MiniData.CurState == State.Die) yield break;
+
         while (true)
         {
             curPos = transform.localPosition;
