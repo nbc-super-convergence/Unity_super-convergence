@@ -1,4 +1,3 @@
-using Sirenix.OdinInspector.Editor;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,13 +20,13 @@ public class UIMinigameDart : UIBase
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
 
-    private string nickname = "";
+    private string nickname;
 
     private void Start()
     {
         //forcePower 초기
         SetForceLimit(1.5f, 3f);
-        
+
         for (int i = 0; i < stateTexts.Length; i++)
         {
             stateTexts[i].color = playerColor[i];
@@ -64,6 +63,8 @@ public class UIMinigameDart : UIBase
     }
     public void SetReady(int idx)
     {
+        resultImage[idx].color = Color.gray;
+        stateTexts[idx].color = playerColor[idx];
         ApplyText(idx, "준비");
     }
     public void SetMyTurn(int idx)
@@ -86,7 +87,8 @@ public class UIMinigameDart : UIBase
 
     private void ApplyText(int idx, string txt)
     {
-        stateTexts[idx].text = $"{nickname} : {txt}";
+        stateTexts[idx].text = $"{idx+1}P : {txt}";
+        Debug.Log(stateTexts[idx].text);
     }
     #endregion
 
