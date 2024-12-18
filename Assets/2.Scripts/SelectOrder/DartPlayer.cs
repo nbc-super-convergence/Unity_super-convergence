@@ -270,6 +270,19 @@ public class DartPlayer : MonoBehaviour
 
     }
 
+    public async void ResetDart()
+    {
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        transform.SetParent(map.PlayerDarts);
+        transform.localPosition = Vector3.zero;
+
+        rgdby.useGravity = false;
+        rgdby.velocity = Vector3.zero;
+        CurAim = Vector3.zero;
+        CurForce = 2f;
+        gameObject.SetActive(false);
+    }
+
     #region 서버로 전송
     /// <summary>
     /// 다트 조준 전송
