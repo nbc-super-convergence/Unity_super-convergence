@@ -22,6 +22,7 @@ public class MiniToken : MonoBehaviour
     private bool isEnabled = false;
     public bool isStun { get; private set; }
     Coroutine PauseInput = null;
+    Coroutine SendMoveCoroutine = null;
 
     #region Unity Messages
     private void Awake()
@@ -110,7 +111,7 @@ public class MiniToken : MonoBehaviour
         if (IsClient)
         {//방어코드
             InputHandler.EnablePlayerInput();
-            StartCoroutine(SendClientMove());
+            SendMoveCoroutine = StartCoroutine(SendClientMove());
         }
     }
 
@@ -189,6 +190,12 @@ public class MiniToken : MonoBehaviour
 
     public void DisableMyToken()
     {
+        if (SendMoveCoroutine != null)
+        {
+            StopCoroutine(SendMoveCoroutine);
+            SendMoveCoroutine = null;
+        }
+
         InputHandler.DisablePlayerInput();
     }
 
