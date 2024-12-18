@@ -65,7 +65,7 @@ public class GameIceSlider : IGame
     {
         int idx = GameManager.Instance.SessionDic[sessionId].Color;
         gameData.playerHps[idx] -= dmg;
-        ingameUI = UIManager.Get<UIMinigameIce>();
+        ingameUI?.ChangeHPUI();
     }
 
     public void PlayerDeath(string sessionId)
