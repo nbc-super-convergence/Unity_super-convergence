@@ -99,8 +99,13 @@ public class UIMinigameResult : UIBase
 
         await UIManager.Show<BoardUI>();
 
-        BoardManager.Instance.SetMiniGamePlaying(false);
-        BoardManager.Instance.ReadyCheck();
+        string id = BoardManager.Instance.Curplayer.data.userInfo.SessionId;
+
+        if (id.Equals(GameManager.Instance.myInfo.SessionId))
+            BoardManager.Instance.TurnEnd();
+
+        //BoardManager.Instance.SetMiniGamePlaying(false);
+        //BoardManager.Instance.ReadyCheck();
     }
 
     private IEnumerator ReturnTxt()

@@ -13,7 +13,8 @@ public class MiniGameNode : BaseNode
             return;
         }
 
-        StartCoroutine(BoardManager.Instance.StartMinigame());
+        BoardManager.Instance.StartMinigame();
+        //StartCoroutine(BoardManager.Instance.StartMinigame());
         //BoardManager.Instance.TurnEnd();
 
         //GamePacket packet = new();
