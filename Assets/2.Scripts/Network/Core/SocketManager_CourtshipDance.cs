@@ -8,13 +8,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DanceMiniGameReadyNotification(GamePacket packet)
     {
         var response = packet.DanceMiniGameReadyNotification;
+        UIManager.SceneChangeTask = new();
+        UIManager.Instance.LoadingScreen.OnLoadingEvent(UIManager.SceneChangeTask);
         StartCoroutine(CouroutineGameReady());
 
         IEnumerator CouroutineGameReady()
         {
             UIManager.Hide<BoardUI>();
-            UIManager.SceneChangeTask = new();
-            UIManager.Instance.LoadingScreen.OnLoadingEvent(UIManager.SceneChangeTask);
             MinigameManager.Instance.SetMiniGame<GameCourtshipDance>(response);
             var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
             yield return new WaitUntil(() => game.isInitialized);
@@ -22,6 +22,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             MinigameManager.Instance.boardCamera.SetActive(false);
 #pragma warning disable CS4014
             UIManager.Show<UIMinigameReady>(eGameType.GameCourtshipDance);
+            yield return new WaitForSeconds(1f);
 #pragma warning restore CS4014
             UIManager.SceneChangeTask.SetResult(true);
         }
