@@ -54,9 +54,9 @@ public class GameDartPanel : MonoBehaviour
         }
     }
 
-    public void SetClient(string sessionId)
+    public void SetClient(int index)
     {
-        imClient = MinigameManager.Instance.mySessonId.Equals(sessionId);
+        imClient = GameManager.Instance.myInfo.Color.Equals(index);
     }
 
     private void ApplyMove()

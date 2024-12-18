@@ -33,7 +33,7 @@ public class GameDart : IGame
 
     private int playerCount;    //현재 플레이어 참여 인원
 
-    List<string> playerInfo = new List<string>();   //플레이어의 닉네임들
+    private List<string> playerInfo = new List<string>();   //플레이어의 닉네임들
 
     /// <summary>
     /// 다음 차례
@@ -46,6 +46,7 @@ public class GameDart : IGame
         if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
             //Debug.Log("다음 사람");
+            DartPannel.SetClient(nowPlayer);
             DartOrder[nowPlayer].gameObject.SetActive(true);
             UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
@@ -64,6 +65,8 @@ public class GameDart : IGame
     {
         curRound++;
         UIManager.Get<UIMinigameDart>().SetRound(curRound);
+        nowPlayer = 0;
+        DartOrder[nowPlayer].gameObject.SetActive(true);
 
         for (int i = 0; i < playerCount; i++)
             UIManager.Get<UIMinigameDart>().SetReady(i);
