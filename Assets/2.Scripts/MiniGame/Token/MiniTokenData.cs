@@ -8,7 +8,7 @@ public class MiniTokenData
 
     #region common : 모든 게임에서 사용
     public int tokenColor;
-    private State curState;
+    private State curState = 0;
     public State CurState
     {
         get => curState;

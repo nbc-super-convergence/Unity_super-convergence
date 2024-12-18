@@ -23,10 +23,7 @@ public static class AnimState
         switch (state)
         {
             case State.Idle:
-                if (!currentState.IsName("Idle"))
-                {
-                    player.SetTrigger(IdleHash);
-                }
+                player.SetTrigger(IdleHash);
                 break;
             case State.Move:
                 player.SetTrigger(MoveHash);
