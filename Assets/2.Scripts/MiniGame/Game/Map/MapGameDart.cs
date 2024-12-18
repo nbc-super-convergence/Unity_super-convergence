@@ -31,6 +31,7 @@ public class MapGameDart : MapBase
     public void BeginSelectOrder()
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
+        UIManager.Get<UIMinigameDart>().SetRound(1);
     }
 
     public void MovePanel()

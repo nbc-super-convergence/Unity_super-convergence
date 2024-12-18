@@ -63,6 +63,7 @@ public class GameDart : IGame
     private void NextRound()
     {
         curRound++;
+        UIManager.Get<UIMinigameDart>().SetRound(curRound);
 
         for (int i = 0; i < playerCount; i++)
             UIManager.Get<UIMinigameDart>().SetReady(i);
