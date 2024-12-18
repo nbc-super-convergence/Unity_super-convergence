@@ -73,7 +73,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         //panel.MoveEvent(response.Location);
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         GameDartPanel panel = map.DartPanel;
-        if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
+        if (!MinigameManager.Instance.mySessonId.Equals(response.SessionId))
         {
             panel.MoveEvent(response.Location);
         }
@@ -86,7 +86,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         string sessionId = response.SessionId;
         int userIdx = GameManager.Instance.SessionDic[sessionId].Color;
 
-        Debug.Log($"{sessionId} {userIdx} {response.Angle}");
+        //Debug.Log($"{sessionId} {userIdx} {response.Angle}");
 
         if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
         {
