@@ -88,6 +88,15 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.IceGameOverNotification;
 
+        foreach (var token in MinigameManager.Instance.miniTokens)
+        {
+            if (token.gameObject.activeInHierarchy)
+            {
+                token.MiniData.nextPos = token.transform.localPosition;
+                token.StopMove();
+            }
+        }
+
         /*필요 데이터 파싱*/
         List<(int Rank, string SessionId)> rankings = new();
         foreach (var r in response.Ranks)
