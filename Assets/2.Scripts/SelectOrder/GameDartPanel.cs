@@ -11,7 +11,7 @@ public class GameDartPanel : MonoBehaviour
     private float pannelSpeed = 0.3f;   //다트판 이동 속도
     private bool swapDirection = false;
     public bool isMove = true;  //움직이고 있는지
-    private Vector3 moveDirection = Vector3.zero;
+    private Vector3 moveDirection = Vector3.left;
     private bool imClient;  //내 차례면 이 클라이언트에서 움직이게
 
     private void Awake()
@@ -24,19 +24,11 @@ public class GameDartPanel : MonoBehaviour
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
-    public void MoveEvent(Vector pos)
+    private void FixedUpdate()
     {
-        transform.localPosition = SocketManager.ToVector3(pos);
-    }
-
-    /// <summary>
-    /// 실시간으로 판넬 움직이기
-    /// </summary>
-    public IEnumerator MoveCoroutine()
-    {
-        while(isMove)
+        if (isMove)
         {
-            if(imClient)
+            if (imClient)
             {
                 if (transform.localPosition.x < -xPositionLimit)
                     moveDirection = Vector3.right;
@@ -44,14 +36,14 @@ public class GameDartPanel : MonoBehaviour
                     moveDirection = Vector3.left;
 
                 ApplyMove();
-                if (imClient) SendServer();
-                yield return new WaitForSeconds(0.1f);
-            }
-            else
-            {
-                //StopCoroutine(MoveCoroutine());
+                SendServer();
             }
         }
+    }
+
+    public void MoveEvent(Vector pos)
+    {
+        transform.localPosition = SocketManager.ToVector3(pos);
     }
 
     public void SetClient(int index)

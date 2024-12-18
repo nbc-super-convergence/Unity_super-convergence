@@ -158,6 +158,7 @@ public class GameDart : IGame
 
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         map.BeginSelectOrder();
+        map.DartPanel.SetClient(0);
     }
     public void DisableUI()
     {
