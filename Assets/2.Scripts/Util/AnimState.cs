@@ -5,7 +5,6 @@ public static class AnimState
     #region Animation Hashes
     private static readonly int IdleHash = Animator.StringToHash("Idle");
     private static readonly int MoveHash = Animator.StringToHash("Move");
-    private static readonly int JumpHash = Animator.StringToHash("Jump");
     private static readonly int DieHash = Animator.StringToHash("Die");
 
     private static readonly int DanceIdleHash = Animator.StringToHash("DanceIdle");
@@ -18,10 +17,16 @@ public static class AnimState
 
     public static void ChangePlayerAnimState(Animator player, State state)
     {
-        switch(state)
+        if (player == null) return;
+        AnimatorStateInfo currentState = player.GetCurrentAnimatorStateInfo(0);
+
+        switch (state)
         {
             case State.Idle:
-                player.SetTrigger(IdleHash);
+                if (!currentState.IsName("Idle"))
+                {
+                    player.SetTrigger(IdleHash);
+                }
                 break;
             case State.Move:
                 player.SetTrigger(MoveHash);
@@ -29,8 +34,6 @@ public static class AnimState
             case State.Die:
                 player.SetTrigger(DieHash);
                 break;
-
-            // 서버처리가 먼저필요?  // Protocol.cs에 임시로 직접 입력함. CurState는 서버에서 받음.
             case State.DanceWait:
                 player.SetTrigger(DanceIdleHash);
                 break;
