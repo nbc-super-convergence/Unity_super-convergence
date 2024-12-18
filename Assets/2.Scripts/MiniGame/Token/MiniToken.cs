@@ -240,15 +240,4 @@ public class MiniToken : MonoBehaviour
         transform.localPosition = MiniData.nextPos;
         ServerMoveCoroutine = null;
     }
-
-    public void StopMove()
-    {
-        if (ServerMoveCoroutine != null)
-        {
-            StopCoroutine(ServerMoveCoroutine);
-            ServerMoveCoroutine = null;
-        }
-        
-        rb.velocity = Vector3.zero;
-    }
 }
