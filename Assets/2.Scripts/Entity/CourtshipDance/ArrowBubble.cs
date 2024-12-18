@@ -9,8 +9,13 @@ public class ArrowBubble : ObjectPoolBase
     [SerializeField] private Image background;
     [SerializeField] private RectTransform arrow;
 
-    // Rotation값 90이면 왼쪽, 270이면 오른쪽    
-        
+    // Rotation값 90이면 왼쪽, 270이면 오른쪽
+    
+    public void SetScale()
+    {
+        transform.localScale = Vector3.one;
+    }
+
     public void SetArrowBubble(Color backColor, float dir)
     {
         this.background.color = backColor;

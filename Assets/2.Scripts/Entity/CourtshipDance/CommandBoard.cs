@@ -130,6 +130,7 @@ public class CommandBoard : MonoBehaviour
             bubble.SetArrowBubble(info);
             bubble.transform.SetParent(background.transform);
             bubble.transform.SetAsLastSibling();
+            bubble.SetScale();
             queue.Enqueue(bubble);
         }
         numOfbubbles = queue.Count;
