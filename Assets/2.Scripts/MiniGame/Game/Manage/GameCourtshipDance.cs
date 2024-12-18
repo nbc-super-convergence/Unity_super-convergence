@@ -12,7 +12,7 @@ public class GameCourtshipDance : IGame
 
     private CommandGenerator commandGenerator;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
-    public List<PlayerInfo> players = new();   
+    public List<PlayerInfo> players = new();
     private TaskCompletionSource<bool> sourceTcs;
 
     public bool isTeamGame = false;
@@ -105,7 +105,7 @@ public class GameCourtshipDance : IGame
             if (!isSuccess)
             {
                 UnityEngine.Debug.LogAssertion("Timeout : DanceTableNotification ");
-                // TODO:: 어플 Quit?
+                // TODO :: 끄는거 말고 어떤 처리를 하는게 더 좋을지...?
 #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;
 #else
@@ -168,7 +168,10 @@ public class GameCourtshipDance : IGame
         foreach (var player in players)
         {
             var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
-            map.TokenReset(token);
+            if(token != null)
+            {
+                map.TokenReset(token);
+            }
         }
     }
 
