@@ -62,7 +62,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
     public Dice dice { get; private set; }
-    private bool isMiniPlaying;
+    public bool isMiniPlaying;
 
 #pragma warning disable
     public CinemachineVirtualCamera camera;
@@ -305,6 +305,7 @@ public class BoardManager : Singleton<BoardManager>
     public void StartMinigame()
     {
         //isMiniPlaying = true;
+        isMiniPlaying = true;
 
         GamePacket packet = new();
 
@@ -342,11 +343,11 @@ public class BoardManager : Singleton<BoardManager>
         Destroy(p.gameObject);
     }
 
-    public void ReadyCheck()
-    {
-        if(!isMiniPlaying) 
-            StartCoroutine(Curplayer.Ready());
-    }
+    //public void ReadyCheck()
+    //{
+    //    if(!isMiniPlaying) 
+    //        StartCoroutine(Curplayer.Ready());
+    //}
 
     //public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
 
