@@ -29,9 +29,12 @@ public class GameDart : IGame
     }   //빗나간 랭크
 
     private int curRound = 1;   //현재 라운드
-    private int maxRound = 9;   //최대 라운드
+    private int maxRound = 3;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
+
+    private float[] scores = new float[4];
+    private float[] result = new float[4];
 
     /// <summary>
     /// 다음 차례
@@ -61,25 +64,32 @@ public class GameDart : IGame
     /// </summary>
     private void NextRound()
     {
-        curRound++;
-        UIManager.Get<UIMinigameDart>().SetRound(curRound);
-
         //다트 초기
         for (int i = 0; i < playerCount; i++)
         {
             UIManager.Get<UIMinigameDart>().SetReady(i);
             DartOrder[i].ResetDart();
+            scores[i] += DartOrder[i].MyDistance;
         }
         nowPlayer = 0;
         DartOrder[nowPlayer].gameObject.SetActive(true);
+        UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
 
-        if(curRound > maxRound)
+        if (curRound > maxRound)
         {
             DartPannel.isMove = false;  //판은 멈춰라
 
+            for (int i = 0; i < scores.Length; i++)
+            {
+                result[i] = scores[i] / maxRound;
+            }
             //결과
             //GameOverNotification
-
+        }
+        else
+        {
+            curRound++;
+            UIManager.Get<UIMinigameDart>().SetRound(curRound);
         }
     }
 
@@ -140,6 +150,9 @@ public class GameDart : IGame
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         DartOrder = map.DartOrder;
         DartPannel = map.DartPanel;
+        for (int i = 0; i < scores.Length; i++)
+            scores[i] = 0;
+        UIManager.Get<UIMinigameDart>().HideForcePower();
 
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
@@ -159,6 +172,7 @@ public class GameDart : IGame
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         map.BeginSelectOrder();
         map.DartPanel.SetClient(0);
+        map.MovePanel();
     }
     public void DisableUI()
     {
