@@ -84,7 +84,7 @@ public class UIMinigameDart : UIBase
     private void ApplyText(int idx, string txt)
     {
         stateTexts[idx].text = $"{idx+1}P : {txt}";
-        Debug.Log(stateTexts[idx].text);
+        //Debug.Log(stateTexts[idx].text);
     }
     #endregion
 
