@@ -41,14 +41,14 @@ public class GameDart : IGame
     /// </summary>
     public void NextDart()
     {
+        DartOrder[nowPlayer].ChangeClient();
         UIManager.Get<UIMinigameDart>().SetFinish(nowPlayer);
         nowPlayer++;
 
         if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
             //Debug.Log("다음 사람");
-            DartPannel.SetClient(nowPlayer);
-            DartOrder[nowPlayer].gameObject.SetActive(true);
+            EnableDart();
             UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
         else
@@ -59,22 +59,18 @@ public class GameDart : IGame
         }
     }
 
+    private void EnableDart()
+    {
+        DartPannel.SetClient(nowPlayer);
+        DartOrder[nowPlayer].gameObject.SetActive(true);
+        DartOrder[nowPlayer].ChangeClient();
+    }
+
     /// <summary>
     /// 다음 라운드
     /// </summary>
     private void NextRound()
     {
-        //다트 초기
-        for (int i = 0; i < playerCount; i++)
-        {
-            UIManager.Get<UIMinigameDart>().SetReady(i);
-            DartOrder[i].ResetDart();
-            scores[i] += DartOrder[i].MyDistance;
-        }
-        nowPlayer = 0;
-        DartOrder[nowPlayer].gameObject.SetActive(true);
-        UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
-
         if (curRound > maxRound)
         {
             DartPannel.isMove = false;  //판은 멈춰라
@@ -88,6 +84,17 @@ public class GameDart : IGame
         }
         else
         {
+            //다트 초기
+            for (int i = 0; i < playerCount; i++)
+            {
+                UIManager.Get<UIMinigameDart>().SetReady(i);
+                DartOrder[i].ResetDart();
+                scores[i] += DartOrder[i].MyDistance;
+            }
+            nowPlayer = 0;
+            EnableDart();
+            UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
+
             curRound++;
             UIManager.Get<UIMinigameDart>().SetRound(curRound);
         }
@@ -152,7 +159,6 @@ public class GameDart : IGame
         DartPannel = map.DartPanel;
         for (int i = 0; i < scores.Length; i++)
             scores[i] = 0;
-        UIManager.Get<UIMinigameDart>().HideForcePower();
 
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
@@ -173,6 +179,7 @@ public class GameDart : IGame
         map.BeginSelectOrder();
         map.DartPanel.SetClient(0);
         map.MovePanel();
+        ingameUI.HideForcePower();
     }
     public void DisableUI()
     {

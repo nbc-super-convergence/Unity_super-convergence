@@ -94,15 +94,16 @@ public class DartPlayer : MonoBehaviour
         SetAimRange(-20f, 20f);
         SetForceRange(1.5f, 3f);
 
-        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
         //Debug.Log($"{gameObject.name}, {IsClient}");
 
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
     }
 
-    private void OnEnable()
+    public void ChangeClient()
     {
+        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
+
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
@@ -130,13 +131,13 @@ public class DartPlayer : MonoBehaviour
             orderEvent.OnShootEvent -= PressKey;
             UIManager.Get<UIMinigameDart>().HideForcePower();
         }
+        MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //무효처리
         MissDart();
-
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
     #endregion
