@@ -28,7 +28,7 @@ public class GameDart : IGame
         }
     }   //빗나간 랭크
 
-    private int curRound = 0;   //현재 라운드
+    private int curRound = 1;   //현재 라운드
     private int maxRound = 9;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
@@ -63,7 +63,6 @@ public class GameDart : IGame
     {
         curRound++;
         UIManager.Get<UIMinigameDart>().SetRound(curRound);
-        nowPlayer = 0;
 
         //다트 초기
         for (int i = 0; i < playerCount; i++)
@@ -71,7 +70,7 @@ public class GameDart : IGame
             UIManager.Get<UIMinigameDart>().SetRound(i);
             DartOrder[i].ResetDart();
         }
-
+        nowPlayer = 0;
         DartOrder[nowPlayer].gameObject.SetActive(true);
 
         if(curRound > maxRound)
@@ -80,6 +79,7 @@ public class GameDart : IGame
 
             //결과
             //GameOverNotification
+
         }
     }
 
