@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class MapGameCourtshipDance : MapBase
 {
+    [Header("Game Objects")]
     public List<Transform> spawnPosition;
     [SerializeField] private GameObject indicator;
-    public Transform mySpawnPos;
+
+    // -- Cached References -- //
+    private Dictionary<int, Transform> prevTranform = new();
+
+    // -- Animator Layer -- //
     private int danceLayerIndex = -1;
     private int baseLayerIndex = 0;
-    private Dictionary<int, Transform> prevTranform = new();
 
 
     public void TokenInit(MiniToken token)
@@ -49,6 +53,8 @@ public class MapGameCourtshipDance : MapBase
     {
         indicator.transform.position = targetPosition;
         indicator.gameObject.SetActive(true);
+        
+        // 주석 : 인디케이터가 첫 입력 후 사라지는 코드
         //yield return new WaitUntil(() => UIManager.Get<UICourtshipDance>().myBoard.isFirstInput);
         //indicator.gameObject.SetActive(false);
     }

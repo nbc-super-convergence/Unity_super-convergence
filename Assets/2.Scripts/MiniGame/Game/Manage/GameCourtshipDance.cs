@@ -7,23 +7,26 @@ public class GameCourtshipDance : IGame
 {
     public bool isInitialized = false;
 
+    // -- Cached References -- //
     public UICourtshipDance uiCourtship;
     public CourtshipDanceData gameData;
-
     private CommandGenerator commandGenerator;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     public List<PlayerInfo> players = new();
+    public Dictionary<int, List<PlayerInfo>> teamDic;
+
     private TaskCompletionSource<bool> sourceTcs;
 
+    // -- State Flags -- //
     public bool isTeamGame = false;
     public bool isBoardReady = false;
     public bool isGameOver = false;
-    public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
     {
     }
 
+    #region IGame
     public async void Init(params object[] param)
     {
         await Initialize(param);
@@ -83,7 +86,7 @@ public class GameCourtshipDance : IGame
             if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
             {
                 commandGenerator = new CommandGenerator();
-                commandGenerator.InitTeamGame(teamDic);
+                commandGenerator.InitGame(teamDic);
                 teamPoolDic = commandGenerator.GetTeamPoolDic();
             }
 
@@ -124,6 +127,29 @@ public class GameCourtshipDance : IGame
         }
     }
 
+    public async void GameStart(params object[] param)
+    {
+        if (param[0] is long startTime)
+        {
+            Action action = () =>
+            {
+                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
+                uiCourtship.ShowTimer();
+            };
+            uiCourtship.StartTimer();
+            var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+            map.ShowIndicator();
+            await UIManager.Show<UICountdown>(startTime, 3, action);
+        }
+    }
+
+    public void DisableUI()
+    {
+        UIManager.Hide<UICourtshipDance>();
+    }
+    #endregion
+
+    #region 초기화
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
         try
@@ -146,29 +172,48 @@ public class GameCourtshipDance : IGame
         }
     }
 
-    public async void GameStart(params object[] param)
+    private async void ResetPlayers(List<PlayerInfo> players)
     {
-        if (param[0] is long startTime)
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        int num = 0;
+        int[] teamSpawnCount = new int[2] { 0, 0 };
+
+        foreach (var p in players)
         {
-            Action action = () =>
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.EnableMiniToken();
+            map.TokenInit(miniToken);
+
+            if (!isTeamGame)
             {
-                MinigameManager.Instance.GetMyToken().EnableInputSystem(eGameType.GameCourtshipDance);
-                uiCourtship.ShowTimer();
-            };
-            uiCourtship.StartTimer();
-            var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-            map.ShowIndicator();
-            await UIManager.Show<UICountdown>(startTime, 3, action);
+                // 개인전 세팅. 
+                miniToken.transform.position = map.spawnPosition[num].position;
+                miniToken.transform.rotation = map.spawnPosition[num].rotation;
+                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
+            }
+            else
+            {
+                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
+                int spawnIndex = teamIndex * 2 + teamSpawnCount[teamIndex]; // 팀별로 0과 2 또는 1과 3
+
+                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
+                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
+
+                teamSpawnCount[teamIndex]++;
+            }
+            num++;
         }
     }
+    #endregion
 
+    #region GameEnd
     public async void BeforeGameEnd()
     {
         var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
         foreach (var player in players)
         {
             var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
-            if(token != null)
+            if (token != null)
             {
                 map.TokenReset(token);
             }
@@ -184,43 +229,9 @@ public class GameCourtshipDance : IGame
         UIManager.Hide<UICourtshipDance>();
         await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
     }
-
-    #region 초기화
-
-    private async void ResetPlayers(List<PlayerInfo> players)
-    {
-        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        int num = 0;
-        int[] teamSpawnCount = new int[2] { 0, 0 };
-        foreach (var p in players)
-        {//미니 토큰 위치 초기화
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
-            miniToken.EnableMiniToken();
-            map.TokenInit(miniToken);
-            
-            if (!isTeamGame)
-            {
-                //개인전 세팅. 
-                miniToken.transform.position = map.spawnPosition[num].position;
-                miniToken.transform.rotation = map.spawnPosition[num].rotation;                
-                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
-            }
-            else
-            {
-                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
-                int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
-
-                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
-                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
-                teamSpawnCount[teamIndex]++;
-            }
-            num++;
-        }
-    }
     #endregion
-       
 
-
+    #region Property
     public int GetMyTeam()
     {
         foreach (var p in players)
@@ -232,6 +243,7 @@ public class GameCourtshipDance : IGame
         }
         return -1;
     }
+
     public int GetPlayerTeam(string sessionId)
     {
         foreach (var p in players)
@@ -243,6 +255,7 @@ public class GameCourtshipDance : IGame
         }
         return -1;
     }
+
     public string GetPlayerSessionId(int teamNumber)
     {
         foreach (var p in players)
@@ -266,9 +279,5 @@ public class GameCourtshipDance : IGame
             }
         }
     }
-
-    public void DisableUI()
-    {
-        UIManager.Hide<UICourtshipDance>();
-    }
+    #endregion
 }

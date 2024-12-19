@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 
@@ -73,6 +72,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             UIManager.Get<UICourtshipDance>().myBoard.MyInputResponse(response.Correct, response.State);
         }
     }
+
     /* 409 */
     public void DanceKeyPressNotification(GamePacket packet)
     {        
@@ -111,6 +111,4 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
     /* 412 : DanceTableCompleteRequest
      * Send 위치 : CommandBoard */
-
-
 }
