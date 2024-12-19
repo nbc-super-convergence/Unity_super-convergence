@@ -36,7 +36,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public async void DartGameThrowNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartGameThrowNotification;
-        Debug.Log(response.Result);
+        //Debug.Log(response.Result);
 
         int userIdx = GameManager.Instance.SessionDic[response.Result.SessionId].Color;
 
@@ -67,7 +67,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     {
         var response = gamePacket.DartPannelSyncNotification;
 
-        Debug.Log($"{response.Location}");
+        //Debug.Log($"{response.Location}");
 
         //GameDartPanel panel = ClientTest.Instance.Panel;
         //panel.MoveEvent(response.Location);
