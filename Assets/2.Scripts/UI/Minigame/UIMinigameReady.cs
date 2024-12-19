@@ -23,7 +23,7 @@ public class UIMinigameReady : UIBase
 
     public override void Opened(object[] param)
     {
-        BoardManager.Instance.SetMiniGamePlaying(true);
+        //BoardManager.Instance.SetMiniGamePlaying(true);
         GameManager.OnPlayerLeft += PlayerLeftEvent;
 
         gameType = (eGameType)param[0]; // 게임 타입

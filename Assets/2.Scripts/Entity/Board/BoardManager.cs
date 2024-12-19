@@ -172,8 +172,8 @@ public class BoardManager : Singleton<BoardManager>
         #endregion
         dice.SetDicePosition(playerTokenHandlers[playerIndex].transform);
 
-        //StartCoroutine(Curplayer.Ready());
-        ReadyCheck();
+        StartCoroutine(Curplayer.Ready());
+        //ReadyCheck();
     }
 
     //테스트용
@@ -272,8 +272,8 @@ public class BoardManager : Singleton<BoardManager>
         camera.Follow = camera.LookAt = t;
         dice.SetDicePosition(t);
 
-        //StartCoroutine(Curplayer.Ready());
-        ReadyCheck();
+        StartCoroutine(Curplayer.Ready());
+        //ReadyCheck();
     }
 
     //public void SetTrophyNode()
@@ -302,9 +302,9 @@ public class BoardManager : Singleton<BoardManager>
     //    #endregion
     //}
 
-    public IEnumerator StartMinigame()
+    public void StartMinigame()
     {
-        isMiniPlaying = true;
+        //isMiniPlaying = true;
 
         GamePacket packet = new();
 
@@ -315,9 +315,8 @@ public class BoardManager : Singleton<BoardManager>
 
         SocketManager.Instance.OnSend(packet);
 
-        yield return new WaitUntil(() => UIManager.IsOpened<UIMinigameReady>());
-
-        TurnEnd();
+        //yield return new WaitUntil(() => UIManager.IsOpened<UIMinigameReady>());
+        //TurnEnd();
     }
 
     public void ExitPlayer(string id)
@@ -349,7 +348,7 @@ public class BoardManager : Singleton<BoardManager>
             StartCoroutine(Curplayer.Ready());
     }
 
-    public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
+    //public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
 
 
     //public void PurChaseNode(int node,int playerIndex)
