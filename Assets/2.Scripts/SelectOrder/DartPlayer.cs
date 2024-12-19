@@ -6,6 +6,8 @@ public class DartPlayer : MonoBehaviour
     private GameDartEvent orderEvent;
     private Rigidbody rgdby;
 
+    public GameDartScore score;
+
     //서버 전송 데이터
     private DiceGameData diceData = new();
     public DiceGameData DiceGameData
@@ -60,7 +62,7 @@ public class DartPlayer : MonoBehaviour
         set
         {
             myDistance = value;
-            DiceGameData.Distance = myDistance;
+            //DiceGameData.Distance = myDistance;
         }
     }
 
@@ -79,6 +81,8 @@ public class DartPlayer : MonoBehaviour
 
     //Server
     public bool IsClient { get; private set; }
+
+    public bool isMyturn = false;
 
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
@@ -106,6 +110,7 @@ public class DartPlayer : MonoBehaviour
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
+            isMyturn = true;
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
             UIManager.Get<UIMinigameDart>().ShowForcePower();
@@ -123,6 +128,7 @@ public class DartPlayer : MonoBehaviour
 
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
+        score.RecordingScore(GameManager.Instance.myInfo.SessionId, MyColor, MyDistance);
 
         if (IsClient)
         {
@@ -203,9 +209,9 @@ public class DartPlayer : MonoBehaviour
         {
             actionPhase = 1;
         }
-        if(actionPhase == 1)
+        else
         {
-            if (!press)
+            if (actionPhase == 1)
             {
                 NowShoot();
                 actionPhase = 0;
@@ -221,7 +227,10 @@ public class DartPlayer : MonoBehaviour
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
         if(IsClient)
+        {
+            isMyturn = false;
             ThrowToServer();
+        }
     }
 
     /// <summary>
@@ -249,19 +258,33 @@ public class DartPlayer : MonoBehaviour
         CurAim = Vector3.zero;
         CurForce = 2f;
 
+        if (IsClient)
+        {
+            orderEvent.OnAimEvent -= SetAim;
+            orderEvent.OnShootEvent -= PressKey;
+            UIManager.Get<UIMinigameDart>().HideForcePower();
+        }
+
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
+        score.RecordingScore(GameManager.Instance.myInfo.SessionId, MyColor, MyDistance);
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
     }
 
     public async void ResetDart()
     {
+        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         transform.SetParent(map.PlayerDarts);
 
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
+        rgdby.constraints = RigidbodyConstraints.None;
+        rgdby.freezeRotation = false;
+        rgdby.constraints = RigidbodyConstraints.FreezeRotationY;
+        rgdby.constraints = RigidbodyConstraints.FreezeRotationZ;
+
         transform.localPosition = Vector3.zero;
         CurAim = Vector3.zero;
         CurForce = 2f;
@@ -272,7 +295,7 @@ public class DartPlayer : MonoBehaviour
 
     private IEnumerator MoveDart()
     {
-        while (IsClient)
+        while (IsClient && isMyturn)
         {
             //키를 누르는 동안
             if (actionPhase == 1)
@@ -284,9 +307,8 @@ public class DartPlayer : MonoBehaviour
             if (GetAim != Vector2.zero)
             {
                 CurAim += new Vector3(GetAim.y, GetAim.x);
+                SendDartSync();
             }
-            //ApplyAim();
-            SendDartSync();
             yield return new WaitForSeconds(0.1f);
         }
     }

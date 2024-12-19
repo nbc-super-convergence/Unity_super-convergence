@@ -43,6 +43,7 @@ public class GameDartPanel : MonoBehaviour
 
     public void MoveEvent(Vector pos)
     {
+        //moveDirection = SocketManager.ToVector3(pos);
         transform.localPosition = SocketManager.ToVector3(pos);
     }
 

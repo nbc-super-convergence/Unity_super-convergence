@@ -12,6 +12,9 @@ public class GameDart : IGame
     //다트그룹
     private List<DartPlayer> DartOrder;
 
+    //점수표
+    public GameDartScore dartScore;
+
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
     [SerializeField] private Transform resultGroup; //다트 결과
@@ -29,9 +32,12 @@ public class GameDart : IGame
     }   //빗나간 랭크
 
     private int curRound = 1;   //현재 라운드
-    private int maxRound = 9;   //최대 라운드
+    private int maxRound = 3;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
+
+    private float[] scores = new float[4];
+    private float[] result = new float[4];
 
     /// <summary>
     /// 다음 차례
@@ -46,6 +52,7 @@ public class GameDart : IGame
             //Debug.Log("다음 사람");
             DartPannel.SetClient(nowPlayer);
             DartOrder[nowPlayer].gameObject.SetActive(true);
+            DartOrder[nowPlayer].isMyturn = true;
             UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
         else
@@ -61,25 +68,33 @@ public class GameDart : IGame
     /// </summary>
     private void NextRound()
     {
-        curRound++;
-        UIManager.Get<UIMinigameDart>().SetRound(curRound);
-
         //다트 초기
         for (int i = 0; i < playerCount; i++)
         {
             UIManager.Get<UIMinigameDart>().SetReady(i);
             DartOrder[i].ResetDart();
+            scores[i] += DartOrder[i].MyDistance;
         }
         nowPlayer = 0;
         DartOrder[nowPlayer].gameObject.SetActive(true);
+        DartPannel.SetClient(nowPlayer);
+        UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
 
-        if(curRound > maxRound)
+        if (curRound > maxRound)
         {
             DartPannel.isMove = false;  //판은 멈춰라
 
+            for (int i = 0; i < scores.Length; i++)
+            {
+                result[i] = scores[i] / maxRound;
+            }
             //결과
             //GameOverNotification
-
+        }
+        else
+        {
+            curRound++;
+            UIManager.Get<UIMinigameDart>().SetRound(curRound);
         }
     }
 
@@ -127,6 +142,7 @@ public class GameDart : IGame
             string nickname = GameManager.Instance.SessionDic[p.SessionId].Nickname;
         }
     }
+        
 
     #region IGame
     public async void Init(params object[] param)
@@ -134,16 +150,26 @@ public class GameDart : IGame
         MinigameManager.Instance.curMap =
             await ResourceManager.Instance.LoadAsset<MapGameDart>
             ($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+
+        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.MakeMap<MapGameDart>();
 
         //DartOrder데이터 설정
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         DartOrder = map.DartOrder;
         DartPannel = map.DartPanel;
+        for (int i = 0; i < scores.Length; i++)
+            scores[i] = 0;
+        UIManager.Get<UIMinigameDart>().HideForcePower();
 
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
+            dartScore = new(response.Players.Count);
+            foreach(var dart in DartOrder)
+            {
+                dart.score = dartScore;
+            }
         }
         else
         {
@@ -153,12 +179,14 @@ public class GameDart : IGame
 
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
 
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         map.BeginSelectOrder();
         map.DartPanel.SetClient(0);
+        map.MovePanel();
+
+        ingameUI.ShowScoreField(playerCount);
     }
     public void DisableUI()
     {
