@@ -34,7 +34,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             player.GetDice(dice);
             StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
 
-            Debug.Log("RollDiceResponse");
+            Debug.Log($"RollDiceResponse{dice}");
         }
         else
         {
@@ -50,7 +50,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         int dice = response.DiceResult;
 
         StartCoroutine(BoardManager.Instance.dice.SetDice(dice - 1));
-        Debug.Log("RollDiceNotification");
+        Debug.Log($"RollDiceNotification {dice}");
     }
 
     #endregion
