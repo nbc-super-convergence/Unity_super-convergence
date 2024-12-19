@@ -67,7 +67,7 @@ public class GameDart : IGame
         //다트 초기
         for (int i = 0; i < playerCount; i++)
         {
-            UIManager.Get<UIMinigameDart>().SetRound(i);
+            UIManager.Get<UIMinigameDart>().SetReady(i);
             DartOrder[i].ResetDart();
         }
         nowPlayer = 0;
