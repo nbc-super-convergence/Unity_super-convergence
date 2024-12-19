@@ -126,6 +126,7 @@ public class GameCourtshipDance : IGame
             UnityEngine.Debug.LogError($"Error in Init: {ex.Message}");
         }
     }
+
     public async void GameStart(params object[] param)
     {
         if (param[0] is long startTime)
@@ -141,45 +142,14 @@ public class GameCourtshipDance : IGame
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
-        public void DisableUI()
+
+    public void DisableUI()
     {
         UIManager.Hide<UICourtshipDance>();
     }
     #endregion
 
     #region 초기화
-
-    private async void ResetPlayers(List<PlayerInfo> players)
-    {
-        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        int num = 0;
-        int[] teamSpawnCount = new int[2] { 0, 0 };
-        foreach (var p in players)
-        {//미니 토큰 위치 초기화
-            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
-            miniToken.EnableMiniToken();
-            map.TokenInit(miniToken);
-            
-            if (!isTeamGame)
-            {
-                //개인전 세팅. 
-                miniToken.transform.position = map.spawnPosition[num].position;
-                miniToken.transform.rotation = map.spawnPosition[num].rotation;                
-                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
-            }
-            else
-            {
-                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
-                int spawnIndex = teamIndex + (teamSpawnCount[teamIndex] * 2);
-
-                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
-                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
-                teamSpawnCount[teamIndex]++;
-            }
-            num++;
-        }
-    }
-
     public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
     {
         try
@@ -199,6 +169,39 @@ public class GameCourtshipDance : IGame
         {
             UnityEngine.Debug.LogError($"Error in SetTeamPoolDic: {ex.Message}");
             sourceTcs.TrySetException(ex);
+        }
+    }
+
+    private async void ResetPlayers(List<PlayerInfo> players)
+    {
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        int num = 0;
+        int[] teamSpawnCount = new int[2] { 0, 0 };
+
+        foreach (var p in players)
+        {
+            MiniToken miniToken = MinigameManager.Instance.GetMiniToken(p.SessionId);
+            miniToken.EnableMiniToken();
+            map.TokenInit(miniToken);
+
+            if (!isTeamGame)
+            {
+                // 개인전 세팅. 
+                miniToken.transform.position = map.spawnPosition[num].position;
+                miniToken.transform.rotation = map.spawnPosition[num].rotation;
+                miniToken.MiniData.rotY = map.spawnPosition[num].rotation.eulerAngles.y;
+            }
+            else
+            {
+                int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
+                int spawnIndex = teamIndex * 2 + teamSpawnCount[teamIndex]; // 팀별로 0과 2 또는 1과 3
+
+                miniToken.transform.position = map.spawnPosition[spawnIndex].position;
+                miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
+
+                teamSpawnCount[teamIndex]++;
+            }
+            num++;
         }
     }
     #endregion
