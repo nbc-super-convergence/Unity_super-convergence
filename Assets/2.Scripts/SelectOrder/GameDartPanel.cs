@@ -31,9 +31,10 @@ public class GameDartPanel : MonoBehaviour
             if(imClient)
             {
                 if (transform.localPosition.x < -xPositionLimit)
-                    SendServer(Vector3.right);
+                    moveDirection = Vector3.right;
                 else if (transform.localPosition.x > xPositionLimit)
-                    SendServer(Vector3.left);
+                    moveDirection = Vector3.left;
+                SendServer();
             }
             ApplyMove();
             yield return new WaitForSeconds(0.1f);
@@ -58,14 +59,14 @@ public class GameDartPanel : MonoBehaviour
     /// <summary>
     /// 서버로 전송
     /// </summary>
-    private void SendServer(Vector3 dir)
+    private void SendServer()
     {
         GamePacket packet = new();
         {
             packet.DartPannelSyncRequest = new()
             {
                 SessionId = MinigameManager.Instance.mySessonId,
-                Location = SocketManager.ToVector(dir)
+                Location = SocketManager.ToVector(transform.localPosition)
             };
         }
         SocketManager.Instance.OnSend(packet);
