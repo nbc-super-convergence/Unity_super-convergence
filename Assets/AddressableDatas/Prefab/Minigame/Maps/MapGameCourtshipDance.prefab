@@ -2159,8 +2159,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPosition:
   - {fileID: 4354719980221755224}
-  - {fileID: 5703222401653625256}
   - {fileID: 1777338177573178635}
+  - {fileID: 5703222401653625256}
   - {fileID: 7198793360924373088}
   indicator: {fileID: 3257756624934716216}
 --- !u!1 &5139658217732283599
