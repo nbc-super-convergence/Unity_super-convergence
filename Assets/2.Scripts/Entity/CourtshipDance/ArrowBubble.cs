@@ -21,6 +21,7 @@ public class ArrowBubble : ObjectPoolBase
         this.background.color = backColor;
         this.arrow.rotation = Quaternion.Euler(0, 0, dir);
     }
+
     public void SetArrowBubble(BubbleInfo info)
     {
         switch (info.Color)

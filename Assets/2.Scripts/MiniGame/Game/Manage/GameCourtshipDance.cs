@@ -83,7 +83,7 @@ public class GameCourtshipDance : IGame
             if (GameManager.Instance.myInfo.SessionId == players[0].SessionId)
             {
                 commandGenerator = new CommandGenerator();
-                commandGenerator.InitTeamGame(teamDic);
+                commandGenerator.InitGame(teamDic);
                 teamPoolDic = commandGenerator.GetTeamPoolDic();
             }
 

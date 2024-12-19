@@ -8,39 +8,45 @@ using UnityEngine.UI;
 
 public class CommandBoard : MonoBehaviour
 {
+    [Header("Game Objects")]
     [SerializeField] private Image background;
     [SerializeField] private GameObject prefabBubble;
     [SerializeField] private Image failImage;
     [SerializeField] private TMP_Text completeText;
 
-    [SerializeField] private Queue<ArrowBubble> curCommandQueue;
-
+    // -- Bubble Management -- //
     private Queue<Queue<BubbleInfo>> queuePool;
     private Queue<BubbleInfo> curQueueInfo;
+    private Queue<ArrowBubble> curCommandQueue;
+    private Queue<ArrowBubble> successQueue = new();
 
-    public bool isFirst = true;
-    public bool isFirstInput = false;
+    // -- State Flags -- //
+    [HideInInspector] public bool isFirst = true;
+    [HideInInspector] public bool isFirstInput = false;
     private bool isDisconnected = false;
+
+    // -- Cached References -- //
+    private UICourtshipDance uiCourtshipDance;
+    private CourtshipDanceData gameData;
     private List<MiniToken> tokens = new();
     private MiniToken myToken;
-    private UICourtshipDance uiCourtshipDance;
-    public List<string> teamSessionIds = new();
+    [HideInInspector] public List<string> teamSessionIds = new();
     public int TeamNumber { get; private set; }
-    public int numOfbubbles = -1;
-    public int round = 0;
+
+    // -- Gameplay Resources -- //
     private AudioClip audioClip;
     private TaskCompletionSource<bool> sourceTcs;
 
-    public int tableCompleteCount = 0;
-    public long tableCompleteTime = 0;
+    // -- Game Metrics -- //
+    [Header("Game Metrics")]
+    [SerializeField] private int tableCompleteCount = 0;
+    [SerializeField] private long tableCompleteTime = 0;
+    [SerializeField] private int numOfbubbles = -1;
 
-    public void TrySetTask(bool isSuccess)
-    {
-        bool b = sourceTcs.TrySetResult(isSuccess);
-    }
-
+    #region Board Control
     public void Init(int teamNumber, Queue<Queue<BubbleInfo>> pool)
     {
+        gameData = new();
         TeamNumber = teamNumber;
         queuePool = new(pool);
         foreach(var item in teamSessionIds)
@@ -50,12 +56,6 @@ public class CommandBoard : MonoBehaviour
         myToken = MinigameManager.Instance.GetMyToken();
 
         uiCourtshipDance = UIManager.Get<UICourtshipDance>();
-    }    
-
-    public void MakeNextBoard()
-    {
-        curCommandQueue = MakeCommandQueue();
-        AdjustBackground(curQueueInfo.Count);
     }
 
     private void AdjustBackground(int bubbleCount)
@@ -66,8 +66,14 @@ public class CommandBoard : MonoBehaviour
         rtfailImage.sizeDelta = new(60f + bubbleCount * 100f, rtfailImage.sizeDelta.y);
     }
 
+    public void MakeNextBoard()
+    {
+        curCommandQueue = MakeCommandQueue();
+        AdjustBackground(curQueueInfo.Count);
+    }
+
+    
     /* 412 */
-    // 정보에 따라 방향방울 만들기
     private Queue<ArrowBubble> MakeCommandQueue()
     {
         if (curQueueInfo != null)
@@ -118,7 +124,7 @@ public class CommandBoard : MonoBehaviour
             tableCompleteCount++;
             tableCompleteTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         }
-         if(isDisconnected)
+        if (isDisconnected)
         {
             isDisconnected = false;
         }
@@ -137,15 +143,24 @@ public class CommandBoard : MonoBehaviour
         return queue;
     }
 
-    
+    public void PopBubble()
+    {
+        var b = curCommandQueue.Dequeue();
+        successQueue.Enqueue(b);
+        curQueueInfo.Dequeue();
+        b.PlayEffect();
 
-    #region 플레이
-    public bool isFail = false;
-    private Queue<ArrowBubble> successQueue = new();
+        if (curQueueInfo.Count == 0)
+        {
+            MakeNextBoard();
+        }
+    }
+#endregion
 
+    #region Player Controls
     /* 407 C2S_DanceKeyPressRequest*/
     // 본인 커맨드 보드에서만 호출됨.
-    public async void OnActionInput(int dir)
+    public void OnActionInput(int dir)
     {
         if (!isFirstInput)
         {
@@ -157,18 +172,8 @@ public class CommandBoard : MonoBehaviour
             SessionId = GameManager.Instance.myInfo.SessionId,
             PressKey = (Direction)dir
         };
-        sourceTcs = new();
-        SocketManager.Instance.OnSend(packet);
-        bool isSuccess = await sourceTcs.Task;
-        if (isSuccess)
-        {
-        }
-        else
-        {
-        }
+        SocketManager.Instance.OnSend(packet);        
     }
-
-    /* 408 */
 
     public void MyInputResponse(bool isCorrect, State state)
     {
@@ -207,8 +212,8 @@ public class CommandBoard : MonoBehaviour
             StartCoroutine(FailInput());
         }
     }
-    /* 409 */
-    // 싱글모드 잔재
+        
+    // 싱글모드의 잔재
     //private void CheckInput(float rot, string sessionId)
     //{
     //    var target = curQueueInfo.Peek();
@@ -255,23 +260,9 @@ public class CommandBoard : MonoBehaviour
     //        StartCoroutine(FailInput());
     //    }        
     //}
-
-    public void PopBubble()
-    {
-        var b = curCommandQueue.Dequeue();
-        successQueue.Enqueue(b);
-        curQueueInfo.Dequeue();
-        b.PlayEffect();
-
-        if (curQueueInfo.Count == 0)
-        {
-            MakeNextBoard();
-        }
-    }
-
+        
     public IEnumerator FailInput()
     {
-        isFail = true;
         failImage.gameObject.SetActive(true);
         SetAudioClip(State.DanceFail);
         foreach (var token in tokens)
@@ -282,9 +273,8 @@ public class CommandBoard : MonoBehaviour
         }
 
         SoundManager.Instance.PlaySFX(audioClip);
-        yield return new WaitForSeconds(1.6f);  // TODO:: 경직시간 CourtshipDanceData에서 관리하기.
+        yield return new WaitForSeconds(gameData.stunDelay);
 
-        isFail = false;
         failImage.gameObject.SetActive(false);
         foreach (var token in tokens)
         {
@@ -343,6 +333,7 @@ public class CommandBoard : MonoBehaviour
         }
     }
 
+    // 플레이 중 누군가 접속을 끊었을 때 실행되는 메서드
     public void ChangeInfoPool(string disconnectedSessionId, string replacementSessionId)
     {
         if (queuePool == null || !teamSessionIds.Contains(disconnectedSessionId) || !teamSessionIds.Contains(replacementSessionId))
@@ -370,7 +361,7 @@ public class CommandBoard : MonoBehaviour
             while (innerQueue.Count > 0)
             {
                 BubbleInfo bubbleInfo = innerQueue.Dequeue();
-                if (bubbleInfo.sessionId == disconnectedSessionId)
+                if (bubbleInfo.SessionId == disconnectedSessionId)
                 {
                     bubbleInfo.SetSessionId(replacementSessionId);
                     bubbleInfo.SetColor(replaceColor);
