@@ -7,23 +7,26 @@ public class GameCourtshipDance : IGame
 {
     public bool isInitialized = false;
 
+    // -- Cached References -- //
     public UICourtshipDance uiCourtship;
     public CourtshipDanceData gameData;
-
     private CommandGenerator commandGenerator;
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
     public List<PlayerInfo> players = new();
+    public Dictionary<int, List<PlayerInfo>> teamDic;
+
     private TaskCompletionSource<bool> sourceTcs;
 
+    // -- State Flags -- //
     public bool isTeamGame = false;
     public bool isBoardReady = false;
     public bool isGameOver = false;
-    public Dictionary<int, List<PlayerInfo>> teamDic;
 
     public GameCourtshipDance()
     {
     }
 
+    #region IGame
     public async void Init(params object[] param)
     {
         await Initialize(param);
@@ -123,29 +126,6 @@ public class GameCourtshipDance : IGame
             UnityEngine.Debug.LogError($"Error in Init: {ex.Message}");
         }
     }
-
-    public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
-    {
-        try
-        {
-            teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
-            if (teamPoolDic != null)
-            {
-                sourceTcs.TrySetResult(true);
-            }
-            else
-            {
-                UnityEngine.Debug.LogAssertion("teamPoolDic is null !!");
-                sourceTcs.TrySetResult(false);
-            }
-        }
-        catch (Exception ex)
-        {
-            UnityEngine.Debug.LogError($"Error in SetTeamPoolDic: {ex.Message}");
-            sourceTcs.TrySetException(ex);
-        }
-    }
-
     public async void GameStart(params object[] param)
     {
         if (param[0] is long startTime)
@@ -161,29 +141,11 @@ public class GameCourtshipDance : IGame
             await UIManager.Show<UICountdown>(startTime, 3, action);
         }
     }
-
-    public async void BeforeGameEnd()
+        public void DisableUI()
     {
-        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
-        foreach (var player in players)
-        {
-            var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
-            if(token != null)
-            {
-                map.TokenReset(token);
-            }
-        }
-    }
-
-    public async void GameEnd(List<(int Rank, string SessionId)> ranks, long boardTime)
-    {
-        foreach (var mini in MinigameManager.Instance.miniTokens)
-        {
-            mini.gameObject.SetActive(false);
-        }
         UIManager.Hide<UICourtshipDance>();
-        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
     }
+    #endregion
 
     #region 초기화
 
@@ -217,10 +179,56 @@ public class GameCourtshipDance : IGame
             num++;
         }
     }
+
+    public void SetTeamPoolDic(RepeatedField<DancePool> dancePools)
+    {
+        try
+        {
+            teamPoolDic = CommandGenerator.ConvertToTeamPoolDic(dancePools);
+            if (teamPoolDic != null)
+            {
+                sourceTcs.TrySetResult(true);
+            }
+            else
+            {
+                UnityEngine.Debug.LogAssertion("teamPoolDic is null !!");
+                sourceTcs.TrySetResult(false);
+            }
+        }
+        catch (Exception ex)
+        {
+            UnityEngine.Debug.LogError($"Error in SetTeamPoolDic: {ex.Message}");
+            sourceTcs.TrySetException(ex);
+        }
+    }
     #endregion
-       
 
+    #region GameEnd
+    public async void BeforeGameEnd()
+    {
+        var map = await MinigameManager.Instance.GetMap<MapGameCourtshipDance>();
+        foreach (var player in players)
+        {
+            var token = MinigameManager.Instance.GetMiniToken(player.SessionId);
+            if (token != null)
+            {
+                map.TokenReset(token);
+            }
+        }
+    }
 
+    public async void GameEnd(List<(int Rank, string SessionId)> ranks, long boardTime)
+    {
+        foreach (var mini in MinigameManager.Instance.miniTokens)
+        {
+            mini.gameObject.SetActive(false);
+        }
+        UIManager.Hide<UICourtshipDance>();
+        await UIManager.Show<UIMinigameResult>(ranks, boardTime + 1500);
+    }
+    #endregion
+
+    #region Property
     public int GetMyTeam()
     {
         foreach (var p in players)
@@ -232,6 +240,7 @@ public class GameCourtshipDance : IGame
         }
         return -1;
     }
+
     public int GetPlayerTeam(string sessionId)
     {
         foreach (var p in players)
@@ -243,6 +252,7 @@ public class GameCourtshipDance : IGame
         }
         return -1;
     }
+
     public string GetPlayerSessionId(int teamNumber)
     {
         foreach (var p in players)
@@ -266,9 +276,5 @@ public class GameCourtshipDance : IGame
             }
         }
     }
-
-    public void DisableUI()
-    {
-        UIManager.Hide<UICourtshipDance>();
-    }
+    #endregion
 }
