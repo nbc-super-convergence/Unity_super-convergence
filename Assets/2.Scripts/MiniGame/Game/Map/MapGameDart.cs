@@ -27,6 +27,11 @@ public class MapGameDart : MapBase
         else return;
     }
 
+    public void MovePanel()
+    {
+        StartCoroutine(DartPanel.MovePanel());
+    }
+
     /// <summary>
     /// 지금부터 시작
     /// </summary>
