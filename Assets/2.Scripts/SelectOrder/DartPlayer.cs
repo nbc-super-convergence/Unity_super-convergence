@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DartPlayer : MonoBehaviour
@@ -30,6 +31,7 @@ public class DartPlayer : MonoBehaviour
             aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
 
             DiceGameData.Angle = SocketManager.ToVector(CurAim);
+            transform.rotation = Quaternion.Euler(CurAim);
         }
     }
     private Vector2 GetAim = Vector2.zero;   //입력 Aim
@@ -107,27 +109,8 @@ public class DartPlayer : MonoBehaviour
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
             UIManager.Get<UIMinigameDart>().ShowForcePower();
+            StartCoroutine(MoveDart());
         }
-    }
-
-    private void FixedUpdate()
-    {
-        //키를 누르는 동안
-        if(actionPhase == 1)
-        {
-            SetForce();
-        }
-
-        //각도를 조절
-        if (GetAim != Vector2.zero)
-        {
-            CurAim += new Vector3(GetAim.y, GetAim.x);
-            if (IsClient)
-            {
-                SendDartSync();
-            }
-        }
-        ApplyAim();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -282,8 +265,30 @@ public class DartPlayer : MonoBehaviour
         transform.localPosition = Vector3.zero;
         CurAim = Vector3.zero;
         CurForce = 2f;
+        actionPhase = 0;
 
         gameObject.SetActive(false);
+    }
+
+    private IEnumerator MoveDart()
+    {
+        while (IsClient)
+        {
+            //키를 누르는 동안
+            if (actionPhase == 1)
+            {
+                SetForce();
+            }
+
+            //각도를 조절
+            if (GetAim != Vector2.zero)
+            {
+                CurAim += new Vector3(GetAim.y, GetAim.x);
+            }
+            //ApplyAim();
+            SendDartSync();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     #region 서버로 전송
