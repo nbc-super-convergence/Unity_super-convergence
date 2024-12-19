@@ -239,17 +239,21 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
                 var data = BoardManager.Instance.playerTokenHandlers[i].data;
 
-                penalty = Mathf.Min(playerinfos[i].Gold - data.coin,penalty);
-                UIManager.Get<PenaltyUI>().SetTax(data.coin, Mathf.Abs(penalty));
+                int dif = playerinfos[i].Gold - data.coin;
+
+                if (id == GameManager.Instance.myInfo.SessionId)
+                    penalty = Mathf.Abs(dif);
+
                 data.coin = playerinfos[i].Gold;
 
                 int j = GameManager.Instance.SessionDic[id].Color;
 
-                if(penalty != 0)
-                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(penalty);
+                if(dif != 0)
+                    UIManager.Get<BoardUI>().GetPlayerUI(j).Event(dif);
                 //data.trophyAmount = playerinfos[i].Trophy;
             }
 
+            UIManager.Get<PenaltyUI>().SetTax(Mathf.Abs(penalty));
             UIManager.Get<BoardUI>().Refresh();
         }
         else

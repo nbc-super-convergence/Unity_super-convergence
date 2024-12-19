@@ -35,13 +35,13 @@ public class PenaltyUI : UIBase
         base.Closed(param);
     }
 
-    public void SetTax(int prev,int t)
+    public void SetTax(int t)
     {
         tax = t;
         MessageUpdate();
 
         SetActive(true);
-        StartCoroutine(PenaltyEvent(prev < (penalty >> 1)));
+        StartCoroutine(PenaltyEvent(tax < (penalty >> 1)));
     }
 
     private IEnumerator PenaltyEvent(bool isGreater)
