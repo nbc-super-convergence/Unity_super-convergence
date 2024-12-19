@@ -119,10 +119,10 @@ public class MiniToken : MonoBehaviour
     {
         Vector3 curPos = transform.localPosition, lastPos = transform.localPosition;
 
-        if (MiniData.CurState == State.Die) yield break;
-
         while (true)
         {
+            if (MiniData.CurState == State.Die) yield break;
+
             curPos = transform.localPosition;
             if (curPos != lastPos)
             {

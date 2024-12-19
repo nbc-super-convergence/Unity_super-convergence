@@ -62,7 +62,7 @@ public class BoardManager : Singleton<BoardManager>
     public List<AreaNode> areaNodes = new List<AreaNode>();
 
     public Dice dice { get; private set; }
-    private bool isMiniPlaying;
+    public bool isMiniPlaying { get; private set; }
 
 #pragma warning disable
     public CinemachineVirtualCamera camera;
@@ -114,7 +114,7 @@ public class BoardManager : Singleton<BoardManager>
 
     private async void Init()
     {
-        isMiniPlaying = false;
+        //isMiniPlaying = false;
         var ids = GameManager.Instance.SessionDic.Keys;
         var dicePrefab = await ResourceManager.Instance.LoadAsset<Dice>("dice", eAddressableType.Prefab);
         dice = Instantiate(dicePrefab, Vector3.zero, Quaternion.identity);
@@ -209,6 +209,7 @@ public class BoardManager : Singleton<BoardManager>
         if(Curplayer.IsTurnEnd())
         {
 
+
             //if(playerIndex + 1 == playerTokenHandlers.Count)
             //{
             //    int count = playerTokenHandlers.Count;
@@ -227,7 +228,7 @@ public class BoardManager : Singleton<BoardManager>
             //else
             //{
 
-            
+            isMiniPlaying = false;
 
             GamePacket packet = new();
 
@@ -304,7 +305,7 @@ public class BoardManager : Singleton<BoardManager>
 
     public void StartMinigame()
     {
-        //isMiniPlaying = true;
+        isMiniPlaying = true;
 
         GamePacket packet = new();
 
@@ -342,11 +343,11 @@ public class BoardManager : Singleton<BoardManager>
         Destroy(p.gameObject);
     }
 
-    public void ReadyCheck()
-    {
-        if(!isMiniPlaying) 
-            StartCoroutine(Curplayer.Ready());
-    }
+    //public void ReadyCheck()
+    //{
+    //    if(!isMiniPlaying) 
+    //        StartCoroutine(Curplayer.Ready());
+    //}
 
     //public void SetMiniGamePlaying(bool isPlay) => isMiniPlaying = isPlay;
 

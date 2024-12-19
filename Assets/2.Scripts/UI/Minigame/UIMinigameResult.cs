@@ -101,8 +101,13 @@ public class UIMinigameResult : UIBase
 
         string id = BoardManager.Instance.Curplayer.data.userInfo.SessionId;
 
-        if (id.Equals(GameManager.Instance.myInfo.SessionId))
+        if (BoardManager.Instance.isMiniPlaying)
             BoardManager.Instance.TurnEnd();
+
+        //BoardManager.Instance.isMiniPlaying = false;
+
+        //if (id.Equals(GameManager.Instance.myInfo.SessionId))
+        //    BoardManager.Instance.TurnEnd();
 
         //BoardManager.Instance.SetMiniGamePlaying(false);
         //BoardManager.Instance.ReadyCheck();
