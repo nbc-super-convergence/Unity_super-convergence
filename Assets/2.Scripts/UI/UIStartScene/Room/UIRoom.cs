@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 public class UIRoom : UIBase
 {
@@ -150,6 +151,7 @@ public class UIRoom : UIBase
             {
                 StartBtn.interactable = false;
             }
+            ActiveKickBtn();
         }
     }
 
@@ -298,6 +300,17 @@ public class UIRoom : UIBase
         readyBtn.gameObject.SetActive(!isReady);
         cancelReadyBtn.gameObject.SetActive(isReady);
     }
+    
+    private void ActiveKickBtn()
+    {
+        if (IsHost)
+        {
+            for (int i = 0; i < roomData.Users.Count - 1; i++)
+            {
+                kickUsers[i].interactable = true;
+            }
+        }
+    }
     #endregion
 
     #region 보조 함수
@@ -319,14 +332,6 @@ public class UIRoom : UIBase
                 GameManager.Instance.SetMyInfo(GameManager.Instance.SessionDic[GameManager.Instance.myInfo.SessionId]);
             }
             num++;
-        }
-
-        if (IsHost)
-        {
-            for (int i = 0; i < Users.Count - 1; i++)
-            {
-                kickUsers[i].interactable = true;
-            }
         }
     }
 
