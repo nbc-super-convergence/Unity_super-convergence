@@ -34,16 +34,17 @@ public class GameDartPanel : MonoBehaviour
                     moveDirection = Vector3.right;
                 else if (transform.localPosition.x > xPositionLimit)
                     moveDirection = Vector3.left;
+                ApplyMove();
                 SendServer();
             }
-            ApplyMove();
             yield return new WaitForSeconds(0.1f);
         }
     }
 
     public void MoveEvent(Vector pos)
     {
-        moveDirection = SocketManager.ToVector3(pos);
+        //moveDirection = SocketManager.ToVector3(pos);
+        transform.localPosition = SocketManager.ToVector3(pos);
     }
 
     public void SetClient(int index)
