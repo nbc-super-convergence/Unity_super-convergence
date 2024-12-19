@@ -303,8 +303,8 @@ public class DartPlayer : MonoBehaviour
             if (GetAim != Vector2.zero)
             {
                 CurAim += new Vector3(GetAim.y, GetAim.x);
+                SendDartSync();
             }
-            SendDartSync();
             yield return new WaitForSeconds(0.1f);
         }
     }
