@@ -15,7 +15,7 @@ public class MiniGameNode : BaseNode
         }
 
         BoardManager.Instance.StartMinigame();
-        StartCoroutine(Playing());
+        //StartCoroutine(Playing());
 
         //StartCoroutine(BoardManager.Instance.StartMinigame());
         //BoardManager.Instance.TurnEnd();
@@ -30,9 +30,9 @@ public class MiniGameNode : BaseNode
         //SocketManager.Instance.OnSend(packet);
     }
 
-    private IEnumerator Playing()
-    {
-        yield return new WaitUntil(() => !BoardManager.Instance.isMiniPlaying);
-        BoardManager.Instance.TurnEnd();
-    }
+    //private IEnumerator Playing()
+    //{
+    //    yield return new WaitUntil(() => (!BoardManager.Instance.isMiniPlaying));
+    //    BoardManager.Instance.TurnEnd();
+    //}
 }
