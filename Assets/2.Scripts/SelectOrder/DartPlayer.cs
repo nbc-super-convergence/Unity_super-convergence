@@ -203,9 +203,9 @@ public class DartPlayer : MonoBehaviour
         {
             actionPhase = 1;
         }
-        if(actionPhase == 1)
+        else
         {
-            if (!press)
+            if (actionPhase == 1)
             {
                 NowShoot();
                 actionPhase = 0;
@@ -249,6 +249,13 @@ public class DartPlayer : MonoBehaviour
         CurAim = Vector3.zero;
         CurForce = 2f;
 
+        if (IsClient)
+        {
+            orderEvent.OnAimEvent -= SetAim;
+            orderEvent.OnShootEvent -= PressKey;
+            UIManager.Get<UIMinigameDart>().HideForcePower();
+        }
+
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
@@ -262,6 +269,11 @@ public class DartPlayer : MonoBehaviour
 
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
+        rgdby.constraints = RigidbodyConstraints.None;
+        rgdby.freezeRotation = false;
+        rgdby.constraints = RigidbodyConstraints.FreezeRotationY;
+        rgdby.constraints = RigidbodyConstraints.FreezeRotationZ;
+
         transform.localPosition = Vector3.zero;
         CurAim = Vector3.zero;
         CurForce = 2f;
@@ -285,7 +297,6 @@ public class DartPlayer : MonoBehaviour
             {
                 CurAim += new Vector3(GetAim.y, GetAim.x);
             }
-            //ApplyAim();
             SendDartSync();
             yield return new WaitForSeconds(0.1f);
         }
