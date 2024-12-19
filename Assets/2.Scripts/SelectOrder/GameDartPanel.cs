@@ -24,20 +24,20 @@ public class GameDartPanel : MonoBehaviour
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
 
-    private void FixedUpdate()
+    public IEnumerator MovePanel()
     {
-        if (isMove)
+        while (isMove)
         {
-            if (imClient)
+            if(imClient)
             {
                 if (transform.localPosition.x < -xPositionLimit)
                     moveDirection = Vector3.right;
                 else if (transform.localPosition.x > xPositionLimit)
                     moveDirection = Vector3.left;
-
                 ApplyMove();
                 SendServer();
             }
+            yield return new WaitForSeconds(0.1f);
         }
     }
 
