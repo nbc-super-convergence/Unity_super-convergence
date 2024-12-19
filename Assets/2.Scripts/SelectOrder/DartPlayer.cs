@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class DartPlayer : MonoBehaviour
@@ -30,6 +31,7 @@ public class DartPlayer : MonoBehaviour
             aimVector.y = Mathf.Clamp(value.y, minAim, maxAim);
 
             DiceGameData.Angle = SocketManager.ToVector(CurAim);
+            transform.rotation = Quaternion.Euler(CurAim);
         }
     }
     private Vector2 GetAim = Vector2.zero;   //입력 Aim
@@ -62,7 +64,7 @@ public class DartPlayer : MonoBehaviour
         }
     }
 
-    private int myRank = 0;
+    private int myRank = 0; 
     public int MyRank 
     {
         get => myRank;
@@ -81,6 +83,7 @@ public class DartPlayer : MonoBehaviour
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
+    #region 유니티 기본함수
     private void Awake()
     {
         rgdby = GetComponent<Rigidbody>();
@@ -93,56 +96,21 @@ public class DartPlayer : MonoBehaviour
 
         IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
         //Debug.Log($"{gameObject.name}, {IsClient}");
+
+        rgdby.useGravity = false;
+        rgdby.velocity = Vector3.zero;
     }
 
-    private void Start()
+    private void OnEnable()
     {
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
-            //UIManager.Get<UIMinigameDart>().ShowForcePower();
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
+            UIManager.Get<UIMinigameDart>().ShowForcePower();
+            StartCoroutine(MoveDart());
         }
-    }
-
-    #region SetProperties
-    /// <summary>
-    /// 각 속성의 최소 최대 결정
-    /// </summary>
-    public void SetAimRange(float min, float max)
-    {
-        minAim = min;
-        maxAim = max;
-    }
-    public void SetForceRange(float min, float max)
-    {
-        minForce = min;
-        maxForce = max;
-    }
-    public void SetPlayerIndex(int idx)
-    {
-        MyColor = idx;
-    }
-    #endregion
-
-    private void FixedUpdate()
-    {
-        //키를 누르는 동안
-        if(actionPhase == 1)
-        {
-            SetForce();
-        }
-
-        //각도를 조절
-        if (GetAim != Vector2.zero)
-        {
-            CurAim += new Vector3(GetAim.y, GetAim.x);
-            SendDartSync();
-        }
-
-            transform.rotation = Quaternion.Euler(CurAim);
-        //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -171,6 +139,36 @@ public class DartPlayer : MonoBehaviour
 
         MinigameManager.Instance.GetMiniGame<GameDart>().NextDart();
     }
+    #endregion
+
+    #region SetProperties
+    /// <summary>
+    /// 각 속성의 최소 최대 결정
+    /// </summary>
+    public void SetAimRange(float min, float max)
+    {
+        minAim = min;
+        maxAim = max;
+    }
+    public void SetForceRange(float min, float max)
+    {
+        minForce = min;
+        maxForce = max;
+    }
+    public void SetPlayerIndex(int idx)
+    {
+        MyColor = idx;
+    }
+    #endregion
+
+    #region 각도 메서드
+    /// <summary>
+    /// 각도 적용
+    /// </summary>
+    private void ApplyAim()
+    {
+        transform.rotation = Quaternion.Euler(CurAim);
+    }
 
     /// <summary>
     /// 각도 조절
@@ -179,7 +177,9 @@ public class DartPlayer : MonoBehaviour
     {
         GetAim = direction;
     }
+    #endregion
 
+    #region 발사 메서드
     /// <summary>
     /// 힘 조절
     /// </summary>
@@ -220,7 +220,8 @@ public class DartPlayer : MonoBehaviour
     {
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
-        ThrowToServer();
+        if(IsClient)
+            ThrowToServer();
     }
 
     /// <summary>
@@ -233,6 +234,7 @@ public class DartPlayer : MonoBehaviour
         CurForce = data.Power;
         NowShoot();
     }
+    #endregion
 
     /// <summary>
     /// 다트 빗나감
@@ -251,6 +253,42 @@ public class DartPlayer : MonoBehaviour
         MyDistance = 10;    //랭크에서 빠지는 걸로
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
+    }
+
+    public async void ResetDart()
+    {
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        transform.SetParent(map.PlayerDarts);
+
+        rgdby.useGravity = false;
+        rgdby.velocity = Vector3.zero;
+        transform.localPosition = Vector3.zero;
+        CurAim = Vector3.zero;
+        CurForce = 2f;
+        actionPhase = 0;
+
+        gameObject.SetActive(false);
+    }
+
+    private IEnumerator MoveDart()
+    {
+        while (IsClient)
+        {
+            //키를 누르는 동안
+            if (actionPhase == 1)
+            {
+                SetForce();
+            }
+
+            //각도를 조절
+            if (GetAim != Vector2.zero)
+            {
+                CurAim += new Vector3(GetAim.y, GetAim.x);
+            }
+            //ApplyAim();
+            SendDartSync();
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     #region 서버로 전송

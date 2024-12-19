@@ -9,6 +9,9 @@ public class UIMinigameDart : UIBase
     [Header("Force Power")]
     [SerializeField] private Slider forcePower;
 
+    [Header("Round")]
+    [SerializeField] private TextMeshProUGUI roundTxt;
+
     [Header("Result")]
     [SerializeField] private Image[] resultImage;
     [SerializeField] private TextMeshProUGUI[] stateTexts;
@@ -17,13 +20,13 @@ public class UIMinigameDart : UIBase
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
 
-    private string nickname = "";
+    private string nickname;
 
     private void Start()
     {
         //forcePower 초기
         SetForceLimit(1.5f, 3f);
-        
+
         for (int i = 0; i < stateTexts.Length; i++)
         {
             stateTexts[i].color = playerColor[i];
@@ -53,12 +56,10 @@ public class UIMinigameDart : UIBase
     #endregion
 
     #region Result 메서드
-    public void SetNickname(string name)
-    {
-        nickname = name;
-    }
     public void SetReady(int idx)
     {
+        resultImage[idx].color = Color.gray;
+        stateTexts[idx].color = playerColor[idx];
         ApplyText(idx, "준비");
     }
     public void SetMyTurn(int idx)
@@ -81,13 +82,19 @@ public class UIMinigameDart : UIBase
 
     private void ApplyText(int idx, string txt)
     {
-        stateTexts[idx].text = $"{nickname} : {txt}";
+        stateTexts[idx].text = $"{idx+1}P : {txt}";
+        Debug.Log(stateTexts[idx].text);
     }
     #endregion
 
+    public void SetRound(int round)
+    {
+        roundTxt.text = $"Round : {round}"; 
+    }
+
     private void PlyaerLeftEvent(int color)
     {
-
+        //이걸 어떤 용도로 구현?
     }
 
     //Todo : 내 차례가 되면 힘조절 UI 활성

@@ -1,11 +1,13 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MapGameDart : MapBase
 {
-    public GameDartPanel DartPanel { get; private set; }
+    public GameDartPanel DartPanel;
 
     //다트그룹
     public List<DartPlayer> DartOrder;
+    public Transform PlayerDarts;
 
     private int nowPlayer = 0;  // 현재 플레이어 차례
 
@@ -25,14 +27,20 @@ public class MapGameDart : MapBase
         else return;
     }
 
+    public void MovePanel()
+    {
+        StartCoroutine(DartPanel.MovePanel());
+    }
+
     /// <summary>
     /// 지금부터 시작
     /// </summary>
     public void BeginSelectOrder()
     {
         DartOrder[nowPlayer].gameObject.SetActive(true);
+        UIManager.Get<UIMinigameDart>().SetRound(1);
+        UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
     }
-
     public void StopPanel()
     {
         DartPanel.isMove = false;

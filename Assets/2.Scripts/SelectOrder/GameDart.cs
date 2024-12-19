@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GameDart : IGame
 {
-    private GameDartData gameData;
     private UIMinigameDart ingameUI;
 
     //다트판
@@ -29,8 +28,8 @@ public class GameDart : IGame
         }
     }   //빗나간 랭크
 
-    private int curRound = 0;   //현재 라운드
-    private int maxRound = 3;   //최대 라운드
+    private int curRound = 1;   //현재 라운드
+    private int maxRound = 9;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
 
@@ -39,18 +38,48 @@ public class GameDart : IGame
     /// </summary>
     public void NextDart()
     {
-
+        UIManager.Get<UIMinigameDart>().SetFinish(nowPlayer);
         nowPlayer++;
+
         if (nowPlayer < playerCount)    //최대 인원보다 초과되지 않게
         {
             //Debug.Log("다음 사람");
+            DartPannel.SetClient(nowPlayer);
             DartOrder[nowPlayer].gameObject.SetActive(true);
+            UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
         else
         {
-            //Debug.Log("결과");
+            NextRound();
+
+            //DistanceRank();
+        }
+    }
+
+    /// <summary>
+    /// 다음 라운드
+    /// </summary>
+    private void NextRound()
+    {
+        curRound++;
+        UIManager.Get<UIMinigameDart>().SetRound(curRound);
+
+        //다트 초기
+        for (int i = 0; i < playerCount; i++)
+        {
+            UIManager.Get<UIMinigameDart>().SetReady(i);
+            DartOrder[i].ResetDart();
+        }
+        nowPlayer = 0;
+        DartOrder[nowPlayer].gameObject.SetActive(true);
+
+        if(curRound > maxRound)
+        {
             DartPannel.isMove = false;  //판은 멈춰라
-            DistanceRank();
+
+            //결과
+            //GameOverNotification
+
         }
     }
 
@@ -88,21 +117,14 @@ public class GameDart : IGame
         }
     }
 
-    public void PannelMoveEvent()
-    {
-        Debug.Log("움직인다");
-        DartPannel.MoveEvent();
-    }
-
     private async void SettingDart(RepeatedField<S2C_DartMiniGameReadyNotification.Types.startPlayers> players)
     {
         playerCount = players.Count;
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         map.SetDartPlayers(playerCount);
-
         foreach(var p in players)
         {
-
+            string nickname = GameManager.Instance.SessionDic[p.SessionId].Nickname;
         }
     }
 
@@ -122,7 +144,6 @@ public class GameDart : IGame
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
-            map.BeginSelectOrder();
         }
         else
         {
@@ -132,20 +153,16 @@ public class GameDart : IGame
 
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>(gameData);
+        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
+
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        map.BeginSelectOrder();
+        map.DartPanel.SetClient(0);
     }
     public void DisableUI()
     {
         UIManager.Hide<UIMinigameDart>();
     }
     #endregion
-}
-
-public class GameDartData : IGameData
-{
-    public void Init()
-    {
-
-    }
 }

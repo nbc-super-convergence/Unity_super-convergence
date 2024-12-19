@@ -36,7 +36,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public async void DartGameThrowNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartGameThrowNotification;
-        Debug.Log(response.Result);
+        //Debug.Log(response.Result);
 
         int userIdx = GameManager.Instance.SessionDic[response.Result.SessionId].Color;
 
@@ -63,18 +63,20 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         Destroy(MinigameManager.Instance.curMap.gameObject);
     }
 
-    public void DartPannelSyncNotification(GamePacket gamePacket)
+    public async void DartPannelSyncNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartPannelSyncNotification;
 
-        //GameDartPanel panel = MinigameManager.Instance.GetMap<MapGameDart>().DartPanel;
-        //panel.moveDirection = ToVector3(response.Location);
-        //Debug.Log($"{panel.moveDirection} {response.Location}");
-        //if (MinigameManager.Instance.mySessonId.Equals(response.SessionId))
-        //{
-        //}
-        
-        MinigameManager.Instance.GetMiniGame<GameDart>().PannelMoveEvent();
+        //Debug.Log($"{response.Location}");
+
+        //GameDartPanel panel = ClientTest.Instance.Panel;
+        //panel.MoveEvent(response.Location);
+        var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+        GameDartPanel panel = map.DartPanel;
+        if (!MinigameManager.Instance.mySessonId.Equals(response.SessionId))
+        {
+            panel.MoveEvent(response.Location);
+        }
     }
 
     public async void DartSyncNotification(GamePacket gamePacket)
@@ -83,9 +85,8 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
 
         string sessionId = response.SessionId;
         int userIdx = GameManager.Instance.SessionDic[sessionId].Color;
-        string nickname = GameManager.Instance.SessionDic[sessionId].Nickname;
 
-        Debug.Log($"{sessionId} {userIdx} {response.Angle} {nickname}");
+        //Debug.Log($"{sessionId} {userIdx} {response.Angle}");
 
         if (!GameManager.Instance.myInfo.SessionId.Equals(sessionId))
         {
