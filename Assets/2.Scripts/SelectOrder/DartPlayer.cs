@@ -128,7 +128,7 @@ public class DartPlayer : MonoBehaviour
 
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
-        score.RecordingScore(MyColor, MyDistance);
+        score.RecordingScore(GameManager.Instance.myInfo.SessionId, MyColor, MyDistance);
 
         if (IsClient)
         {
@@ -267,7 +267,7 @@ public class DartPlayer : MonoBehaviour
 
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
-        score.RecordingScore(MyColor, MyDistance);
+        score.RecordingScore(GameManager.Instance.myInfo.SessionId, MyColor, MyDistance);
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
     }

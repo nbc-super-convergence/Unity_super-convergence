@@ -13,10 +13,11 @@ public class GameDartScore
     }
 
     // 점수기록
-    public void RecordingScore(int color, float distance)
+    public void RecordingScore(string sessionId, int color, float distance)
     {
         scoreInfo[color].Add(distance);
         // TODO:: 점수표UI를 갱신시키는 코드
 
+        // TODO:: C2S_DartPointRequest 패킷 보내는 코드
     }
 }
