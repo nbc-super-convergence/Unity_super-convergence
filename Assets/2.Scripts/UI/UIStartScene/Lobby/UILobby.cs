@@ -28,13 +28,11 @@ public class UILobby : UIBase
     [Header("Button")]
     [SerializeField] private Button btnRefresh;
 
-    private TaskCompletionSource<bool> lobbyTcs;
+    private TaskCompletionSource<bool> lobbyTcs = null;
     private TaskCompletionSource<bool> roomTcs;
     private TaskCompletionSource<bool> userTcs;
     private float elapseTime;
-    const int maxRetries = 5; // 최대 재시도 횟수
-    const float timeoutSeconds = 10f; // 타임아웃 (초 단위)
-
+    
     public override void Opened(object[] param)
     {
         SoundManager.Instance.PlayBGM(BGMType.Lobby);
@@ -78,6 +76,7 @@ public class UILobby : UIBase
 
         SocketManager.Instance.OnSend(packet);
         bool isSuccess = await lobbyTcs.Task;
+        lobbyTcs = null;
 
         if (!isSuccess)
         {
@@ -137,6 +136,8 @@ public class UILobby : UIBase
         SocketManager.Instance.OnSend(packet);
 
         bool isSuccess = await lobbyTcs.Task;
+        lobbyTcs = null;
+
         if (isSuccess)
         {
             SocketManager.Instance.isLobby = false;
@@ -184,6 +185,8 @@ public class UILobby : UIBase
     {
         btnRefresh.interactable = false;
 
+        await WaitUntilAsync(() => lobbyTcs == null);
+
         GamePacket roomPacket = new()
         {
             RoomListRequest = new()
@@ -197,6 +200,9 @@ public class UILobby : UIBase
         {
             await UIManager.Show<UIError>("방 목록을 새로고침할 수 없습니다.");
         }
+        roomTcs = null;
+
+        await WaitUntilAsync(() => roomTcs == null);
 
         GamePacket userPacket = new()
         {
@@ -231,6 +237,8 @@ public class UILobby : UIBase
         SocketManager.Instance.OnSend(packet);
 
         bool isSuccess = await lobbyTcs.Task;
+        lobbyTcs = null;
+
         if (isSuccess)
         {
         }
@@ -323,6 +331,14 @@ public class UILobby : UIBase
             {
                 Debug.LogError("User Prefab 없음");
             }
+        }
+    }
+
+    private async Task WaitUntilAsync(Func<bool> condition, int checkIntervalMs = 10)
+    {
+        while (!condition()) // 람다로 조건 확인
+        {
+            await Task.Delay(checkIntervalMs); // 주기적으로 확인
         }
     }
     #endregion
