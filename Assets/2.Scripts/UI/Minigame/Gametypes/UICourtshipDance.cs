@@ -6,19 +6,20 @@ using UnityEngine;
 
 public class UICourtshipDance : UIBase
 {
-    private CourtshipDanceData gameData;
-    private GameCourtshipDance game;
-    private bool isTeamGame;    
-    
+    [Header("Game Objects")]
     [SerializeField] private GameObject end;
     [SerializeField] private TextMeshProUGUI timeText;
     [SerializeField] public AudioClip[] sfxClips;
-
     public List<Transform> spawnPosition;
+
+    // -- Cached References -- //
+    private CourtshipDanceData gameData;
+    private GameCourtshipDance game;
     public Dictionary<int, CommandBoard> boardDic = new();
+    [HideInInspector] public CommandBoard myBoard;
 
-    public CommandBoard myBoard;
-
+    // -- State Flags -- //
+    private bool isTeamGame;
 
     public override void Opened(object[] param)
     {
@@ -27,6 +28,7 @@ public class UICourtshipDance : UIBase
         isTeamGame = game.isTeamGame;
     }
 
+    #region 커맨드보드 UI 초기화
     public async void MakeCommandBoard(Dictionary<int, List<PlayerInfo>> teamDic, Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic)
     {
         int num = 0;
@@ -52,17 +54,19 @@ public class UICourtshipDance : UIBase
             }
         }
     }
+    #endregion
 
-    // 카운트다운이 끝나면 실행하기
+    #region Timer
     public void StartTimer()
     {
-        StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.totalTime, timeText));
+        StartCoroutine(UIUtils.DecreaseTimeCoroutine(gameData.timerStartValue, timeText));
     }
 
     public void ShowTimer()
     {
         timeText.gameObject.SetActive(true);
     }
+    #endregion
 
     #region 게임오버
     public void GameOver(S2C_DanceGameOverNotification response)

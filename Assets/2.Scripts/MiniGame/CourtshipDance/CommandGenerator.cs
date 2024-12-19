@@ -6,18 +6,20 @@ using System.Linq;
 public class CommandGenerator
 {
     private CourtshipDanceData gameData;
-    private int[] rotations = { 0, 90, 180, 270 };
+    private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;
     private Random random = new();
-    private Dictionary<string, UserInfo> SessionDic = GameManager.Instance.SessionDic;    
+    private int[] rotations = { 0, 90, 180, 270 };
+
     private Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic;
 
     public CommandGenerator()
     {
         gameData = new CourtshipDanceData();        
         gameData.Init();
-    }       
+    }
 
-    public void InitTeamGame(Dictionary<int, List<PlayerInfo>> teamDic)
+    #region Management
+    public void InitGame(Dictionary<int, List<PlayerInfo>> teamDic)
     {
         teamPoolDic = new();
         var game = MinigameManager.Instance.GetMiniGame<GameCourtshipDance>();
@@ -45,7 +47,9 @@ public class CommandGenerator
     {
         return teamPoolDic;
     }
+    #endregion
 
+    #region Pool Generation
     public Queue<Queue<BubbleInfo>> GenerateBoardInfoPool(int poolCount)
     {
         Queue<Queue<BubbleInfo>> pool = new();
@@ -66,7 +70,9 @@ public class CommandGenerator
         }
         return queue;
     }
+    #endregion
 
+    #region Pool Customization
     public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, List<PlayerInfo> players)
     {
         foreach (var queue in pool)
@@ -74,15 +80,7 @@ public class CommandGenerator
             SetBoardColor(queue, players);
         }
     }
-
-    public void SetBoardPoolColor(Queue<Queue<BubbleInfo>> pool, PlayerInfo player)
-    {
-        foreach (var queue in pool)
-        {
-            SetBoardColor(queue, player);
-        }
-    }
-
+    
     private void SetBoardColor(Queue<BubbleInfo> queue, List<PlayerInfo> teamPlayers)
     {
         List<int> colors = new();
@@ -112,26 +110,11 @@ public class CommandGenerator
         }
     }
 
-    private void SetBoardColor(Queue<BubbleInfo> queue, PlayerInfo player)
-    {
-        int color = -1;
-
-        if (SessionDic.TryGetValue(player.SessionId, out UserInfo userInfo))
-        {
-            color = userInfo.Color;
-        }        
-
-        foreach (BubbleInfo b in queue)
-        {
-            b.SetColor(color);
-            b.SetSessionId(player.SessionId);
-        }
-    }
-
     private float GetRandomRotation()
     {
         return rotations[random.Next(rotations.Length)];
     }
+    #endregion
 
     #region Convert
     public static RepeatedField<DancePool> ConvertToDancePools(Dictionary<int, Queue<Queue<BubbleInfo>>> teamPoolDic, Dictionary<int, List<PlayerInfo>> teamDic)
@@ -156,7 +139,7 @@ public class CommandGenerator
                     DanceCommand command = new DanceCommand
                     {
                         Direction = (Direction)bubbleInfo.Rotation,
-                        TargetSessionId = bubbleInfo.sessionId
+                        TargetSessionId = bubbleInfo.SessionId
                     };
                     danceTable.Commands.Add(command);
                 }
