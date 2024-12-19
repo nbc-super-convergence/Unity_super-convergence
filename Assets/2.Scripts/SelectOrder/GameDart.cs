@@ -185,6 +185,8 @@ public class GameDart : IGame
         map.BeginSelectOrder();
         map.DartPanel.SetClient(0);
         map.MovePanel();
+
+        ingameUI.ShowScoreField(playerCount);
     }
     public void DisableUI()
     {

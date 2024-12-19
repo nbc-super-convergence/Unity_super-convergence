@@ -15,7 +15,8 @@ public class UIMinigameDart : UIBase
     [Header("Result")]
     [SerializeField] private Image[] resultImage;
     [SerializeField] private TextMeshProUGUI[] stateTexts;
-    [SerializeField] private TextMeshProUGUI[] scoreTexts;
+    [SerializeField] private GameObject[] scoreFields;
+    private TextMeshProUGUI[,] scoreTexts;  //플레이어, 점수 2차원 배열
     #endregion
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
@@ -31,8 +32,29 @@ public class UIMinigameDart : UIBase
         {
             stateTexts[i].color = playerColor[i];
             resultImage[i].color = Color.gray;
-            scoreTexts[i].gameObject.SetActive(false);
             SetReady(i);
+        }
+
+        for (int i = 0; i < scoreTexts.Length; i++)
+        {
+            Transform List = scoreFields[i].transform;
+            for (int j = 1; j <= 4; j++)
+            {
+                scoreTexts[i, j] = List.GetChild(j).GetComponentInChildren<TextMeshProUGUI>(); 
+            }
+        }
+    }
+
+    /// <summary>
+    /// 현재 인원까지 보여주기
+    /// </summary>
+    /// <param name="idx"></param>
+    public void ShowScoreField(int idx)
+    {
+        for (int i = 0; i < scoreFields.Length; i++)
+        {
+            if(i > idx) //현재 인원이 넘어가면
+                scoreFields[i].gameObject.SetActive(false);
         }
     }
 
@@ -72,13 +94,6 @@ public class UIMinigameDart : UIBase
     public void SetFinish(int idx)
     {
         ApplyText(idx, "OK!");
-    }
-    public void SetScore(int idx, float score)
-    {
-        if (score >= 10f)
-            ApplyText(idx, "Miss");
-        else
-            ApplyText(idx, score.ToString("N4"));
     }
 
     private void ApplyText(int idx, string txt)
