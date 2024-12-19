@@ -194,7 +194,7 @@ public class GameCourtshipDance : IGame
             else
             {
                 int teamIndex = (p.TeamNumber % 2 == 1) ? 0 : 1;
-                int spawnIndex = teamIndex * 2 + teamSpawnCount[teamIndex]; // 팀별로 0과 2 또는 1과 3
+                int spawnIndex = teamSpawnCount[teamIndex] * 2 + teamIndex; // 팀별로 0과 2 또는 1과 3
 
                 miniToken.transform.position = map.spawnPosition[spawnIndex].position;
                 miniToken.MiniData.rotY = map.spawnPosition[spawnIndex].rotation.eulerAngles.y;
