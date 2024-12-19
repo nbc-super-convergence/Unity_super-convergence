@@ -6,7 +6,7 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
     public void DartMiniGameReadyNotification(GamePacket gamePacket)
     {
         var response = gamePacket.DartMiniGameReadyNotification;
-        Debug.Log(response);
+        //Debug.Log(response);
 
         UIManager.Hide<BoardUI>();
 #pragma warning disable CS4014 
@@ -94,5 +94,13 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
             DartPlayer dartUser = map.DartOrder[userIdx];
             dartUser.CurAim = ToVector3(response.Angle);
         }
+    }
+
+    public void DartPointNotification(GamePacket gamePacket)
+    {
+        var response = gamePacket.DartPointNotification;
+        Debug.Log(response);
+
+        int userIdx = GameManager.Instance.SessionDic[response.SessionId].Color;
     }
 }

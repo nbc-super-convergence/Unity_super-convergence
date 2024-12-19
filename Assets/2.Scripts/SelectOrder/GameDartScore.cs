@@ -17,6 +17,7 @@ public class GameDartScore
     {
         scoreInfo[color].Add(distance);
         // TODO:: 점수표UI를 갱신시키는 코드
+        UIManager.Get<UIMinigameDart>().AddScore(color, scoreInfo[color].Count, distance);
 
         // TODO:: C2S_DartPointRequest 패킷 보내는 코드
     }

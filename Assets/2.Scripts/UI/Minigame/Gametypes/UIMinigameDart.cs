@@ -58,6 +58,11 @@ public class UIMinigameDart : UIBase
         }
     }
 
+    public void AddScore(int color, int index, float distance)
+    {
+        scoreTexts[color, index].text = distance.ToString("N4");
+    }
+
     #region Force 메서드
     public void SetForceLimit(float min, float max)
     {
