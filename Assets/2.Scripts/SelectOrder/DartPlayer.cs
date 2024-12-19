@@ -94,6 +94,9 @@ public class DartPlayer : MonoBehaviour
 
         IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
         //Debug.Log($"{gameObject.name}, {IsClient}");
+
+        rgdby.useGravity = false;
+        rgdby.velocity = Vector3.zero;
     }
 
     private void OnEnable()
@@ -182,7 +185,6 @@ public class DartPlayer : MonoBehaviour
     private void ApplyAim()
     {
         transform.rotation = Quaternion.Euler(CurAim);
-        //Debug.DrawRay(transform.position, -transform.forward * 2);
     }
 
     /// <summary>
@@ -274,12 +276,13 @@ public class DartPlayer : MonoBehaviour
     {
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         transform.SetParent(map.PlayerDarts);
-        transform.localPosition = Vector3.zero;
 
         rgdby.useGravity = false;
         rgdby.velocity = Vector3.zero;
+        transform.localPosition = Vector3.zero;
         CurAim = Vector3.zero;
         CurForce = 2f;
+
         gameObject.SetActive(false);
     }
 
