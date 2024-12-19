@@ -6,6 +6,8 @@ public class DartPlayer : MonoBehaviour
     private GameDartEvent orderEvent;
     private Rigidbody rgdby;
 
+    public GameDartScore score;
+
     //서버 전송 데이터
     private DiceGameData diceData = new();
     public DiceGameData DiceGameData
@@ -60,7 +62,7 @@ public class DartPlayer : MonoBehaviour
         set
         {
             myDistance = value;
-            DiceGameData.Distance = myDistance;
+            //DiceGameData.Distance = myDistance;
         }
     }
 
@@ -126,6 +128,7 @@ public class DartPlayer : MonoBehaviour
 
         //collision.transform으로 불러오기
         MyDistance = Vector3.Distance(collision.transform.position, transform.position);
+        score.RecordingScore(MyColor, MyDistance);
 
         if (IsClient)
         {
@@ -264,6 +267,7 @@ public class DartPlayer : MonoBehaviour
 
         gameObject.SetActive(false);
         MyDistance = 10;    //랭크에서 빠지는 걸로
+        score.RecordingScore(MyColor, MyDistance);
         MyRank = MinigameManager.Instance.GetMiniGame<GameDart>().MissRank;
 
     }

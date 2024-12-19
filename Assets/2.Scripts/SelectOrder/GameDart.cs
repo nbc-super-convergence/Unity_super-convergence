@@ -12,6 +12,9 @@ public class GameDart : IGame
     //다트그룹
     private List<DartPlayer> DartOrder;
 
+    //점수표
+    public GameDartScore dartScore;
+
     //UI
     [SerializeField] private RectTransform targetUI;    //타겟 지점
     [SerializeField] private Transform resultGroup; //다트 결과
@@ -139,6 +142,7 @@ public class GameDart : IGame
             string nickname = GameManager.Instance.SessionDic[p.SessionId].Nickname;
         }
     }
+        
 
     #region IGame
     public async void Init(params object[] param)
@@ -161,6 +165,11 @@ public class GameDart : IGame
         if (param.Length > 0 && param[0] is S2C_DartMiniGameReadyNotification response)
         {
             SettingDart(response.Players);
+            dartScore = new(response.Players.Count);
+            foreach(var dart in DartOrder)
+            {
+                dart.score = dartScore;
+            }
         }
         else
         {
