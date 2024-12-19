@@ -264,6 +264,7 @@ public class DartPlayer : MonoBehaviour
 
     public async void ResetDart()
     {
+        IsClient = GameManager.Instance.SessionDic[MinigameManager.Instance.mySessonId].Color.Equals(MyColor);
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
         transform.SetParent(map.PlayerDarts);
 

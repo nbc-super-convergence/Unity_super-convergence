@@ -73,6 +73,7 @@ public class GameDart : IGame
         }
         nowPlayer = 0;
         DartOrder[nowPlayer].gameObject.SetActive(true);
+        DartPannel.SetClient(nowPlayer);
         UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
 
         if (curRound > maxRound)
@@ -144,6 +145,8 @@ public class GameDart : IGame
         MinigameManager.Instance.curMap =
             await ResourceManager.Instance.LoadAsset<MapGameDart>
             ($"Map{MinigameManager.gameType}", eAddressableType.Prefab);
+
+        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.MakeMap<MapGameDart>();
 
         //DartOrder데이터 설정
@@ -166,7 +169,6 @@ public class GameDart : IGame
 
     public async void GameStart(params object[] param)
     {
-        ingameUI = await UIManager.Show<UIMinigameDart>();
         MinigameManager.Instance.GetMyToken().EnableInputSystem();
 
         var map = await MinigameManager.Instance.GetMap<MapGameDart>();
