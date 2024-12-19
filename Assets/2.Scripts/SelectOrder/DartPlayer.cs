@@ -80,6 +80,8 @@ public class DartPlayer : MonoBehaviour
     //Server
     public bool IsClient { get; private set; }
 
+    public bool isMyturn = false;
+
     //나갈 각도
     private Vector3 dartRot = Vector3.back;
 
@@ -106,6 +108,7 @@ public class DartPlayer : MonoBehaviour
         //이게 내 유저라면 이벤트 실행
         if (IsClient)
         {
+            isMyturn = true;
             orderEvent.OnAimEvent += SetAim;
             orderEvent.OnShootEvent += PressKey;
             UIManager.Get<UIMinigameDart>().ShowForcePower();
@@ -221,7 +224,10 @@ public class DartPlayer : MonoBehaviour
         rgdby.useGravity = true;
         rgdby.AddForce(-transform.forward * CurForce, ForceMode.Impulse);
         if(IsClient)
+        {
+            isMyturn = false;
             ThrowToServer();
+        }
     }
 
     /// <summary>
@@ -285,7 +291,7 @@ public class DartPlayer : MonoBehaviour
 
     private IEnumerator MoveDart()
     {
-        while (IsClient)
+        while (IsClient && isMyturn)
         {
             //키를 누르는 동안
             if (actionPhase == 1)

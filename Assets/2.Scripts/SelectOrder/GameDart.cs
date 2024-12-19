@@ -49,6 +49,7 @@ public class GameDart : IGame
             //Debug.Log("다음 사람");
             DartPannel.SetClient(nowPlayer);
             DartOrder[nowPlayer].gameObject.SetActive(true);
+            DartOrder[nowPlayer].isMyturn = true;
             UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
         }
         else
