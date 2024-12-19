@@ -31,6 +31,7 @@ public class UIMinigameDart : UIBase
         {
             stateTexts[i].color = playerColor[i];
             resultImage[i].color = Color.gray;
+            scoreTexts[i].gameObject.SetActive(false);
             SetReady(i);
         }
     }
