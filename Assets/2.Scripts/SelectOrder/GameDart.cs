@@ -33,7 +33,7 @@ public class GameDart : IGame
     }   //빗나간 랭크
 
     private int curRound = 1;   //현재 라운드
-    private int maxRound = 3;   //최대 라운드
+    private int maxRound = 4;   //최대 라운드
 
     private int playerCount;    //현재 플레이어 참여 인원
 
