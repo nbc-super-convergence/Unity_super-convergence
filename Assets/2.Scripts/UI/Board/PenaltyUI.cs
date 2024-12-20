@@ -41,7 +41,7 @@ public class PenaltyUI : UIBase
         MessageUpdate();
 
         SetActive(true);
-        StartCoroutine(PenaltyEvent(data.coin < penalty));
+        StartCoroutine(PenaltyEvent(tax < (penalty >> 1)));
     }
 
     private IEnumerator PenaltyEvent(bool isGreater)
@@ -70,7 +70,7 @@ public class PenaltyUI : UIBase
         for (int i = 0; i < messages.Count; i++)
             messages[i].Clear();
 
-        messages[0].Append($"어서오세요, 통행료는 {penalty}입니다.");
+        messages[0].Append($"어서오세요, 통행료는 {penalty >> 1}입니다.");
         messages[1].Append($"돈이 부족하시군요? {tax}를 지불하고 가세요 에휴");
     }
 }

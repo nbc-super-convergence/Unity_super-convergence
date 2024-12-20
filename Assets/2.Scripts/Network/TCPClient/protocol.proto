@@ -802,6 +802,17 @@ syntax = "proto3";
         Vector angle = 2;
     }
 
+    // 다트 점수 결과 패킷 
+    message C2S_DartPointRequest {      
+        string sessionId = 1; 
+        int32 point = 2; 
+    }
+
+    message S2C_DartPointNotification {
+        string sessionId = 1; 
+        int32 point = 2; 
+    }
+
 // 게임패킷
     message GamePacket {
         oneof payload {
@@ -942,5 +953,7 @@ syntax = "proto3";
             S2C_DartPannelSyncNotification dartPannelSyncNotification = 609;
             C2S_DartSyncRequest dartSyncRequest = 610;
             S2C_DartSyncNotification dartSyncNotification = 611;
+            C2S_DartPointRequest dartPointRequest = 612;
+            S2C_DartPointNotification dartPointNotification = 613;
         }
     }

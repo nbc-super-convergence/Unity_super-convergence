@@ -9,26 +9,52 @@ public class UIMinigameDart : UIBase
     [Header("Force Power")]
     [SerializeField] private Slider forcePower;
 
+    [Header("Round")]
+    [SerializeField] private TextMeshProUGUI roundTxt;
+
     [Header("Result")]
     [SerializeField] private Image[] resultImage;
     [SerializeField] private TextMeshProUGUI[] stateTexts;
-    [SerializeField] private TextMeshProUGUI[] scoreTexts;
+    [SerializeField] private GameObject[] scoreFields;
+    private TextMeshProUGUI[,] scoreTexts;  //플레이어, 점수 2차원 배열
     #endregion
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
 
-    private string nickname = "";
+    private string nickname;
 
     private void Start()
     {
         //forcePower 초기
         SetForceLimit(1.5f, 3f);
-        
+
         for (int i = 0; i < stateTexts.Length; i++)
         {
             stateTexts[i].color = playerColor[i];
             resultImage[i].color = Color.gray;
             SetReady(i);
+        }
+
+        for (int i = 0; i < scoreTexts.Length; i++)
+        {
+            Transform List = scoreFields[i].transform;
+            for (int j = 1; j <= 4; j++)
+            {
+                scoreTexts[i, j] = List.GetChild(j).GetComponentInChildren<TextMeshProUGUI>(); 
+            }
+        }
+    }
+
+    /// <summary>
+    /// 현재 인원까지 보여주기
+    /// </summary>
+    /// <param name="idx"></param>
+    public void ShowScoreField(int idx)
+    {
+        for (int i = 0; i < scoreFields.Length; i++)
+        {
+            if(i > idx) //현재 인원이 넘어가면
+                scoreFields[i].gameObject.SetActive(false);
         }
     }
 
@@ -53,12 +79,10 @@ public class UIMinigameDart : UIBase
     #endregion
 
     #region Result 메서드
-    public void SetNickname(string name)
-    {
-        nickname = name;
-    }
     public void SetReady(int idx)
     {
+        resultImage[idx].color = Color.gray;
+        stateTexts[idx].color = playerColor[idx];
         ApplyText(idx, "준비");
     }
     public void SetMyTurn(int idx)
@@ -71,23 +95,22 @@ public class UIMinigameDart : UIBase
     {
         ApplyText(idx, "OK!");
     }
-    public void SetScore(int idx, float score)
-    {
-        if (score >= 10f)
-            ApplyText(idx, "Miss");
-        else
-            ApplyText(idx, score.ToString("N4"));
-    }
 
     private void ApplyText(int idx, string txt)
     {
-        stateTexts[idx].text = $"{nickname} : {txt}";
+        stateTexts[idx].text = $"{idx+1}P : {txt}";
+        //Debug.Log(stateTexts[idx].text);
     }
     #endregion
 
+    public void SetRound(int round)
+    {
+        roundTxt.text = $"Round : {round}"; 
+    }
+
     private void PlyaerLeftEvent(int color)
     {
-
+        //이걸 어떤 용도로 구현?
     }
 
     //Todo : 내 차례가 되면 힘조절 UI 활성

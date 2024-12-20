@@ -23,6 +23,9 @@ public class BoardResultUI : UIBase
         for(int i = 0; i < length; i++)
             MinigameManager.Instance.miniTokens[i].DisableMiniToken();
 
+        for (int i = 0; i < BoardManager.Instance.playerTokenHandlers.Count; i++)
+            BoardManager.Instance.playerTokenHandlers[i].gameObject.SetActive(false);
+
         //base.Opened(param);
         //result = (List<IGameResult>)param[0];
 

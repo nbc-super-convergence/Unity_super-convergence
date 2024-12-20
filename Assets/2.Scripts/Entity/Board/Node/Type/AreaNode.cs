@@ -63,7 +63,7 @@ public class AreaNode : BaseNode, IPurchase
     private async void Penalty(BoardTokenData p)
     {
         IPurchase purchase = this;
-        await UIManager.Show<PenaltyUI>(saleAmount >> 1,purchase,p);
+        await UIManager.Show<PenaltyUI>(saleAmount,purchase,p);
 
         GamePacket packet = new();
 

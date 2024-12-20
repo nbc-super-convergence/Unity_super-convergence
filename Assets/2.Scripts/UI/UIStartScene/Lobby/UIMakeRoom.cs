@@ -8,6 +8,14 @@ public class UIMakeRoom : UIBase
 
     private TaskCompletionSource<bool> sourceTcs;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            OnApplyBtn();
+        }
+    }
+
     public void OnBackBtn()
     {
         UIManager.Hide<UIMakeRoom>();

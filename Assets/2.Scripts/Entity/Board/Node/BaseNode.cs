@@ -103,10 +103,10 @@ public class BaseNode : MonoBehaviour, IBoardNode,IAction
 
     public void LineUp()
     {
-         Vector3 pos = lineUp.position;
+        //Vector3 pos = lineUp.position;
 
-        for (int i = 0; i < players.Count; i++)
-            players[i].position = new Vector3(pos.x,0,pos.z);
+        //for (int i = 0; i < players.Count; i++)
+        //    players[i].position = new Vector3(pos.x, 0, pos.z);
     }
 
     public List<Transform> GetList()

@@ -162,7 +162,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 2
 --- !u!114 &2645148477201630496
 MonoBehaviour:
@@ -245,11 +244,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e061f4b1d1e3ad4c8d3b5758e6c8589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DartPanel: {fileID: 5119921672502209709}
   DartOrder:
   - {fileID: 8867677764518157141}
   - {fileID: 618492240407348854}
   - {fileID: 1456507541303351940}
   - {fileID: 8519787329038370472}
+  PlayerDarts: {fileID: 3282114998953417439}
 --- !u!1 &4243239605345812087
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,7 +278,7 @@ Transform:
   m_GameObject: {fileID: 4243239605345812087}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -1.2, y: 0.25, z: 2.07}
+  m_LocalPosition: {x: -1.2, y: 0.25, z: 3.97}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -754,7 +755,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 3
 --- !u!114 &6514973013519690379
 MonoBehaviour:
@@ -896,7 +896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 1
 --- !u!114 &5189453259755136390
 MonoBehaviour:
@@ -1040,7 +1039,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9e3b2524912f648adc3d894d6d6c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GetAim: {x: 0, y: 0}
   MyColor: 0
 --- !u!114 &5694422111203393032
 MonoBehaviour:
@@ -1263,7 +1261,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isMove: 1
-  moveDirection: {x: 0, y: 0, z: 0}
 --- !u!4 &4241309454975411409 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4041765378854372, guid: d31d5e07362494e468582cf3e3d08eaf,
