@@ -1,4 +1,5 @@
 using Google.Protobuf.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,7 +43,7 @@ public class GameDart : IGame
     /// <summary>
     /// 다음 차례
     /// </summary>
-    public void NextDart()
+    public async void NextDart()
     {
         UIManager.Get<UIMinigameDart>().SetFinish(nowPlayer);
         nowPlayer++;
@@ -57,9 +58,11 @@ public class GameDart : IGame
         }
         else
         {
-            NextRound();
+            //여기에 코루틴 쓸수 없어서 대신 map에다 코루틴 설정
+            var map = await MinigameManager.Instance.GetMap<MapGameDart>();
+            map.WaitRound();
 
-            //DistanceRank();
+            NextRound();
         }
     }
 

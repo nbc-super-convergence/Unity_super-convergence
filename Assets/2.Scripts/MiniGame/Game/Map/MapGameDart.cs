@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -41,8 +42,14 @@ public class MapGameDart : MapBase
         UIManager.Get<UIMinigameDart>().SetRound(1);
         UIManager.Get<UIMinigameDart>().SetMyTurn(nowPlayer);
     }
-    public void StopPanel()
+
+    public void WaitRound()
     {
-        DartPanel.isMove = false;
+        StartCoroutine(WaitDealyTime());
+    }
+
+    private IEnumerator WaitDealyTime()
+    {
+        yield return new WaitForSeconds(1f);
     }
 }
