@@ -103,53 +103,34 @@ public class MiniTokenInputHandler : IDisposable
     }
     #endregion
 
-    #region SimpleInput   
-    private void OnUp(InputAction.CallbackContext context)
+    #region SimpleInput
+    private void OnSimpleInput(InputAction.CallbackContext context, int arrowInput)
     {
-        if (isEnable)
+        if(isEnable)
         {
-            miniData.arrowInput = 0;
-            if (UIManager.IsOpened<UICourtshipDance>())
+            miniData.arrowInput = arrowInput;
+            if(UIManager.IsOpened<UICourtshipDance>())
             {
                 UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
             }
-
-            Debug.Log($"ActionMap MiniToken : {playerInput.MiniPlayerToken.enabled}");
-            Debug.Log($"ActionMap SimpleInput : {playerInput.SimpleInput.enabled}");
         }
+    }
+
+    private void OnUp(InputAction.CallbackContext context)
+    {
+        OnSimpleInput(context, 0);
     }
     private void OnLeft(InputAction.CallbackContext context)
     {
-        if (isEnable)
-        {
-            miniData.arrowInput = 90;
-            if (UIManager.IsOpened<UICourtshipDance>())
-            {
-                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
-            }
-        }
+        OnSimpleInput(context, 90);
     }
     private void OnDown(InputAction.CallbackContext context)
     {
-        if (isEnable)
-        {
-            miniData.arrowInput = 180;
-            if (UIManager.IsOpened<UICourtshipDance>())
-            {
-                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
-            }
-        }
+        OnSimpleInput(context, 180);
     }
     private void OnRight(InputAction.CallbackContext context)
     {
-        if (isEnable)
-        {
-            miniData.arrowInput = 270;
-            if (UIManager.IsOpened<UICourtshipDance>())
-            {
-                UIManager.Get<UICourtshipDance>().myBoard.OnActionInput(miniData.arrowInput);
-            }
-        }
+        OnSimpleInput(context, 270);
     }
     #endregion
 
