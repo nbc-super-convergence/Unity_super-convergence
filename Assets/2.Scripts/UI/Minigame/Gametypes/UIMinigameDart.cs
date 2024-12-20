@@ -16,7 +16,7 @@ public class UIMinigameDart : UIBase
     [SerializeField] private Image[] resultImage;
     [SerializeField] private TextMeshProUGUI[] stateTexts;
     [SerializeField] private GameObject[] scoreFields;
-    private TextMeshProUGUI[,] scoreTexts;  //플레이어, 점수 2차원 배열
+    private TextMeshProUGUI[,] scoreTexts = new TextMeshProUGUI[4,4];  //[플레이어, 점수] 2차원 배열
     #endregion
 
     private Color[] playerColor = {Color.red, Color.yellow, Color.green, Color.blue};
@@ -35,12 +35,12 @@ public class UIMinigameDart : UIBase
             SetReady(i);
         }
 
-        for (int i = 0; i < scoreTexts.Length; i++)
+        for (int i = 0; i < scoreFields.Length; i++)
         {
             Transform List = scoreFields[i].transform;
-            for (int j = 1; j <= 4; j++)
+            for (int j = 0; j < 4; j++)
             {
-                scoreTexts[i, j] = List.GetChild(j).GetComponentInChildren<TextMeshProUGUI>(); 
+                scoreTexts[i, j] = List.GetChild(j).GetChild(0).GetComponent<TextMeshProUGUI>(); 
             }
         }
     }
@@ -53,9 +53,14 @@ public class UIMinigameDart : UIBase
     {
         for (int i = 0; i < scoreFields.Length; i++)
         {
-            if(i > idx) //현재 인원이 넘어가면
+            if(i >= idx) //현재 인원이 넘어가면
                 scoreFields[i].gameObject.SetActive(false);
         }
+    }
+
+    public void AddScore(int color, int index, float distance)
+    {
+        scoreTexts[color, index].text = distance.ToString("N4");
     }
 
     #region Force 메서드
