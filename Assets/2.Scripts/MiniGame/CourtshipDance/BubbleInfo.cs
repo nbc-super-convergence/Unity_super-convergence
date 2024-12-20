@@ -28,7 +28,7 @@ public class BubbleInfo
     public void SetColor(int color)
     {
         this.Color = color;
-        this.SessionId = GameManager.Instance.FindSessionIdByColor(color);      // TODO:: 간결한 방법으로 바꾸기.
+        this.SessionId = GameManager.Instance.FindSessionIdByColor(color);
     }
 
     public void SetColor(string sessionId)
