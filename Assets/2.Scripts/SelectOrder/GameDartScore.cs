@@ -26,15 +26,23 @@ public class GameDartScore
             allScore += score;
         }
 
-        // TODO:: C2S_DartPointRequest 패킷 보내는 코드
+        #region 패킷 보내는 코드
         GamePacket packet = new()
         {
             DartPointRequest = new()
             {
                 SessionId = sessionId,
-                Point = Convert.ToInt16(allScore)
+                Point = CalculateScore(allScore)   //이걸 어떻게 계산할까?
             }
         };
         SocketManager.Instance.OnSend(packet);
+        #endregion
+    }
+
+    private int CalculateScore(float score)
+    {
+        //Todo :: 받은 거리에서 정수형으로 점수 환산하기
+        
+        return Convert.ToInt16(1 / score);
     }
 }

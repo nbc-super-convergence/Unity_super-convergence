@@ -37,8 +37,8 @@ public class GameDart : IGame
 
     private int playerCount;    //현재 플레이어 참여 인원
 
-    private float[] scores = new float[4];
-    private float[] result = new float[4];
+    private int[] scores = new int[4];
+    private int[] result = new int[4];
 
     /// <summary>
     /// 다음 차례
@@ -76,7 +76,6 @@ public class GameDart : IGame
         {
             UIManager.Get<UIMinigameDart>().SetReady(i);
             DartOrder[i].ResetDart();
-            scores[i] += DartOrder[i].MyDistance;
         }
         nowPlayer = 0;
         DartOrder[nowPlayer].gameObject.SetActive(true);
@@ -87,10 +86,6 @@ public class GameDart : IGame
         {
             DartPannel.isMove = false;  //판은 멈춰라
 
-            for (int i = 0; i < scores.Length; i++)
-            {
-                result[i] = scores[i] / maxRound;
-            }
             //결과
             //GameOverNotification
         }
@@ -99,6 +94,11 @@ public class GameDart : IGame
             curRound++;
             UIManager.Get<UIMinigameDart>().SetRound(curRound);
         }
+    }
+
+    public void AddScore(int color, int point)
+    {
+        scores[color] += point;
     }
 
     private List<float> distanceRank = new List<float>();    //다트 거리의 매겨줄 랭킹

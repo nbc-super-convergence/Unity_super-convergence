@@ -102,5 +102,6 @@ public partial class SocketManager : TCPSocketManagerBase<SocketManager>
         Debug.Log(response);
 
         int userIdx = GameManager.Instance.SessionDic[response.SessionId].Color;
+        MinigameManager.Instance.GetMiniGame<GameDart>().AddScore(userIdx, response.Point);
     }
 }
